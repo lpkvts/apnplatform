@@ -164,3 +164,8 @@ body {
 .cms-badge.s-review { background: #fffbeb; color: #92400e; }
 .cms-badge.s-published { background: #ecfdf5; color: #047857; }
 .cms-badge.s-expired { background: #fef2f2; color: #b91c1c; }
+
+/* ===== Profil ===== */
+.prof-head { display: flex; align-items: center; gap: 12px; }
+.prof-av { width: 48px; height: 48px; border-radius: 14px; background: var(--teal); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
+.prof-name { font-weight: 700; font-size: 16px; }

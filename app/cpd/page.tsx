@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { addCpdEntry } from './actions'
 import type { CpdEntry } from '@/lib/types'
@@ -24,6 +25,7 @@ export default async function CpdPage() {
 
   return (
     <>
+      <Link className="sh-back" href="/profil">‹ Profil</Link>
       <h1 className="h1">Szakmai fejlődésem (CPD)</h1>
       <p className="sub">
         {year} · {total} / {target} pont

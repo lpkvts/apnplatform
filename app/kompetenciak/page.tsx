@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ProgressBar } from '@/components/progress-bar'
 import type { Competency, CompetencyProgress } from '@/lib/types'
@@ -28,6 +29,7 @@ export default async function KompetenciakPage() {
 
   return (
     <>
+      <Link className="sh-back" href="/profil">‹ Profil</Link>
       <h1 className="h1">Kompetencia-passzport</h1>
       <p className="sub">A klinikai és gondozási kompetenciáid aktuális szintje.</p>
 
