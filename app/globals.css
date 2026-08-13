@@ -135,3 +135,11 @@ body {
 .as-foot { display: flex; gap: 10px; padding: 16px 0 4px; position: sticky; bottom: calc(64px + env(safe-area-inset-bottom)); background: var(--slate-50); }
 .as-foot .btn { flex: 1; justify-content: center; }
 .as-doc-actions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+
+/* ===== Tudástár 3 szint ===== */
+.kb-levels { display: flex; gap: 6px; background: var(--slate-100); padding: 4px; border-radius: 12px; margin: 12px 0 14px; }
+.kb-lv { flex: 1; padding: 9px 6px; border: none; border-radius: 9px; background: transparent; color: var(--slate-500); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.kb-lv.on { background: #fff; color: var(--teal-700); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+.kb-qh { font-size: 13px; font-weight: 700; color: var(--teal-700); margin: 4px 0 8px; }
+.lead { font-size: 15px; color: var(--slate-800); line-height: 1.5; }
+.kb-relnote { font-size: 12.5px; color: var(--slate-500); background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: 10px; padding: 9px 11px; margin: 10px 0; }
