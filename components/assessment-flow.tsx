@@ -137,7 +137,7 @@ export function AssessmentFlow() {
       <textarea className="as-ta" rows={5} value={as.f.physical} onChange={(e) => setF('physical', e.target.value)}
         placeholder="Fizikális status régiónként…" /></>)
     if (S === 4) return (<><div className="as-step-t">Labor</div>
-      <Link className="btn ghost sm" href="/klinika/tesztek">Klinikai tesztek megnyitása</Link>
+      <Link className="btn ghost sm" href="/klinika/labor">Labor Kisokos megnyitása</Link>
       <div className="as-lbl">Lényeges eredmények</div>
       <textarea className="as-ta" rows={3} value={as.f.lab} onChange={(e) => setF('lab', e.target.value)}
         placeholder="pl. CRP 84, Hb 118…" /></>)
