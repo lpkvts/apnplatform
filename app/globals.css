@@ -157,3 +157,10 @@ body {
 .cop-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
 .cop-inputbar { display: flex; gap: 8px; align-items: center; }
 .cop-inputbar .field { flex: 1; }
+
+/* ===== CMS státusz-badge ===== */
+.cms-badge { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.cms-badge.s-draft { background: var(--slate-100); color: var(--slate-500); }
+.cms-badge.s-review { background: #fffbeb; color: #92400e; }
+.cms-badge.s-published { background: #ecfdf5; color: #047857; }
+.cms-badge.s-expired { background: #fef2f2; color: #b91c1c; }

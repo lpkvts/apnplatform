@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { currentRole, isStaff } from '@/lib/roles'
 import type { Profile, CpdEntry } from '@/lib/types'
 
 export default async function DashboardPage() {
@@ -14,6 +15,7 @@ export default async function DashboardPage() {
     .eq('id', user?.id ?? '')
     .single<Profile>()
 
+  const { role } = await currentRole()
   const year = new Date().getFullYear()
   const { data: entries } = await supabase
     .from('cpd_entries')
@@ -65,6 +67,13 @@ export default async function DashboardPage() {
           Megnyitás
         </Link>
       </div>
+
+      {isStaff(role) && (
+        <Link className="card klink" href="/cms">
+          <div className="klink-t">🛠️ Tartalomkezelés (CMS)</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Irányelvek — piszkozat → lektorálás → publikálás</div>
+        </Link>
+      )}
     </>
   )
 }
