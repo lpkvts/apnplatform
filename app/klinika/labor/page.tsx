@@ -1,4 +1,10 @@
+import { createClient } from '@/lib/supabase/server'
 import { Labor } from '@/components/labor'
-export default function LaborPage() {
-  return <Labor />
+
+interface Gl { id: string; title: string; summary: string | null }
+
+export default async function LaborPage() {
+  const supabase = await createClient()
+  const { data } = await supabase.from('guidelines').select('id, title, summary').eq('status', 'published').returns<Gl[]>()
+  return <Labor guidelines={data ?? []} />
 }
