@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { TESTS, TEST_CATS, type Test, type TestItem } from '@/lib/scores/data'
 import { testScore, testComplete, testBand } from '@/lib/scores/engine'
 
@@ -17,9 +18,10 @@ const RISK_CLS: Record<string, string> = {
 }
 
 export function ScoreHub() {
+  const sp = useSearchParams()
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(sp.get('open'))
   const [answers, setAnswers] = useState<Record<string, AnsMap>>({})
 
   const open = openId ? TESTS.find((t) => t.id === openId) ?? null : null

@@ -98,3 +98,40 @@ body {
 .sh-apn { background: var(--slate-50); border-radius: 10px; padding: 10px 12px; margin: 8px 0; font-size: 13px; }
 .sh-apn ul { margin: 6px 0 0; padding-left: 18px; }
 .sh-disc { font-size: 11px; color: var(--slate-400); font-style: italic; margin: 10px 0; }
+
+/* ===== Klinika landing + értékelés ===== */
+.klink { display: block; text-decoration: none; color: inherit; }
+.klink-t { font-weight: 700; font-size: 16px; color: var(--slate-800); }
+.as-head { margin-bottom: 12px; }
+.as-t2 { font-size: 12px; color: var(--teal-700); font-weight: 600; margin-top: 2px; }
+.as-prog { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+.as-dot { width: 27px; height: 27px; border-radius: 8px; border: 1px solid var(--slate-200); background: #fff; color: var(--slate-400); font-size: 11px; font-weight: 700; cursor: pointer; }
+.as-dot.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+.as-dot.done { background: var(--teal-50, #f0fdfa); border-color: #ccfbf1; color: var(--teal-700); }
+.as-body { min-height: 180px; }
+.as-step-t { font-weight: 700; font-size: 15px; color: var(--slate-800); margin-bottom: 10px; }
+.as-lbl { font-size: 12px; font-weight: 600; color: var(--slate-500); margin: 12px 2px 5px; }
+.as-ta, .as-summary { width: 100%; border: 1px solid var(--slate-200); border-radius: 12px; padding: 10px 12px; font: inherit; font-size: 14px; color: var(--slate-800); box-sizing: border-box; background: #fff; resize: vertical; }
+.as-summary { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5; background: var(--slate-50); white-space: pre-wrap; }
+.as-domain { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.as-dom { padding: 11px 12px; border: 1px solid var(--slate-200); border-radius: 12px; background: #fff; color: var(--slate-700); font-size: 13px; font-weight: 600; text-align: left; cursor: pointer; }
+.as-dom.on { border-color: var(--teal); background: var(--teal-50, #f0fdfa); color: var(--teal-700); }
+.as-vitrow { display: flex; align-items: center; gap: 9px; margin-bottom: 8px; }
+.as-vl { flex: 1; font-size: 14px; color: var(--slate-800); }
+.as-vin { width: 92px; border: 1px solid var(--slate-200); border-radius: 10px; padding: 9px 10px; font: inherit; font-size: 15px; text-align: right; box-sizing: border-box; }
+.as-vin.flag-amber { border-color: #f59e0b; background: #fffbeb; }
+.as-vin.flag-red { border-color: #dc2626; background: #fef2f2; }
+.as-vu { width: 46px; font-size: 12px; color: var(--slate-400); }
+.as-flag { font-size: 10.5px; font-weight: 700; padding: 3px 7px; border-radius: 999px; white-space: nowrap; }
+.as-flag.flag-amber { background: #fffbeb; color: #92400e; }
+.as-flag.flag-red { background: #fef2f2; color: #b91c1c; }
+.as-pills { display: flex; gap: 6px; }
+.as-pill { width: 46px; height: 42px; border: 1px solid var(--slate-200); border-radius: 10px; background: #fff; color: var(--slate-600); font-weight: 700; cursor: pointer; }
+.as-pill.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+.as-chks { display: flex; flex-direction: column; gap: 7px; }
+.as-chk { text-align: left; padding: 11px 12px; border: 1px solid var(--slate-200); border-radius: 11px; background: #fff; color: var(--slate-700); font-size: 13.5px; cursor: pointer; }
+.as-chk.on { border-color: var(--teal); background: var(--teal-50, #f0fdfa); color: var(--teal-700); font-weight: 600; }
+.as-amber { display: flex; gap: 7px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e; padding: 10px 12px; border-radius: 12px; font-size: 12.5px; margin-bottom: 8px; }
+.as-foot { display: flex; gap: 10px; padding: 16px 0 4px; position: sticky; bottom: calc(64px + env(safe-area-inset-bottom)); background: var(--slate-50); }
+.as-foot .btn { flex: 1; justify-content: center; }
+.as-doc-actions { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
