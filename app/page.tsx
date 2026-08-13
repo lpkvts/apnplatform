@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import type { Profile, CpdEntry } from '@/lib/types'
 import { Icon, CpdRing } from '@/components/icons'
+import { getNotifications } from '@/lib/notifications'
 
 const TILES = [
   { href: '/klinika/ertekeles', label: 'Új betegértékelés', icon: 'assessment' },
@@ -32,6 +33,7 @@ export default async function DashboardPage() {
     .eq('status', 'published').order('published_at', { ascending: false }).limit(1)
     .maybeSingle<{ id: string; title: string; summary: string | null }>()
 
+  const { count: notifCount } = await getNotifications()
   const initial = (profile?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? 'A').toUpperCase()
 
   return (
@@ -42,6 +44,10 @@ export default async function DashboardPage() {
           <span>{profile?.full_name || 'Üdvözöljük'} · {profile?.specialty || 'APN'}</span>
         </div>
         <div className="dash-actions">
+          <Link href="/ertesitesek" className="icon-btn bell-wrap">
+            <Icon name="bell" size={20} />
+            {notifCount > 0 && <span className="notif-dot">{notifCount > 9 ? '9+' : notifCount}</span>}
+          </Link>
           <Link href="/profil" className="avatar">{initial}</Link>
         </div>
       </div>
