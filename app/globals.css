@@ -143,3 +143,17 @@ body {
 .kb-qh { font-size: 13px; font-weight: 700; color: var(--teal-700); margin: 4px 0 8px; }
 .lead { font-size: 15px; color: var(--slate-800); line-height: 1.5; }
 .kb-relnote { font-size: 12.5px; color: var(--slate-500); background: var(--slate-50); border: 1px solid var(--slate-100); border-radius: 10px; padding: 9px 11px; margin: 10px 0; }
+
+/* ===== Copilot ===== */
+.cop-modes { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 6px; }
+.cop-mode { flex: 0 0 auto; white-space: nowrap; padding: 8px 12px; border: 1px solid var(--slate-200); border-radius: 999px; background: #fff; color: var(--slate-500); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.cop-mode.on { background: var(--teal); border-color: var(--teal); color: #fff; }
+.cop-hint { background: var(--teal-50, #f0fdfa); border: 1px solid #ccfbf1; color: var(--teal-700); border-radius: 10px; padding: 8px 11px; font-size: 12.5px; margin-bottom: 10px; }
+.cop-convo { min-height: 120px; margin-bottom: 12px; }
+.cop-user { background: var(--teal); color: #fff; padding: 10px 13px; border-radius: 14px 14px 4px 14px; margin: 10px 0 10px auto; max-width: 85%; width: fit-content; font-size: 14px; }
+.cop-ai { background: #fff; border: 1px solid var(--slate-200); padding: 12px 14px; border-radius: 14px 14px 14px 4px; margin: 10px 0; max-width: 92%; font-size: 14px; }
+.cop-kind { font-size: 11px; font-weight: 700; color: var(--teal-700); text-transform: uppercase; letter-spacing: .3px; margin-bottom: 4px; }
+.cop-note { font-size: 11.5px; color: var(--slate-500); font-style: italic; border-left: 2px solid #f59e0b; padding-left: 8px; margin: 8px 0 4px; }
+.cop-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.cop-inputbar { display: flex; gap: 8px; align-items: center; }
+.cop-inputbar .field { flex: 1; }

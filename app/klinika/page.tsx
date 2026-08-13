@@ -16,6 +16,11 @@ export default function KlinikaPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Vezetett 12 lépéses folyamat — menthető</div>
       </Link>
 
+      <Link className="card klink" href="/klinika/copilot">
+        <div className="klink-t">🤖 APN Copilot</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Célzott, forrásalapú döntéstámogatás</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/tudastar">
         <div className="klink-t">📚 Tudástár</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Irányelvek — 3 szinten, kereszt-linkekkel</div>
