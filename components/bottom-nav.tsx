@@ -2,15 +2,15 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Icon } from '@/components/icons'
 
 const TABS = [
-  { href: '/', label: 'Kezdőlap', icon: '🏠' },
-  { href: '/klinika', label: 'Klinika', icon: '🩺' },
-  { href: '/klinika/labor', label: 'Labor', icon: '🧪' },
-  { href: '/klinika/ekg', label: 'EKG', icon: '📈' },
-  { href: '/profil', label: 'Profil', icon: '👤' },
+  { href: '/', label: 'Kezdőlap', icon: 'home' },
+  { href: '/klinika', label: 'Klinika', icon: 'clinic' },
+  { href: '/klinika/labor', label: 'Labor', icon: 'flask' },
+  { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
+  { href: '/profil', label: 'Profil', icon: 'user' },
 ]
-
 const PROFILE_PATHS = ['/profil', '/kompetenciak', '/cpd', '/cms']
 
 export function BottomNav() {
@@ -28,8 +28,8 @@ export function BottomNav() {
         else active = path.startsWith(t.href)
         return (
           <Link key={t.href} href={t.href} className={active ? 'bn active' : 'bn'}>
-            <span className="bn-i">{t.icon}</span>
-            <span className="bn-l">{t.label}</span>
+            <span className="bn-i"><Icon name={t.icon} size={23} /></span>
+            <span>{t.label}</span>
           </Link>
         )
       })}
