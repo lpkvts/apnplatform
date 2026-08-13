@@ -21,6 +21,11 @@ export default function KlinikaPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Célzott, forrásalapú döntéstámogatás</div>
       </Link>
 
+      <Link className="card klink" href="/klinika/ekg">
+        <div className="klink-t">📈 EKG Tudástár</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>30 EKG-kép — görbe, kritériumok, APN-teendők</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/labor">
         <div className="klink-t">🧪 Labor Kisokos</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>49 laborérték — referencia, értelmezés, APN-teendők</div>

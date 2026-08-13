@@ -169,3 +169,11 @@ body {
 .prof-head { display: flex; align-items: center; gap: 12px; }
 .prof-av { width: 48px; height: 48px; border-radius: 14px; background: var(--teal); color: #fff; font-weight: 800; font-size: 20px; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 .prof-name { font-weight: 700; font-size: 16px; }
+
+/* ===== EKG ===== */
+.ecg-svg { width: 100%; height: 120px; display: block; border-radius: 8px; }
+.ekg-sev { font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 999px; white-space: nowrap; margin-right: 4px; }
+.ekg-sev.sev-low { background: #ecfdf5; color: #047857; }
+.ekg-sev.sev-mid { background: #fffbeb; color: #92400e; }
+.ekg-sev.sev-high { background: #fff1f2; color: #be123c; }
+.ekg-sev.sev-crit { background: #fef2f2; color: #b91c1c; }

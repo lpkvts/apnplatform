@@ -142,6 +142,7 @@ export function AssessmentFlow() {
       <textarea className="as-ta" rows={3} value={as.f.lab} onChange={(e) => setF('lab', e.target.value)}
         placeholder="pl. CRP 84, Hb 118…" /></>)
     if (S === 5) return (<><div className="as-step-t">EKG</div>
+      <Link className="btn ghost sm" href="/klinika/ekg">EKG Tudástár megnyitása</Link>
       <div className="as-lbl">EKG-lelet</div>
       <textarea className="as-ta" rows={3} value={as.f.ekg} onChange={(e) => setF('ekg', e.target.value)}
         placeholder="pl. sinus tachycardia 108/perc…" /></>)
