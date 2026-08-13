@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 
 async function signOut() {
   'use server'
@@ -16,20 +16,23 @@ export async function Nav() {
   } = await supabase.auth.getUser()
 
   return (
-    <nav className="nav">
-      <Link href="/">Kezdőlap</Link>
-      <Link href="/kompetenciak">Kompetenciák</Link>
-      <Link href="/cpd">CPD</Link>
+    <header className="topbar">
+      <Link href="/" className="brand">
+        <span className="brand-logo">APN</span>
+        <span className="brand-txt">Hungary Platform</span>
+      </Link>
       <span className="spacer" />
       {user ? (
         <form action={signOut}>
-          <button className="btn ghost" type="submit">
-            Kijelentkezés
+          <button className="btn ghost sm" type="submit">
+            Kilépés
           </button>
         </form>
       ) : (
-        <Link href="/login">Belépés</Link>
+        <Link href="/login" className="btn ghost sm">
+          Belépés
+        </Link>
       )}
-    </nav>
+    </header>
   )
 }
