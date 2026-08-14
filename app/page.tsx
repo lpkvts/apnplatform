@@ -19,15 +19,15 @@ export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const [profileRes, latestRes, notif] = await Promise.all([
+  const [profileRes, recentRes, notif] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>(),
-    supabase.from('guidelines').select('id, title, summary')
-      .eq('status', 'published').order('published_at', { ascending: false }).limit(1)
-      .maybeSingle<{ id: string; title: string; summary: string | null }>(),
+    supabase.from('assessments').select('id, domain, complaint, created_at')
+      .order('created_at', { ascending: false }).limit(5)
+      .returns<{ id: string; domain: string | null; complaint: string | null; created_at: string }[]>(),
     getNotifications(),
   ])
   const profile = profileRes.data
-  const latest = latestRes.data
+  const recent = recentRes.data ?? []
   const notifCount = notif.count
   const initial = (profile?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? 'A').toUpperCase()
 
@@ -52,14 +52,6 @@ export default async function DashboardPage() {
         <span>Keresés a platformon…</span>
       </Link>
 
-      {latest && (
-        <Link className="update-card" href={`/klinika/tudastar/${latest.id}`}>
-          <div className="update-k">Legfrissebb szakmai tartalom</div>
-          <div className="update-t">{latest.title}</div>
-          {latest.summary && <div className="update-s">{latest.summary}</div>}
-          <span className="update-go">Megnyitás →</span>
-        </Link>
-      )}
 
       <div className="sec-h">
         <span className="sec-t">Gyors elérés</span>
@@ -74,6 +66,29 @@ export default async function DashboardPage() {
         ))}
       </div>
 
+      <div className="sec-h">
+        <span className="sec-t">Legutóbbi tevékenységek</span>
+        <Link className="sec-l" href="/klinika/elozmenyek">Összes →</Link>
+      </div>
+      {recent.length === 0 ? (
+        <div className="card">
+          <p style={{ margin: 0 }}>Még nincs mentett tevékenységed.</p>
+          <p className="sub" style={{ marginBottom: 0 }}>
+            Kezdj egy <Link href="/klinika/ertekeles">Új betegértékelést</Link>.
+          </p>
+        </div>
+      ) : (
+        recent.map((a) => (
+          <Link key={a.id} className="sh-row" href="/klinika/elozmenyek">
+            <span className="qtile-i" style={{ width: 38, height: 38, marginRight: 4 }}><Icon name="assessment" size={20} /></span>
+            <span className="sh-row-main">
+              <span className="sh-row-name">{a.domain || 'Betegértékelés'}</span>
+              <span className="sh-row-sub">{new Date(a.created_at).toLocaleDateString('hu-HU')}{a.complaint ? ` · ${a.complaint}` : ''}</span>
+            </span>
+            <span className="sh-chev">›</span>
+          </Link>
+        ))
+      )}
     </>
   )
 }
