@@ -37,16 +37,6 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
     items.push({ id: n.id, icon: 'bell', title: n.title, body: n.body ?? undefined, stored: true })
   }
 
-  // 2) CPD-hiány
-  const year = new Date().getFullYear()
-  const { data: entries } = await supabase.from('cpd_entries').select('points').eq('activity_year', year).returns<{ points: number }[]>()
-  const { data: goal } = await supabase.from('cpd_goals').select('target_points').eq('year', year).maybeSingle<{ target_points: number }>()
-  const total = (entries ?? []).reduce((s, e) => s + Number(e.points), 0)
-  const target = goal?.target_points ?? 50
-  if (target - total > 0) {
-    items.push({ id: 'cpd', icon: 'grad', title: `CPD: még ${target - total} pont`, body: `Az éves célod ${target} pont (${total} teljesítve).`, href: '/cpd' })
-  }
-
   // 3) Új irányelvek (utolsó 14 nap)
   const { data: guides } = await supabase
     .from('guidelines').select('id, title, published_at')

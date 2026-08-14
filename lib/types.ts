@@ -8,6 +8,12 @@ export interface Profile {
   specialty: string | null
   role: Role
   registration_no: string | null
+  apn_type: string | null
+  title: string | null
+  workplace: string | null
+  qualification: string | null
+  qual_year: number | null
+  phone: string | null
 }
 
 export interface Competency {

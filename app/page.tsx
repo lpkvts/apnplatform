@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import type { Profile, CpdEntry } from '@/lib/types'
-import { Icon, CpdRing } from '@/components/icons'
+import type { Profile } from '@/lib/types'
+import { Icon } from '@/components/icons'
 import { getNotifications } from '@/lib/notifications'
 
 const TILES = [
@@ -19,14 +19,6 @@ export default async function DashboardPage() {
 
   const { data: profile } = await supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>()
 
-  const year = new Date().getFullYear()
-  const { data: entries } = await supabase
-    .from('cpd_entries').select('points').eq('activity_year', year).returns<Pick<CpdEntry, 'points'>[]>()
-  const { data: goal } = await supabase
-    .from('cpd_goals').select('target_points').eq('year', year).maybeSingle<{ target_points: number }>()
-  const total = (entries ?? []).reduce((s, e) => s + Number(e.points), 0)
-  const target = goal?.target_points ?? 50
-  const remaining = Math.max(0, target - total)
 
   const { data: latest } = await supabase
     .from('guidelines').select('id, title, summary')
@@ -74,19 +66,6 @@ export default async function DashboardPage() {
         ))}
       </div>
 
-      <div className="sec-h">
-        <span className="sec-t">Szakmai fejlődésem</span>
-        <Link className="sec-l" href="/cpd">Részletek →</Link>
-      </div>
-      <div className="card cpd-card">
-        <CpdRing total={total} target={target} />
-        <div className="cpd-txt">
-          <div className="big">{remaining > 0 ? `Már csak ${remaining} pont` : 'Éves cél teljesítve! 🎉'}</div>
-          <p className="sub" style={{ margin: '4px 0 0' }}>
-            {remaining > 0 ? `és eléred az éves célod (${target} pont).` : `Idén ${total} CPD-pontot gyűjtöttél.`}
-          </p>
-        </div>
-      </div>
     </>
   )
 }
