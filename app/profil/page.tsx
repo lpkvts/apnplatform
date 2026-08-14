@@ -66,6 +66,11 @@ export default async function ProfilPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Kompetenciaszintek és fejlődési terv</div>
       </Link>
 
+      <Link className="card klink" href="/career">
+        <div className="klink-t">💼 APN Career</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Állások, képzések, konferenciák, pályázatok</div>
+      </Link>
+
       {isStaff(role) && (
         <>
           <div className="sec-h"><span className="sec-t">Adminisztráció</span></div>

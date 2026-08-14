@@ -11,21 +11,23 @@ const TILES = [
   { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
   { href: '/klinika/copilot', label: 'APN Copilot', icon: 'copilot' },
   { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
+  { href: '/career', label: 'APN Career', icon: 'grad' },
 ]
 
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: profile } = await supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>()
-
-
-  const { data: latest } = await supabase
-    .from('guidelines').select('id, title, summary')
-    .eq('status', 'published').order('published_at', { ascending: false }).limit(1)
-    .maybeSingle<{ id: string; title: string; summary: string | null }>()
-
-  const { count: notifCount } = await getNotifications()
+  const [profileRes, latestRes, notif] = await Promise.all([
+    supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>(),
+    supabase.from('guidelines').select('id, title, summary')
+      .eq('status', 'published').order('published_at', { ascending: false }).limit(1)
+      .maybeSingle<{ id: string; title: string; summary: string | null }>(),
+    getNotifications(),
+  ])
+  const profile = profileRes.data
+  const latest = latestRes.data
+  const notifCount = notif.count
   const initial = (profile?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? 'A').toUpperCase()
 
   return (
