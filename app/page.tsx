@@ -11,6 +11,7 @@ const TILES = [
   { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
   { href: '/klinika/copilot', label: 'APN Copilot', icon: 'copilot' },
   { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
+  { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },
   { href: '/career', label: 'APN Career', icon: 'grad' },
 ]
 

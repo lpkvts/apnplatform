@@ -16,7 +16,8 @@ interface Group { key: string; label: string; hits: Hit[] }
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 const LIMIT = 8
 
-export function GlobalSearch({ guidelines, career }: { guidelines: Gl[]; career: CareerRow[] }) {
+interface DiseaseRow { id: string; name: string; aliases: string[] | null; abbrev: string | null; specialty: string | null }
+export function GlobalSearch({ guidelines, career, diseases }: { guidelines: Gl[]; career: CareerRow[]; diseases: DiseaseRow[] }) {
   const [q, setQ] = useState('')
   const nq = norm(q.trim())
   const groups: Group[] = []
@@ -27,6 +28,12 @@ export function GlobalSearch({ guidelines, career }: { guidelines: Gl[]; career:
       .filter((c) => norm(`${c.name} ${c.guidelineKw.join(' ')}`).includes(nq))
       .slice(0, LIMIT).map((c) => ({ id: c.id, title: c.name, sub: 'Klinikai kontextus', href: `/kontextus/${c.id}` }))
     if (ctxHits.length) groups.push({ key: 'ctx', label: '🧠 Klinikai kontextus', hits: ctxHits })
+
+    // Betegségtár
+    const dis = diseases
+      .filter((d) => norm(`${d.name} ${(d.aliases ?? []).join(' ')} ${d.abbrev ?? ''} ${d.specialty ?? ''}`).includes(nq))
+      .slice(0, LIMIT).map((d) => ({ id: d.id, title: d.name, sub: d.specialty ?? undefined, href: `/betegsegtar/${d.id}` }))
+    if (dis.length) groups.push({ key: 'dis', label: '🩺 Betegségtár', hits: dis })
 
     // Tudástár
     const kb = guidelines

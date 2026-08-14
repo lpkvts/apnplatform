@@ -11,6 +11,11 @@ export default function KlinikaPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Egy helyzet — minden kapcsolódó eszköz, labor, EKG, irányelv</div>
       </Link>
 
+      <Link className="card klink" href="/betegsegtar">
+        <div className="klink-t">🩺 Betegségtár</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>APN-fókuszú betegségoldalak, kereszt-linkekkel</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/tesztek">
         <div className="klink-t">🧮 Klinikai tesztek és skálák</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>56 skála — pontozás, rizikósáv, APN-teendők</div>
