@@ -46,6 +46,11 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      <Link href="/kereses" className="search-box">
+        <Icon name="search" size={18} />
+        <span>Keresés a platformon…</span>
+      </Link>
+
       {latest && (
         <Link className="update-card" href={`/klinika/tudastar/${latest.id}`}>
           <div className="update-k">Legfrissebb szakmai tartalom</div>

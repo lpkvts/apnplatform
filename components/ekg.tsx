@@ -40,7 +40,7 @@ type Mode = 'atlas' | 'practice' | 'exam'
 interface Prac { qid: string; opts: string[]; picked: string | null }
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
-export function Ekg() {
+export function Ekg({ initialOpen }: { initialOpen?: string }) {
   const [mode, setMode] = useState<Mode>('atlas')
   const [prac, setPrac] = useState<Prac | null>(null)
   const [exam, setExam] = useState<Exam | null>(null)
@@ -88,7 +88,7 @@ export function Ekg() {
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">EKG Tudástár</h1>
       <ModeBar />
-      {mode === 'atlas' && <Atlas />}
+      {mode === 'atlas' && <Atlas initialOpen={initialOpen} />}
       {mode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}
       {mode === 'exam' && <ExamView exam={exam} best={best} onStart={startExam} onAnswer={examAnswer} />}
     </>
@@ -166,10 +166,10 @@ function ExamView({ exam, best, onStart, onAnswer }: { exam: Exam | null; best: 
   )
 }
 
-function Atlas() {
+function Atlas({ initialOpen }: { initialOpen?: string }) {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
   const open = openId ? ECG.find((e) => e.id === openId) ?? null : null
   if (open) return <EcgDetail e={open} onBack={() => setOpenId(null)} />
   const nq = norm(q.trim())

@@ -11,7 +11,7 @@ const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u
 const RISK_CLS: Record<string, string> = { low: 'r-low', mid: 'r-mid', high: 'r-high', crit: 'r-crit' }
 const SEV_CLS: Record<string, string> = { info: 'sev-low', 'figyelendő': 'sev-mid', 'sürgős': 'sev-crit' }
 
-export function Labor({ guidelines = [] }: { guidelines?: Gl[] }) {
+export function Labor({ guidelines = [], initialOpen }: { guidelines?: Gl[]; initialOpen?: string }) {
   const [mode, setMode] = useState<'kisokos' | 'panel'>('kisokos')
   return (
     <>
@@ -21,7 +21,7 @@ export function Labor({ guidelines = [] }: { guidelines?: Gl[] }) {
         <button className={`seg ${mode === 'kisokos' ? 'on' : ''}`} onClick={() => setMode('kisokos')}>Kisokos</button>
         <button className={`seg ${mode === 'panel' ? 'on' : ''}`} onClick={() => setMode('panel')}>Panel értékelés</button>
       </div>
-      {mode === 'kisokos' ? <Kisokos /> : <Panel guidelines={guidelines} />}
+      {mode === 'kisokos' ? <Kisokos initialOpen={initialOpen} /> : <Panel guidelines={guidelines} />}
     </>
   )
 }
@@ -140,10 +140,10 @@ function Panel({ guidelines }: { guidelines: Gl[] }) {
 }
 
 /* ---------- Kisokos (egyértékes referencia) ---------- */
-function Kisokos() {
+function Kisokos({ initialOpen }: { initialOpen?: string }) {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
-  const [openId, setOpenId] = useState<string | null>(null)
+  const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
   const [vals, setVals] = useState<Record<string, string>>({})
 
   const open = openId ? LAB.find((l) => l.id === openId) ?? null : null
