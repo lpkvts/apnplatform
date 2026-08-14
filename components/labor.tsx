@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { LAB, LAB_CATS, LAB_REF_EXTRA, type LabItem } from '@/lib/labor/data'
 import { interpret, STATUS_LABEL, statusRisk } from '@/lib/labor/engine'
 import { PANELS, PATTERNS, evaluatePanel, type Pattern } from '@/lib/labor/patterns'
+import { SafetyNote } from '@/components/safety'
 
 interface Gl { id: string; title: string; summary: string | null }
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -134,7 +135,7 @@ function Panel({ guidelines }: { guidelines: Gl[] }) {
           )}
         </>
       )}
-      <p className="sh-disc">Döntéstámogató mintázat-értelmezés, nem automatikus diagnózis; a konkrét értékek a teljes klinikai kép alapján értékelendők.</p>
+      <SafetyNote />
     </>
   )
 }

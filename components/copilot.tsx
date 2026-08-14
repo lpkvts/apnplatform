@@ -2,9 +2,10 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { SafetyNote, UrgencyBanner, StructuredAnswer, parseSections } from '@/components/safety'
 
 interface Src { id: string; title: string }
-interface Msg { role: 'user' | 'ai'; text: string; sources?: Src[]; error?: boolean }
+interface Msg { role: 'user' | 'ai'; text: string; sources?: Src[]; error?: boolean; sections?: Record<string, string>; urgent?: boolean }
 
 const MODES = [
   { id: 'magyarazd', label: 'Magyarázd el', ph: 'Milyen fogalmat magyarázzak el egyszerűen? (pl. mi az a NEWS2)', hint: 'Szakmai fogalom közérthető magyarázata.' },
@@ -37,7 +38,10 @@ export function Copilot({ initialQuery }: { initialQuery?: string }) {
       if (!res.ok) {
         setMsgs((m) => [...m, { role: 'ai', text: data.error || 'Hiba történt.', error: true }])
       } else {
-        setMsgs((m) => [...m, { role: 'ai', text: data.text || '(üres válasz)', sources: data.sources ?? [] }])
+        const text = data.text || '(üres válasz)'
+        const sections = parseSections(text) ?? undefined
+        const urgent = /sürg[őo]s|azonnal|életvesz/i.test(text)
+        setMsgs((m) => [...m, { role: 'ai', text, sections, urgent, sources: data.sources ?? [] }])
       }
     } catch {
       setMsgs((m) => [...m, { role: 'ai', text: 'Hálózati hiba. Próbáld újra.', error: true }])
@@ -69,7 +73,10 @@ export function Copilot({ initialQuery }: { initialQuery?: string }) {
             <div className="cop-user" key={i}>{m.text}</div>
           ) : (
             <div className={`cop-ai ${m.error ? 'cop-err' : ''}`} key={i}>
-              {m.text.split('\n').map((p, j) => <p key={j} style={{ margin: '4px 0' }}>{p}</p>)}
+              {m.urgent && !m.error && <UrgencyBanner />}
+              {m.sections
+                ? <StructuredAnswer sections={m.sections} />
+                : m.text.split('\n').map((p, j) => <p key={j} style={{ margin: '4px 0' }}>{p}</p>)}
               {m.sources && m.sources.length > 0 && (
                 <div className="cop-acts">
                   {m.sources.map((s) => (
@@ -90,7 +97,7 @@ export function Copilot({ initialQuery }: { initialQuery?: string }) {
           onKeyDown={(e) => { if (e.key === 'Enter') send() }} />
         <button className="btn" onClick={send} disabled={loading}>{loading ? '…' : 'Küldés'}</button>
       </div>
-      <p className="sh-disc">Döntéstámogatás — nem helyettesíti a klinikai megítélést, és nem állít fel diagnózist. Ne adj meg betegazonosító adatot.</p>
+      <SafetyNote />
     </>
   )
 }

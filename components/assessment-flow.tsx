@@ -8,6 +8,7 @@ import {
 import { assessInit, vitalFlag, assessRisk, assessSummary, type AssessState } from '@/lib/assessment/logic'
 import { TESTS } from '@/lib/scores/data'
 import { saveAssessment } from '@/app/klinika/actions'
+import { SafetyNote } from '@/components/safety'
 
 export function AssessmentFlow() {
   const [as, setAs] = useState<AssessState>(assessInit())
@@ -202,6 +203,7 @@ export function AssessmentFlow() {
             <ul><li>a vitális paraméterek romlanak vagy kritikus tartományban vannak,</li>
               <li>új vagy súlyosbodó tudatzavar, mellkasi fájdalom, fokális neurológiai tünet,</li>
               <li>a panasz a kompetencia- vagy protokollhatáron túlmutat.</li></ul></div>
+          <SafetyNote />
         </>
       )
     }

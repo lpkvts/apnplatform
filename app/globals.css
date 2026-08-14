@@ -276,3 +276,17 @@ body {
 /* ===== Globális kereső belépő ===== */
 .search-box { display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 13px 15px; color: var(--brand-3); text-decoration: none; margin-bottom: 16px; font-size: 15px; }
 .search-box:hover { border-color: var(--brand-3); }
+
+/* ===== Healthcare Safety Layer ===== */
+.safety-note { background: var(--brand-tint); border: 1px solid #d8e6df; color: var(--slate-700); border-radius: 12px; padding: 11px 13px; font-size: 12px; line-height: 1.5; margin: 12px 0; }
+.safety-note b { color: var(--brand); }
+.urgency-flag { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; border-radius: 12px; padding: 10px 13px; font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+.sl-wrap { display: flex; flex-direction: column; gap: 8px; }
+.sl-block { border-left: 3px solid var(--line); padding: 6px 0 6px 11px; }
+.sl-label { display: inline-block; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px; margin-bottom: 3px; }
+.sl-body { font-size: 14px; color: var(--ink); white-space: pre-wrap; }
+.sl-fact { border-left-color: var(--brand-2); } .sl-fact .sl-label { color: var(--brand-2); }
+.sl-source { border-left-color: var(--brand); } .sl-source .sl-label { color: var(--brand); }
+.sl-interp { border-left-color: #6366f1; } .sl-interp .sl-label { color: #4f46e5; }
+.sl-decide { border-left-color: #0d9488; } .sl-decide .sl-label { color: #0f766e; }
+.sl-uncertain { border-left-color: #f59e0b; } .sl-uncertain .sl-label { color: #92400e; }
