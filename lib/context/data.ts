@@ -1,0 +1,78 @@
+// Context Engine — kurált klinikai kontextusok, modulközi kapcsolatokkal.
+export interface ClinicalContext {
+  id: string
+  name: string
+  apnFocus: string
+  scoreIds: string[]
+  labIds: string[]
+  ekgIds: string[]
+  guidelineKw: string[]
+  careerKw?: string[]
+}
+
+export const CONTEXTS: ClinicalContext[] = [
+  { id: 'copd', name: 'COPD / krónikus légúti betegség',
+    apnFocus: 'Inhalációs technika, adherencia, exacerbáció felismerése; oxigén óvatosan.',
+    scoreIds: ['cat', 'mmrc', 'curb65', 'news2'], labIds: ['crp', 'wbc', 'ph', 'lact'], ekgIds: [],
+    guidelineKw: ['copd', 'obstruktiv'], careerKw: ['tüdő', 'légz'] },
+  { id: 'szivelegtelenseg', name: 'Szívelégtelenség',
+    apnFocus: 'Testsúly/folyadékstátusz követése, terápiahűség, korai dekompenzáció jelei.',
+    scoreIds: ['news2'], labIds: ['bnp', 'krea', 'na', 'k'], ekgIds: ['afib', 'lbbb'],
+    guidelineKw: ['szivelegtelen', 'szív'], careerKw: ['kardio'] },
+  { id: 'pneumonia', name: 'Pneumónia / alsó légúti infekció',
+    apnFocus: 'Súlyosság (CURB-65), szepszis-jelek, góc és oxigenizáció.',
+    scoreIds: ['curb65', 'news2', 'qsofa'], labIds: ['crp', 'wbc', 'pct'], ekgIds: [],
+    guidelineKw: ['pneumonia', 'fertoz', 'tudogyullad'] },
+  { id: 'stroke', name: 'Stroke / TIA',
+    apnFocus: 'Időablak, FAST, vércukor, pitvarfibrilláció keresése.',
+    scoreIds: ['fast', 'cincinnati', 'abcd2', 'gcs', 'nihss'], labIds: ['gluk'], ekgIds: ['afib'],
+    guidelineKw: ['stroke', 'tia', 'neurolog', 'agyi'] },
+  { id: 'szepszis', name: 'Szepszis / súlyos infekció',
+    apnFocus: 'qSOFA, laktát, korai felismerés és protokoll szerinti ellátás.',
+    scoreIds: ['qsofa', 'news2', 'sofa'], labIds: ['crp', 'wbc', 'pct', 'lact'], ekgIds: [],
+    guidelineKw: ['fertoz', 'szepszis'] },
+  { id: 'pitvarfibrillacio', name: 'Pitvarfibrilláció',
+    apnFocus: 'Antikoagulálás mérlegelése (CHA₂DS₂-VASc/HAS-BLED), frekvencia, pajzsmirigy.',
+    scoreIds: ['cha2ds2', 'hasbled'], labIds: ['tsh', 'k', 'ft4'], ekgIds: ['afib', 'aflutter'],
+    guidelineKw: ['pitvarfibrill', 'antikoagul', 'ritmus'] },
+  { id: 'acs', name: 'Mellkasi fájdalom / ACS',
+    apnFocus: 'Azonnali EKG, sorozat-troponin, HEART/TIMI; sürgős kardiológia gyanú esetén.',
+    scoreIds: ['heart', 'timi', 'grace'], labIds: ['trop', 'ck'], ekgIds: ['stemi', 'nstemi', 'ischaemia'],
+    guidelineKw: ['sziv', 'kardio', 'infarkt'], careerKw: ['kardio', 'sürgősségi'] },
+  { id: 'tudoembolia', name: 'Tüdőembólia / MVT',
+    apnFocus: 'Klinikai valószínűség (Wells/Geneva), D-dimer, hypoxia, sürgősség.',
+    scoreIds: ['wellspe', 'wellsdvt', 'geneva'], labIds: ['ddimer'], ekgIds: ['pe'],
+    guidelineKw: ['embolia', 'thrombo'] },
+  { id: 'diabetesz', name: 'Diabétesz / hyperglykaemia',
+    apnFocus: 'Vércukor, keton (DKA!), HbA1c, szövődmények szűrése.',
+    scoreIds: ['findrisc', 'bmi'], labIds: ['gluk', 'hba1c', 'k', 'uket', 'ph'], ekgIds: [],
+    guidelineKw: ['diabet', 'cukor', 'retinopath'] },
+  { id: 'vashiany', name: 'Vashiányos anaemia',
+    apnFocus: 'Mikrocitás anaemia, ferritin, vérzésforrás keresése.',
+    scoreIds: [], labIds: ['hb', 'mcv', 'ferr', 'tsat'], ekgIds: [],
+    guidelineKw: ['anaemia', 'vashiany'] },
+  { id: 'vesekarosodas', name: 'Vesekárosodás (AKI / CKD)',
+    apnFocus: 'Kreatinin/eGFR, kálium (EKG!), nefrotoxikus szerek, folyadék.',
+    scoreIds: [], labIds: ['krea', 'urea', 'egfr', 'k', 'na'], ekgIds: ['hyperk'],
+    guidelineKw: ['vese'] },
+  { id: 'eses_geriatria', name: 'Esés / geriátriai rizikó',
+    apnFocus: 'Esésrizikó, mobilitás, kogníció, D-vitamin/kalcium.',
+    scoreIds: ['morse', 'hendrich', 'tug', 'cfs', 'minicog'], labIds: ['vitd', 'ca'], ekgIds: [],
+    guidelineKw: ['geriatr', 'eses', 'frailty'], careerKw: ['geriátria'] },
+  { id: 'taplaltsag', name: 'Tápláltság / malnutríció',
+    apnFocus: 'Szűrés (MUST/NRS-2002/MNA-SF), fogyás, hiányállapotok.',
+    scoreIds: ['must', 'nrs2002', 'mnasf', 'bmi'], labIds: ['b12', 'folsav', 'ferr'], ekgIds: [],
+    guidelineKw: ['taplal', 'malnutri'] },
+  { id: 'decubitus', name: 'Bőr / decubitus rizikó',
+    apnFocus: 'Nyomási fekély rizikó (Braden/Norton/Waterlow), bőrintegritás.',
+    scoreIds: ['braden', 'norton', 'waterlow'], labIds: [], ekgIds: [],
+    guidelineKw: ['decubitus', 'felfekves', 'seb'] },
+  { id: 'mentalis', name: 'Hangulat / mentális állapot',
+    apnFocus: 'Depresszió/szorongás szűrés, alkohol, pajzsmirigy kizárása.',
+    scoreIds: ['phq9', 'gad7', 'audit', 'cage', 'hads'], labIds: ['tsh'], ekgIds: [],
+    guidelineKw: ['depresszio', 'szorong', 'mental'] },
+  { id: 'elektrolit', name: 'Elektrolit-zavar',
+    apnFocus: 'Na/K/Ca/Mg eltérések, EKG-hatás, korrekció óvatossága.',
+    scoreIds: [], labIds: ['na', 'k', 'ca', 'mg', 'phos'], ekgIds: ['hyperk', 'hypok', 'hyperca', 'hypoca'],
+    guidelineKw: [] },
+]

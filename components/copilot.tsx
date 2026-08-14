@@ -14,9 +14,9 @@ const MODES = [
   { id: 'forras', label: 'Mutasd a forrást', ph: 'Mihez keressek hivatalos forrást?', hint: 'Minden állításhoz a hivatalos, jóváhagyott forrás.' },
 ]
 
-export function Copilot() {
+export function Copilot({ initialQuery }: { initialQuery?: string }) {
   const [mode, setMode] = useState<string | null>(null)
-  const [input, setInput] = useState('')
+  const [input, setInput] = useState(initialQuery ?? '')
   const [msgs, setMsgs] = useState<Msg[]>([])
   const [loading, setLoading] = useState(false)
   const md = MODES.find((m) => m.id === mode)

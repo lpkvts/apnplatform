@@ -6,6 +6,7 @@ import { TESTS } from '@/lib/scores/data'
 import { LAB } from '@/lib/labor/data'
 import { ECG } from '@/lib/ekg/data'
 import { CAT_LABEL } from '@/components/career'
+import { CONTEXTS } from '@/lib/context/data'
 
 interface Gl { id: string; title: string; summary: string | null; specialty: string[] | null }
 interface CareerRow { id: string; title: string; category: string; tags: string[] | null; org: string | null }
@@ -21,6 +22,12 @@ export function GlobalSearch({ guidelines, career }: { guidelines: Gl[]; career:
   const groups: Group[] = []
 
   if (nq.length >= 2) {
+    // Klinikai kontextus
+    const ctxHits = CONTEXTS
+      .filter((c) => norm(`${c.name} ${c.guidelineKw.join(' ')}`).includes(nq))
+      .slice(0, LIMIT).map((c) => ({ id: c.id, title: c.name, sub: 'Klinikai kontextus', href: `/kontextus/${c.id}` }))
+    if (ctxHits.length) groups.push({ key: 'ctx', label: '🧠 Klinikai kontextus', hits: ctxHits })
+
     // Tudástár
     const kb = guidelines
       .filter((g) => norm(`${g.title} ${g.summary ?? ''} ${(g.specialty ?? []).join(' ')}`).includes(nq))

@@ -6,6 +6,11 @@ export default function KlinikaPage() {
       <h1 className="h1">Klinikai mag</h1>
       <p className="sub">Pontozók, betegértékelés és előzmények egy helyen.</p>
 
+      <Link className="card klink" href="/kontextus">
+        <div className="klink-t">🧠 Klinikai kontextus</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Egy helyzet — minden kapcsolódó eszköz, labor, EKG, irányelv</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/tesztek">
         <div className="klink-t">🧮 Klinikai tesztek és skálák</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>56 skála — pontozás, rizikósáv, APN-teendők</div>
