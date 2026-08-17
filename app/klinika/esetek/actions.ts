@@ -44,26 +44,3 @@ export async function setCaseStatus(formData: FormData) {
   await supabase.from('clinical_cases').update({ status }).eq('id', id).eq('owner_id', user.id)
   revalidatePath(`/klinika/esetek/${id}`); revalidatePath('/klinika/esetek')
 }
-
-export async function saveCaseClinical(_prev: CaseState, formData: FormData): Promise<CaseState> {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { error: 'Nincs bejelentkezve.' }
-  const id = String(formData.get('id') ?? '')
-  const val = (k: string) => { const v = String(formData.get(k) ?? '').trim(); return v === '' ? null : v }
-
-  const vitals: Record<string, string> = {}
-  for (const k of ['rr', 'spo2', 'sbp', 'hr', 'temp', 'avpu']) {
-    const v = val(k)
-    if (v) vitals[k] = v
-  }
-  const { data, error } = await supabase.from('clinical_cases').update({
-    vitals,
-    disease_id: val('disease_id'),
-    context_id: val('context_id'),
-  }).eq('id', id).eq('owner_id', user.id).select('id')
-  if (error) return { error: `Adatbázis-hiba: ${error.message}` }
-  if (!data || data.length === 0) return { error: 'A mentés 0 sort érintett (jogosultság?).' }
-  revalidatePath(`/klinika/esetek/${id}`); revalidatePath('/klinika/esetek')
-  return { saved: true }
-}

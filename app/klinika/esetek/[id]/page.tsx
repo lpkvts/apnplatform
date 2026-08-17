@@ -2,18 +2,12 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { CaseCoreForm } from '@/components/case-core-form'
-import { CaseClinicalForm } from '@/components/case-clinical-form'
-import { CONTEXTS } from '@/lib/context/data'
 import { setCaseStatus } from '../actions'
 
 export const dynamic = 'force-dynamic'
 
 const STATUS_LABEL: Record<string, string> = { draft: 'Folyamatban', active: 'Aktív', completed: 'Lezárt', followup: 'Follow-up', archived: 'Archivált' }
-interface Vitals { rr?: string; spo2?: string; sbp?: string; hr?: string; temp?: string; avpu?: string }
-interface CaseRow {
-  id: string; case_no: number; title: string; status: string; complaint: string | null; background: string | null
-  created_at: string; vitals: Vitals | null; disease_id: string | null; context_id: string | null
-}
+interface CaseRow { id: string; case_no: number; title: string; status: string; complaint: string | null; background: string | null; created_at: string }
 
 function StatusBtn({ id, status, label }: { id: string; status: string; label: string }) {
   return (
@@ -27,17 +21,9 @@ function StatusBtn({ id, status, label }: { id: string; status: string; label: s
 export default async function CaseDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const supabase = await createClient()
-  const [caseRes, disRes] = await Promise.all([
-    supabase.from('clinical_cases')
-      .select('id, case_no, title, status, complaint, background, created_at, vitals, disease_id, context_id')
-      .eq('id', id).maybeSingle<CaseRow>(),
-    supabase.from('diseases').select('id, name').eq('status', 'published').order('name').returns<{ id: string; name: string }[]>(),
-  ])
-  const c = caseRes.data
+  const { data: c } = await supabase.from('clinical_cases')
+    .select('id, case_no, title, status, complaint, background, created_at').eq('id', id).maybeSingle<CaseRow>()
   if (!c) notFound()
-  const diseases = disRes.data ?? []
-  const disease = c.disease_id ? diseases.find((d) => d.id === c.disease_id) : null
-  const ctx = c.context_id ? CONTEXTS.find((x) => x.id === c.context_id) : null
 
   return (
     <>
@@ -48,21 +34,7 @@ export default async function CaseDetail({ params }: { params: Promise<{ id: str
       </div>
       <p className="sub">Létrehozva: {new Date(c.created_at).toLocaleDateString('hu-HU')}</p>
 
-      <div className="sec-h"><span className="sec-t">Alapadatok</span></div>
       <CaseCoreForm c={c} />
-
-      <div className="sec-h"><span className="sec-t">Klinikai adatok</span></div>
-      <CaseClinicalForm c={c} diseases={diseases} />
-
-      {(disease || ctx) && (
-        <>
-          <div className="sec-h"><span className="sec-t">Kapcsolódó modulok</span></div>
-          {disease && <Link className="sh-row" href={`/betegsegtar/${disease.id}`}>
-            <span className="sh-row-main"><span className="sh-row-name">🩺 {disease.name}</span><span className="sh-row-sub">Betegségtár</span></span><span className="sh-chev">›</span></Link>}
-          {ctx && <Link className="sh-row" href={`/kontextus/${ctx.id}`}>
-            <span className="sh-row-main"><span className="sh-row-name">🧠 {ctx.name}</span><span className="sh-row-sub">Klinikai kontextus — ajánlott eszközök</span></span><span className="sh-chev">›</span></Link>}
-        </>
-      )}
 
       <div className="sec-h"><span className="sec-t">Állapot</span></div>
       <div className="cop-acts">
@@ -73,7 +45,7 @@ export default async function CaseDetail({ params }: { params: Promise<{ id: str
       </div>
 
       <div className="card" style={{ marginTop: 12 }}>
-        <p className="sub" style={{ margin: 0 }}>Következő lépések ide épülnek: Labor/EKG/Score az esethez, Clinical Summary, SBAR, Follow-up.</p>
+        <p className="sub" style={{ margin: 0 }}>A további szakaszok (vitálisok, betegség/kontextus, Labor/EKG/Score az esethez, Clinical Summary, SBAR, Follow-up) a következő lépésekben épülnek be ide.</p>
       </div>
     </>
   )
