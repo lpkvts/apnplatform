@@ -1,10 +1,10 @@
 -- APN Hungary Platform — Labor Knowledge Base (forrásalapú, verziózott)
+-- Idempotens; has_role helyett inline profiles.role ellenőrzés.
 
--- 1) Források
-create table public.lab_sources (
+create table if not exists public.lab_sources (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  type text,                       -- pl. IFCC/EFLM/CLSI/WHO/guideline/helyi labor
+  type text,
   url text,
   publication_date date,
   version text,
@@ -14,8 +14,7 @@ create table public.lab_sources (
   created_at timestamptz not null default now()
 );
 
--- 2) Laborparaméterek
-create table public.lab_parameters (
+create table if not exists public.lab_parameters (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,
   name_hu text not null,
@@ -50,13 +49,13 @@ create table public.lab_parameters (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
-create index idx_labparam_cat on public.lab_parameters(category);
-create index idx_labparam_review on public.lab_parameters(review_status);
+create index if not exists idx_labparam_cat on public.lab_parameters(category);
+create index if not exists idx_labparam_review on public.lab_parameters(review_status);
+drop trigger if exists trg_labparam_updated on public.lab_parameters;
 create trigger trg_labparam_updated before update on public.lab_parameters
   for each row execute function public.set_updated_at();
 
--- 3) Verziók (archívum)
-create table public.lab_parameter_versions (
+create table if not exists public.lab_parameter_versions (
   id uuid primary key default gen_random_uuid(),
   parameter_id uuid not null references public.lab_parameters(id) on delete cascade,
   version int not null default 1,
@@ -66,10 +65,9 @@ create table public.lab_parameter_versions (
   valid_to date,
   created_at timestamptz not null default now()
 );
-create index idx_labver_param on public.lab_parameter_versions(parameter_id);
+create index if not exists idx_labver_param on public.lab_parameter_versions(parameter_id);
 
--- 4) Változásnapló
-create table public.lab_change_log (
+create table if not exists public.lab_change_log (
   id uuid primary key default gen_random_uuid(),
   parameter_id uuid references public.lab_parameters(id) on delete set null,
   action text not null,
@@ -81,31 +79,37 @@ create table public.lab_change_log (
   reason text,
   created_at timestamptz not null default now()
 );
-create index idx_labchange_param on public.lab_change_log(parameter_id, created_at desc);
+create index if not exists idx_labchange_param on public.lab_change_log(parameter_id, created_at desc);
 
--- RLS: referenciaadat (nem betegadat) — bejelentkezettnek olvasható, staff kezeli
+-- RLS
 alter table public.lab_sources enable row level security;
+drop policy if exists "labsrc: olvasás" on public.lab_sources;
 create policy "labsrc: olvasás" on public.lab_sources for select using (true);
+drop policy if exists "labsrc: staff kezelés" on public.lab_sources;
 create policy "labsrc: staff kezelés" on public.lab_sources for all
-  using (has_role(array['szerkeszto','lektor','admin'])) with check (has_role(array['szerkeszto','lektor','admin']));
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 
 alter table public.lab_parameters enable row level security;
+drop policy if exists "labparam: olvasás" on public.lab_parameters;
 create policy "labparam: olvasás" on public.lab_parameters for select using (true);
+drop policy if exists "labparam: staff kezelés" on public.lab_parameters;
 create policy "labparam: staff kezelés" on public.lab_parameters for all
-  using (has_role(array['szerkeszto','lektor','admin'])) with check (has_role(array['szerkeszto','lektor','admin']));
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 
 alter table public.lab_parameter_versions enable row level security;
+drop policy if exists "labver: olvasás" on public.lab_parameter_versions;
 create policy "labver: olvasás" on public.lab_parameter_versions for select using (true);
+drop policy if exists "labver: staff kezelés" on public.lab_parameter_versions;
 create policy "labver: staff kezelés" on public.lab_parameter_versions for all
-  using (has_role(array['szerkeszto','lektor','admin'])) with check (has_role(array['szerkeszto','lektor','admin']));
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 
 alter table public.lab_change_log enable row level security;
-create policy "labchange: staff olvasás" on public.lab_change_log for select
-  using (has_role(array['szerkeszto','lektor','admin']));
-create policy "labchange: staff írás" on public.lab_change_log for insert
-  with check (has_role(array['szerkeszto','lektor','admin']));
+drop policy if exists "labchange: staff olvasás" on public.lab_change_log;
+create policy "labchange: staff olvasás" on public.lab_change_log for select using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
+drop policy if exists "labchange: staff írás" on public.lab_change_log;
+create policy "labchange: staff írás" on public.lab_change_log for insert with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 
--- 5) Meglévő 49 laborparaméter áttöltése — PENDING_REVIEW, kitalált forrás nélkül
+-- Meglévő 49 laborparaméter — PENDING_REVIEW, kitalált forrás nélkül
 insert into public.lab_parameters
   (slug, name_hu, abbrev, loinc, category, unit, reference_range, reference_range_by_age,
    critical_values, low_bound, high_bound, clinical_significance, details, review_status, status) values
