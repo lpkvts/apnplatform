@@ -17,7 +17,7 @@ export default async function DiseaseCmsPage() {
   return (
     <>
       <Link className="sh-back" href="/cms">‹ Tartalomkezelés</Link>
-      <div className="row" style={{ border: 'none' }}><h1 className="h1" style={{ margin: 0 }}>Betegségtár</h1><Link className="btn sm" href="/cms/betegsegek/uj">+ Új betegség</Link></div>
+      <div className="row" style={{ border: 'none' }}><h1 className="h1" style={{ margin: 0 }}>Betegségtár</h1><span style={{ display: 'flex', gap: 8 }}><Link className="btn ghost sm" href="/cms/betegsegek/import">Import</Link><Link className="btn sm" href="/cms/betegsegek/uj">+ Új</Link></span></div>
       <p className="sub">Munkafolyamat: piszkozat → lektorálás → publikálás.</p>
       {items.map((g) => (
         <div className="card" key={g.id}>

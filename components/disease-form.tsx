@@ -21,7 +21,7 @@ export interface DiseaseData {
   version?: string | null; review_on?: string | null; expires_on?: string | null
   ai_generated?: boolean; body?: DBody
   epidemiology?: string | null; pathophysiology?: string | null; ddx?: Ddx[] | null; apn_approach?: ApnApproach | null
-  evidence_levels?: string[] | null; validation_status?: string | null; reviewers?: Reviewer[] | null
+  evidence_levels?: string[] | null; validation_status?: string | null; reviewers?: Reviewer[] | null; bno?: string | null; is_stub?: boolean
   block_sources?: Record<string, string> | null
 }
 
@@ -51,6 +51,12 @@ export function DiseaseForm({ d }: { d?: DiseaseData }) {
         <div style={{ flex: 1 }}><div className="as-lbl">Rövidítés</div><input className="field" name="abbrev" defaultValue={d?.abbrev ?? ''} /></div>
         <div style={{ flex: 2 }}><div className="as-lbl">Szakterület</div><input className="field" name="specialty" defaultValue={d?.specialty ?? ''} placeholder="pl. Kardiológia" /></div>
       </div>
+      <div className="as-lbl">BNO kód</div>
+      <input className="field" name="bno" defaultValue={d?.bno ?? ''} placeholder="pl. I10" />
+      <label style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '10px 0' }}>
+        <input type="checkbox" name="is_stub" defaultChecked={d?.is_stub ?? false} />
+        Katalógus-tétel (stub) — „fejlesztés alatt". Vedd ki a pipát, ha az adatlap kidolgozott.
+      </label>
       <div className="as-lbl">Klinikai kontextus</div>
       <select className="field" name="context_id" defaultValue={d?.context_id ?? ''}>
         <option value="">— nincs —</option>

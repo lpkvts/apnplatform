@@ -66,6 +66,7 @@ export async function saveDisease(_prev: DiseaseSaveState, formData: FormData): 
     ddx, apn_approach, reviewers, block_sources,
     evidence_levels: formData.getAll('evidence_levels').map((x) => String(x)),
     validation_status: str(formData.get('validation_status')),
+    bno: str(formData.get('bno')), is_stub: formData.get('is_stub') === 'on',
   }
 
   if (id) {

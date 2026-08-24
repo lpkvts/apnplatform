@@ -27,7 +27,7 @@ interface Disease {
   body: DiseaseBody; version: string | null; review_on: string | null; status: string
   epidemiology: string | null; pathophysiology: string | null; ddx: Ddx[] | null; apn_approach: ApnApproach | null
   evidence_levels: string[] | null; validation_status: string | null; reviewers: Reviewer[] | null
-  block_sources: Record<string, string> | null
+  block_sources: Record<string, string> | null; is_stub: boolean; bno: string | null
 }
 
 const EVID: Record<string, string> = { guideline: '🟢 Guideline-based', evidence: '🔵 Evidence-based', expert: '🟣 Expert-reviewed' }
@@ -68,6 +68,22 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
   const supabase = await createClient()
   const { data } = await supabase.from('diseases').select('*').eq('id', id).eq('status', 'published').maybeSingle<Disease>()
   if (!data) notFound()
+  if (data.is_stub) {
+    return (
+      <>
+        <Link className="sh-back" href="/betegsegtar/betegsegek">‹ Betegségtár</Link>
+        <h1 className="h1">{data.name}</h1>
+        <p className="sub">{data.specialty}{data.bno ? ` · BNO ${data.bno}` : ''}</p>
+        <ClinicalDisclaimer />
+        <div className="card">
+          <b>⚪ Tartalom fejlesztés alatt</b>
+          <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, vörös zászlók, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
+        </div>
+        <Link className="sh-row" href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`}><span className="sh-row-main"><span className="sh-row-name">🤖 Kérdezd az APN Copilotot</span><span className="sh-row-sub">Amíg az adatlap készül</span></span><span className="sh-chev">›</span></Link>
+      </>
+    )
+  }
+
   const b = data.body ?? {}
   const bs = data.block_sources ?? {}
 
