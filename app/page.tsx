@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import type { Profile } from '@/lib/types'
 import { Icon } from '@/components/icons'
 import { getNotifications } from '@/lib/notifications'
+import { getFlag } from '@/lib/flags'
 
 const TILES = [
   { href: '/klinika/ertekeles', label: 'Új betegértékelés', icon: 'assessment' },
@@ -29,6 +30,8 @@ export default async function DashboardPage() {
   const profile = profileRes.data
   const recent = recentRes.data ?? []
   const notifCount = notif.count
+  const [copilotEnabled, careerEnabled] = await Promise.all([getFlag('apn_copilot', false), getFlag('apn_career', false)])
+  const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
   const initial = (profile?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? 'A').toUpperCase()
 
   return (
@@ -58,7 +61,7 @@ export default async function DashboardPage() {
         <Link className="sec-l" href="/klinika">Klinikai mag →</Link>
       </div>
       <div className="qgrid">
-        {TILES.map((t) => (
+        {tiles.map((t) => (
           <Link key={t.href} className="qtile" href={t.href}>
             <span className="qtile-i"><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>

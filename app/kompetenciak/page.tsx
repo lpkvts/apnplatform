@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { ProgressBar } from '@/components/progress-bar'
 import type { Competency, CompetencyProgress } from '@/lib/types'
+import { getFlag } from '@/lib/flags'
+import { FeatureOff } from '@/components/feature-off'
 
 const STATUS_LABEL: Record<CompetencyProgress['status'], string> = {
   not_started: 'Nem kezdett',
@@ -10,6 +12,7 @@ const STATUS_LABEL: Record<CompetencyProgress['status'], string> = {
 }
 
 export default async function KompetenciakPage() {
+  if (!(await getFlag('kompetencia_passport', false))) return <FeatureOff title="Kompetencia Passport" />
   const supabase = await createClient()
 
   // Egyszerű, egyértelmű lekérdezések, majd JS-oldali összefésülés

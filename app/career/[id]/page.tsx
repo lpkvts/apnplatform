@@ -4,6 +4,8 @@ import { createClient } from '@/lib/supabase/server'
 import { currentRole, isStaff } from '@/lib/roles'
 import { CAT_LABEL } from '@/components/career'
 import { deleteCareerItem } from '../actions'
+import { getFlag } from '@/lib/flags'
+import { FeatureOff } from '@/components/feature-off'
 
 interface Row {
   id: string; category: string; title: string; org: string | null; location: string | null
@@ -11,6 +13,7 @@ interface Row {
 }
 
 export default async function CareerDetail({ params }: { params: Promise<{ id: string }> }) {
+  if (!(await getFlag('apn_career', false))) return <FeatureOff title="APN Career" />
   const { id } = await params
   const { role } = await currentRole()
   const supabase = await createClient()

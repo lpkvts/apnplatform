@@ -29,6 +29,7 @@ export default async function ContextDetail({ params }: { params: Promise<{ id: 
   const ctx = CONTEXTS.find((c) => c.id === id)
   if (!ctx) notFound()
   const copilotEnabled = await getFlag('apn_copilot', false)
+  const careerEnabled = await getFlag('apn_career', false)
 
   const supabase = await createClient()
   const [gRes, cRes, dRes] = await Promise.all([
@@ -68,7 +69,7 @@ export default async function ContextDetail({ params }: { params: Promise<{ id: 
       {labs.length > 0 && <Group label="🧪 Laborok">{labs.map((l) => <RowLink key={l.id} href={`/klinika/labor?open=${l.id}`} title={`${l.name} (${l.abbr})`} sub={`${l.ref}${l.unit ? ` ${l.unit}` : ''}`} />)}</Group>}
       {ekgs.length > 0 && <Group label="📈 EKG">{ekgs.map((e) => <RowLink key={e.id} href={`/klinika/ekg?open=${e.id}`} title={e.name} sub={e.cat} />)}</Group>}
       {guides.length > 0 && <Group label="📚 Irányelvek">{guides.map((g) => <RowLink key={g.id} href={`/klinika/tudastar/${g.id}`} title={g.title} sub={g.summary ?? undefined} />)}</Group>}
-      {careers.length > 0 && <Group label="💼 Kapcsolódó képzések">{careers.map((c) => <RowLink key={c.id} href={`/career/${c.id}`} title={c.title} />)}</Group>}
+      {careerEnabled && careers.length > 0 && <Group label="💼 Kapcsolódó képzések">{careers.map((c) => <RowLink key={c.id} href={`/career/${c.id}`} title={c.title} />)}</Group>}
 
       {diseases.length + scores.length + labs.length + ekgs.length + guides.length + careers.length === 0 && (
         <div className="card"><p style={{ margin: 0 }}>Ehhez a kontextushoz még nincs társított tartalom.</p></div>

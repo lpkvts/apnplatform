@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { currentRole, isStaff } from '@/lib/roles'
 import type { Profile } from '@/lib/types'
+import { getFlag } from '@/lib/flags'
 
 const ROLE_LABEL: Record<string, string> = {
   apn: 'APN', szerkeszto: 'Szerkesztő', lektor: 'Lektor', admin: 'Adminisztrátor',
@@ -27,6 +28,7 @@ function Field({ label, value }: { label: string; value?: string | number | null
 }
 
 export default async function ProfilPage() {
+  const [careerEnabled, passportEnabled] = await Promise.all([getFlag('apn_career', false), getFlag('kompetencia_passport', false)])
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const { role } = await currentRole()
@@ -63,15 +65,19 @@ export default async function ProfilPage() {
         </div>
       </div>
 
-      <Link className="card klink" href="/kompetenciak">
-        <div className="klink-t">📈 Kompetencia-passzport</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Kompetenciaszintek és fejlődési terv</div>
-      </Link>
+      {passportEnabled && (
+        <Link className="card klink" href="/kompetenciak">
+          <div className="klink-t">📈 Kompetencia-passzport</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Kompetenciaszintek és fejlődési terv</div>
+        </Link>
+      )}
 
-      <Link className="card klink" href="/career">
-        <div className="klink-t">💼 APN Career</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Állások, képzések, konferenciák, pályázatok</div>
-      </Link>
+      {careerEnabled && (
+        <Link className="card klink" href="/career">
+          <div className="klink-t">💼 APN Career</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Állások, képzések, konferenciák, pályázatok</div>
+        </Link>
+      )}
 
       {isStaff(role) && (
         <>

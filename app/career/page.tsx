@@ -2,8 +2,13 @@ import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { currentRole, isStaff } from '@/lib/roles'
 import { Career, type CareerItem } from '@/components/career'
+import { getFlag } from '@/lib/flags'
+import { FeatureOff } from '@/components/feature-off'
+
+export const dynamic = 'force-dynamic'
 
 export default async function CareerPage() {
+  if (!(await getFlag('apn_career', false))) return <FeatureOff title="APN Career" />
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   const { role } = await currentRole()

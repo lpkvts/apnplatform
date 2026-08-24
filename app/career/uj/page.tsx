@@ -2,10 +2,13 @@ import Link from 'next/link'
 import { currentRole, isStaff } from '@/lib/roles'
 import { createCareerItem } from '../actions'
 import { CAT_LABEL } from '@/components/career'
+import { getFlag } from '@/lib/flags'
+import { FeatureOff } from '@/components/feature-off'
 
 const CATS = ['allas', 'kepzes', 'konferencia', 'palyazat', 'publikacio', 'kutatas', 'mentor']
 
 export default async function CareerUj() {
+  if (!(await getFlag('apn_career', false))) return <FeatureOff title="APN Career" />
   const { role } = await currentRole()
   if (!isStaff(role)) return <div className="card">Nincs jogosultság.</div>
   return (
