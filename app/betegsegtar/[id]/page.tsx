@@ -73,7 +73,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
   if (data.is_stub) {
     return (
       <>
-        <Link className="sh-back" href="/betegsegtar/betegsegek">‹ Betegségtár</Link>
+        <Link className="sh-back" href="/betegsegtar">‹ Betegségtár</Link>
         <h1 className="h1">{data.name}</h1>
         <p className="sub">{data.specialty}{data.bno ? ` · BNO ${data.bno}` : ''}</p>
         <ClinicalDisclaimer />
@@ -109,7 +109,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
 
   return (
     <>
-      <Link className="sh-back" href="/betegsegtar/betegsegek">‹ Betegségtár</Link>
+      <Link className="sh-back" href="/betegsegtar">‹ Betegségtár</Link>
       <h1 className="h1">{data.name}</h1>
       <p className="sub">{data.specialty}{data.aliases && data.aliases.length ? ` · ${data.aliases.slice(0, 3).join(', ')}` : ''}</p>
 

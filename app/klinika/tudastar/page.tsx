@@ -18,7 +18,7 @@ export default async function TudastarPage() {
     <>
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">Tudástár</h1>
-      <p className="sub">{items.length} publikált irányelv · APN-szintű összefoglalóval</p>
+      <p className="sub">Irányelvek, protokollok és források egy helyen · {items.length} publikált tétel, APN-szintű összefoglalóval</p>
 
       {items.length === 0 ? (
         <div className="card">

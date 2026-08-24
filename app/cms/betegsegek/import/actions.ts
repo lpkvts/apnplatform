@@ -43,6 +43,6 @@ export async function importStubs(_prev: ImportState, formData: FormData): Promi
     if (error) return { error: `Adatbázis-hiba: ${error.message}` }
     created = data?.length ?? 0
   }
-  revalidatePath('/cms/betegsegek'); revalidatePath('/betegsegtar/betegsegek')
+  revalidatePath('/cms/betegsegek'); revalidatePath('/betegsegtar/betegsegek'); revalidatePath('/betegsegtar')
   return { done: true, created, skipped: parsed.length - created, total: parsed.length }
 }
