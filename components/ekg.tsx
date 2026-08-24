@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { FavStar } from '@/components/favorites-context'
 import { ECG, EKG_CATS, type EcgItem } from '@/lib/ekg/data'
 import { ECG_WAVES } from '@/lib/ekg/waves'
 
@@ -191,6 +192,7 @@ function Atlas({ initialOpen }: { initialOpen?: string }) {
           <button key={e.id} className="sh-row" onClick={() => setOpenId(e.id)}>
             <span className="sh-row-main"><span className="sh-row-name">{e.name}</span><span className="sh-row-sub">{e.cat}</span></span>
             {e.sev && <span className={`ekg-sev ${SEV_CLS[e.sev] ?? ''}`}>{e.sev}</span>}
+            <FavStar type="ekg" id={e.id} />
             <span className="sh-chev">›</span>
           </button>
         ))}

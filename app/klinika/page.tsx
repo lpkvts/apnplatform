@@ -10,6 +10,11 @@ export default async function KlinikaPage() {
       <h1 className="h1">Klinikai mag</h1>
       <p className="sub">Pontozók, betegértékelés és előzmények egy helyen.</p>
 
+      <Link className="card klink" href="/kedvencek">
+        <div className="klink-t">⭐ Kedvenceim</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Csillagozott betegségek, laborok, score-ok, EKG-k</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/esetek">
         <div className="klink-t">🗂️ Eseteim és előzmények</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Klinikai esetek és korábbi betegértékelések egy helyen</div>

@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TESTS, TEST_CATS, type Test, type TestItem } from '@/lib/scores/data'
+import { FavStar } from '@/components/favorites-context'
 import { testScore, testComplete, testBand } from '@/lib/scores/engine'
 
 type AnsMap = Record<number, number | number[]>
@@ -84,6 +85,7 @@ export function ScoreHub() {
                 {t.specialty ?? ''}
               </span>
             </span>
+            <FavStar type="score" id={t.id} />
             <span className="sh-chev">›</span>
           </button>
         ))}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { FavStar } from '@/components/favorites-context'
 
 export interface DiseaseRow {
   id: string; name: string; aliases: string[] | null; abbrev: string | null; specialty: string | null
@@ -42,6 +43,7 @@ export function DiseaseList({ items }: { items: DiseaseRow[] }) {
                 <span className="sh-row-name">{d.name}{d.abbrev ? ` (${d.abbrev})` : ''}</span>
                 <span className="sh-row-sub">{d.is_stub ? '⚪ Tartalom fejlesztés alatt' : (d.aliases && d.aliases.length > 0 ? d.aliases.slice(0, 3).join(' · ') : 'Kidolgozott adatlap')}{d.bno ? ` · BNO ${d.bno}` : ''}</span>
               </span>
+              <FavStar type="disease" id={d.id} />
               <span className="sh-chev">›</span>
             </Link>
           ))}

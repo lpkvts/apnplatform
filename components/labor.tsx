@@ -1,4 +1,5 @@
 'use client'
+import { FavStar } from '@/components/favorites-context'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -172,6 +173,7 @@ function Kisokos({ initialOpen }: { initialOpen?: string }) {
           <button key={l.id} className="sh-row" onClick={() => setOpenId(l.id)}>
             <span className="sh-row-main"><span className="sh-row-name">{l.name} <span style={{ color: 'var(--brand-3)', fontWeight: 400 }}>({l.abbr})</span></span>
               <span className="sh-row-sub">{l.ref}{l.unit ? ` ${l.unit}` : ''}</span></span>
+            <FavStar type="lab" id={l.id} />
             <span className="sh-chev">›</span>
           </button>
         ))}
@@ -211,7 +213,7 @@ function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack:
   return (
     <>
       <button className="sh-back" onClick={onBack}>‹ Vissza a listához</button>
-      <h2 className="h1" style={{ fontSize: 20 }}>{l.name}</h2>
+      <div className="row" style={{ border: 'none', padding: 0 }}><h2 className="h1" style={{ fontSize: 20, margin: 0 }}>{l.name}</h2><FavStar type="lab" id={l.id} /></div>
       <p className="sub">{l.abbr} · Referencia: {l.ref}{l.unit ? ` ${l.unit}` : ''}</p>
       {numeric && (
         <div className="card">

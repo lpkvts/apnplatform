@@ -4,6 +4,8 @@ import type { Metadata, Viewport } from 'next'
 import { Nav } from '@/components/nav'
 import { BottomNav } from '@/components/bottom-nav'
 import { PwaRegister } from '@/components/pwa-register'
+import { FavoritesProvider } from '@/components/favorites-context'
+import { getAllFavoriteKeys } from '@/lib/favorites'
 
 export const metadata: Metadata = {
   title: 'APN Hungary Platform',
@@ -26,12 +28,15 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const favKeys = await getAllFavoriteKeys()
   return (
     <html lang="hu">
       <body>
         <Nav />
-        <main className="container">{children}</main>
+        <FavoritesProvider initial={favKeys}>
+          <main className="container">{children}</main>
+        </FavoritesProvider>
         <BottomNav />
         <PwaRegister />
       </body>
