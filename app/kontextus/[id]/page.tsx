@@ -5,6 +5,7 @@ import { CONTEXTS } from '@/lib/context/data'
 import { TESTS } from '@/lib/scores/data'
 import { LAB } from '@/lib/labor/data'
 import { ECG } from '@/lib/ekg/data'
+import { getFlag } from '@/lib/flags'
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
@@ -27,6 +28,7 @@ export default async function ContextDetail({ params }: { params: Promise<{ id: 
   const { id } = await params
   const ctx = CONTEXTS.find((c) => c.id === id)
   if (!ctx) notFound()
+  const copilotEnabled = await getFlag('apn_copilot', false)
 
   const supabase = await createClient()
   const [gRes, cRes, dRes] = await Promise.all([
@@ -55,9 +57,11 @@ export default async function ContextDetail({ params }: { params: Promise<{ id: 
       <h1 className="h1">{ctx.name}</h1>
       <div className="kb-relnote">🩺 APN fókusz: {ctx.apnFocus}</div>
 
-      <a className="btn" href={`/klinika/copilot?q=${encodeURIComponent(ctx.name)}`} style={{ width: '100%', marginBottom: 8 }}>
-        🤖 Kérdezd az APN Copilotot erről
-      </a>
+      {copilotEnabled && (
+        <a className="btn" href={`/klinika/copilot?q=${encodeURIComponent(ctx.name)}`} style={{ width: '100%', marginBottom: 8 }}>
+          🤖 Kérdezd az APN Copilotot erről
+        </a>
+      )}
 
       {diseases.length > 0 && <Group label="🩺 Betegségek">{diseases.map((d) => <RowLink key={d.id} href={`/betegsegtar/${d.id}`} title={d.name} />)}</Group>}
       {scores.length > 0 && <Group label="🧮 Klinikai score-ok">{scores.map((t) => <RowLink key={t.id} href={`/klinika/tesztek?open=${t.id}`} title={t.name} sub={t.abbr} />)}</Group>}

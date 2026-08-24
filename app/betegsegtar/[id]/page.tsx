@@ -7,6 +7,7 @@ import { ECG } from '@/lib/ekg/data'
 import { CONTEXTS } from '@/lib/context/data'
 import { SafetyNote } from '@/components/safety'
 import { ClinicalDisclaimer } from '@/components/clinical-disclaimer'
+import { getFlag } from '@/lib/flags'
 
 export const dynamic = 'force-dynamic'
 
@@ -68,6 +69,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
   const supabase = await createClient()
   const { data } = await supabase.from('diseases').select('*').eq('id', id).eq('status', 'published').maybeSingle<Disease>()
   if (!data) notFound()
+  const copilotEnabled = await getFlag('apn_copilot', false)
   if (data.is_stub) {
     return (
       <>
@@ -79,7 +81,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
           <b>⚪ Tartalom fejlesztés alatt</b>
           <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, vörös zászlók, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
         </div>
-        <Link className="sh-row" href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`}><span className="sh-row-main"><span className="sh-row-name">🤖 Kérdezd az APN Copilotot</span><span className="sh-row-sub">Amíg az adatlap készül</span></span><span className="sh-chev">›</span></Link>
+        {copilotEnabled && <Link className="sh-row" href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`}><span className="sh-row-main"><span className="sh-row-name">🤖 Kérdezd az APN Copilotot</span><span className="sh-row-sub">Amíg az adatlap készül</span></span><span className="sh-chev">›</span></Link>}
       </>
     )
   }
@@ -195,7 +197,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
       <Sec title="12. Kapcsolódó tartalmak">
         {ctx && <RowLink href={`/kontextus/${ctx.id}`} title={`🧠 Klinikai kontextus: ${ctx.name}`} />}
         {gl.map((g) => <RowLink key={g.id} href={`/klinika/tudastar/${g.id}`} title={`📚 ${g.title}`} />)}
-        <RowLink href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`} title="🤖 Kérdezd az APN Copilotot" />
+        {copilotEnabled && <RowLink href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`} title="🤖 Kérdezd az APN Copilotot" />}
       </Sec>
 
       <Sec title="13. Források, evidencia és felülvizsgálat">
