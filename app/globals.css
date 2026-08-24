@@ -301,3 +301,9 @@ body {
 .cms-badge.cs-completed { background: #dcfce7; color: #15803d; }
 .cms-badge.cs-followup { background: #ffedd5; color: #c2410c; }
 .cms-badge.cs-archived { background: #e5e7eb; color: #4b5563; }
+
+/* ===== Tartalomfigyelő stat kártyák ===== */
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+.stat-card { border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #fff; text-align: center; }
+.stat-num { font-size: 26px; font-weight: 700; line-height: 1; }
+.stat-lbl { font-size: 12px; color: var(--brand-3); margin-top: 6px; }
