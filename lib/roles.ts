@@ -15,3 +15,7 @@ export async function currentRole(): Promise<{ userId: string | null; role: Role
 export function isStaff(role: Role | null): boolean {
   return !!role && STAFF.includes(role)
 }
+
+export function isAdmin(role: Role | null): boolean {
+  return role === 'admin'
+}

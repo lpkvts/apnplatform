@@ -40,7 +40,7 @@ type Mode = 'atlas' | 'practice' | 'exam'
 interface Prac { qid: string; opts: string[]; picked: string | null }
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
-export function Ekg({ initialOpen }: { initialOpen?: string }) {
+export function Ekg({ initialOpen, examEnabled = false }: { initialOpen?: string; examEnabled?: boolean }) {
   const [mode, setMode] = useState<Mode>('atlas')
   const [prac, setPrac] = useState<Prac | null>(null)
   const [exam, setExam] = useState<Exam | null>(null)
@@ -73,11 +73,13 @@ export function Ekg({ initialOpen }: { initialOpen?: string }) {
     }
   }
 
+  const MODES: Mode[] = examEnabled ? ['atlas', 'practice', 'exam'] : ['atlas', 'practice']
+  const activeMode: Mode = mode === 'exam' && !examEnabled ? 'atlas' : mode
   const ModeBar = () => (
     <div className="ekg-modebar">
-      {(['atlas', 'practice', 'exam'] as Mode[]).map((m) => (
+      {MODES.map((m) => (
         <button key={m} className={`seg ${mode === m ? 'on' : ''}`} onClick={() => goMode(m)}>
-          {m === 'atlas' ? 'Atlász' : m === 'practice' ? 'Gyakorló' : 'Vizsga'}
+          {m === 'atlas' ? 'Atlasz' : m === 'practice' ? 'Gyakorló' : 'Vizsga'}
         </button>
       ))}
     </div>
@@ -88,9 +90,9 @@ export function Ekg({ initialOpen }: { initialOpen?: string }) {
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">EKG Tudástár</h1>
       <ModeBar />
-      {mode === 'atlas' && <Atlas initialOpen={initialOpen} />}
-      {mode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}
-      {mode === 'exam' && <ExamView exam={exam} best={best} onStart={startExam} onAnswer={examAnswer} />}
+      {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} />}
+      {activeMode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}
+      {activeMode === 'exam' && examEnabled && <ExamView exam={exam} best={best} onStart={startExam} onAnswer={examAnswer} />}
     </>
   )
 }

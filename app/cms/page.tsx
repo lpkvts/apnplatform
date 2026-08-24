@@ -92,6 +92,11 @@ export default async function CmsPage() {
         <div className="klink-t">📚 Klinikai források</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Evidenciaforrások nyilvántartása és verziói</div>
       </Link>
+
+      <Link className="card klink" href="/cms/beallitasok">
+        <div className="klink-t">⚙️ Beállítások</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Modulrészek ki-/bekapcsolása (admin)</div>
+      </Link>
     </>
   )
 }
