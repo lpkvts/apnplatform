@@ -4,6 +4,8 @@ import type { Profile } from '@/lib/types'
 import { Icon } from '@/components/icons'
 import { getNotifications } from '@/lib/notifications'
 import { getFlag } from '@/lib/flags'
+import { getFavoritesByType } from '@/lib/favorites'
+import { SHORTCUTS } from '@/lib/shortcuts'
 
 const TILES = [
   { href: '/klinika/ertekeles', label: 'Új betegértékelés', icon: 'assessment' },
@@ -31,6 +33,8 @@ export default async function DashboardPage() {
   const recent = recentRes.data ?? []
   const notifCount = notif.count
   const [copilotEnabled, careerEnabled] = await Promise.all([getFlag('apn_copilot', false), getFlag('apn_career', false)])
+  const menuKeys = await getFavoritesByType('menu')
+  const myShortcuts = SHORTCUTS.filter((sc) => menuKeys.includes(sc.key))
   const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
   const initial = (profile?.full_name?.trim()?.[0] ?? user?.email?.[0] ?? 'A').toUpperCase()
 
@@ -55,6 +59,26 @@ export default async function DashboardPage() {
         <span>Keresés a platformon…</span>
       </Link>
 
+
+      <div className="sec-h">
+        <span className="sec-t">Gyorsindítóim</span>
+        <Link className="sec-l" href="/testreszabas">Testreszabás →</Link>
+      </div>
+      {myShortcuts.length > 0 ? (
+        <div className="qgrid">
+          {myShortcuts.map((sc) => (
+            <Link key={sc.key} className="qtile" href={sc.href}>
+              <span className="qtile-i"><Icon name={sc.icon} size={24} /></span>
+              <span className="qtile-l">{sc.label}</span>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <Link className="card klink" href="/testreszabas">
+          <div className="klink-t">➕ Tegyél ki gyorsindítókat</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Válaszd ki a leggyakrabban használt menüket a kezdőlapra</div>
+        </Link>
+      )}
 
       <div className="sec-h">
         <span className="sec-t">Gyors elérés</span>
