@@ -2,14 +2,29 @@ import type { LabItem } from './data'
 
 export type LabStatus = 'normal' | 'low' | 'high' | 'crit-low' | 'crit-high' | 'unknown'
 
+function classify(n: number, lo: number | null, hi: number | null, critLo: number | null, critHi: number | null): LabStatus {
+  if (critLo != null && n <= critLo) return 'crit-low'
+  if (critHi != null && n >= critHi) return 'crit-high'
+  if (lo != null && n < lo) return 'low'
+  if (hi != null && n > hi) return 'high'
+  return 'normal'
+}
+
 export function interpret(l: LabItem, raw: string): LabStatus {
   const n = parseFloat(String(raw).replace(',', '.'))
   if (isNaN(n)) return 'unknown'
-  if (l.critLo != null && n <= l.critLo) return 'crit-low'
-  if (l.critHi != null && n >= l.critHi) return 'crit-high'
-  if (l.lo != null && n < l.lo) return 'low'
-  if (l.hi != null && n > l.hi) return 'high'
-  return 'normal'
+  return classify(n, l.lo, l.hi, l.critLo, l.critHi)
+}
+
+// Nem-specifikus értelmezés: külön férfi és nő eredmény (a kritikus határok közösek).
+export function interpretSex(l: LabItem, raw: string): { m: LabStatus; f: LabStatus } | null {
+  if (!l.sex) return null
+  const n = parseFloat(String(raw).replace(',', '.'))
+  if (isNaN(n)) return { m: 'unknown', f: 'unknown' }
+  return {
+    m: classify(n, l.sex.m.lo, l.sex.m.hi, l.critLo, l.critHi),
+    f: classify(n, l.sex.f.lo, l.sex.f.hi, l.critLo, l.critHi),
+  }
 }
 
 export const STATUS_LABEL: Record<LabStatus, string> = {

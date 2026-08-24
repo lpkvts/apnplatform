@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { LAB, LAB_CATS, LAB_REF_EXTRA, type LabItem } from '@/lib/labor/data'
-import { interpret, STATUS_LABEL, statusRisk } from '@/lib/labor/engine'
+import { interpret, interpretSex, STATUS_LABEL, statusRisk, type LabStatus } from '@/lib/labor/engine'
 import { PANELS, PATTERNS, evaluatePanel, type Pattern } from '@/lib/labor/patterns'
 import { SafetyNote } from '@/components/safety'
 
@@ -91,7 +91,7 @@ function Panel({ guidelines }: { guidelines: Gl[] }) {
                 <input className="as-vin" type="number" inputMode="decimal" placeholder="érték"
                   value={values[l.id] ?? ''} onChange={(e) => setValues((v) => ({ ...v, [l.id]: e.target.value }))} />
                 <span className="as-vu">{l.unit}</span>
-                {st !== 'unknown' && <span className={`ekg-sev ${risk === 'low' ? 'sev-low' : risk === 'crit' ? 'sev-crit' : 'sev-mid'}`}>{STATUS_LABEL[st]}</span>}
+                {st !== 'unknown' && (l.sex ? <SexResult l={l} val={values[l.id] ?? ''} compact /> : <span className={`ekg-sev ${risk === 'low' ? 'sev-low' : risk === 'crit' ? 'sev-crit' : 'sev-mid'}`}>{STATUS_LABEL[st]}</span>)}
                 <button className="sh-back" style={{ padding: 0, marginLeft: 4 }} onClick={() => removeLab(l.id)}>✕</button>
               </div>
             )
@@ -186,6 +186,21 @@ function LList({ title, items }: { title: string; items?: string[] }) {
   return (<div style={{ marginTop: 8 }}><b style={{ fontSize: 13 }}>{title}</b><ul style={{ margin: '4px 0 0', paddingLeft: 18 }}>{items.map((x, i) => <li key={i}>{x}</li>)}</ul></div>)
 }
 
+const SEV_OF: Record<LabStatus, string> = { normal: 'sev-low', low: 'sev-mid', high: 'sev-mid', 'crit-low': 'sev-crit', 'crit-high': 'sev-crit', unknown: '' }
+function SexResult({ l, val, compact }: { l: LabItem; val: string; compact?: boolean }) {
+  const r = interpretSex(l, val)
+  if (!r || r.m === 'unknown') return null
+  const cell = (label: string, st: LabStatus) => (
+    <span className={`ekg-sev ${SEV_OF[st]}`} style={{ marginRight: 6 }}>{label}: {STATUS_LABEL[st]}</span>
+  )
+  if (compact) return <span style={{ display: 'inline-flex', gap: 4, flexWrap: 'wrap' }}>{cell('F', r.m)}{cell('N', r.f)}</span>
+  return (
+    <div style={{ marginTop: 10 }}>
+      <div className="sub" style={{ margin: '0 0 4px' }}>Nem szerinti értelmezés (a referencia férfi/nő eltér):</div>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{cell('Férfi', r.m)}{cell('Nő', r.f)}</div>
+    </div>
+  )
+}
 function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack: () => void; onVal: (v: string) => void }) {
   const st = interpret(l, val)
   const risk = statusRisk(st)
@@ -205,9 +220,15 @@ function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack:
             <input className="field" type="number" inputMode="decimal" style={{ maxWidth: 160, marginBottom: 0 }} value={val} placeholder="mért érték" onChange={(e) => onVal(e.target.value)} />
             {l.unit && <span className="sh-unit">{l.unit}</span>}
           </div>
-          {st !== 'unknown' && (
+          {st !== 'unknown' && !l.sex && (
             <div className={`sh-result ${RISK_CLS[risk] ?? ''}`} style={{ marginTop: 10 }}>
               <div className="sh-res-band">{STATUS_LABEL[st]}</div>
+              {(st === 'crit-low' || st === 'crit-high') && l.crit && <div className="sh-urgent" style={{ marginTop: 6 }}>⚠ {l.crit}</div>}
+            </div>
+          )}
+          {st !== 'unknown' && l.sex && (
+            <div className={`sh-result ${RISK_CLS[risk] ?? ''}`} style={{ marginTop: 10 }}>
+              <SexResult l={l} val={val} />
               {(st === 'crit-low' || st === 'crit-high') && l.crit && <div className="sh-urgent" style={{ marginTop: 6 }}>⚠ {l.crit}</div>}
             </div>
           )}
