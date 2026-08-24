@@ -4,18 +4,19 @@ import { createClient } from '@/lib/supabase/server'
 import { EXAM_SECTIONS } from '@/lib/exam/data'
 import { ExamAnamnesisForm } from '@/components/exam-anamnesis-form'
 import { ExamVitalsForm } from '@/components/exam-vitals-form'
+import { ExamGeneralForm } from '@/components/exam-general-form'
 import { setExamStatus } from '../actions'
 export const dynamic = 'force-dynamic'
 
 const MODE_BADGE: Record<string, string> = { clinical: '🩺 Klinikai', education: '🎓 Oktatási', practice: '🧠 Gyakorló' }
 const TYPE_BADGE: Record<string, string> = { full: 'Teljes', acute: 'Akut panasz', system: 'Szervrendszer' }
-interface Session { id: string; title: string; mode: string; exam_type: string | null; focus: string | null; status: string; anamnesis: Record<string, unknown>; vitals: Record<string, string>[] }
+interface Session { id: string; title: string; mode: string; exam_type: string | null; focus: string | null; status: string; anamnesis: Record<string, unknown>; vitals: Record<string, string>[]; general_exam: Record<string, unknown> }
 
 export default async function VizsgalatDetail({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ sec?: string }> }) {
   const { id } = await params
   const { sec = 'anamnezis' } = await searchParams
   const supabase = await createClient()
-  const { data } = await supabase.from('exam_sessions').select('id, title, mode, exam_type, focus, status, anamnesis, vitals').eq('id', id).maybeSingle<Session>()
+  const { data } = await supabase.from('exam_sessions').select('id, title, mode, exam_type, focus, status, anamnesis, vitals, general_exam').eq('id', id).maybeSingle<Session>()
   if (!data) notFound()
 
   return (
@@ -41,6 +42,9 @@ export default async function VizsgalatDetail({ params, searchParams }: { params
       )}
       {sec === 'vitalis' && (
         <ExamVitalsForm id={id} initial={data.vitals ?? []} />
+      )}
+      {sec === 'altalanos' && (
+        <ExamGeneralForm id={id} initial={data.general_exam ?? {}} />
       )}
 
       <div className="sec-h"><span className="sec-t">Állapot</span></div>

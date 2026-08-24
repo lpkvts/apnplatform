@@ -56,7 +56,7 @@ export const ALLERGY_STATUS = [
 export const EXAM_SECTIONS = [
   { id: 'anamnezis', label: 'Anamnézis', icon: '📝', ready: true },
   { id: 'vitalis', label: 'Vitális paraméterek', icon: '📊', ready: true },
-  { id: 'altalanos', label: 'Általános fizikális vizsgálat', icon: '🩺', ready: false },
+  { id: 'altalanos', label: 'Általános fizikális vizsgálat', icon: '🩺', ready: true },
   { id: 'szervrendszer', label: 'Szervrendszeri vizsgálatok', icon: '❤️', ready: false },
   { id: 'redflag', label: 'Red flag jelzések', icon: '🚨', ready: false },
   { id: 'osszegzes', label: 'Klinikai összegzés', icon: '📄', ready: false },
@@ -109,3 +109,19 @@ export function computeBmi(weight?: string, height?: string): string {
   if (isNaN(w) || isNaN(h) || h <= 0) return ''
   return (w / Math.pow(h / 100, 2)).toFixed(1)
 }
+
+// --- Általános fizikális vizsgálat (Betegvizsgálat 2.0) ---
+export const GENERAL_STATE = ['jó', 'kielégítő', 'közepes', 'rossz', 'kritikus']
+export const CONSCIOUSNESS = ['éber', 'aluszékony', 'zavart', 'sopor', 'coma']
+export const AVPU_OPTS = [
+  { v: 'A', l: 'A – éber' }, { v: 'V', l: 'V – hangra' }, { v: 'P', l: 'P – fájdalomra' }, { v: 'U', l: 'U – nem reagál' },
+]
+export const NUTRITION_FLAGS = ['obesitas', 'cachexia', 'malnutritio gyanúja']
+export const SKIN_COLOR = ['normál', 'sápadt', 'cyanotikus', 'icterusos', 'vörös']
+export const SKIN_TEMP = ['meleg', 'normál', 'hűvös']
+export const SKIN_MOIST = ['száraz', 'normál', 'nedves', 'verejtékes']
+export const SKIN_TURGOR = ['normál', 'csökkent']
+export const SKIN_FINDINGS = ['kiütés', 'vérzéses bőrtünet', 'seb', 'decubitus']
+export const HYDRATION = ['megfelelő', 'enyhén csökkent', 'jelentősen csökkent', 'fokozott folyadékretenció jelei']
+export const OEDEMA_LOC = ['nincs', 'boka', 'lábszár', 'generalizált']
+export const OEDEMA_SEV = ['enyhe', 'közepes', 'jelentős']
