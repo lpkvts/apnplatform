@@ -5,10 +5,15 @@ import Link from 'next/link'
 import { updateProfile, type ProfileState } from '@/app/profil/actions'
 import type { Profile } from '@/lib/types'
 
-const APN_TYPES = [
-  '', 'Általános APN', 'Sürgősségi APN', 'Intenzív terápiás APN', 'Geriátriai APN',
-  'Onkológiai APN', 'Kardiológiai APN', 'Pszichiátriai APN', 'Diabetológiai APN',
-  'Alapellátási APN', 'Sebészeti APN', 'Neonatológiai/gyermek APN', 'Egyéb',
+// Magyarországon, egyetemi képzésben elérhető APN-szakirányok
+const APN_TYPES: { v: string; l: string }[] = [
+  { v: '', l: '— válassz —' },
+  { v: 'Geriátriai APN', l: '👴 Geriátriai' },
+  { v: 'Közösségi / alapellátási APN', l: '🏘️ Közösségi (alapellátás)' },
+  { v: 'Sürgősségi / akut ellátási APN', l: '🚨 Sürgősségi (akut ellátás)' },
+  { v: 'Intenzív / kritikus betegellátási APN', l: '🫁 Intenzív (kritikus betegellátás)' },
+  { v: 'Perioperatív / műtéti betegellátási APN', l: '🏥 Perioperatív (műtéti betegellátás)' },
+  { v: 'Extrakorporális és mechanikus keringéstámogató APN', l: '🫀 Extrakorporális és mechanikus keringéstámogató' },
 ]
 
 export function ProfileForm({ p }: { p: Profile | null }) {
@@ -20,7 +25,10 @@ export function ProfileForm({ p }: { p: Profile | null }) {
 
       <div className="as-lbl">APN szakirány</div>
       <select className="field" name="apn_type" defaultValue={p?.apn_type ?? ''}>
-        {APN_TYPES.map((t) => <option key={t} value={t}>{t || '— válassz —'}</option>)}
+        {p?.apn_type && !APN_TYPES.some((t) => t.v === p.apn_type) && (
+          <option value={p.apn_type}>{p.apn_type} (korábbi)</option>
+        )}
+        {APN_TYPES.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
       </select>
 
       <div className="as-lbl">Szakterület (szabad szöveg)</div>
