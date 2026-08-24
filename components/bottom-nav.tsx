@@ -9,6 +9,7 @@ const TABS = [
   { href: '/klinika', label: 'Klinika', icon: 'clinic' },
   { href: '/klinika/labor', label: 'Labor', icon: 'flask' },
   { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
+  { href: '/kedvencek', label: 'Kedvencek', icon: 'star' },
   { href: '/profil', label: 'Profil', icon: 'user' },
 ]
 const PROFILE_PATHS = ['/profil', '/kompetenciak', '/cpd', '/cms']

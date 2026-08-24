@@ -14,6 +14,7 @@ const P: Record<string, ReactNode> = {
   grad: (<><path d="M12 4 2.5 9 12 14l9.5-5L12 4z" /><path d="M6.5 11v4.2c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8V11" /></>),
   chevron: (<path d="M9 6l6 6-6 6" />),
   search: (<><circle cx="11" cy="11" r="7" /><path d="M20.5 20.5 17 17" /></>),
+  star: (<path d="M12 3.5l2.7 5.47 6.05.88-4.38 4.27 1.03 6.03L12 17.77l-5.42 2.85 1.03-6.03L3.25 9.85l6.05-.88z" />),
 }
 
 export function Icon({ name, size = 24, className = '' }: { name: string; size?: number; className?: string }) {
