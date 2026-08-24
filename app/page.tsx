@@ -71,7 +71,7 @@ export default async function DashboardPage() {
 
       <div className="sec-h">
         <span className="sec-t">Legutóbbi tevékenységek</span>
-        <Link className="sec-l" href="/klinika/elozmenyek">Összes →</Link>
+        <Link className="sec-l" href="/klinika/esetek?type=assessment">Összes →</Link>
       </div>
       {recent.length === 0 ? (
         <div className="card">
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
         </div>
       ) : (
         recent.map((a) => (
-          <Link key={a.id} className="sh-row" href="/klinika/elozmenyek">
+          <Link key={a.id} className="sh-row" href="/klinika/esetek?type=assessment">
             <span className="qtile-i" style={{ width: 38, height: 38, marginRight: 4 }}><Icon name="assessment" size={20} /></span>
             <span className="sh-row-main">
               <span className="sh-row-name">{a.domain || 'Betegértékelés'}</span>

@@ -1,14 +1,18 @@
 import Link from 'next/link'
+import { getFlag } from '@/lib/flags'
 
-export default function KlinikaPage() {
+export const dynamic = 'force-dynamic'
+
+export default async function KlinikaPage() {
+  const copilotEnabled = await getFlag('apn_copilot', false)
   return (
     <>
       <h1 className="h1">Klinikai mag</h1>
       <p className="sub">Pontozók, betegértékelés és előzmények egy helyen.</p>
 
       <Link className="card klink" href="/klinika/esetek">
-        <div className="klink-t">🗂️ Saját klinikai eseteim</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Klinikai esetek létrehozása, folytatása, lezárása</div>
+        <div className="klink-t">🗂️ Eseteim és előzmények</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Klinikai esetek és korábbi betegértékelések egy helyen</div>
       </Link>
 
       <Link className="card klink" href="/kontextus">
@@ -31,10 +35,12 @@ export default function KlinikaPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Vezetett 12 lépéses folyamat — menthető</div>
       </Link>
 
-      <Link className="card klink" href="/klinika/copilot">
-        <div className="klink-t">🤖 APN Copilot</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Célzott, forrásalapú döntéstámogatás</div>
-      </Link>
+      {copilotEnabled && (
+        <Link className="card klink" href="/klinika/copilot">
+          <div className="klink-t">🤖 APN Copilot</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Célzott, forrásalapú döntéstámogatás</div>
+        </Link>
+      )}
 
       <Link className="card klink" href="/klinika/ekg">
         <div className="klink-t">📈 EKG Tudástár</div>
@@ -49,11 +55,6 @@ export default function KlinikaPage() {
       <Link className="card klink" href="/klinika/tudastar">
         <div className="klink-t">📚 Tudástár</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Irányelvek — 3 szinten, kereszt-linkekkel</div>
-      </Link>
-
-      <Link className="card klink" href="/klinika/elozmenyek">
-        <div className="klink-t">🗂️ Előzmények</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Korábbi mentett értékelések</div>
       </Link>
     </>
   )

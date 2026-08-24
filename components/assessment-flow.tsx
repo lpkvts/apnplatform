@@ -220,7 +220,7 @@ export function AssessmentFlow() {
           <button className="btn" onClick={doSave} disabled={saving}>{saving ? 'Mentés…' : 'Mentés az előzményekbe'}</button>
           <button className="btn ghost" onClick={() => { setAs(assessInit()); setSaved(null) }}>Új értékelés</button>
         </div>
-        {saved && <p className="sub" style={{ marginTop: 8, color: 'var(--teal-700)' }}>{saved} <Link href="/klinika/elozmenyek">Előzmények →</Link></p>}
+        {saved && <p className="sub" style={{ marginTop: 8, color: 'var(--teal-700)' }}>{saved} <Link href="/klinika/esetek?type=assessment">Előzmények →</Link></p>}
         <p className="sh-disc">Döntéstámogató összefoglaló, nem orvosi diagnózis.</p>
       </>
     )
