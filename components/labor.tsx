@@ -9,6 +9,10 @@ import { SafetyNote } from '@/components/safety'
 
 interface Gl { id: string; title: string; summary: string | null }
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+function LabDisclaimer() {
+  return (<div className="safety-note"><b>ⓘ Tájékoztató.</b> A Labor Kisokos szakmai tájékoztató és döntéstámogató eszköz, nem diagnosztikai rendszer. A referenciaérték laboratóriumonként és mérési módszerenként eltérhet — a konkrét leleten szereplő referencia-tartomány az elsődlegesen alkalmazandó. A megjelenített értékek forrás-ellenőrzése és verziózása folyamatban.</div>)
+}
+
 const RISK_CLS: Record<string, string> = { low: 'r-low', mid: 'r-mid', high: 'r-high', crit: 'r-crit' }
 const SEV_CLS: Record<string, string> = { info: 'sev-low', 'figyelendő': 'sev-mid', 'sürgős': 'sev-crit' }
 
@@ -159,6 +163,7 @@ function Kisokos({ initialOpen }: { initialOpen?: string }) {
   const cats = ['Összes', ...LAB_CATS]
   return (
     <>
+      <LabDisclaimer />
       <p className="sub">{LAB.length} laborérték · referencia, értelmezés, APN-teendők</p>
       <input className="field" placeholder="Keresés: név, rövidítés, szerv…" value={q} onChange={(e) => setQ(e.target.value)} />
       {!nq && <div className="sh-chips">{cats.map((c) => <button key={c} className={c === cat ? 'sh-chip on' : 'sh-chip'} onClick={() => setCat(c)}>{c}</button>)}</div>}

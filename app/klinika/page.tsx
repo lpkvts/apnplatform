@@ -17,7 +17,7 @@ export default function KlinikaPage() {
       </Link>
 
       <Link className="card klink" href="/betegsegtar">
-        <div className="klink-t">🩺 Betegségtár</div>
+        <div className="klink-t">🩺 Klinikai Tudástár</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>APN-fókuszú betegségoldalak, kereszt-linkekkel</div>
       </Link>
 

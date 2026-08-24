@@ -55,25 +55,13 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
     }
   }
 
-  // Esedékes utánkövetések (saját esetek)
   const soon = new Date(Date.now() + 86400000).toISOString().slice(0, 10)
-  const { data: fups } = await supabase.from('clinical_case_followups')
-    .select('id, case_id, horizon, due_on, done').eq('done', false).lte('due_on', soon)
-    .returns<{ id: string; case_id: string; horizon: string | null; due_on: string | null; done: boolean }[]>()
+  const { data: fups } = await supabase.from('clinical_case_followups').select('id, case_id, horizon, due_on, done').eq('done', false).lte('due_on', soon).returns<{ id: string; case_id: string; horizon: string | null; due_on: string | null; done: boolean }[]>()
   if (fups && fups.length) {
     const ids = [...new Set(fups.map((x) => x.case_id))]
-    const { data: cs } = await supabase.from('clinical_cases').select('id, title, case_no').in('id', ids)
-      .returns<{ id: string; title: string; case_no: number }[]>()
+    const { data: cs } = await supabase.from('clinical_cases').select('id, title, case_no').in('id', ids).returns<{ id: string; title: string; case_no: number }[]>()
     const byId = new Map((cs ?? []).map((x) => [x.id, x]))
-    for (const fu of fups) {
-      const cc = byId.get(fu.case_id)
-      if (!cc) continue
-      items.push({
-        id: `fu-${fu.id}`, icon: 'assessment', title: 'Esedékes utánkövetés',
-        body: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}${fu.horizon ? ` (${fu.horizon})` : ''}`,
-        href: `/klinika/esetek/${fu.case_id}`, urgent: !!(fu.due_on && fu.due_on <= today),
-      })
-    }
+    for (const fu of fups) { const cc = byId.get(fu.case_id); if (!cc) continue; items.push({ id: `fu-${fu.id}`, icon: 'assessment', title: 'Esedékes utánkövetés', body: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}${fu.horizon ? ` (${fu.horizon})` : ''}`, href: `/klinika/esetek/${fu.case_id}`, urgent: !!(fu.due_on && fu.due_on <= today) }) }
   }
 
   return { items, count: items.length }

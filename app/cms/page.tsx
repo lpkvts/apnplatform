@@ -74,6 +74,15 @@ export default async function CmsPage() {
         )
       })}
       {items.length === 0 && <p className="sub">Még nincs tartalom.</p>}
+
+      <Link className="card klink" href="/cms/betegsegek">
+        <div className="klink-t">🩺 Betegségtár kezelése</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Betegségoldalak létrehozása, szerkesztése, lektorálása</div>
+      </Link>
+      <Link className="card klink" href="/cms/audit">
+        <div className="klink-t">🧾 Audit napló</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Ki, mit, mikor módosított</div>
+      </Link>
     </>
   )
 }

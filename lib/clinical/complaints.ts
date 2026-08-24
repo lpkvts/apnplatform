@@ -1,51 +1,11 @@
-// Panasz-alapú orientáció: tünet → lehetséges kórképek.
-// A slug a meglévő betegségoldalra mutat (ha publikált); egyébként "fejlesztés alatt".
 export interface ComplaintCondition { name: string; slug?: string }
 export interface Complaint { id: string; name: string; note?: string; conditions: ComplaintCondition[] }
-
 export const COMPLAINTS: Complaint[] = [
-  { id: 'mellkasi_fajdalom', name: 'Mellkasi fájdalom',
-    conditions: [
-      { name: 'Akut coronaria szindróma' }, { name: 'Stabil angina' },
-      { name: 'Pulmonalis embolia' }, { name: 'Aortadissectio' }, { name: 'Pericarditis' },
-      { name: 'Pneumothorax' }, { name: 'Pneumonia', slug: 'pneumonia' },
-      { name: 'GERD' }, { name: 'Musculoskeletalis fájdalom' }, { name: 'Pánikroham' },
-    ] },
-  { id: 'dyspnoe', name: 'Dyspnoe (nehézlégzés)',
-    conditions: [
-      { name: 'Szívelégtelenség', slug: 'szivelegtelenseg' }, { name: 'COPD / exacerbatio', slug: 'copd' },
-      { name: 'Asthma exacerbatio', slug: 'asthma' }, { name: 'Pneumonia', slug: 'pneumonia' },
-      { name: 'Pulmonalis embolia' }, { name: 'Pneumothorax' }, { name: 'Anaemia' },
-      { name: 'Metabolikus acidosis' }, { name: 'Anaphylaxia' },
-    ] },
-  { id: 'palpitacio', name: 'Palpitáció',
-    conditions: [
-      { name: 'Pitvarfibrilláció', slug: 'pitvarfibrillacio' }, { name: 'Pitvari flutter' },
-      { name: 'Supraventricularis tachycardia' }, { name: 'Bradyarrhythmia' }, { name: 'Kamrai arrhythmia' },
-      { name: 'Hyperthyreosis' }, { name: 'Szorongás / pánikroham' }, { name: 'Anaemia' },
-    ] },
-  { id: 'szedules', name: 'Szédülés',
-    conditions: [
-      { name: 'Vertigo' }, { name: 'Orthostaticus hypotensio' }, { name: 'Arrhythmia' },
-      { name: 'Hypoglykaemia' }, { name: 'Stroke', slug: 'stroke' }, { name: 'Dehidráció' },
-      { name: 'Gyógyszermellékhatás' },
-    ] },
-  { id: 'eszmeletvesztes', name: 'Eszméletvesztés',
-    conditions: [
-      { name: 'Syncope' }, { name: 'Arrhythmia' }, { name: 'Hypoglykaemia' },
-      { name: 'Epilepsia' }, { name: 'Stroke', slug: 'stroke' },
-      { name: 'Orthostaticus hypotensio' }, { name: 'Vasovagalis syncope' },
-    ] },
-  { id: 'akut_zavartsag', name: 'Akut zavartság',
-    conditions: [
-      { name: 'Delírium', slug: 'dementia_delirium' }, { name: 'Sepsis', slug: 'sepsis' },
-      { name: 'Hypoglykaemia' }, { name: 'Hypoxaemia' }, { name: 'Elektrolitzavar' },
-      { name: 'Gyógyszermellékhatás' }, { name: 'Alkoholmegvonás' }, { name: 'Neurológiai esemény' },
-    ] },
-  { id: 'akut_hasi_fajdalom', name: 'Akut hasi fájdalom',
-    conditions: [
-      { name: 'Appendicitis' }, { name: 'Cholecystitis' }, { name: 'Pancreatitis' },
-      { name: 'Diverticulitis' }, { name: 'Ileus' }, { name: 'GI perforáció' },
-      { name: 'Vesekő' }, { name: 'Pyelonephritis' }, { name: 'Gastroenteritis' },
-    ] },
+  { id: 'mellkasi_fajdalom', name: 'Mellkasi fájdalom', conditions: [{ name: 'Akut coronaria szindróma' }, { name: 'Stabil angina' }, { name: 'Pulmonalis embolia' }, { name: 'Aortadissectio' }, { name: 'Pericarditis' }, { name: 'Pneumothorax' }, { name: 'Pneumonia', slug: 'pneumonia' }, { name: 'GERD' }, { name: 'Musculoskeletalis fájdalom' }, { name: 'Pánikroham' }] },
+  { id: 'dyspnoe', name: 'Dyspnoe (nehézlégzés)', conditions: [{ name: 'Szívelégtelenség', slug: 'szivelegtelenseg' }, { name: 'COPD / exacerbatio', slug: 'copd' }, { name: 'Asthma exacerbatio', slug: 'asthma' }, { name: 'Pneumonia', slug: 'pneumonia' }, { name: 'Pulmonalis embolia' }, { name: 'Pneumothorax' }, { name: 'Anaemia' }, { name: 'Metabolikus acidosis' }, { name: 'Anaphylaxia' }] },
+  { id: 'palpitacio', name: 'Palpitáció', conditions: [{ name: 'Pitvarfibrilláció', slug: 'pitvarfibrillacio' }, { name: 'Pitvari flutter' }, { name: 'Supraventricularis tachycardia' }, { name: 'Bradyarrhythmia' }, { name: 'Kamrai arrhythmia' }, { name: 'Hyperthyreosis' }, { name: 'Szorongás / pánikroham' }, { name: 'Anaemia' }] },
+  { id: 'szedules', name: 'Szédülés', conditions: [{ name: 'Vertigo' }, { name: 'Orthostaticus hypotensio' }, { name: 'Arrhythmia' }, { name: 'Hypoglykaemia' }, { name: 'Stroke', slug: 'stroke' }, { name: 'Dehidráció' }, { name: 'Gyógyszermellékhatás' }] },
+  { id: 'eszmeletvesztes', name: 'Eszméletvesztés', conditions: [{ name: 'Syncope' }, { name: 'Arrhythmia' }, { name: 'Hypoglykaemia' }, { name: 'Epilepsia' }, { name: 'Stroke', slug: 'stroke' }, { name: 'Orthostaticus hypotensio' }, { name: 'Vasovagalis syncope' }] },
+  { id: 'akut_zavartsag', name: 'Akut zavartság', conditions: [{ name: 'Delírium', slug: 'dementia_delirium' }, { name: 'Sepsis', slug: 'sepsis' }, { name: 'Hypoglykaemia' }, { name: 'Hypoxaemia' }, { name: 'Elektrolitzavar' }, { name: 'Gyógyszermellékhatás' }, { name: 'Alkoholmegvonás' }, { name: 'Neurológiai esemény' }] },
+  { id: 'akut_hasi_fajdalom', name: 'Akut hasi fájdalom', conditions: [{ name: 'Appendicitis' }, { name: 'Cholecystitis' }, { name: 'Pancreatitis' }, { name: 'Diverticulitis' }, { name: 'Ileus' }, { name: 'GI perforáció' }, { name: 'Vesekő' }, { name: 'Pyelonephritis' }, { name: 'Gastroenteritis' }] },
 ]
