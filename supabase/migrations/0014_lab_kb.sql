@@ -1,118 +1,27 @@
--- APN Hungary Platform — Labor Knowledge Base (forrásalapú, verziózott)
--- Idempotens; has_role helyett inline profiles.role ellenőrzés.
-
-create table if not exists public.lab_sources (
-  id uuid primary key default gen_random_uuid(),
-  name text not null,
-  type text,
-  url text,
-  publication_date date,
-  version text,
-  last_verified date,
-  status text not null default 'current' check (status in ('current','superseded','archived')),
-  notes text,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists public.lab_parameters (
-  id uuid primary key default gen_random_uuid(),
-  slug text unique not null,
-  name_hu text not null,
-  name_en text,
-  abbrev text,
-  loinc text not null default 'not assigned',
-  category text,
-  specimen text,
-  unit text,
-  reference_range text,
-  reference_range_male text,
-  reference_range_female text,
-  reference_range_by_age jsonb,
-  clinical_decision_limits text,
-  critical_values text,
-  low_bound numeric,
-  high_bound numeric,
-  interpretation_low text,
-  interpretation_high text,
-  clinical_significance text,
-  preanalytical_notes text,
-  methodological_notes text,
-  details jsonb not null default '{}'::jsonb,
-  source_id uuid references public.lab_sources(id) on delete set null,
-  evidence_level text,
-  review_status text not null default 'pending_review'
-    check (review_status in ('verified','due_for_review','outdated','superseded','pending_review','limited_evidence')),
-  last_verified date,
-  next_review date,
-  status text not null default 'active' check (status in ('active','archived')),
-  created_by uuid references public.profiles(id) on delete set null,
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
+-- APN Hungary Platform — Labor Knowledge Base (idempotens, has_role nélkül)
+create table if not exists public.lab_sources (id uuid primary key default gen_random_uuid(), name text not null, type text, url text, publication_date date, version text, last_verified date, status text not null default 'current' check (status in ('current','superseded','archived')), notes text, created_at timestamptz not null default now());
+create table if not exists public.lab_parameters (id uuid primary key default gen_random_uuid(), slug text unique not null, name_hu text not null, name_en text, abbrev text, loinc text not null default 'not assigned', category text, specimen text, unit text, reference_range text, reference_range_male text, reference_range_female text, reference_range_by_age jsonb, clinical_decision_limits text, critical_values text, low_bound numeric, high_bound numeric, interpretation_low text, interpretation_high text, clinical_significance text, preanalytical_notes text, methodological_notes text, details jsonb not null default '{}'::jsonb, source_id uuid references public.lab_sources(id) on delete set null, evidence_level text, review_status text not null default 'pending_review' check (review_status in ('verified','due_for_review','outdated','superseded','pending_review','limited_evidence')), last_verified date, next_review date, status text not null default 'active' check (status in ('active','archived')), created_by uuid references public.profiles(id) on delete set null, created_at timestamptz not null default now(), updated_at timestamptz not null default now());
 create index if not exists idx_labparam_cat on public.lab_parameters(category);
 create index if not exists idx_labparam_review on public.lab_parameters(review_status);
 drop trigger if exists trg_labparam_updated on public.lab_parameters;
-create trigger trg_labparam_updated before update on public.lab_parameters
-  for each row execute function public.set_updated_at();
-
-create table if not exists public.lab_parameter_versions (
-  id uuid primary key default gen_random_uuid(),
-  parameter_id uuid not null references public.lab_parameters(id) on delete cascade,
-  version int not null default 1,
-  snapshot jsonb not null,
-  source_id uuid references public.lab_sources(id) on delete set null,
-  valid_from date,
-  valid_to date,
-  created_at timestamptz not null default now()
-);
+create trigger trg_labparam_updated before update on public.lab_parameters for each row execute function public.set_updated_at();
+create table if not exists public.lab_parameter_versions (id uuid primary key default gen_random_uuid(), parameter_id uuid not null references public.lab_parameters(id) on delete cascade, version int not null default 1, snapshot jsonb not null, source_id uuid references public.lab_sources(id) on delete set null, valid_from date, valid_to date, created_at timestamptz not null default now());
 create index if not exists idx_labver_param on public.lab_parameter_versions(parameter_id);
-
-create table if not exists public.lab_change_log (
-  id uuid primary key default gen_random_uuid(),
-  parameter_id uuid references public.lab_parameters(id) on delete set null,
-  action text not null,
-  old_data jsonb,
-  new_data jsonb,
-  source_id uuid references public.lab_sources(id) on delete set null,
-  changed_by uuid references public.profiles(id) on delete set null,
-  changed_by_email text,
-  reason text,
-  created_at timestamptz not null default now()
-);
+create table if not exists public.lab_change_log (id uuid primary key default gen_random_uuid(), parameter_id uuid references public.lab_parameters(id) on delete set null, action text not null, old_data jsonb, new_data jsonb, source_id uuid references public.lab_sources(id) on delete set null, changed_by uuid references public.profiles(id) on delete set null, changed_by_email text, reason text, created_at timestamptz not null default now());
 create index if not exists idx_labchange_param on public.lab_change_log(parameter_id, created_at desc);
-
--- RLS
 alter table public.lab_sources enable row level security;
-drop policy if exists "labsrc: olvasás" on public.lab_sources;
-create policy "labsrc: olvasás" on public.lab_sources for select using (true);
-drop policy if exists "labsrc: staff kezelés" on public.lab_sources;
-create policy "labsrc: staff kezelés" on public.lab_sources for all
-  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
-
+drop policy if exists "labsrc: olvasás" on public.lab_sources; create policy "labsrc: olvasás" on public.lab_sources for select using (true);
+drop policy if exists "labsrc: staff" on public.lab_sources; create policy "labsrc: staff" on public.lab_sources for all using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 alter table public.lab_parameters enable row level security;
-drop policy if exists "labparam: olvasás" on public.lab_parameters;
-create policy "labparam: olvasás" on public.lab_parameters for select using (true);
-drop policy if exists "labparam: staff kezelés" on public.lab_parameters;
-create policy "labparam: staff kezelés" on public.lab_parameters for all
-  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
-
+drop policy if exists "labparam: olvasás" on public.lab_parameters; create policy "labparam: olvasás" on public.lab_parameters for select using (true);
+drop policy if exists "labparam: staff" on public.lab_parameters; create policy "labparam: staff" on public.lab_parameters for all using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 alter table public.lab_parameter_versions enable row level security;
-drop policy if exists "labver: olvasás" on public.lab_parameter_versions;
-create policy "labver: olvasás" on public.lab_parameter_versions for select using (true);
-drop policy if exists "labver: staff kezelés" on public.lab_parameter_versions;
-create policy "labver: staff kezelés" on public.lab_parameter_versions for all
-  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
-
+drop policy if exists "labver: olvasás" on public.lab_parameter_versions; create policy "labver: olvasás" on public.lab_parameter_versions for select using (true);
+drop policy if exists "labver: staff" on public.lab_parameter_versions; create policy "labver: staff" on public.lab_parameter_versions for all using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin'))) with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
 alter table public.lab_change_log enable row level security;
-drop policy if exists "labchange: staff olvasás" on public.lab_change_log;
-create policy "labchange: staff olvasás" on public.lab_change_log for select using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
-drop policy if exists "labchange: staff írás" on public.lab_change_log;
-create policy "labchange: staff írás" on public.lab_change_log for insert with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
-
--- Meglévő 49 laborparaméter — PENDING_REVIEW, kitalált forrás nélkül
-insert into public.lab_parameters
-  (slug, name_hu, abbrev, loinc, category, unit, reference_range, reference_range_by_age,
-   critical_values, low_bound, high_bound, clinical_significance, details, review_status, status) values
+drop policy if exists "labchange: staff olv" on public.lab_change_log; create policy "labchange: staff olv" on public.lab_change_log for select using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
+drop policy if exists "labchange: staff ir" on public.lab_change_log; create policy "labchange: staff ir" on public.lab_change_log for insert with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role in ('szerkeszto','lektor','admin')));
+insert into public.lab_parameters (slug, name_hu, abbrev, loinc, category, unit, reference_range, reference_range_by_age, critical_values, low_bound, high_bound, clinical_significance, details, review_status, status) values
   ('hb', 'Hemoglobin', 'Hb', 'not assigned', 'Hematológia', 'g/l', 'F: 120–160 · Fé: 130–170', '{"gyermek": "Újszülött 145–225; csecsemő/gyermek kb. 105–140 g/l", "terhesseg": "≥110 g/l (hemodilúció miatt élettanilag alacsonyabb)"}'::jsonb, 'Hb <70 g/l: súlyos anaemia — transzfúzió mérlegelése, sürgős értékelés.', 120, 170, 'Alacsony Hb + alacsony MCV → vashiány gyanúja | Hirtelen esés → aktív vérzés', '{"what": "A vörösvértestek oxigénszállító fehérjéje.", "why": "Az anaemia és a policitémia alapmutatója; oxigénellátást tükröz.", "organ": "Vér / csontvelő", "kw": "vérszegénység anémia vörösvértest oxigén", "low": {"causes": ["Vérzés", "Vashiány", "Krónikus betegség anaemiája"], "rare": ["Hemolízis", "Csontvelő-elégtelenség"], "sx": ["Fáradtság", "Sápadtság", "Nehézlégzés", "Tachycardia"], "apn": ["Vérzésforrás keresése", "Vitális paraméterek, tolerancia felmérése", "Vas/ferritin, retikulocita kiegészítés mérlegelése"]}, "high": {"causes": ["Dehidráció", "Policitémia vera", "Krónikus hipoxia (COPD, dohányzás)"], "rare": ["EPO-túltermelés"], "sx": ["Fejfájás", "Bőrpír", "Thrombosis-hajlam"], "apn": ["Folyadékstátusz értékelése", "Dohányzás/hipoxia feltárása"]}, "diseases": ["Anaemia", "Policitémia", "Krónikus vesebetegség"], "relLabs": ["Htc", "MCV", "Ferritin", "Retikulocita"], "drugs": ["Vaspótlás", "EPO", "Kemoterápia"]}'::jsonb, 'pending_review', 'active'),
   ('wbc', 'Fehérvérsejtszám', 'WBC', 'not assigned', 'Hematológia', 'G/l', '4.0–10.0', '{"gyermek": "Csecsemő/kisgyermek magasabb: kb. 6–17 G/l", "terhesseg": "Élettanilag emelkedett lehet (kb. 15 G/l-ig)"}'::jsonb, 'WBC <1 G/l: súlyos neutropenia — fertőzésveszély, izoláció, sürgős értékelés.', 4, 10, 'Magas WBC + magas CRP → bakteriális infekció | Nagyon alacsony WBC → fertőzésveszély, izoláció', '{"what": "A védekező (immun) sejtek összszáma.", "why": "Infekció, gyulladás, hematológiai kórképek jelzője.", "organ": "Vér / immunrendszer", "kw": "fehérvérsejt leukocita fertőzés gyulladás immun", "low": {"causes": ["Vírusfertőzés", "Csontvelő-szuppresszió", "Gyógyszer (citosztatikum)"], "rare": ["Aplasztikus anaemia", "Hypersplenismus"], "sx": ["Fokozott fertőzéshajlam"], "apn": ["Neutropeniás láz esetén sürgős ellátás", "Izolációs szempontok"]}, "high": {"causes": ["Bakteriális fertőzés", "Gyulladás", "Stressz, szteroid"], "rare": ["Leukémia"], "sx": ["Láz, góctünetek"], "apn": ["Góc keresése", "CRP/PCT kiegészítés", "Lázgörbe követése"]}, "diseases": ["Szepszis", "Leukémia", "Neutropenia"], "relLabs": ["CRP", "PCT", "Kvalitatív vérkép"], "drugs": ["Szteroid", "G-CSF", "Citosztatikum"]}'::jsonb, 'pending_review', 'active'),
   ('plt', 'Thrombocytaszám', 'PLT', 'not assigned', 'Hematológia', 'G/l', '150–400', '{"gyermek": "Hasonló a felnőtthöz (150–450 G/l)", "terhesseg": "Enyhén alacsonyabb lehet (gestatiós thrombocytopenia)"}'::jsonb, 'PLT <20 G/l: spontán vérzés veszélye — sürgős értékelés.', 150, 400, '<20–30 G/l: spontán vérzés veszélye | Csökkenés heparin mellett → HIT gyanúja', '{"what": "Véralvadásban részt vevő vérlemezkék.", "why": "Vérzés- és thrombosis-kockázat felmérése.", "organ": "Vér / csontvelő", "kw": "thrombocyta vérlemezke alvadás vérzés", "low": {"causes": ["Fokozott felhasználás/pusztulás", "Csontvelő-szuppresszió", "Hypersplenismus"], "rare": ["ITP", "TTP", "DIC"], "sx": ["Petechia", "Nyálkahártyavérzés"], "apn": ["Vérzésjelek figyelése", "Invazív beavatkozás előtt egyeztetés"]}, "high": {"causes": ["Reaktív (gyulladás, vashiány)", "Splenectomia után"], "rare": ["Esszenciális thrombocytaemia"], "sx": ["Általában tünetmentes"], "apn": ["Thrombosis-jelek figyelése"]}, "diseases": ["ITP", "DIC", "Csontvelői betegség"], "relLabs": ["INR", "Fibrinogén", "D-dimer"], "drugs": ["Heparin (HIT)", "Kemoterápia"]}'::jsonb, 'pending_review', 'active'),
