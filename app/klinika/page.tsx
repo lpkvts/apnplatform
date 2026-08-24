@@ -35,6 +35,11 @@ export default async function KlinikaPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>56 skála — pontozás, rizikósáv, APN-teendők</div>
       </Link>
 
+      <Link className="card klink" href="/klinika/vizsgalat">
+        <div className="klink-t">🩺 Betegvizsgálat</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Strukturált propedeutikai vizsgálat — klinikai és oktatási mód</div>
+      </Link>
+
       <Link className="card klink" href="/klinika/ertekeles">
         <div className="klink-t">🩺 Új betegértékelés</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Vezetett 12 lépéses folyamat — menthető</div>
