@@ -42,8 +42,7 @@ A kikapcsolt vagy rejtett modulok automatikusan eltűnnek a navigációból, a k
 ### 🏠 Kezdőlap (munkaasztal)
 - **Fő művelet:** „Új betegvizsgálat indítása" kiemelt gomb
 - **Folytasd, ahol abbahagytad:** a folyamatban lévő betegvizsgálat és nyitott klinikai eset gyors folytatása
-- **Gyorsindítóim:** a felhasználó által kiválasztott menük gombként (Testreszabás oldalon állítható)
-- **Gyors elérés:** a legfontosabb klinikai modulok csempéi
+- **Gyors elérés:** testreszabható gyorsindító csempék — a felhasználó a Testreszabás oldalon (vagy a „＋ Hozzáadás” csempével) veszi fel a leggyakrabban használt menüket
 - **Legutóbbi tevékenységek** és **központi keresés**
 
 ### 🩺 Klinikum
@@ -189,7 +188,7 @@ Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run buil
 
 - **Betegvizsgálat 2.0** – propedeutikai modul (anamnézis → összegzés), red flag-ekkel és kapcsolódó modulokkal
 - **V2 UX** – 4-kategóriás navigáció, Profil a felső sávba, munkaasztal-dashboard, multi-típusú keresés, **egységes Clinical Context** komponens
-- **Kedvencek rendszer** (★) + testreszabható kezdőlapi gyorsindítók
+- **Kedvencek rendszer** (★) + testreszabható Gyors elérés a kezdőlapon
 - **Labor** – nem-specifikus (férfi/nő) referenciaérték-értelmezés
 - **CMS** – irányelvek külön oldalon, felhasználó-lista, tartalomfigyelő, források
 - **Design** – kontrasztosabb paletta
