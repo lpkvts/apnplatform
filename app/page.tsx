@@ -45,14 +45,7 @@ export default async function DashboardPage() {
           Kezdőlap
           <span>{profile?.full_name || 'Üdvözöljük'} · {profile?.specialty || 'APN'}</span>
         </div>
-        <div className="dash-actions">
-          <Link href="/ertesitesek" className="icon-btn bell-wrap">
-            <Icon name="bell" size={20} />
-            {notifCount > 0 && <span className="notif-dot">{notifCount > 9 ? '9+' : notifCount}</span>}
-          </Link>
-          <Link href="/profil" className="avatar">{initial}</Link>
         </div>
-      </div>
 
       <Link href="/kereses" className="search-box">
         <Icon name="search" size={18} />

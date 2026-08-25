@@ -65,6 +65,14 @@ export default async function ProfilPage() {
         </div>
       </div>
 
+      <Link className="card klink" href="/kedvencek">
+        <div className="klink-t">⭐ Kedvenceim</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Csillagozott betegségek, laborok, score-ok, EKG-k</div>
+      </Link>
+      <Link className="card klink" href="/klinika/esetek?type=assessment">
+        <div className="klink-t">🗂️ Előzmények</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Korábbi betegértékelések és klinikai esetek</div>
+      </Link>
       {passportEnabled && (
         <Link className="card klink" href="/kompetenciak">
           <div className="klink-t">📈 Kompetencia-passzport</div>
