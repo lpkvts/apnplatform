@@ -456,3 +456,8 @@ body {
 .kt-acc[open] .kt-sum::after { transform: rotate(180deg); }
 .kt-sum:hover { background: var(--brand-tint); }
 .kt-body { padding: 0 12px 12px; }
+
+/* Felső sáv — üdvözlő szöveg a profil-ikon mellett */
+.nav-greet { font-size: 13px; color: var(--muted); margin-right: 8px; white-space: nowrap; max-width: 42vw; overflow: hidden; text-overflow: ellipsis; }
+.nav-greet b { color: var(--brand); font-weight: 700; }
+@media (max-width: 380px) { .nav-greet { display: none; } }
