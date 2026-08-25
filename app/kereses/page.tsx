@@ -5,7 +5,8 @@ import { getFlag } from '@/lib/flags'
 
 export const dynamic = 'force-dynamic'
 
-export default async function KeresesPage() {
+export default async function KeresesPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q: initialQuery } = await searchParams
   const supabase = await createClient()
   const [g, c, d] = await Promise.all([
     supabase.from('guidelines').select('id, title, summary, specialty').eq('status', 'published'),
@@ -17,7 +18,7 @@ export default async function KeresesPage() {
     <>
       <Link className="sh-back" href="/">‹ Kezdőlap</Link>
       <h1 className="h1">Keresés</h1>
-      <GlobalSearch guidelines={g.data ?? []} career={careerEnabled ? (c.data ?? []) : []} diseases={d.data ?? []} />
+      <GlobalSearch guidelines={g.data ?? []} career={careerEnabled ? (c.data ?? []) : []} diseases={d.data ?? []} initialQuery={initialQuery ?? ''} />
     </>
   )
 }

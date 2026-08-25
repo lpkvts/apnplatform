@@ -276,7 +276,9 @@ body {
 
 /* ===== Globális kereső belépő ===== */
 .search-box { display: flex; align-items: center; gap: 10px; background: #fff; border: 1.5px solid var(--line); border-radius: 14px; padding: 13px 15px; color: var(--brand-3); text-decoration: none; margin-bottom: 16px; font-size: 15px; }
-.search-box:hover { border-color: var(--brand-3); }
+.search-box:hover { border-color: var(--brand-2); }
+.search-box .search-input { flex: 1; min-width: 0; border: none; outline: none; background: transparent; font: inherit; font-size: 15px; color: var(--ink); padding: 0; }
+.search-box .search-input::placeholder { color: var(--brand-3); }
 
 /* ===== Healthcare Safety Layer ===== */
 .safety-note { background: var(--brand-tint); border: 1px solid #d8e6df; color: var(--slate-700); border-radius: 12px; padding: 11px 13px; font-size: 12px; line-height: 1.5; margin: 12px 0; }

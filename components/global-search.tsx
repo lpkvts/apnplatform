@@ -7,6 +7,8 @@ import { LAB } from '@/lib/labor/data'
 import { ECG } from '@/lib/ekg/data'
 import { CAT_LABEL } from '@/components/career'
 import { CONTEXTS } from '@/lib/context/data'
+import { COMPLAINTS } from '@/lib/clinical/complaints'
+import { ACUTE } from '@/lib/clinical/acute'
 
 interface Gl { id: string; title: string; summary: string | null; specialty: string[] | null }
 interface CareerRow { id: string; title: string; category: string; tags: string[] | null; org: string | null }
@@ -17,8 +19,8 @@ const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u
 const LIMIT = 8
 
 interface DiseaseRow { id: string; name: string; aliases: string[] | null; abbrev: string | null; specialty: string | null }
-export function GlobalSearch({ guidelines, career, diseases }: { guidelines: Gl[]; career: CareerRow[]; diseases: DiseaseRow[] }) {
-  const [q, setQ] = useState('')
+export function GlobalSearch({ guidelines, career, diseases, initialQuery = '' }: { guidelines: Gl[]; career: CareerRow[]; diseases: DiseaseRow[]; initialQuery?: string }) {
+  const [q, setQ] = useState(initialQuery)
   const nq = norm(q.trim())
   const groups: Group[] = []
 
@@ -28,6 +30,12 @@ export function GlobalSearch({ guidelines, career, diseases }: { guidelines: Gl[
       .filter((c) => norm(`${c.name} ${c.guidelineKw.join(' ')}`).includes(nq))
       .slice(0, LIMIT).map((c) => ({ id: c.id, title: c.name, sub: 'Klinikai kontextus', href: `/kontextus/${c.id}` }))
     if (ctxHits.length) groups.push({ key: 'ctx', label: '🧠 Klinikai kontextus', hits: ctxHits })
+
+    // Panasz alapján
+    const pa = COMPLAINTS
+      .filter((c) => norm(`${c.name} ${c.conditions.map((x) => x.name).join(' ')}`).includes(nq))
+      .slice(0, LIMIT).map((c) => ({ id: c.id, title: c.name, sub: `${c.conditions.length} lehetséges kórkép`, href: `/betegsegtar/panasz?p=${c.id}` }))
+    if (pa.length) groups.push({ key: 'panasz', label: '🔍 Panasz alapján', hits: pa })
 
     // Betegségtár
     const dis = diseases
@@ -59,6 +67,12 @@ export function GlobalSearch({ guidelines, career, diseases }: { guidelines: Gl[
       .slice(0, LIMIT).map((e) => ({ id: e.id, title: e.name, sub: e.cat, href: `/klinika/ekg?open=${e.id}` }))
     if (ek.length) groups.push({ key: 'ekg', label: '📈 EKG', hits: ek })
 
+    // Akut állapotok
+    const ac = ACUTE
+      .filter((a) => norm(a).includes(nq))
+      .slice(0, LIMIT).map((a) => ({ id: a, title: a, sub: 'Akut állapotok', href: '/betegsegtar/akut' }))
+    if (ac.length) groups.push({ key: 'akut', label: '🚨 Akut állapotok', hits: ac })
+
     // Career
     const ca = career
       .filter((c) => norm(`${c.title} ${c.org ?? ''} ${(c.tags ?? []).join(' ')}`).includes(nq))
@@ -74,7 +88,7 @@ export function GlobalSearch({ guidelines, career, diseases }: { guidelines: Gl[
         value={q} onChange={(e) => setQ(e.target.value)} />
 
       {nq.length < 2 && (
-        <p className="sub">Írj be legalább 2 karaktert. A kereső egyszerre néz a Tudástárban, az eszközökben (score-ok), a laborban, az EKG-ban és a Career-ben.</p>
+        <p className="sub">Írj be legalább 2 karaktert. Egy keresés — több tartalomtípus: panasz, kórkép, labor, score, EKG, akut állapot, protokoll/evidence és klinikai kontextus.</p>
       )}
 
       {nq.length >= 2 && total === 0 && (
