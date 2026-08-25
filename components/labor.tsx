@@ -248,7 +248,7 @@ function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack:
         <div className="card"><b>⬆ Magas érték</b><LList title="Okok" items={l.highCauses} /><LList title="Ritkább okok" items={l.highRare} /><LList title="Tünetek" items={l.highSx} /><LList title="APN teendők" items={l.highApn} /></div>
       )}
       {l.signif && l.signif.length > 0 && <div className="card"><b>💡 Klinikai jelentőség</b><LList title="" items={l.signif} /></div>}
-      <div className="card"><LList title="Kapcsolódó betegségek" items={l.diseases} /><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} /></div>
+      <div className="card"><LList title="Kapcsolódó betegségek" items={l.diseases} /><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} />{l.diseases && l.diseases.length > 0 && <a className="btn ghost sm" href="/betegsegtar" style={{ marginTop: 8 }}>🩺 Betegségtár megnyitása</a>}</div>
       {extra && (extra.ped || extra.preg) && (
         <div className="card"><b>Speciális referenciák</b>{extra.ped && <p className="sub" style={{ margin: '6px 0 0' }}><b>Gyermek:</b> {extra.ped}</p>}{extra.preg && <p className="sub" style={{ margin: '4px 0 0' }}><b>Terhesség:</b> {extra.preg}</p>}</div>
       )}

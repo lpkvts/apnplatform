@@ -218,7 +218,7 @@ function EcgDetail({ e, onBack }: { e: EcgItem; onBack: () => void }) {
       {e.signif && e.signif.trim() && <div className="card"><b>💡 Klinikai jelentőség</b><p style={{ margin: '6px 0 0' }}>{e.signif}</p></div>}
       {e.mistakes && e.mistakes.length > 0 && <div className="card"><b>⚠ Gyakori hibák</b><UL title="" items={e.mistakes} /></div>}
       {e.memory && <div className="kb-relnote">🧠 Memóriakampó: {e.memory}</div>}
-      {e.diseases && e.diseases.length > 0 && <div className="card"><UL title="Kapcsolódó kórképek" items={e.diseases} /></div>}
+      {e.diseases && e.diseases.length > 0 && <div className="card"><UL title="Kapcsolódó kórképek" items={e.diseases} /><div className="cop-acts" style={{ marginTop: 8 }}><a className="btn ghost sm" href="/betegsegtar">🩺 Betegségtár</a>{e.tags && e.tags.includes("surgos") && <a className="btn ghost sm" href="/betegsegtar/akut">🚨 Akut állapotok</a>}</div></div>}
       <p className="sh-disc">Oktató-döntéstámogató referencia; a valós EKG mindig klinikai kontextusban, orvosi megerősítéssel értékelendő.</p>
     </>
   )

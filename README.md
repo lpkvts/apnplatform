@@ -5,7 +5,7 @@ Cél: **egy összekapcsolt, gyors, intuitív** felület, amely a napi klinikai m
 
 > **Fontos elv:** a platform **nem ad orvosi diagnózist**. Minden funkció döntéstámogató, oktatási és dokumentációs célú; a klinikai megítélést nem helyettesíti.
 
-*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis) és a V2 UX-audit (Phase 1–6 + 9) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
+*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis) és a V2 UX-audit (Phase 1–7 + 9) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
 
 ---
 
@@ -180,7 +180,7 @@ Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run buil
 
 ### V2 UX-audit és modulintegráció
 - ✅ 1. Audit · ✅ 2. Navigáció/IA · ✅ 3. Dashboard · ✅ 4. Betegvizsgálat workflow · ✅ 5. Keresés + Tudástár
-- ✅ 6. Clinical Context egységes, újrahasználható komponens · ⏳ 7. Labor/EKG/Score finomhangolás · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
+- ✅ 6. Clinical Context egységes, újrahasználható komponens · ✅ 7. Labor/EKG/Score finomhangolás (teljes strukturált detail-nézetek, kapcsolódások) · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
 - ⏳ Opcionális: adatvezérelt navigáció (flag-státuszok: active/beta/coming_soon/hidden/disabled)
 
 ---
