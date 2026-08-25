@@ -7,5 +7,6 @@ export default async function LaborPage({ searchParams }: { searchParams: Promis
   const { open } = await searchParams
   const supabase = await createClient()
   const { data } = await supabase.from('guidelines').select('id, title, summary').eq('status', 'published').returns<Gl[]>()
-  return <Labor guidelines={data ?? []} initialOpen={open} />
+  const { data: dz } = await supabase.from('diseases').select('id, name, aliases, is_stub').eq('status', 'published')
+  return <Labor guidelines={data ?? []} initialOpen={open} lookup={dz ?? []} />
 }

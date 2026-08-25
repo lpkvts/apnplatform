@@ -1,4 +1,6 @@
 'use client'
+import { RelatedDiseases } from '@/components/related-diseases'
+import type { DzLite } from '@/lib/disease/resolve'
 
 import { useState } from 'react'
 import Link from 'next/link'
@@ -41,7 +43,7 @@ type Mode = 'atlas' | 'practice' | 'exam'
 interface Prac { qid: string; opts: string[]; picked: string | null }
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
-export function Ekg({ initialOpen, examEnabled = false }: { initialOpen?: string; examEnabled?: boolean }) {
+export function Ekg({ initialOpen, examEnabled = false, lookup = [] }: { initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[] }) {
   const [mode, setMode] = useState<Mode>('atlas')
   const [prac, setPrac] = useState<Prac | null>(null)
   const [exam, setExam] = useState<Exam | null>(null)
@@ -91,7 +93,7 @@ export function Ekg({ initialOpen, examEnabled = false }: { initialOpen?: string
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">EKG Tudástár</h1>
       <ModeBar />
-      {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} />}
+      {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} lookup={lookup} />}
       {activeMode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}
       {activeMode === 'exam' && examEnabled && <ExamView exam={exam} best={best} onStart={startExam} onAnswer={examAnswer} />}
     </>
@@ -169,12 +171,12 @@ function ExamView({ exam, best, onStart, onAnswer }: { exam: Exam | null; best: 
   )
 }
 
-function Atlas({ initialOpen }: { initialOpen?: string }) {
+function Atlas({ initialOpen, lookup = [] }: { initialOpen?: string; lookup?: DzLite[] }) {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
   const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
   const open = openId ? ECG.find((e) => e.id === openId) ?? null : null
-  if (open) return <EcgDetail e={open} onBack={() => setOpenId(null)} />
+  if (open) return <EcgDetail e={open} onBack={() => setOpenId(null)} lookup={lookup} />
   const nq = norm(q.trim())
   const list = ECG.filter((e) => {
     const inCat = cat === 'Összes' || e.cat === cat
@@ -202,7 +204,7 @@ function Atlas({ initialOpen }: { initialOpen?: string }) {
   )
 }
 
-function EcgDetail({ e, onBack }: { e: EcgItem; onBack: () => void }) {
+function EcgDetail({ e, onBack, lookup = [] }: { e: EcgItem; onBack: () => void; lookup?: DzLite[] }) {
   const urgent = e.urgent && e.urgent.trim() && e.urgent.trim() !== '—'
   return (
     <>
@@ -218,7 +220,7 @@ function EcgDetail({ e, onBack }: { e: EcgItem; onBack: () => void }) {
       {e.signif && e.signif.trim() && <div className="card"><b>💡 Klinikai jelentőség</b><p style={{ margin: '6px 0 0' }}>{e.signif}</p></div>}
       {e.mistakes && e.mistakes.length > 0 && <div className="card"><b>⚠ Gyakori hibák</b><UL title="" items={e.mistakes} /></div>}
       {e.memory && <div className="kb-relnote">🧠 Memóriakampó: {e.memory}</div>}
-      {e.diseases && e.diseases.length > 0 && <div className="card"><UL title="Kapcsolódó kórképek" items={e.diseases} /><div className="cop-acts" style={{ marginTop: 8 }}><a className="btn ghost sm" href="/betegsegtar">🩺 Betegségtár</a>{e.tags && e.tags.includes("surgos") && <a className="btn ghost sm" href="/betegsegtar/akut">🚨 Akut állapotok</a>}</div></div>}
+      {e.diseases && e.diseases.length > 0 && <RelatedDiseases names={e.diseases} lookup={lookup} showAkut={!!(e.tags && e.tags.includes("surgos"))} title="Kapcsolódó kórképek" />}
       <p className="sh-disc">Oktató-döntéstámogató referencia; a valós EKG mindig klinikai kontextusban, orvosi megerősítéssel értékelendő.</p>
     </>
   )

@@ -1,4 +1,6 @@
 'use client'
+import { RelatedDiseases } from '@/components/related-diseases'
+import type { DzLite } from '@/lib/disease/resolve'
 import { FavStar } from '@/components/favorites-context'
 
 import { useState } from 'react'
@@ -17,7 +19,7 @@ function LabDisclaimer() {
 const RISK_CLS: Record<string, string> = { low: 'r-low', mid: 'r-mid', high: 'r-high', crit: 'r-crit' }
 const SEV_CLS: Record<string, string> = { info: 'sev-low', 'figyelendő': 'sev-mid', 'sürgős': 'sev-crit' }
 
-export function Labor({ guidelines = [], initialOpen }: { guidelines?: Gl[]; initialOpen?: string }) {
+export function Labor({ guidelines = [], initialOpen, lookup = [] }: { guidelines?: Gl[]; initialOpen?: string; lookup?: DzLite[] }) {
   const [mode, setMode] = useState<'kisokos' | 'panel'>('kisokos')
   return (
     <>
@@ -27,7 +29,7 @@ export function Labor({ guidelines = [], initialOpen }: { guidelines?: Gl[]; ini
         <button className={`seg ${mode === 'kisokos' ? 'on' : ''}`} onClick={() => setMode('kisokos')}>Kisokos</button>
         <button className={`seg ${mode === 'panel' ? 'on' : ''}`} onClick={() => setMode('panel')}>Panel értékelés</button>
       </div>
-      {mode === 'kisokos' ? <Kisokos initialOpen={initialOpen} /> : <Panel guidelines={guidelines} />}
+      {mode === 'kisokos' ? <Kisokos initialOpen={initialOpen} lookup={lookup} /> : <Panel guidelines={guidelines} />}
     </>
   )
 }
@@ -146,14 +148,14 @@ function Panel({ guidelines }: { guidelines: Gl[] }) {
 }
 
 /* ---------- Kisokos (egyértékes referencia) ---------- */
-function Kisokos({ initialOpen }: { initialOpen?: string }) {
+function Kisokos({ initialOpen, lookup = [] }: { initialOpen?: string; lookup?: DzLite[] }) {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
   const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
   const [vals, setVals] = useState<Record<string, string>>({})
 
   const open = openId ? LAB.find((l) => l.id === openId) ?? null : null
-  if (open) return <LabDetail l={open} val={vals[open.id] ?? ''} onBack={() => setOpenId(null)} onVal={(v) => setVals((s) => ({ ...s, [open.id]: v }))} />
+  if (open) return <LabDetail l={open} val={vals[open.id] ?? ''} onBack={() => setOpenId(null)} onVal={(v) => setVals((s) => ({ ...s, [open.id]: v }))} lookup={lookup} />
 
   const nq = norm(q.trim())
   const list = LAB.filter((l) => {
@@ -203,7 +205,7 @@ function SexResult({ l, val, compact }: { l: LabItem; val: string; compact?: boo
     </div>
   )
 }
-function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack: () => void; onVal: (v: string) => void }) {
+function LabDetail({ l, val, onBack, onVal, lookup = [] }: { l: LabItem; val: string; onBack: () => void; onVal: (v: string) => void; lookup?: DzLite[] }) {
   const st = interpret(l, val)
   const risk = statusRisk(st)
   const showLow = st === 'low' || st === 'crit-low'
@@ -248,7 +250,7 @@ function LabDetail({ l, val, onBack, onVal }: { l: LabItem; val: string; onBack:
         <div className="card"><b>⬆ Magas érték</b><LList title="Okok" items={l.highCauses} /><LList title="Ritkább okok" items={l.highRare} /><LList title="Tünetek" items={l.highSx} /><LList title="APN teendők" items={l.highApn} /></div>
       )}
       {l.signif && l.signif.length > 0 && <div className="card"><b>💡 Klinikai jelentőség</b><LList title="" items={l.signif} /></div>}
-      <div className="card"><LList title="Kapcsolódó betegségek" items={l.diseases} /><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} />{l.diseases && l.diseases.length > 0 && <a className="btn ghost sm" href="/betegsegtar" style={{ marginTop: 8 }}>🩺 Betegségtár megnyitása</a>}</div>
+      <RelatedDiseases names={l.diseases} lookup={lookup} title="Kapcsolódó betegségek" />{((l.relLabs && l.relLabs.length > 0) || (l.drugs && l.drugs.length > 0)) && <div className="card"><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} /></div>}
       {extra && (extra.ped || extra.preg) && (
         <div className="card"><b>Speciális referenciák</b>{extra.ped && <p className="sub" style={{ margin: '6px 0 0' }}><b>Gyermek:</b> {extra.ped}</p>}{extra.preg && <p className="sub" style={{ margin: '4px 0 0' }}><b>Terhesség:</b> {extra.preg}</p>}</div>
       )}
