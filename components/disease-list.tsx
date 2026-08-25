@@ -21,6 +21,10 @@ export function DiseaseList({ items }: { items: DiseaseRow[] }) {
   const fullCount = items.filter((d) => !d.is_stub).length
   const stubCount = items.length - fullCount
 
+  // Szakterületenkénti teljes darabszám (a fel nem töltötteket is beleértve) — a teljes listából
+  const specTotals: Record<string, { total: number; full: number }> = {}
+  for (const d of items) { const k = d.specialty || 'Egyéb'; const t = (specTotals[k] ??= { total: 0, full: 0 }); t.total++; if (!d.is_stub) t.full++ }
+
   const groups: Record<string, DiseaseRow[]> = {}
   for (const d of list) { const k = d.specialty || 'Egyéb'; (groups[k] ??= []).push(d) }
   const specs = Object.keys(groups).sort((a, b) => a.localeCompare(b, 'hu'))
@@ -36,7 +40,12 @@ export function DiseaseList({ items }: { items: DiseaseRow[] }) {
       {list.length === 0 && <p className="sub">Nincs találat.</p>}
       {specs.map((spec) => (
         <div key={spec}>
-          <div className="sec-h"><span className="sec-t">{spec}</span></div>
+          <div className="sec-h">
+            <span className="sec-t">{spec}</span>
+            <span className="sec-l" style={{ pointerEvents: 'none', color: 'var(--muted)', fontWeight: 600 }}>
+              {specTotals[spec].total} kórkép{specTotals[spec].full < specTotals[spec].total ? ` · ${specTotals[spec].full} kidolgozott` : ''}
+            </span>
+          </div>
           {groups[spec].map((d) => (
             <Link key={d.id} className="sh-row" href={`/betegsegtar/${d.id}`}>
               <span className="sh-row-main">
