@@ -66,9 +66,9 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
       </Card>
       <Card title="Célzott anamnézis">
         <div className="sub" style={{ marginBottom: 4 }}>A panasz jellemzői</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{t.historyFeatures.map((x) => <span key={x} className="chip">{x}</span>)}</div>
+        <p style={{ margin: 0, lineHeight: 1.6 }}>{t.historyFeatures.join(', ')}.</p>
         <div className="sub" style={{ margin: '10px 0 4px' }}>Fontos kísérő tünetek</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>{t.historySymptoms.map((x) => <span key={x} className="chip">{x}</span>)}</div>
+        <p style={{ margin: 0, lineHeight: 1.6 }}>{t.historySymptoms.join(', ')}.</p>
         {t.historyNote && <div className="safety-note" style={{ marginTop: 10 }}>{t.historyNote}</div>}
         <div className="cop-acts" style={{ marginTop: 10 }}>
           <a className="btn ghost sm" href="/klinika/vizsgalat/munkamenet">🩺 Célzott anamnézis</a>
