@@ -204,3 +204,12 @@ A Betegvizsgálat modul átalakítása gyors, mobil-first **vizsgálati és tanu
 - Adat: `lib/vizsgalat/checklist.ts` (EXAM_SYSTEMS + EXAM_ELEMENTS, §7 sablon).
 
 *Következő fázisok: perzisztens tanulási haladás (checklist-státusz per felhasználó), kompetencia-integráció, mentorprogram-hivatkozás, University Space.*
+
+## Klinikai témakör-rendszer — Mellkasi fájdalom (1. teljes témakör)
+
+Újrahasznosítható topic/relatedContent rendszer (`lib/topics/data.ts`), amely a meglévő modulokat **kétirányúan** kapcsolja össze — új főmenü/„Knowledge Graph" modul nélkül:
+- **`/betegsegtar/akut/[slug]`** — részletes akut adatlap (mobil-first, kártyás): rövid orientáció · 🚨 vörös zászlók · elsődleges értékelés (stabilitás checklist + célzott anamnézis) · EKG · Labor (hs-cTn) · Score (GRACE) · differenciáldiagnózisok (3 szint, kattintható Betegségtár) · ⭐ APN klinikai fókusz · ⚡ eszkaláció · oxigén-kártya · automatikus „Kapcsolódó tudás" · szakmai források.
+- **Kétirányú kapcsolat**: az EKG (STEMI/NSTEMI/ischaemia/PE/pericarditis), Labor (troponin/kreatinin/kálium/vércukor/lipid), Score (GRACE/HEART/TIMI) és a Betegségtár érintett kórképeinek oldalain megjelenik a „🔗 Kapcsolódó klinikai témakör → Mellkasi fájdalom" visszalink (`components/topic-backlinks.tsx`). A Betegvizsgálat szervrendszer-oldalak (életjelek/cardio/légző) is visszalinkelnek.
+- **Akut lista** (`/betegsegtar/akut`): a topickal rendelkező elem (Mellkasi fájdalom) kattintható a részletes adatlapra.
+- **Kereső**: a „mellkasi fájdalom" keresés a topic részletes adatlapjára visz (Akut állapot kategória).
+- Bővíthető: akut dyspnoe, akut hasi fájdalom, eszméletvesztés, tudatzavar stb. ugyanezzel a rendszerrel.

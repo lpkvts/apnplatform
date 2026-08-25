@@ -8,6 +8,7 @@ import { CONTEXTS } from '@/lib/context/data'
 import { SafetyNote } from '@/components/safety'
 import { ClinicalDisclaimer } from '@/components/clinical-disclaimer'
 import { getFlag } from '@/lib/flags'
+import { TopicBacklinksForDisease } from '@/components/topic-backlinks'
 
 export const dynamic = 'force-dynamic'
 
@@ -77,6 +78,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
         <h1 className="h1">{data.name}</h1>
         <p className="sub">{data.specialty}{data.bno ? ` · BNO ${data.bno}` : ''}</p>
         <ClinicalDisclaimer />
+        <TopicBacklinksForDisease name={data.name} />
         <div className="card">
           <b>⚪ Tartalom fejlesztés alatt</b>
           <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, vörös zászlók, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
@@ -122,6 +124,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
       )}
 
       <ClinicalDisclaimer />
+      <TopicBacklinksForDisease name={data.name} />
 
       <Sec title="1. Röviden">
         {b.brief_what && <p style={{ margin: '0 0 6px' }}>{b.brief_what}</p>}

@@ -9,6 +9,7 @@ import { CAT_LABEL } from '@/components/career'
 import { CONTEXTS } from '@/lib/context/data'
 import { COMPLAINTS } from '@/lib/clinical/complaints'
 import { ACUTE } from '@/lib/clinical/acute'
+import { topicForAcuteName } from '@/lib/topics/data'
 
 interface Gl { id: string; title: string; summary: string | null; specialty: string[] | null }
 interface CareerRow { id: string; title: string; category: string; tags: string[] | null; org: string | null }
@@ -70,7 +71,7 @@ export function GlobalSearch({ guidelines, career, diseases, initialQuery = '' }
     // Akut állapotok
     const ac = ACUTE
       .filter((a) => norm(a).includes(nq))
-      .slice(0, LIMIT).map((a) => ({ id: a, title: a, sub: 'Akut állapotok', href: '/betegsegtar/akut' }))
+      .slice(0, LIMIT).map((a) => { const tp = topicForAcuteName(a); return { id: a, title: a, sub: tp ? 'Részletes akut adatlap' : 'Akut állapotok', href: tp ? `/betegsegtar/akut/${tp.slug}` : '/betegsegtar/akut' } })
     if (ac.length) groups.push({ key: 'akut', label: '🚨 Akut állapotok', hits: ac })
 
     // Career

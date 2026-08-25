@@ -1,5 +1,6 @@
 'use client'
 import { RelatedDiseases } from '@/components/related-diseases'
+import { TopicBacklinks } from '@/components/topic-backlinks'
 import type { DzLite } from '@/lib/disease/resolve'
 
 import { useState } from 'react'
@@ -221,6 +222,7 @@ function EcgDetail({ e, onBack, lookup = [] }: { e: EcgItem; onBack: () => void;
       {e.mistakes && e.mistakes.length > 0 && <div className="card"><b>⚠ Gyakori hibák</b><UL title="" items={e.mistakes} /></div>}
       {e.memory && <div className="kb-relnote">🧠 Memóriakampó: {e.memory}</div>}
       {e.diseases && e.diseases.length > 0 && <RelatedDiseases names={e.diseases} lookup={lookup} showAkut={!!(e.tags && e.tags.includes("surgos"))} title="Kapcsolódó kórképek" />}
+      <TopicBacklinks kind="ekg" id={e.id} />
       <p className="sh-disc">Oktató-döntéstámogató referencia; a valós EKG mindig klinikai kontextusban, orvosi megerősítéssel értékelendő.</p>
     </>
   )

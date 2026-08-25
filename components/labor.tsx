@@ -1,5 +1,6 @@
 'use client'
 import { RelatedDiseases } from '@/components/related-diseases'
+import { TopicBacklinks } from '@/components/topic-backlinks'
 import type { DzLite } from '@/lib/disease/resolve'
 import { FavStar } from '@/components/favorites-context'
 
@@ -250,7 +251,8 @@ function LabDetail({ l, val, onBack, onVal, lookup = [] }: { l: LabItem; val: st
         <div className="card"><b>⬆ Magas érték</b><LList title="Okok" items={l.highCauses} /><LList title="Ritkább okok" items={l.highRare} /><LList title="Tünetek" items={l.highSx} /><LList title="APN teendők" items={l.highApn} /></div>
       )}
       {l.signif && l.signif.length > 0 && <div className="card"><b>💡 Klinikai jelentőség</b><LList title="" items={l.signif} /></div>}
-      <RelatedDiseases names={l.diseases} lookup={lookup} title="Kapcsolódó betegségek" />{((l.relLabs && l.relLabs.length > 0) || (l.drugs && l.drugs.length > 0)) && <div className="card"><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} /></div>}
+      <RelatedDiseases names={l.diseases} lookup={lookup} title="Kapcsolódó betegségek" />
+      <TopicBacklinks kind="labor" id={l.id} />{((l.relLabs && l.relLabs.length > 0) || (l.drugs && l.drugs.length > 0)) && <div className="card"><LList title="Kapcsolódó laborok" items={l.relLabs} /><LList title="Érintett gyógyszerek" items={l.drugs} /></div>}
       {extra && (extra.ped || extra.preg) && (
         <div className="card"><b>Speciális referenciák</b>{extra.ped && <p className="sub" style={{ margin: '6px 0 0' }}><b>Gyermek:</b> {extra.ped}</p>}{extra.preg && <p className="sub" style={{ margin: '4px 0 0' }}><b>Terhesség:</b> {extra.preg}</p>}</div>
       )}

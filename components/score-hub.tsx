@@ -1,4 +1,5 @@
 'use client'
+import { TopicBacklinks } from '@/components/topic-backlinks'
 
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
@@ -223,6 +224,7 @@ function TestDetail({
           )}
         </>
       )}
+      <TopicBacklinks kind="scores" id={t.id} />
     </>
   )
 }

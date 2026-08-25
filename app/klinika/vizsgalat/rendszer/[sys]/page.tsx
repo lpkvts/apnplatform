@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { findSystem, elementsBySystem } from '@/lib/vizsgalat/checklist'
+import { TopicBacklinks } from '@/components/topic-backlinks'
 
 const TABS = [
   { id: 'checklist', label: 'Vizsgálati checklist' },
@@ -26,6 +27,8 @@ export default async function RendszerPage({ params, searchParams }: { params: P
           <Link key={t.id} href={`/klinika/vizsgalat/rendszer/${sys}?tab=${t.id}`} className={`sh-chip ${tab === t.id ? 'on' : ''}`}>{t.label}</Link>
         ))}
       </div>
+
+      <TopicBacklinks kind="examSystems" id={sys} />
 
       {tab === 'attekintes' && (
         <>
