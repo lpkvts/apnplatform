@@ -103,12 +103,16 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
         </div>
       </Card>
 
-      {/* 7. Fontos differenciáldiagnózisok */}
-      <div className="sec-h"><span className="sec-t">Fontos differenciáldiagnózisok</span></div>
-      <div className="safety-note" style={{ borderLeftColor: '#C0392B' }}>Elsőként mérlegelendő, potenciálisan életveszélyes okok:</div>
-      <RelatedDiseases names={t.ddx.critical} lookup={lookup} title="Életveszélyes okok" />
-      <RelatedDiseases names={t.ddx.cardiac} lookup={lookup} title="Fontos kardiális okok" />
-      <RelatedDiseases names={t.ddx.other} lookup={lookup} title="Egyéb lehetséges okok" />
+      {/* 7. Fontos differenciáldiagnózisok — összecsukható */}
+      <details className="kt-acc">
+        <summary className="kt-sum">🧩 Fontos differenciáldiagnózisok</summary>
+        <div className="kt-body">
+          <div className="safety-note" style={{ borderLeftColor: '#C0392B' }}>Elsőként mérlegelendő, potenciálisan életveszélyes okok:</div>
+          <RelatedDiseases names={t.ddx.critical} lookup={lookup} title="Életveszélyes okok" />
+          <RelatedDiseases names={t.ddx.cardiac} lookup={lookup} title="Fontos kardiális okok" />
+          <RelatedDiseases names={t.ddx.other} lookup={lookup} title="Egyéb lehetséges okok" />
+        </div>
+      </details>
 
       {/* 8. APN klinikai fókusz */}
       <div style={apnPremium}>
