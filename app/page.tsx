@@ -67,8 +67,8 @@ export default async function DashboardPage() {
         <input name="q" className="search-input" placeholder="Keresés a platformon…" autoComplete="off" aria-label="Keresés" />
       </form>
 
-      <Link href="/klinika/vizsgalat/munkamenet" className="btn" style={{ width: '100%', padding: '15px', fontSize: 16, margin: '4px 0 14px' }}>
-        🩺 Új betegvizsgálat indítása
+      <Link href="/klinika/vizsgalat" className="btn" style={{ width: '100%', padding: '15px', fontSize: 16, margin: '4px 0 14px' }}>
+        🩺 Betegvizsgálat megnyitása
       </Link>
 
       {resume.length > 0 && (
@@ -112,7 +112,7 @@ export default async function DashboardPage() {
         <div className="card">
           <p style={{ margin: 0 }}>Még nincs mentett tevékenységed.</p>
           <p className="sub" style={{ marginBottom: 0 }}>
-            Kezdj egy <Link href="/klinika/vizsgalat/munkamenet">betegvizsgálattal</Link> vagy <Link href="/klinika/ertekeles">betegértékeléssel</Link>.
+            Kezdj egy <Link href="/klinika/vizsgalat">betegvizsgálattal</Link> vagy <Link href="/klinika/ertekeles">betegértékeléssel</Link>.
           </p>
         </div>
       ) : (
