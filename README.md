@@ -1,62 +1,196 @@
-# APN Hungary Platform — B sáv (perzisztens platform)
+# APN Hungary Platform
 
-Next.js (App Router) + Supabase (PostgreSQL) induló váz a PHASE 3–4-hez:
-**Kompetencia-passzport, CPD, kurzusok, tartalom-/forráskezelés (CMS)**.
+Mobil-first klinikai szakmai munkakörnyezet Advanced Practice Nurse (APN) szakembereknek.
+Cél: **egy összekapcsolt, gyors, intuitív** felület, amely a napi klinikai munkát, a szakmai tájékozódást és a fejlődést egyben támogatja.
 
-Ez a réteg azt tartalmazza, amihez perzisztencia és valódi auth kell — ez a
-része NEM fér el az offline egyfájlos prototípusban. Az offline klinikai mag
-(Score Hub, Új betegértékelés, Labor, EKG, Copilot) továbbra is külön él.
+> **Fontos elv:** a platform **nem ad orvosi diagnózist**. Minden funkció döntéstámogató, oktatási és dokumentációs célú; a klinikai megítélést nem helyettesíti.
 
-## Fontos: migráció ELŐBB, kód UTÁNA
+*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis), a V2 UX-audit (Phase 1–5) és a Phase 9 (üres állapotok/loading) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
 
-A séma mindig a kód-deploy előtt fusson (QuestRun-konvenció).
+---
 
-## Beállítás
+## Tartalom
+1. [Információs architektúra](#információs-architektúra)
+2. [Mit lehet csinálni – funkciók](#mit-lehet-csinálni--funkciók)
+3. [Admin / Tartalomkezelés](#admin--tartalomkezelés)
+4. [Jogosultságok](#jogosultságok)
+5. [Kapcsolható modulok (feature flag-ek)](#kapcsolható-modulok-feature-flagek)
+6. [Technológia](#technológia)
+7. [Adatmodell és migrációk](#adatmodell-és-migrációk)
+8. [Telepítés és élesítés](#telepítés-és-élesítés)
+9. [Fejlesztési elvek](#fejlesztési-elvek)
+10. [Fejlesztési státusz és roadmap](#fejlesztési-státusz-és-roadmap)
+11. [Változásnapló](#változásnapló)
 
-1. Supabase projekt létrehozása → `Project Settings → API`-ból másold ki az
-   URL-t és az anon kulcsot.
-2. `cp .env.example .env.local`, töltsd ki a `NEXT_PUBLIC_SUPABASE_*` értékeket.
-3. Migrációk futtatása **sorrendben** (SQL editor vagy `supabase db push`):
-   - `supabase/migrations/0001_init.sql` — séma, triggerek, `handle_new_user`
-   - `supabase/migrations/0002_rls.sql`  — Row Level Security
-   - `supabase/migrations/0003_seed.sql` — kezdő katalógusok (kompetenciák, CPD-típusok, kurzusok)
-4. `npm install`
-5. `npm run dev` → http://localhost:3000
+---
 
-Első belépéskor regisztrálj — a `handle_new_user` trigger automatikusan
-létrehozza a profilodat. Admin/szerkesztő jogot a `profiles.role` átállításával
-adhatsz (SQL editorból).
+## Információs architektúra
 
-## Adatmodell (0001)
+A navigáció egyetlen, tiszta mentális modellre épül:
 
-- `profiles` (auth.users-hez kötve, szerepkör: apn/szerkeszto/lektor/admin)
-- `competencies`, `competency_progress`
-- `certifications`
-- `cpd_activity_types`, `cpd_entries` (év generált oszlop), `cpd_goals`
-- `courses`
-- `sources`, `guidelines` (státusz: draft → review → published → expired; `ai_generated` jelölés)
-- `notifications`
+**🩺 Klinikum → 📚 Tudástár → 🎓 Fejlődés → 👤 Profil**
 
-## Biztonság (0002)
+- **Alsó menü (mobil + desktop):** Kezdőlap · Klinikum · Tudástár · Fejlődés
+- **Felső sáv (jobb felül):** értesítések + Profil (avatar) — minden oldalon elérhető
 
-- Mindenki csak a SAJÁT rekordjait látja/írja (progress, cert, cpd, goal, notif).
-- Katalógusok: bejelentkezett olvas; szerkesztő/admin ír.
-- Irányelvek: csak **published** olvasható mindenkinek; piszkozat a szerzőnek/lektornak.
-- Az AI-generált tartalom kötelezően `draft` → lektorálás → `published`
-  (nem publikálható automatikusan).
+A kikapcsolt vagy rejtett modulok automatikusan eltűnnek a navigációból, a kezdőlapról, a gyorselérésből és a keresésből.
 
-## Konvenciók
+---
 
-- Kétértelmű beágyazott join elkerülése: ahol egy tábla KÉT idegen kulccsal
-  mutat ugyanarra (pl. `guidelines.created_by` és `guidelines.reviewed_by` →
-  `profiles`), ott explicit FK-hint kell:
-  `.select('*, created_by:profiles!guidelines_created_by_fkey(*)')`.
-  A jelen oldalak ezt elkerülik: egyszerű lekérdezés + JS-oldali összefésülés.
-- Típusok: `lib/types.ts` (kézzel), vagy generálható: `supabase gen types typescript`.
+## Mit lehet csinálni – funkciók
 
-## Következő lépések
+### 🏠 Kezdőlap (munkaasztal)
+- **Fő művelet:** „Új betegvizsgálat indítása" kiemelt gomb
+- **Folytasd, ahol abbahagytad:** a folyamatban lévő betegvizsgálat és nyitott klinikai eset gyors folytatása
+- **Gyorsindítóim:** a felhasználó által kiválasztott menük gombként (Testreszabás oldalon állítható)
+- **Gyors elérés:** a legfontosabb klinikai modulok csempéi
+- **Legutóbbi tevékenységek** és **központi keresés**
 
-- Tanúsítványok + fájlfeltöltés (Supabase Storage).
-- Kurzus-ajánlás a kompetencia-profil alapján.
-- CMS felület a `guidelines` lektorálási munkafolyamathoz.
-- Az offline mag Tudástár-tartalmának import-migrációja a `guidelines`/`sources` táblákba.
+### 🩺 Klinikum
+- **Betegvizsgálat 2.0** – strukturált propedeutikai vizsgálat, klinikai és oktatási módban:
+  - Anamnézis (vezető panasz, OPQRST, korábbi betegségek, gyógyszerlista, allergia, szociális/családi)
+  - Vitális paraméterek (10 érték + BMI, ismételt mérés, **trend**, 🟢🟡🔴 zónák)
+  - Általános fizikális vizsgálat (állapot, tudat/AVPU, bőr, hydratatio, oedema)
+  - Szervrendszeri vizsgálatok (légző · cardiovascularis · neurológiai + FAST · hasi) IPPA/IAPP-logikával
+  - **Red flag jelzések** egy helyen, kapcsolódó akut/protokoll/mentor linkekkel
+  - **Klinikai összegzés** – automatikus, szerkeszthető, másolható státusz + kapcsolódó Labor/EKG/Betegségtár
+- **Új betegértékelés** – gyors, 12 lépéses klinikai értékelés
+- **Eseteim és előzmények** – klinikai esetek és korábbi betegértékelések egy listában (típus- és státuszszűrővel)
+- **Score Hub** – 56 klinikai skála és pontozó, kategóriákkal, kedvencezéssel
+- **Labor** – laborértékek referenciával és klinikai értelmezéssel; **nem-specifikus (férfi/nő) referenciák** külön értékeléssel
+- **EKG** – atlasz és gyakorlás (a vizsga mód admin-kapcsolóval)
+- **APN Copilot** – döntéstámogató (admin-kapcsolóval; AI-integráció előkészítve)
+
+### 📚 Tudástár
+- **Betegségtár** – kórképek strukturált, APN-fókuszú adatlapjai (evidence-badge-ekkel, DDx-szel, red flag-ekkel)
+- **Panasz alapján** – tünetből a lehetséges kórképek felé
+- **Akut állapotok** – gyors klinikai orientáció, vörös zászlók
+- **Protokollok és irányelvek** – evidence-alapú összefoglalók, források
+- **Klinikai kontextus** – összekapcsolt témák és modulok
+
+### 🎓 Fejlődés
+- **Mentorprogram** (hamarosan)
+- **Kompetenciák** (admin-kapcsolóval)
+- **CPD** – továbbképzés követése
+- **APN Career** (admin-kapcsolóval) – állások, képzések, konferenciák, pályázatok
+
+### 👤 Profil
+- Szakmai adatok, **APN szakirány** (6, itthon elérhető szakirány)
+- **Kedvenceim** – csillagozott betegségek, laborok, score-ok, EKG-k
+- **Előzmények**, profil szerkesztése, kijelentkezés
+- **Értesítések** (felső sávban is)
+
+### ⭐ Kedvencek és személyre szabás
+- Bárhol a **☆ csillaggal** kedvencnek jelölhető betegség, labor, score, EKG
+- **Kedvenceim** összesítő nézet, felhasználónként mentve
+- **Kezdőlap testreszabása** – gyorsindító gombok kiválasztása
+
+### 🔍 Központi keresés
+Egyetlen keresés, több tartalomtípus, csoportosítva: **panasz · kórkép · labor · score · EKG · akut állapot · protokoll/evidence · klinikai kontextus** (és Career, ha be van kapcsolva).
+
+---
+
+## Admin / Tartalomkezelés
+
+A **Tartalomkezelés (CMS)** szerkesztő/lektor/admin szerepkörrel érhető el:
+- **Irányelvek kezelése** – piszkozat → lektorálás → publikálás munkafolyamat
+- **Betegségtár kezelése** – kórképek létrehozása, szerkesztése, lektorálása, **stub-import**
+- **Tartalomfigyelő** – felülvizsgálatra esedékes és lejárt tartalmak
+- **Klinikai források** – evidenciaforrások nyilvántartása és verziói
+- **Audit napló** – ki, mit, mikor módosított
+- **Beállítások** – modulrészek ki-/bekapcsolása (feature flag-ek)
+- **Felhasználók** – regisztrált felhasználók egy helyen (név, e-mail, szerep, szakirány), csak adminnak
+
+---
+
+## Jogosultságok
+
+| Szerep | Jogosultság |
+|---|---|
+| **apn** | Klinikai és tudástár funkciók használata, saját adatok |
+| **szerkeszto** | + tartalom létrehozása/szerkesztése |
+| **lektor** | + tartalom lektorálása, publikálása |
+| **admin** | + beállítások, feature flag-ek, felhasználó-lista |
+
+A hozzáférést Supabase **Row Level Security (RLS)** védi; a saját munkamenetek (vizsgálatok, esetek, kedvencek) csak a tulajdonos számára láthatók.
+
+---
+
+## Kapcsolható modulok (feature flag-ek)
+
+Admin → Beállítások alatt:
+- `ekg_exam` – EKG vizsga mód
+- `ekg_learning` – EKG oktatóanyagok
+- `apn_copilot` – APN Copilot
+- `apn_career` – APN Career
+- `kompetencia_passport` – Kompetencia Passport
+
+Alapértelmezetten kikapcsolva; bekapcsoláskor automatikusan megjelennek a megfelelő belépési pontokon.
+
+---
+
+## Technológia
+
+- **Next.js 15** (App Router, TypeScript, Server Components)
+- **Supabase** (Postgres, Auth, RLS) – szerveroldali SSR kliens
+- **Vercel** (hosting, PWA – telepíthető mobilra)
+- Egyedi design rendszer (zöld/bézs paletta, kártyák, ikonrendszer), mobil-first, kontrasztos nézet
+
+---
+
+## Adatmodell és migrációk
+
+A séma verziózott SQL migrációkban (`supabase/migrations/`). Főbb táblák: `profiles`, `guidelines`, `assessments`, `clinical_cases`, `diseases`, `disease_evidence`, `clinical_sources`, `feature_flags`, `favorites`, `exam_sessions`, `career_items`, `competencies`, `cpd_entries`, `audit_log`, `notifications`.
+
+Migrációk (aktuális): **0001–0025**
+- 0001–0011: init, RLS, seed, assessments, guidelines, CMS, profil, értesítések, career, betegségek, javítások
+- 0012 audit · 0013 clinical_cases · 0014 labor tudásbázis · 0015 disease_evidence · 0016 clinical_sources · 0017–0019 betegség-katalógus + seed + demó kórképek
+- 0020 feature_flags · 0021 copilot flag · 0022 career/passport flag · 0023 kedvencek · 0024 exam_sessions (Betegvizsgálat 2.0) · 0025 admin felhasználó-lista
+
+---
+
+## Telepítés és élesítés
+
+A fejlesztés **GitHub → Vercel** pipeline-nal élesedik, a séma a **Supabase SQL Editorban** fut.
+
+1. **Séma:** az új migráció(k) lefuttatása a Supabase SQL Editorban (a helyes projektben), sorrendben. A migrációk idempotensek.
+2. **Kód:** a módosított fájlok a GitHub repóba (a Vercel automatikusan buildel).
+3. **Sorrend:** mindig **séma előbb**, kód utána.
+
+Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run build`.
+
+---
+
+## Fejlesztési elvek
+
+- **Nem-diagnózis:** a rendszer soha nem állítja, hogy „a betegnek biztosan X betegsége van".
+- **Meglévő funkciók megtartása:** finomhangolás és összekötés, nem újraírás.
+- **RLS:** új policy-kben inline `exists (select 1 from profiles where id = auth.uid() and role in (...))`; profiles-önhivatkozásnál security-definer függvény.
+- **Migráció-kezelés:** alkalmazott migrációt sosem módosítunk, mindig új fájlban javítunk.
+- **Build-validáció:** minden lépés végén `tsc` + `next build` zöld.
+- **Betegadat-védelem:** valós betegazonosító nem tárolódik; az oktatási munkamenet elkülönül a klinikai dokumentációtól.
+
+---
+
+## Fejlesztési státusz és roadmap
+
+### Betegvizsgálat 2.0 modul
+- ✅ 1. Anamnézis · ✅ 2. Vitálisok · ✅ 3. Általános vizsgálat · ✅ 4. Szervrendszerek · ✅ 5. Red flags · ✅ 6. Összegzés
+- ⏳ 7. Oktatási/gyakorló mód · ⏳ 8. Mentor-átadás + kompetencia
+
+### V2 UX-audit és modulintegráció
+- ✅ 1. Audit · ✅ 2. Navigáció/IA · ✅ 3. Dashboard · ✅ 4. Betegvizsgálat workflow · ✅ 5. Keresés + Tudástár
+- ⏳ 6. Clinical Context egységes komponens · ⏳ 7. Labor/EKG/Score finomhangolás · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
+- ⏳ Opcionális: adatvezérelt navigáció (flag-státuszok: active/beta/coming_soon/hidden/disabled)
+
+---
+
+## Változásnapló
+
+- **Betegvizsgálat 2.0** – propedeutikai modul (anamnézis → összegzés), red flag-ekkel és kapcsolódó modulokkal
+- **V2 UX** – 4-kategóriás navigáció, Profil a felső sávba, munkaasztal-dashboard, multi-típusú keresés
+- **Kedvencek rendszer** (★) + testreszabható kezdőlapi gyorsindítók
+- **Labor** – nem-specifikus (férfi/nő) referenciaérték-értelmezés
+- **CMS** – irányelvek külön oldalon, felhasználó-lista, tartalomfigyelő, források
+- **Design** – kontrasztosabb paletta
+- **Admin-kapcsolók** – Copilot, Career, Kompetencia Passport, EKG vizsga/oktatás

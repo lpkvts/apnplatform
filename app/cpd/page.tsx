@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { EmptyState } from '@/components/empty-state'
 import { createClient } from '@/lib/supabase/server'
 import { addCpdEntry } from './actions'
 import type { CpdEntry } from '@/lib/types'
@@ -53,9 +54,7 @@ export default async function CpdPage() {
       <div className="card">
         <strong>Bejegyzések ({year})</strong>
         {(entries ?? []).length === 0 ? (
-          <p className="sub" style={{ marginTop: 8 }}>
-            Még nincs bejegyzés erre az évre.
-          </p>
+          <EmptyState icon="🎓" title="Még nincs CPD-bejegyzés erre az évre" description="Rögzítsd a továbbképzéseidet, konferenciáidat és önképzésedet, hogy egy helyen kövesd a szakmai fejlődésed." />
         ) : (
           (entries ?? []).map((e) => (
             <div className="row" key={e.id}>
