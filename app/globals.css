@@ -447,3 +447,12 @@ body {
 
 /* Betegvizsgálat checklist ikon */
 .ck-box { font-size: 18px; color: var(--brand-2); margin-right: 4px; flex-shrink: 0; }
+
+/* Akut adatlap — Kapcsolódó tudás összecsukható fül */
+.kt-acc { border: 1px solid var(--line); border-radius: 14px; background: var(--card); margin: 10px 0; overflow: hidden; box-shadow: 0 1px 3px rgba(16,32,26,.06); }
+.kt-sum { cursor: pointer; list-style: none; padding: 14px 16px; font-weight: 700; color: var(--ink); display: flex; align-items: center; justify-content: space-between; }
+.kt-sum::-webkit-details-marker { display: none; }
+.kt-sum::after { content: '▾'; color: var(--brand-2); transition: transform .15s; }
+.kt-acc[open] .kt-sum::after { transform: rotate(180deg); }
+.kt-sum:hover { background: var(--brand-tint); }
+.kt-body { padding: 0 12px 12px; }

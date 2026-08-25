@@ -130,8 +130,10 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
         <ul style={{ margin: '6px 0 0', paddingLeft: 18 }}>{t.oxygen.map((x, i) => <li key={i} style={{ margin: '2px 0' }}>{x}</li>)}</ul>
       </Card>
 
-      {/* 11. Kapcsolódó tudás */}
-      <div className="sec-h"><span className="sec-t">🔗 Kapcsolódó tudás</span></div>
+      {/* 11. Kapcsolódó tudás — összecsukható */}
+      <details className="kt-acc">
+        <summary className="kt-sum">🔗 Kapcsolódó tudás</summary>
+        <div className="kt-body">
       <Card title="🩺 Betegvizsgálat">
         {(t.related.examSystems ?? []).map((id) => (
           <Link key={id} className="sh-row" href={`/klinika/vizsgalat/rendszer/${id}`}>
@@ -172,6 +174,8 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
         </Card>
       )}
       <RelatedDiseases names={t.related.diseases} lookup={lookup} title="Betegségtár" />
+        </div>
+      </details>
 
       {/* 13. Források */}
       <div className="sec-h"><span className="sec-t">Szakmai források</span></div>
