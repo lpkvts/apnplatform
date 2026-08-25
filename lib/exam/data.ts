@@ -59,7 +59,7 @@ export const EXAM_SECTIONS = [
   { id: 'altalanos', label: 'Általános fizikális vizsgálat', icon: '🩺', ready: true },
   { id: 'szervrendszer', label: 'Szervrendszeri vizsgálatok', icon: '❤️', ready: true },
   { id: 'redflag', label: 'Red flag jelzések', icon: '🚨', ready: true },
-  { id: 'osszegzes', label: 'Klinikai összegzés', icon: '📄', ready: false },
+  { id: 'osszegzes', label: 'Klinikai összegzés', icon: '📄', ready: true },
   { id: 'dokumentacio', label: 'Dokumentáció / Mentor', icon: '👥', ready: false },
 ]
 

@@ -71,6 +71,17 @@ export async function saveSystems(_prev: ExamState, formData: FormData): Promise
   revalidatePath(`/klinika/vizsgalat/${id}`); return { saved: true }
 }
 
+
+export async function saveSummary(_prev: ExamState, formData: FormData): Promise<ExamState> {
+  const { supabase, user } = await owner(); if (!user) return { error: 'Nincs bejelentkezve.' }
+  const id = String(formData.get('id') ?? '')
+  const summary = String(formData.get('summary') ?? '')
+  const { data, error } = await supabase.from('exam_sessions').update({ summary }).eq('id', id).eq('owner_id', user.id).select('id')
+  if (error) return { error: `Adatbázis-hiba: ${error.message}` }
+  if (!data || data.length === 0) return { error: 'A mentés 0 sort érintett (jogosultság?).' }
+  revalidatePath(`/klinika/vizsgalat/${id}`); return { saved: true }
+}
+
 export async function setExamStatus(formData: FormData) {
   const { supabase, user } = await owner(); if (!user) return
   const id = String(formData.get('id') ?? ''); const status = String(formData.get('status') ?? '')
