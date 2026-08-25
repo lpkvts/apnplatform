@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
 import { findElement, findSystem } from '@/lib/vizsgalat/checklist'
+export const dynamic = 'force-dynamic'
+
+const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim()
+
+interface Dz { id: string; name: string; aliases: string[] | null; is_stub: boolean }
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return <div className="card"><b>{title}</b><div style={{ marginTop: 6 }}>{children}</div></div>
@@ -10,12 +16,36 @@ function UL({ items }: { items?: string[] }) {
   return <ul style={{ margin: 0, paddingLeft: 18 }}>{items.map((x, i) => <li key={i} style={{ margin: '2px 0' }}>{x}</li>)}</ul>
 }
 
+function resolveDisease(name: string, dz: Dz[]): Dz | null {
+  const n = norm(name)
+  let hit = dz.find((d) => norm(d.name) === n)
+  if (!hit) hit = dz.find((d) => (d.aliases ?? []).some((a) => norm(a) === n))
+  if (!hit) {
+    const cands = dz.filter((d) => norm(d.name).includes(n) || n.includes(norm(d.name)))
+    hit = cands.find((d) => !d.is_stub) ?? cands[0]
+  }
+  if (!hit) {
+    const cands = dz.filter((d) => (d.aliases ?? []).some((a) => norm(a).includes(n) || n.includes(norm(a))))
+    hit = cands.find((d) => !d.is_stub) ?? cands[0]
+  }
+  return hit ?? null
+}
+
 export default async function ElemPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const e = findElement(id)
   if (!e) notFound()
   const system = findSystem(e.sys)
   const hasDeep = e.purpose || e.prep || e.equip || e.steps || e.observe || e.findings || e.detail
+
+  // Kapcsolódó kórképek feloldása a Betegségtár rekordjaira (kattinthatóság + stub jelzés)
+  let dz: Dz[] = []
+  if (e.conditions && e.conditions.length > 0) {
+    const supabase = await createClient()
+    const { data } = await supabase.from('diseases').select('id, name, aliases, is_stub').eq('status', 'published').returns<Dz[]>()
+    dz = data ?? []
+  }
+  const condRows = (e.conditions ?? []).map((c) => ({ name: c, match: resolveDisease(c, dz) }))
 
   return (
     <>
@@ -31,16 +61,42 @@ export default async function ElemPage({ params }: { params: Promise<{ id: strin
       {e.observe && <Block title="👀 Mire figyeljek?"><UL items={e.observe} /></Block>}
       {e.findings && <Block title="⚠️ Gyakori eltérések"><UL items={e.findings} /></Block>}
 
-      {(e.conditions || e.scoreIds || e.labIds || e.ekgIds) && (
+      {(condRows.length > 0 || e.scoreIds || e.labIds || e.ekgIds) && (
         <div className="card">
           <b>🔗 Kapcsolódó tartalmak</b>
-          <div className="cop-acts" style={{ marginTop: 8 }}>
-            {e.conditions && e.conditions.length > 0 && <a className="btn ghost sm" href="/betegsegtar">🩺 Betegségtár</a>}
-            {e.scoreIds && e.scoreIds.map((s) => <a key={s} className="btn ghost sm" href={`/klinika/tesztek?open=${s}`}>🧮 {s.toUpperCase()}</a>)}
-            {e.labIds && e.labIds.map((l) => <a key={l} className="btn ghost sm" href={`/klinika/labor?open=${l}`}>🧪 {l}</a>)}
-            {e.ekgIds && e.ekgIds.map((k) => <a key={k} className="btn ghost sm" href={`/klinika/ekg?open=${k}`}>📈 EKG</a>)}
-          </div>
-          {e.conditions && e.conditions.length > 0 && <p className="sub" style={{ margin: '8px 0 0' }}>Kórképek: {e.conditions.join(', ')}</p>}
+
+          {(e.scoreIds || e.labIds || e.ekgIds) && (
+            <div className="cop-acts" style={{ marginTop: 8 }}>
+              {e.scoreIds && e.scoreIds.map((s) => <a key={s} className="btn ghost sm" href={`/klinika/tesztek?open=${s}`}>🧮 {s.toUpperCase()}</a>)}
+              {e.labIds && e.labIds.map((l) => <a key={l} className="btn ghost sm" href={`/klinika/labor?open=${l}`}>🧪 {l}</a>)}
+              {e.ekgIds && e.ekgIds.map((k) => <a key={k} className="btn ghost sm" href={`/klinika/ekg?open=${k}`}>📈 EKG</a>)}
+            </div>
+          )}
+
+          {condRows.length > 0 && (
+            <>
+              <div className="sub" style={{ margin: '10px 0 4px' }}>Kapcsolódó kórképek</div>
+              {condRows.map(({ name, match }) => (
+                match ? (
+                  <Link key={name} className="sh-row" href={`/betegsegtar/${match.id}`}>
+                    <span className="sh-row-main">
+                      <span className="sh-row-name">🩺 {name}</span>
+                      <span className="sh-row-sub">{match.is_stub ? '⚪ Tartalom feltöltés alatt' : 'Kidolgozott adatlap'}</span>
+                    </span>
+                    <span className="sh-chev">›</span>
+                  </Link>
+                ) : (
+                  <Link key={name} className="sh-row" href="/betegsegtar">
+                    <span className="sh-row-main">
+                      <span className="sh-row-name">🩺 {name}</span>
+                      <span className="sh-row-sub">⏳ Hamarosan a Betegségtárban</span>
+                    </span>
+                    <span className="sh-chev">›</span>
+                  </Link>
+                )
+              ))}
+            </>
+          )}
         </div>
       )}
 
