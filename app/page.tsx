@@ -5,6 +5,7 @@ import { Icon } from '@/components/icons'
 import { getFlag } from '@/lib/flags'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
+import { Landing } from '@/components/landing'
 
 const TILES = [
   { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment' },
@@ -21,6 +22,7 @@ const CASE_STATUS: Record<string, string> = { active: 'Aktív', draft: 'Folyamat
 export default async function DashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return <Landing />
 
   const [profileRes, recentRes, examRes, caseRes] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>(),
@@ -65,7 +67,7 @@ export default async function DashboardPage() {
         <input name="q" className="search-input" placeholder="Keresés a platformon…" autoComplete="off" aria-label="Keresés" />
       </form>
 
-      <Link href="/klinika/vizsgalat" className="btn" style={{ width: '100%', padding: '15px', fontSize: 16, margin: '4px 0 14px' }}>
+      <Link href="/klinika/vizsgalat/munkamenet" className="btn" style={{ width: '100%', padding: '15px', fontSize: 16, margin: '4px 0 14px' }}>
         🩺 Új betegvizsgálat indítása
       </Link>
 
@@ -110,7 +112,7 @@ export default async function DashboardPage() {
         <div className="card">
           <p style={{ margin: 0 }}>Még nincs mentett tevékenységed.</p>
           <p className="sub" style={{ marginBottom: 0 }}>
-            Kezdj egy <Link href="/klinika/vizsgalat">betegvizsgálattal</Link> vagy <Link href="/klinika/ertekeles">betegértékeléssel</Link>.
+            Kezdj egy <Link href="/klinika/vizsgalat/munkamenet">betegvizsgálattal</Link> vagy <Link href="/klinika/ertekeles">betegértékeléssel</Link>.
           </p>
         </div>
       ) : (

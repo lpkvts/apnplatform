@@ -193,3 +193,14 @@ Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run buil
 - **CMS** – irányelvek külön oldalon, felhasználó-lista, tartalomfigyelő, források
 - **Design** – kontrasztosabb paletta
 - **Admin-kapcsolók** – Copilot, Career, Kompetencia Passport, EKG vizsga/oktatás
+
+## Betegvizsgálat — szervrendszer-alapú checklist (1. fázis)
+
+A Betegvizsgálat modul átalakítása gyors, mobil-first **vizsgálati és tanulási segédletté** (nem klinikai protokoll):
+- **`/klinika/vizsgalat`** — referencia-kezdőoldal: kereső (vizsgálati elemre is, pl. „pupilla") + szervrendszer-kártyák (11 rendszer) + belépő a vizsgálati munkamenethez.
+- **`/klinika/vizsgalat/rendszer/[sys]`** — szervrendszer-oldal: tabok (Vizsgálati checklist [alap] · Áttekintés · Részletes tudás); a checklist elemei a részletes útmutatóra visznek.
+- **`/klinika/vizsgalat/elem/[id]`** — vizsgálati elem részletes oldala: Mit vizsgálunk? · Előkészítés · Eszközök · Vizsgálat menete · Mire figyeljek? · Gyakori eltérések · Kapcsolódó tartalmak (Betegségtár/Score/Labor/EKG) · kompetencia-hivatkozás · Részletes propedeutikai útmutató.
+- **`/klinika/vizsgalat/munkamenet`** — a korábbi, beteg-szintű vizsgálati munkamenet (anamnézis→összegzés) ide került; a `/klinika/vizsgalat/[id]` munkamenet-oldalak változatlanok.
+- Adat: `lib/vizsgalat/checklist.ts` (EXAM_SYSTEMS + EXAM_ELEMENTS, §7 sablon).
+
+*Következő fázisok: perzisztens tanulási haladás (checklist-státusz per felhasználó), kompetencia-integráció, mentorprogram-hivatkozás, University Space.*

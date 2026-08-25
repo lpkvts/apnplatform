@@ -1,37 +1,34 @@
 import Link from 'next/link'
-import { createClient } from '@/lib/supabase/server'
-import { ExamStart } from '@/components/exam-start'
-import { ClinicalDisclaimer } from '@/components/clinical-disclaimer'
+import { EXAM_SYSTEMS, elementsBySystem } from '@/lib/vizsgalat/checklist'
+import { ExamSearch } from '@/components/exam-search'
 export const dynamic = 'force-dynamic'
 
-const MODE_BADGE: Record<string, string> = { clinical: '🩺 Klinikai', education: '🎓 Oktatási', practice: '🧠 Gyakorló' }
-interface Row { id: string; title: string; mode: string; status: string; updated_at: string }
-
-export default async function VizsgalatPage() {
-  const supabase = await createClient()
-  const { data } = await supabase.from('exam_sessions').select('id, title, mode, status, updated_at').neq('status', 'archived').order('updated_at', { ascending: false }).limit(10).returns<Row[]>()
-  const items = data ?? []
+export default function VizsgalatPage() {
   return (
     <>
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">Betegvizsgálat</h1>
-      <p className="sub">Strukturált propedeutikai betegvizsgálat: anamnézis, fizikális vizsgálat, red flags, összegzés — klinikai és oktatási módban.</p>
-      <ClinicalDisclaimer />
+      <p className="sub">Strukturált vizsgálati áttekintő szervrendszerenként. Tanulási és áttekintési segédlet — nem klinikai protokoll.</p>
 
-      <div className="sec-h"><span className="sec-t">Új vizsgálat indítása</span></div>
-      <ExamStart />
+      <ExamSearch />
 
-      {items.length > 0 && (
-        <>
-          <div className="sec-h"><span className="sec-t">Folyamatban lévő vizsgálataim</span></div>
-          {items.map((r) => (
-            <Link key={r.id} className="sh-row" href={`/klinika/vizsgalat/${r.id}`}>
-              <span className="sh-row-main"><span className="sh-row-name">{r.title}</span><span className="sh-row-sub">{MODE_BADGE[r.mode] ?? r.mode} · {new Date(r.updated_at).toLocaleDateString('hu-HU')}{r.status === 'completed' ? ' · lezárt' : ''}</span></span>
+      <Link className="btn" href="/klinika/vizsgalat/munkamenet" style={{ width: '100%', padding: 14, margin: '4px 0 8px' }}>
+        🩺 Vizsgálati munkamenet indítása (adott betegnél)
+      </Link>
+
+      <div className="sec-h"><span className="sec-t">Szervrendszerek</span></div>
+      {EXAM_SYSTEMS.map((s) => {
+        const n = elementsBySystem(s.id).length
+        return (
+          <Link key={s.id} className="card klink" href={`/klinika/vizsgalat/rendszer/${s.id}`}>
+            <div className="row" style={{ border: 'none', padding: 0 }}>
+              <span className="klink-t">{s.icon} {s.name}</span>
               <span className="sh-chev">›</span>
-            </Link>
-          ))}
-        </>
-      )}
+            </div>
+            <div className="sub" style={{ margin: '4px 0 0' }}>{n} vizsgálati elem</div>
+          </Link>
+        )
+      })}
     </>
   )
 }
