@@ -319,3 +319,11 @@ body {
 .empty-i { font-size: 30px; margin-bottom: 8px; }
 .empty-t { font-weight: 700; font-size: 15px; color: var(--ink); }
 .empty .btn { display: inline-flex; }
+
+/* ===== Clinical Context (lenyitható) ===== */
+.cc { border: 1px solid var(--line); border-radius: 14px; background: var(--card); margin-bottom: 12px; box-shadow: 0 1px 2px rgba(16,32,26,.05); overflow: hidden; }
+.cc > summary { list-style: none; cursor: pointer; padding: 13px 15px; font-weight: 700; font-size: 13.5px; color: var(--brand-dark); }
+.cc > summary::-webkit-details-marker { display: none; }
+.cc[open] > summary { border-bottom: 1px solid var(--line); }
+.cc-body { padding: 10px 12px 12px; }
+.cc-h { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin: 8px 2px 5px; }

@@ -5,7 +5,7 @@ Cél: **egy összekapcsolt, gyors, intuitív** felület, amely a napi klinikai m
 
 > **Fontos elv:** a platform **nem ad orvosi diagnózist**. Minden funkció döntéstámogató, oktatási és dokumentációs célú; a klinikai megítélést nem helyettesíti.
 
-*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis), a V2 UX-audit (Phase 1–5) és a Phase 9 (üres állapotok/loading) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
+*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis) és a V2 UX-audit (Phase 1–6 + 9) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
 
 ---
 
@@ -180,7 +180,7 @@ Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run buil
 
 ### V2 UX-audit és modulintegráció
 - ✅ 1. Audit · ✅ 2. Navigáció/IA · ✅ 3. Dashboard · ✅ 4. Betegvizsgálat workflow · ✅ 5. Keresés + Tudástár
-- ⏳ 6. Clinical Context egységes komponens · ⏳ 7. Labor/EKG/Score finomhangolás · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
+- ✅ 6. Clinical Context egységes, újrahasználható komponens · ⏳ 7. Labor/EKG/Score finomhangolás · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
 - ⏳ Opcionális: adatvezérelt navigáció (flag-státuszok: active/beta/coming_soon/hidden/disabled)
 
 ---
@@ -188,7 +188,7 @@ Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run buil
 ## Változásnapló
 
 - **Betegvizsgálat 2.0** – propedeutikai modul (anamnézis → összegzés), red flag-ekkel és kapcsolódó modulokkal
-- **V2 UX** – 4-kategóriás navigáció, Profil a felső sávba, munkaasztal-dashboard, multi-típusú keresés
+- **V2 UX** – 4-kategóriás navigáció, Profil a felső sávba, munkaasztal-dashboard, multi-típusú keresés, **egységes Clinical Context** komponens
 - **Kedvencek rendszer** (★) + testreszabható kezdőlapi gyorsindítók
 - **Labor** – nem-specifikus (férfi/nő) referenciaérték-értelmezés
 - **CMS** – irányelvek külön oldalon, felhasználó-lista, tartalomfigyelő, források

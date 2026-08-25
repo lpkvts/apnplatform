@@ -7,6 +7,7 @@ import { ExamVitalsForm } from '@/components/exam-vitals-form'
 import { ExamGeneralForm } from '@/components/exam-general-form'
 import { ExamSystemsForm } from '@/components/exam-systems-form'
 import { ExamSummaryForm } from '@/components/exam-summary-form'
+import { ClinicalContext } from '@/components/clinical-context'
 import { setExamStatus } from '../actions'
 export const dynamic = 'force-dynamic'
 
@@ -38,6 +39,8 @@ export default async function VizsgalatDetail({ params, searchParams }: { params
             : <span key={s.id} className="sh-chip" style={{ opacity: 0.5 }}>{s.icon} {s.label}</span>
         ))}
       </div>
+
+      <ClinicalContext keywords={[String((data.anamnesis as Record<string, unknown>)?.complaint ?? ''), String((data.anamnesis as Record<string, unknown>)?.complaint_cat ?? ''), data.focus ?? '']} />
 
       {sec === 'anamnezis' && (
         <ExamAnamnesisForm id={id} initial={data.anamnesis ?? {}} education={data.mode !== 'clinical'} />
