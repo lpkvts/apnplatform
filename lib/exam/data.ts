@@ -58,7 +58,7 @@ export const EXAM_SECTIONS = [
   { id: 'vitalis', label: 'Vitális paraméterek', icon: '📊', ready: true },
   { id: 'altalanos', label: 'Általános fizikális vizsgálat', icon: '🩺', ready: true },
   { id: 'szervrendszer', label: 'Szervrendszeri vizsgálatok', icon: '❤️', ready: true },
-  { id: 'redflag', label: 'Red flag jelzések', icon: '🚨', ready: false },
+  { id: 'redflag', label: 'Red flag jelzések', icon: '🚨', ready: true },
   { id: 'osszegzes', label: 'Klinikai összegzés', icon: '📄', ready: false },
   { id: 'dokumentacio', label: 'Dokumentáció / Mentor', icon: '👥', ready: false },
 ]
@@ -194,4 +194,39 @@ export const FINDING_HINTS: Record<string, string[]> = {
   'Speech – beszédzavar': ['Stroke – akut ellátás'],
   'Arm – kartartás gyengeség': ['Stroke – akut ellátás'],
   'Face – arc-aszimmetria': ['Stroke – akut ellátás'],
+}
+
+// --- Red flag összegzés (a rögzített adatokból származtatva; NEM diagnózis) ---
+export interface RedFlagSummary { vitals: string[]; general: string[]; systems: string[]; total: number }
+export function examRedFlags(d: {
+  vitals?: unknown; general_exam?: Record<string, unknown>; systems?: Record<string, Record<string, string | string[]>>; red_flags?: string[]
+}): RedFlagSummary {
+  const vitals: string[] = []
+  if (Array.isArray(d.vitals)) {
+    for (const m of d.vitals as Record<string, string>[]) {
+      for (const f of VITAL_FIELDS) {
+        const v = m?.[f.k]
+        if (v && vitalZone(f.k, v) === 'alert') vitals.push(`${f.label}: ${v} ${f.unit}`)
+      }
+    }
+  }
+  const g = (d.general_exam ?? {}) as Record<string, unknown>
+  const general: string[] = []
+  if (g.general_state === 'kritikus') general.push('kritikus általános állapot')
+  if (g.consciousness === 'sopor' || g.consciousness === 'coma') general.push(`tudat: ${g.consciousness}`)
+  if (g.avpu === 'P' || g.avpu === 'U') general.push('AVPU: csökkent reaktivitás')
+  if (g.skin_color === 'cyanotikus') general.push('cyanosis')
+  const sys = new Set<string>()
+  const ss = d.systems ?? {}
+  for (const sid of Object.keys(ss)) {
+    const grp = ss[sid] ?? {}
+    for (const gid of Object.keys(grp)) {
+      const v = grp[gid]
+      const arr = Array.isArray(v) ? v : v ? [v] : []
+      for (const x of arr) if (RED_FLAG_FINDINGS.includes(x)) sys.add(x)
+    }
+  }
+  if (Array.isArray(d.red_flags)) for (const x of d.red_flags) sys.add(x)
+  const V = [...new Set(vitals)], G = [...new Set(general)], S = [...sys]
+  return { vitals: V, general: G, systems: S, total: V.length + G.length + S.length }
 }
