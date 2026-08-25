@@ -53,7 +53,6 @@ export default async function ProfilPage() {
       <div className="sec-h"><span className="sec-t">Szakmai adatok</span><Link className="sec-l" href="/profil/szerkesztes">Szerkesztés</Link></div>
       <div className="card">
         <Field label="APN szakirány" value={p?.apn_type} />
-        <Field label="Szakterület" value={p?.specialty} />
         <Field label="Beosztás" value={p?.title} />
         <Field label="Munkahely" value={p?.workplace} />
         <Field label="Végzettség" value={p?.qualification} />

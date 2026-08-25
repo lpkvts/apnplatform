@@ -28,9 +28,6 @@ export function ProfileForm({ p }: { p: Profile | null }) {
         {APN_TYPES.map((t) => <option key={t.v} value={t.v}>{t.l}</option>)}
       </select>
 
-      <div className="as-lbl">Szakterület (szabad szöveg)</div>
-      <input className="field" name="specialty" defaultValue={p?.specialty ?? ''} placeholder="pl. belgyógyászat, sürgősségi" />
-
       <div className="as-lbl">Beosztás</div>
       <input className="field" name="title" defaultValue={p?.title ?? ''} placeholder="pl. vezető APN" />
 

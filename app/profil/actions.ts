@@ -16,7 +16,6 @@ export async function updateProfile(_prev: ProfileState, formData: FormData): Pr
   const { data, error } = await supabase.from('profiles').update({
     full_name: str('full_name'),
     apn_type: str('apn_type'),
-    specialty: str('specialty'),
     title: str('title'),
     workplace: str('workplace'),
     qualification: str('qualification'),
