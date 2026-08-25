@@ -71,22 +71,6 @@ export default async function DashboardPage() {
         🩺 Betegvizsgálat megnyitása
       </Link>
 
-      {resume.length > 0 && (
-        <>
-          <div className="sec-h"><span className="sec-t">Folytasd, ahol abbahagytad</span></div>
-          {resume.map((r) => (
-            <Link key={r.href} className="sh-row" href={r.href}>
-              <span className="qtile-i" style={{ width: 38, height: 38, marginRight: 4 }}><Icon name={r.kind === 'exam' ? 'assessment' : 'clinic'} size={20} /></span>
-              <span className="sh-row-main">
-                <span className="sh-row-name">{r.title}</span>
-                <span className="sh-row-sub">{r.sub} · {new Date(r.at).toLocaleDateString('hu-HU')}</span>
-              </span>
-              <span className="sh-chev">›</span>
-            </Link>
-          ))}
-        </>
-      )}
-
       <div className="sec-h">
         <span className="sec-t">Gyors elérés</span>
         <Link className="sec-l" href="/testreszabas">Testreszabás →</Link>
@@ -103,6 +87,22 @@ export default async function DashboardPage() {
           <span className="qtile-l">Hozzáadás</span>
         </Link>
       </div>
+
+      {resume.length > 0 && (
+        <>
+          <div className="sec-h"><span className="sec-t">Folytasd, ahol abbahagytad</span></div>
+          {resume.map((r) => (
+            <Link key={r.href} className="sh-row" href={r.href}>
+              <span className="qtile-i" style={{ width: 38, height: 38, marginRight: 4 }}><Icon name={r.kind === 'exam' ? 'assessment' : 'clinic'} size={20} /></span>
+              <span className="sh-row-main">
+                <span className="sh-row-name">{r.title}</span>
+                <span className="sh-row-sub">{r.sub} · {new Date(r.at).toLocaleDateString('hu-HU')}</span>
+              </span>
+              <span className="sh-chev">›</span>
+            </Link>
+          ))}
+        </>
+      )}
 
       <div className="sec-h">
         <span className="sec-t">Legutóbbi tevékenységek</span>
