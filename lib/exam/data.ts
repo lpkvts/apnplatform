@@ -57,7 +57,7 @@ export const EXAM_SECTIONS = [
   { id: 'anamnezis', label: 'Anamnézis', icon: '📝', ready: true },
   { id: 'vitalis', label: 'Vitális paraméterek', icon: '📊', ready: true },
   { id: 'altalanos', label: 'Általános fizikális vizsgálat', icon: '🩺', ready: true },
-  { id: 'szervrendszer', label: 'Szervrendszeri vizsgálatok', icon: '❤️', ready: false },
+  { id: 'szervrendszer', label: 'Szervrendszeri vizsgálatok', icon: '❤️', ready: true },
   { id: 'redflag', label: 'Red flag jelzések', icon: '🚨', ready: false },
   { id: 'osszegzes', label: 'Klinikai összegzés', icon: '📄', ready: false },
   { id: 'dokumentacio', label: 'Dokumentáció / Mentor', icon: '👥', ready: false },
@@ -125,3 +125,73 @@ export const SKIN_FINDINGS = ['kiütés', 'vérzéses bőrtünet', 'seb', 'decub
 export const HYDRATION = ['megfelelő', 'enyhén csökkent', 'jelentősen csökkent', 'fokozott folyadékretenció jelei']
 export const OEDEMA_LOC = ['nincs', 'boka', 'lábszár', 'generalizált']
 export const OEDEMA_SEV = ['enyhe', 'közepes', 'jelentős']
+
+// --- Szervrendszeri vizsgálatok (Betegvizsgálat 2.0) ---
+export type ExamGroupType = 'single' | 'multi' | 'text'
+export interface ExamGroup { id: string; label: string; type: ExamGroupType; items?: string[]; ph?: string }
+export interface SystemDef { id: string; label: string; icon: string; order?: string; groups: ExamGroup[] }
+
+export const SYSTEM_EXAMS: SystemDef[] = [
+  {
+    id: 'resp', label: 'Légzőszervi', icon: '🫁', order: 'Inspectio → Palpatio → Percussio → Auscultatio',
+    groups: [
+      { id: 'inspectio', label: 'Inspectio', type: 'multi', items: ['fokozott légzési munka', 'dyspnoe', 'cyanosis', 'segédizom-használat', 'aszimmetrikus mellkasmozgás', 'nehezített beszéd'] },
+      { id: 'palpatio', label: 'Palpatio', type: 'multi', items: ['csökkent mellkasi kitérés', 'aszimmetria', 'kóros fremitus'] },
+      { id: 'percussio', label: 'Percussio', type: 'single', items: ['sonor (normál)', 'tompulat', 'hyperresonantia'] },
+      { id: 'auscultatio', label: 'Auscultatio', type: 'multi', items: ['vesicularis (normál)', 'csökkent légzési hang', 'bronchialis légzés', 'wheezing', 'rhonchus', 'crepitatio', 'pleuralis dörzszörej'] },
+      { id: 'note', label: 'Megjegyzés', type: 'text', ph: 'Lokalizáció, oldaliság, jelleg…' },
+    ],
+  },
+  {
+    id: 'cardio', label: 'Cardiovascularis', icon: '❤️',
+    groups: [
+      { id: 'inspectio', label: 'Inspectio', type: 'multi', items: ['cyanosis', 'perifériás oedema', 'telt nyaki vénák', 'rossz perifériás keringés'] },
+      { id: 'palpatio', label: 'Palpatio / pulzus', type: 'multi', items: ['szapora pulzus', 'szabálytalan ritmus', 'aszimmetrikus pulzus', 'gyenge pulzuskvalitás', 'hiányzó perifériás pulzus', 'elhúzódó kapilláris újratelődés'] },
+      { id: 'auscultatio', label: 'Auscultatio', type: 'multi', items: ['normál szívhangok', 'szabálytalan ritmus', 'szisztolés zörej', 'diasztolés zörej', 'egyéb kóros hang'] },
+      { id: 'egyeb', label: 'Egyéb (vérnyomás, orthostaticus)', type: 'text', ph: 'pl. BP 150/92, orthostaticus mérés…' },
+    ],
+  },
+  {
+    id: 'neuro', label: 'Neurológiai', icon: '🧠',
+    groups: [
+      { id: 'tudat', label: 'Tudat', type: 'single', items: ['éber', 'aluszékony', 'zavart', 'sopor', 'coma'] },
+      { id: 'pupillak', label: 'Pupillák', type: 'multi', items: ['egyenlő és reaktív', 'tág', 'szűk', 'aszimmetrikus', 'renyhe/hiányzó fényreakció'] },
+      { id: 'arc', label: 'Arc', type: 'multi', items: ['szimmetrikus', 'facialis paresis', 'aszimmetria'] },
+      { id: 'mozgas', label: 'Mozgás', type: 'multi', items: ['normál izomerő', 'csökkent erő', 'oldalkülönbség', 'kóros tónus'] },
+      { id: 'erzes', label: 'Érzés', type: 'multi', items: ['ép', 'oldalkülönbség', 'érzéskiesés'] },
+      { id: 'koordinacio', label: 'Koordináció', type: 'multi', items: ['ujj-orr pontos', 'ujj-orr bizonytalan', 'sarok-térd pontos', 'sarok-térd bizonytalan'] },
+      { id: 'jaras', label: 'Járás', type: 'single', items: ['stabil', 'bizonytalan', 'ataxiás', 'nem vizsgálható'] },
+      { id: 'fast', label: 'FAST (stroke gyorsteszt)', type: 'multi', items: ['Face – arc-aszimmetria', 'Arm – kartartás gyengeség', 'Speech – beszédzavar'] },
+      { id: 'note', label: 'Megjegyzés', type: 'text', ph: 'GCS, egyéb részletek…' },
+    ],
+  },
+  {
+    id: 'abdo', label: 'Hasi', icon: '🍽️', order: 'Inspectio → Auscultatio → Percussio → Palpatio',
+    groups: [
+      { id: 'inspectio', label: 'Inspectio', type: 'multi', items: ['normál alak', 'distensio', 'hegek', 'sérv', 'látható perisztaltika'] },
+      { id: 'auscultatio', label: 'Auscultatio (bélhangok)', type: 'single', items: ['normál', 'fokozott', 'csökkent', 'hiányzó'] },
+      { id: 'percussio', label: 'Percussio', type: 'multi', items: ['tympanicus', 'tompulat', 'ascitesre utaló jel'] },
+      { id: 'palpatio', label: 'Palpatio', type: 'multi', items: ['nyomásérzékenység', 'défense', 'rebound (Blumberg)', 'tapintható terime', 'hepatomegalia', 'splenomegalia'] },
+      { id: 'regio', label: 'Lokalizáció (anatómiai régió)', type: 'text', ph: 'pl. jobb alhas, epigastrium…' },
+    ],
+  },
+]
+
+// Red flag leletek (kiválasztáskor nem-diagnosztikus figyelmeztetés)
+export const RED_FLAG_FINDINGS: string[] = [
+  'cyanosis', 'fokozott légzési munka', 'csökkent légzési hang', 'crepitatio',
+  'hiányzó perifériás pulzus', 'elhúzódó kapilláris újratelődés',
+  'sopor', 'coma', 'ataxiás', 'csökkent erő', 'oldalkülönbség', 'facialis paresis',
+  'Face – arc-aszimmetria', 'Arm – kartartás gyengeség', 'Speech – beszédzavar',
+  'défense', 'rebound (Blumberg)', 'hiányzó',
+]
+
+// Lelet → kapcsolódó kórképek (navigációs/oktatási utalás, NEM diagnózis)
+export const FINDING_HINTS: Record<string, string[]> = {
+  'wheezing': ['Asthma bronchiale', 'COPD exacerbatio'],
+  'crepitatio': ['Pneumonia', 'Szívelégtelenség'],
+  'perifériás oedema': ['Szívelégtelenség', 'Vénás elégtelenség', 'Vesebetegség'],
+  'Speech – beszédzavar': ['Stroke – akut ellátás'],
+  'Arm – kartartás gyengeség': ['Stroke – akut ellátás'],
+  'Face – arc-aszimmetria': ['Stroke – akut ellátás'],
+}
