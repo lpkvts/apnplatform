@@ -175,14 +175,25 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
 
       {/* 13. Források */}
       <div className="sec-h"><span className="sec-t">Szakmai források</span></div>
-      {t.sources.map((s, i) => (
-        <div key={i} className="card">
-          <b>{s.name}</b>
-          <div className="sub" style={{ marginTop: 4 }}>
-            {[s.org, s.year, s.identifier ? `azonosító: ${s.identifier}` : null, s.intl ? 'nemzetközi' : 'magyar', s.primary ? 'elsődleges' : 'kiegészítő', s.status].filter(Boolean).join(' · ')}
+      {t.sources.map((src, i) => {
+        const today = new Date().toISOString().slice(0, 10)
+        const due = src.reviewNext ? src.reviewNext <= today : false
+        const soon = src.reviewNext && !due ? (new Date(src.reviewNext).getTime() - Date.now()) / 86400000 <= 90 : false
+        return (
+          <div key={i} className="card">
+            <b>{src.name}</b>
+            <div className="sub" style={{ marginTop: 4 }}>
+              {[src.org, src.year, src.identifier ? `azonosító: ${src.identifier}` : null, src.intl ? 'nemzetközi' : 'magyar', src.primary ? 'elsődleges' : 'kiegészítő', src.status].filter(Boolean).join(' · ')}
+            </div>
+            <div className="sub" style={{ marginTop: 4, fontSize: 12 }}>
+              {src.lastChecked && <>Utolsó ellenőrzés: {src.lastChecked}</>}
+              {src.reviewNext && <> · Következő felülvizsgálat: {src.reviewNext}</>}
+            </div>
+            {due && <div className="safety-note" style={{ marginTop: 6, borderLeftColor: '#C0392B' }}>🔴 Felülvizsgálat esedékes — a forrás aktualitása ellenőrizendő.</div>}
+            {soon && <div className="sub" style={{ marginTop: 6, color: '#B7791F' }}>🟠 A felülvizsgálat hamarosan esedékes.</div>}
           </div>
-        </div>
-      ))}
+        )
+      })}
 
       <ClinicalDisclaimer />
     </>

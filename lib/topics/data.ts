@@ -5,6 +5,8 @@ import { normName } from '@/lib/disease/resolve'
 export interface TopicSource {
   name: string; org?: string; year?: string; identifier?: string; url?: string
   intl?: boolean; primary?: boolean; status?: string
+  lastChecked?: string   // utolsó ellenőrzés (YYYY-MM-DD)
+  reviewNext?: string    // következő felülvizsgálat esedékessége (YYYY-MM-DD)
 }
 export interface TopicRelated {
   examSystems?: string[]                    // EXAM_SYSTEMS id-k (Betegvizsgálat)
@@ -121,8 +123,8 @@ export const TOPICS: Topic[] = [
       diseases: ['Akut koronária szindróma', 'Tüdőembólia', 'Akut aortaszindróma', 'Pneumothorax'],
     },
     sources: [
-      { name: 'Egészségügyi szakmai irányelv az akut koronária szindrómáról', org: 'Belügyminisztérium', year: '2025', identifier: '002272-2025', intl: false, primary: true, status: 'Publikálva' },
-      { name: '2023 ESC Guidelines for the management of acute coronary syndromes', org: 'European Society of Cardiology', year: '2023', intl: true, primary: false, status: 'Publikálva' },
+      { name: 'Egészségügyi szakmai irányelv az akut koronária szindrómáról', org: 'Belügyminisztérium', year: '2025', identifier: '002272-2025', intl: false, primary: true, status: 'Publikálva', lastChecked: '2026-08-25', reviewNext: '2027-08-25' },
+      { name: '2023 ESC Guidelines for the management of acute coronary syndromes', org: 'European Society of Cardiology', year: '2023', intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-25', reviewNext: '2027-08-25' },
     ],
     contentStatus: '⚪ Draft — szakmai ellenőrzés alatt',
     relatedTopics: [],
