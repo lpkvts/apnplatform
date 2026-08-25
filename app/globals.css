@@ -329,3 +329,7 @@ body {
 .cc[open] > summary { border-bottom: 1px solid var(--line); }
 .cc-body { padding: 10px 12px 12px; }
 .cc-h { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin: 8px 2px 5px; }
+
+/* Gyors elérés — Hozzáadás csempe */
+.qtile-add { border-style: dashed; }
+.qtile-add .qtile-i { font-size: 22px; font-weight: 700; color: var(--brand-2); }

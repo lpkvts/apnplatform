@@ -86,36 +86,20 @@ export default async function DashboardPage() {
       )}
 
       <div className="sec-h">
-        <span className="sec-t">Gyorsindítóim</span>
+        <span className="sec-t">Gyors elérés</span>
         <Link className="sec-l" href="/testreszabas">Testreszabás →</Link>
       </div>
-      {myShortcuts.length > 0 ? (
-        <div className="qgrid">
-          {myShortcuts.map((sc) => (
-            <Link key={sc.key} className="qtile" href={sc.href}>
-              <span className="qtile-i"><Icon name={sc.icon} size={24} /></span>
-              <span className="qtile-l">{sc.label}</span>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <Link className="card klink" href="/testreszabas">
-          <div className="klink-t">➕ Tegyél ki gyorsindítókat</div>
-          <div className="sub" style={{ margin: '4px 0 0' }}>Válaszd ki a leggyakrabban használt menüket a kezdőlapra</div>
-        </Link>
-      )}
-
-      <div className="sec-h">
-        <span className="sec-t">Gyors elérés</span>
-        <Link className="sec-l" href="/klinika">Klinikum →</Link>
-      </div>
       <div className="qgrid">
-        {tiles.map((t) => (
+        {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
           <Link key={t.href} className="qtile" href={t.href}>
             <span className="qtile-i"><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>
           </Link>
         ))}
+        <Link className="qtile qtile-add" href="/testreszabas">
+          <span className="qtile-i">＋</span>
+          <span className="qtile-l">Hozzáadás</span>
+        </Link>
       </div>
 
       <div className="sec-h">
