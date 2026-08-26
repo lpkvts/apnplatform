@@ -3,7 +3,8 @@ import { createClient } from '@/lib/supabase/server'
 import { GUIDELINE_SOURCES } from '@/lib/sources/data'
 import { GuidelineSearch, type GuideRow } from '@/components/guideline-search'
 
-export default async function TudastarPage() {
+export default async function TudastarPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
+  const { q } = await searchParams
   const supabase = await createClient()
   const { data } = await supabase
     .from('guidelines')
@@ -24,7 +25,7 @@ export default async function TudastarPage() {
         A verzió-ellenőrzés a kiadó hivatalos regiszterébe vezet.
       </p>
 
-      <GuidelineSearch sources={GUIDELINE_SOURCES} guides={guides} today={today} />
+      <GuidelineSearch sources={GUIDELINE_SOURCES} guides={guides} today={today} initialQuery={q ?? ''} />
     </>
   )
 }

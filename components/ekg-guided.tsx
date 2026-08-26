@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { EcgViewer } from '@/components/ecg-viewer'
 import { ANALYSIS_STEPS, type AnalysisQuestion, type StepId } from '@/lib/ekg/analysis'
 import { qtc } from '@/lib/ekg/render'
+import { GUIDELINE_SOURCES, registryFor, checkQuery } from '@/lib/sources/data'
 import type { EcgCase } from '@/lib/ekg/analysis'
 
 /**
@@ -109,16 +110,55 @@ export function GuidedAnalysis({
         ))}
 
         <div className="sec-h"><span className="sec-t">Szakmai háttér</span></div>
-        {ecgCase.evidence.map((e, i) => (
-          <div className="card" key={i} style={{ marginBottom: 8 }}>
-            <b style={{ fontSize: 14 }}>{e.name}</b>
-            <div className="sub" style={{ marginTop: 4 }}>
-              {[e.org, e.year, e.identifier ? `azonosító: ${e.identifier}` : null, e.level ? `bizonyíték: ${e.level}` : null].filter(Boolean).join(' · ')}
+        {ecgCase.evidence.map((e, i) => {
+          // A forrás adatai a központi regiszterből jönnek, nem az esetből —
+          // így a frissítés és a visszavonás egy helyen látszik.
+          const src = GUIDELINE_SOURCES.find((g) => g.id === e.sourceId)
+          if (!src) {
+            return (
+              <div className="card" key={i} style={{ marginBottom: 8 }}>
+                <p className="form-err" style={{ margin: 0 }}>
+                  Hivatkozott forrás nem található a regiszterben: <code>{e.sourceId}</code>
+                </p>
+              </div>
+            )
+          }
+          const today = new Date().toISOString().slice(0, 10)
+          const due = src.reviewNext ? src.reviewNext <= today : false
+          const reg = registryFor(src)
+          return (
+            <div className="card" key={i} style={{ marginBottom: 8 }}>
+              <b style={{ fontSize: 14 }}>{src.title}</b>
+              <div className="sub" style={{ marginTop: 4 }}>
+                {[src.org, src.year, src.identifier ? `azonosító: ${src.identifier}` : null,
+                  src.intl ? 'nemzetközi' : 'magyar', src.primary ? 'elsődleges' : 'kiegészítő',
+                  e.level ? `bizonyíték: ${e.level}` : null, src.status].filter(Boolean).join(' · ')}
+              </div>
+              <div className="sub" style={{ marginTop: 2, fontSize: 12 }}>
+                {src.lastChecked && <>Utolsó ellenőrzés: {src.lastChecked}</>}
+                {src.reviewNext && <> · Következő felülvizsgálat: {src.reviewNext}</>}
+              </div>
+              {e.note && <div className="sub" style={{ marginTop: 6 }}>{e.note}</div>}
+              {src.versionNote && <div className="sub" style={{ marginTop: 4, fontSize: 12 }}>{src.versionNote}</div>}
+              {src.supersededBy && (
+                <div className="safety-note" style={{ marginTop: 6 }}>
+                  ⚠️ Újabb kiadás váltotta fel: <b>{src.supersededBy}</b>
+                </div>
+              )}
+              {due && (
+                <div className="safety-note" style={{ marginTop: 6, borderLeftColor: '#C0392B' }}>
+                  🔴 Felülvizsgálat esedékes — a forrás aktualitása ellenőrizendő.
+                </div>
+              )}
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+                <Link className="btn ghost sm" href={`/klinika/tudastar?q=${encodeURIComponent(checkQuery(src))}`}>
+                  Forrás a Tudástárban
+                </Link>
+                {reg && <a className="btn ghost sm" href={reg.url} target="_blank" rel="noopener">Verzió ellenőrzése</a>}
+              </div>
             </div>
-            {e.lastChecked && <div className="sub" style={{ marginTop: 2, fontSize: 12 }}>Utolsó ellenőrzés: {e.lastChecked}</div>}
-            {e.note && <div className="sub" style={{ marginTop: 4 }}>{e.note}</div>}
-          </div>
-        ))}
+          )
+        })}
 
         <div className="safety-note" style={{ marginTop: 10 }}>
           <b>ⓘ Oktatási eszköz.</b> A megjelenített görbék szintetizáltak, nem valódi betegfelvételek.

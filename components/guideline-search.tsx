@@ -163,8 +163,8 @@ function GuideRowLink({ g }: { g: GuideRow }) {
 }
 
 /* ---------- Fő komponens ---------- */
-export function GuidelineSearch({ sources, guides, today }: { sources: GuidelineSource[]; guides: GuideRow[]; today: string }) {
-  const [q, setQ] = useState('')
+export function GuidelineSearch({ sources, guides, today, initialQuery = '' }: { sources: GuidelineSource[]; guides: GuideRow[]; today: string; initialQuery?: string }) {
+  const [q, setQ] = useState(initialQuery)
   const [cat, setCat] = useState('')
   const [origin, setOrigin] = useState<'' | 'hu' | 'intl'>('')
   const [onlyPrimary, setOnlyPrimary] = useState(false)

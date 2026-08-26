@@ -143,6 +143,33 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
     supersededBy: 'NG253 / NG254 / NG255 (2025)',
     versionNote: 'Nem használandó. 2025 novemberében három új irányelv váltotta fel — az erre hivatkozó korábbi anyagok felülvizsgálandók.',
   },
+  {
+    id: 'esc-2024-af', title: '2024 ESC Guidelines for the management of atrial fibrillation',
+    org: 'European Society of Cardiology', year: '2024', category: 'Kardiológia',
+    intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Pitvarfibrilláció', 'EKG elemzés'],
+    versionNote: 'Az ellenőrzés időpontjában nem volt azonosítható önálló, érvényes hazai irányelv a pitvarfibrillációról. Hazai irányelv megjelenése esetén az lesz az elsődleges forrás.',
+  },
+  {
+    id: 'esc-2021-pacing', title: '2021 ESC Guidelines on cardiac pacing and cardiac resynchronization therapy',
+    org: 'European Society of Cardiology', year: '2021', category: 'Kardiológia',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['AV-blokk', 'Bradycardia', 'EKG elemzés'],
+  },
+  {
+    id: 'bm-002311-2025-hypertonia', title: 'Egészségügyi szakmai irányelv a magasvérnyomás-betegség ellátásáról',
+    org: 'Belügyminisztérium', year: '2025', identifier: '002311', category: 'Kardiológia',
+    intl: false, primary: true, status: 'Publikálva', registry: 'eszk',
+    lastChecked: '2026-08-26', reviewNext: '2028-09-15',
+    usedIn: ['Magas vérnyomás', 'Bal kamra hypertrophia'],
+    versionNote: 'Megjelenés: 2025. szeptember 15. Érvényesség a megjelenést követő három évig.',
+  },
+  {
+    id: 'erc-2021-special', title: 'European Resuscitation Council Guidelines 2021: Special Circumstances',
+    org: 'European Resuscitation Council', year: '2021', category: 'Sürgősségi ellátás',
+    intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Hyperkalaemia', 'Elektrolitzavarok', 'EKG elemzés'],
+  },
 ]
 
 export function sourcesByCategory(): [string, GuidelineSource[]][] {

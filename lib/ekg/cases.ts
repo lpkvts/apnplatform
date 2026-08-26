@@ -147,17 +147,8 @@ export const EKG_CASES: EcgCase[] = [
       },
     ],
     evidence: [
-      {
-        name: 'Egészségügyi szakmai irányelv az akut koronária szindrómáról',
-        org: 'Belügyminisztérium', year: '2025', identifier: '002272-2025',
-        lastChecked: '2026-08-26',
-        note: 'Hazai elsődleges forrás az akut koronária szindróma ellátásához.',
-      },
-      {
-        name: '2023 ESC Guidelines for the management of acute coronary syndromes',
-        org: 'European Society of Cardiology', year: '2023', lastChecked: '2026-08-26',
-        note: 'Az ST-eleváció elvezetés-specifikus küszöbértékeit és a reperfúziós időablakot tárgyalja.',
-      },
+      { sourceId: 'bm-002272-2025-acs', note: 'Hazai elsődleges forrás az akut koronária szindróma ellátásához.' },
+      { sourceId: 'esc-2023-acs', note: 'Az ST-eleváció elvezetés-specifikus küszöbértékeit és a reperfúziós időablakot tárgyalja.' },
     ],
   },
 
@@ -258,11 +249,7 @@ export const EKG_CASES: EcgCase[] = [
       },
     ],
     evidence: [
-      {
-        name: '2024 ESC Guidelines for the management of atrial fibrillation',
-        org: 'European Society of Cardiology', year: '2024', lastChecked: '2026-08-26',
-        note: 'A pitvarfibrilláció diagnosztikájának és ellátásának európai ajánlása. A hazai forrásjegyzék bővítendő, ha megjelenik erre vonatkozó magyar irányelv.',
-      },
+      { sourceId: 'esc-2024-af', note: 'A pitvarfibrilláció felismerésének és ellátásának európai ajánlása.' },
     ],
   },
 
@@ -359,11 +346,494 @@ export const EKG_CASES: EcgCase[] = [
       },
     ],
     evidence: [
+      { sourceId: 'erc-2021-special', note: 'Az elektrolitzavarok — köztük a hyperkalaemia — felismerését és ellátását tárgyaló fejezet.' },
+    ],
+  },
+
+  /* ══════════════════ 4. Anterior STEMI ══════════════════ */
+  {
+    id: 'anterior-stemi',
+    title: 'Nyomó mellkasi fájdalom, nehézlégzés',
+    age: 58, sex: 'férfi',
+    vignette:
+      '58 éves férfi. Egy órája kezdődött, nyugalomban is fennálló nyomó mellkasi fájdalom, nehézlégzés, ' +
+      'halálfélelem. Vérnyomás 148/92 Hgmm, pulzus 98/perc, SpO₂ 94%. Cukorbetegség és magas koleszterinszint az előzményben.',
+    difficulty: 'haladó',
+    tags: ['stemi', 'ischaemia', 'tachy', 'sinus'],
+    params: {
+      rate: 98, rhythm: 'sinus', p: 'normal', prMs: 160, qrsMs: 96, axis: 'normal', qtMs: 360,
+      st: { V1: 2.5, V2: 4.5, V3: 5.0, V4: 3.5, I: 1.0, aVL: 1.2, III: -1.5, aVF: -1.2 },
+      t: { V2: 'peaked', V3: 'peaked', V4: 'peaked' },
+      q: ['V1', 'V2'],
+      noise: 0.25,
+    },
+    questions: {
+      st: [
+        {
+          id: 'q-st1', prompt: 'Mely elvezetésekben látsz ST-elevációt?',
+          options: [
+            { id: 'a', label: 'II, III, aVF' }, { id: 'b', label: 'V1–V4' },
+            { id: 'c', label: 'V5–V6, I, aVL' }, { id: 'd', label: 'Nincs ST-eleváció' },
+          ],
+          correct: ['b'],
+          explain: 'A V1–V4 elvezetésben kifejezett ST-eleváció látható, a V2–V3 elvezetésben a legnagyobb. Ez az anteroseptalis terület leképeződése.',
+          highlight: 'st',
+        },
+        {
+          id: 'q-st2', prompt: 'Mit jelez a III. és aVF elvezetésben látható ST-depresszió?',
+          options: [
+            { id: 'a', label: 'Egyidejű inferior infarktust' },
+            { id: 'b', label: 'Reciprok eltérést az anterior eleváció mellett' },
+            { id: 'c', label: 'Mérési műterméket' },
+          ],
+          correct: ['b'],
+          explain: 'Az inferior elvezetésekben megjelenő ST-depresszió az anterior eleváció reciprok tükörképe. Erősíti az ischaemiás eredetet.',
+          highlight: 'st',
+        },
+      ],
+      qrs: [{
+        id: 'q-q', prompt: 'Látsz-e kóros Q-hullámot?',
+        options: [
+          { id: 'a', label: 'Nem' }, { id: 'b', label: 'Igen, a V1–V2 elvezetésben' },
+          { id: 'c', label: 'Igen, az inferior elvezetésekben' },
+        ],
+        correct: ['b'],
+        explain: 'A V1–V2 elvezetésben kóros Q-hullám látható. Kialakuló Q-hullám a myocardium elhalásának jele, és a folyamat előrehaladottságára utal.',
+        highlight: 'qrs',
+      }],
+      frekvencia: [{
+        id: 'q-freq', prompt: 'Mekkora a kamrai frekvencia?',
+        options: [
+          { id: 'a', label: '60/perc alatt' }, { id: 'b', label: '60–80/perc' },
+          { id: 'c', label: 'Kb. 90–100/perc' }, { id: 'd', label: '150/perc felett' },
+        ],
+        correct: ['c'],
+        explain: 'Kb. 98/perc — enyhe sinus tachycardia. Fájdalom, szorongás és csökkent szívteljesítmény egyaránt okozhatja.',
+        highlight: 'rr',
+      }],
+    },
+    reference: {
+      kalibracio: 'Szabványos beállítás: 25 mm/s, 10 mm/mV. Értékelhető felvétel.',
+      frekvencia: 'Kb. 98/perc — enyhe sinus tachycardia.',
+      ritmus: 'Szabályos kamrai ritmus, sinus eredettel.',
+      p: 'Minden QRS-t élettani alakú P-hullám előz meg.',
+      pr: 'PR kb. 160 ms — élettani.',
+      qrs: 'QRS kb. 96 ms, keskeny. Kóros Q-hullám a V1–V2 elvezetésben.',
+      tengely: 'Normál frontális tengely.',
+      qt: 'QT kb. 360 ms; a QTc a frekvenciára korrigálva élettani tartományban.',
+      st: 'Kifejezett ST-eleváció a V1–V4 elvezetésben, a V2–V3 elvezetésben a legnagyobb. Enyhe eleváció az I és aVL elvezetésben, reciprok ST-depresszió a III és aVF elvezetésben.',
+      t: 'Magas, csúcsos T-hullámok az anterior elvezetésekben.',
+      osszegzes:
+        'Sinus tachycardia kb. 98/perc, keskeny QRS, normál tengely. Kiterjedt ST-eleváció a V1–V4 ' +
+        'elvezetésben reciprok inferior ST-depresszióval, kialakuló Q-hullámmal a V1–V2 elvezetésben — ' +
+        'az anteroseptalis fal akut, kiterjedt ischaemiájával összeegyeztethető kép. ' +
+        'A klinikai kontextussal együtt időkritikus helyzet, azonnali orvosi értékelés szükséges.',
+    },
+    findings: [
       {
-        name: 'European Resuscitation Council Guidelines: Special Circumstances',
-        org: 'European Resuscitation Council', year: '2021', lastChecked: '2026-08-26',
-        note: 'Az elektrolitzavarok — köztük a hyperkalaemia — felismerését és ellátását tárgyaló fejezet.',
+        title: 'Kiterjedt anterior ST-eleváció',
+        what: 'Az izoelektromos vonal fölé emelkedő ST-szakasz, amely a T-hullámba olvad.',
+        where: 'V1–V4 elvezetés, a V2–V3 elvezetésben a legkifejezettebb.',
+        meaning: 'Az anteroseptalis fal akut, teljes falvastagságot érintő ischaemiája, amely jellemzően a bal elülső leszálló koszorúér elzáródásához köthető.',
+        ddx: ['Akut anterior szívinfarktus', 'Bal Tawara-szár blokk okozta ST-eltérés', 'Korai repolarizáció', 'Pericarditis', 'Bal kamra aneurysma'],
+        why: 'A kiterjedt anterior infarktus nagy myocardium-tömeget veszélyeztet, ezért a reperfúzióig eltelt idő különösen meghatározó.',
+        leads: ['V1', 'V2', 'V3', 'V4'],
       },
+      {
+        title: 'Kialakuló kóros Q-hullám',
+        what: 'A QRS elején megjelenő, széles és mély negatív kitérés.',
+        where: 'V1–V2 elvezetés.',
+        meaning: 'Elektromosan néma, elhalt myocardium-terület jele. Megjelenése azt jelzi, hogy a folyamat már nem a legkorábbi szakaszban van.',
+        ddx: ['Lezajlott vagy folyamatban lévő infarktus', 'Szeptális Q élettani változata', 'Cardiomyopathia'],
+        why: 'A Q-hullám jelenléte nem zárja ki a reperfúzió hasznát, de az időfaktor megítélésében segít.',
+        leads: ['V1', 'V2'],
+      },
+    ],
+    evidence: [
+      { sourceId: 'bm-002272-2025-acs', note: 'Hazai elsődleges forrás az akut koronária szindróma ellátásához.' },
+      { sourceId: 'esc-2023-acs', note: 'Az elvezetés-specifikus ST-eleváció küszöbértékeit tárgyalja, életkor és nem szerinti bontásban.' },
+    ],
+  },
+
+  /* ══════════════════ 5. Teljes AV-blokk ══════════════════ */
+  {
+    id: 'av-blokk-3',
+    title: 'Szédülés, rövid eszméletvesztés',
+    age: 78, sex: 'nő',
+    vignette:
+      '78 éves nő. Az elmúlt napokban ismétlődő szédülés, ma reggel rövid, előjel nélküli eszméletvesztés. ' +
+      'Vérnyomás 96/58 Hgmm, pulzus 38/perc, tapintható. Béta-blokkolót és digoxint szed.',
+    difficulty: 'gyakorlott',
+    tags: ['av3', 'brady'],
+    params: {
+      rate: 38, rhythm: 'junctional', p: 'varying', prMs: 0, qrsMs: 130, axis: 'left', qtMs: 480,
+      t: { V5: 'flat', V6: 'flat' },
+      noise: 0.25,
+    },
+    questions: {
+      p: [{
+        id: 'q-p', prompt: 'Milyen kapcsolat van a P-hullámok és a QRS-komplexusok között?',
+        options: [
+          { id: 'a', label: 'Minden QRS-t állandó távolságú P előz meg' },
+          { id: 'b', label: 'A P-hullámok és a QRS-ek egymástól függetlenül jelennek meg' },
+          { id: 'c', label: 'A PR fokozatosan nyúlik, majd kimarad egy QRS' },
+          { id: 'd', label: 'Nincs azonosítható P-hullám' },
+        ],
+        correct: ['b'],
+        explain: 'A P-hullámok saját, szabályos ütemben követik egymást, a QRS-ek szintén — de a kettő között nincs állandó kapcsolat. Ez az AV-disszociáció, a teljes AV-blokk jellegzetessége.',
+        highlight: 'p',
+      }],
+      frekvencia: [{
+        id: 'q-freq', prompt: 'Mekkora a kamrai frekvencia?',
+        options: [
+          { id: 'a', label: 'Kb. 35–40/perc' }, { id: 'b', label: '50–60/perc' },
+          { id: 'c', label: '70–90/perc' },
+        ],
+        correct: ['a'],
+        explain: 'Kb. 38/perc. Teljes AV-blokkban a kamrákat pótritmus tartja működésben, amelynek frekvenciája jóval alacsonyabb a sinuscsomóénál.',
+        highlight: 'rr',
+      }],
+      qrs: [{
+        id: 'q-qrs', prompt: 'Mit jelent a kiszélesedett QRS ebben a helyzetben?',
+        options: [
+          { id: 'a', label: 'Semmi különöset, élettani változat' },
+          { id: 'b', label: 'A pótritmus a kamrákból, alacsonyabb szintről indul' },
+          { id: 'c', label: 'A felvétel rossz minőségű' },
+        ],
+        correct: ['b'],
+        explain: 'A széles QRS arra utal, hogy a pótritmus a His-köteg alatti, kamrai szintről ered. Az ilyen pótritmus lassabb és megbízhatatlanabb, ezért a helyzet instabilabb.',
+        highlight: 'qrs',
+      }],
+      qt: [{
+        id: 'q-qt', prompt: 'Hogyan értékeled a QT-időt ilyen lassú frekvencia mellett?',
+        options: [
+          { id: 'a', label: 'A mért QT önmagában elegendő' },
+          { id: 'b', label: 'A frekvenciára korrigálva kell értékelni' },
+          { id: 'c', label: 'Bradycardia mellett nem mérhető' },
+        ],
+        correct: ['b'],
+        explain: 'A QT a frekvenciával változik, ezért korrigálni kell. Lassú frekvencián a mért QT hosszabb, a korrigált érték viszont közelebb kerül az élettanihoz — de a bradycardia önmagában is ritmuszavar-kockázatot jelent.',
+        highlight: 'qt',
+      }],
+    },
+    reference: {
+      kalibracio: 'Szabványos beállítás, értékelhető felvétel.',
+      frekvencia: 'Kamrai frekvencia kb. 38/perc; a pitvari frekvencia ennél gyorsabb és független.',
+      ritmus: 'Szabályos, lassú kamrai pótritmus.',
+      p: 'P-hullámok szabályos ütemben, a QRS-ektől függetlenül — AV-disszociáció.',
+      pr: 'PR-intervallum nem értelmezhető, mivel nincs átvezetés.',
+      qrs: 'QRS kb. 130 ms — széles, kamrai eredetű pótritmusra utal.',
+      tengely: 'Bal tengelyeltérés.',
+      qt: 'QT kb. 480 ms; a lassú frekvencia miatt korrigálva értékelendő.',
+      st: 'Jelentős ST-eltérés nem látható.',
+      t: 'Lapos T-hullámok a lateralis elvezetésekben.',
+      osszegzes:
+        'Teljes (harmadfokú) AV-blokk: a pitvarok és a kamrák egymástól függetlenül működnek, ' +
+        'a kamrákat kb. 38/perc frekvenciájú, széles QRS-ű pótritmus tartja fenn. Bal tengelyeltérés. ' +
+        'A klinikai kép (eszméletvesztés, alacsony vérnyomás) alapján ez sürgős helyzet: folyamatos ' +
+        'szívmonitorozás, a frekvenciacsökkentő gyógyszerek felülvizsgálata és azonnali orvosi értékelés szükséges.',
+    },
+    findings: [
+      {
+        title: 'AV-disszociáció',
+        what: 'A P-hullámok és a QRS-komplexusok saját, egymástól független ütemben követik egymást.',
+        where: 'Legjobban a hosszú ritmuscsíkon értékelhető, ahol több ütés látható egymás után.',
+        meaning: 'Az ingerület nem jut át a pitvarokból a kamrákba; a kamrákat pótritmus tartja működésben.',
+        ddx: ['Harmadfokú AV-blokk', 'Kamrai tachycardia AV-disszociációval', 'Gyógyszerhatás (béta-blokkoló, digoxin, kalciumcsatorna-blokkoló)', 'Ischaemia', 'Hyperkalaemia'],
+        why: 'A pótritmus bármikor kimaradhat, ami keringésmegálláshoz vezethet — ezért folyamatos monitorozás szükséges.',
+      },
+      {
+        title: 'Széles QRS-ű pótritmus',
+        what: '120 ms-nál szélesebb QRS lassú, szabályos ritmusban.',
+        where: 'Minden elvezetésben.',
+        meaning: 'A pótritmus a His-köteg alatti szintről indul, ezért lassabb és megbízhatatlanabb, mint a junkcionális pótritmus.',
+        ddx: ['Kamrai pótritmus', 'Junkcionális pótritmus szárblokkal', 'Pacemaker-diszfunkció'],
+        why: 'A blokk szintje meghatározza a kockázatot és a további ellátás irányát.',
+      },
+    ],
+    evidence: [
+      { sourceId: 'esc-2021-pacing', note: 'A bradyarrhythmiák és az ingervezetési zavarok felismerését és ellátását tárgyalja.' },
+    ],
+  },
+
+  /* ══════════════════ 6. Pitvari flutter ══════════════════ */
+  {
+    id: 'flutter-2-1',
+    title: 'Egyenletes szapora szívverés',
+    age: 66, sex: 'férfi',
+    vignette:
+      '66 éves férfi. Két napja tartó, egyenletesnek érzett szapora szívverés, enyhe nehézlégzés terhelésre. ' +
+      'Vérnyomás 132/80 Hgmm, pulzus 150/perc, szabályos. Korábban szívelégtelenség miatt gondozták.',
+    difficulty: 'haladó',
+    tags: ['flutter', 'tachy'],
+    params: {
+      rate: 150, rhythm: 'flutter', p: 'flutter', prMs: 0, qrsMs: 92, axis: 'normal', qtMs: 300,
+      st: { V4: -0.6, V5: -0.6 },
+      noise: 0.2,
+    },
+    questions: {
+      ritmus: [{
+        id: 'q-rhythm', prompt: 'Milyen a kamrai ritmus?',
+        options: [
+          { id: 'a', label: 'Szabályos, kb. 150/perc' }, { id: 'b', label: 'Szabálytalanul szabálytalan' },
+          { id: 'c', label: 'Szabályos, kb. 75/perc' },
+        ],
+        correct: ['a'],
+        explain: 'A kamrai ritmus szabályos, kb. 150/perc. A pitvarfibrillációval szemben itt a ritmus egyenletes — ez fontos elkülönítő jel.',
+        highlight: 'rr',
+      }],
+      p: [{
+        id: 'q-p', prompt: 'Milyen a pitvari aktivitás?',
+        options: [
+          { id: 'a', label: 'Élettani P-hullámok' },
+          { id: 'b', label: 'Fűrészfog-mintázat, kb. 300/perc pitvari frekvenciával' },
+          { id: 'c', label: 'Rendezetlen, hullámzó alapvonal' },
+          { id: 'd', label: 'Nincs pitvari aktivitás' },
+        ],
+        correct: ['b'],
+        explain: 'A II, III és aVF elvezetésben folyamatos fűrészfog-mintázat látható, kb. 300/perc pitvari frekvenciával. A kamrai frekvencia ennek fele, tehát 2:1 az átvezetés.',
+        highlight: 'p',
+      }],
+      frekvencia: [{
+        id: 'q-freq', prompt: 'Miért gyanús a pontosan 150/perc körüli, szabályos kamrai frekvencia?',
+        options: [
+          { id: 'a', label: 'Semmi különös, gyakori sinus tachycardia' },
+          { id: 'b', label: 'A 2:1 átvezetésű pitvari flutter jellegzetes frekvenciája' },
+          { id: 'c', label: 'Mindig kamrai eredetre utal' },
+        ],
+        correct: ['b'],
+        explain: 'A pitvari flutter tipikus pitvari frekvenciája kb. 300/perc. 2:1 átvezetésnél ebből 150/perc kamrai frekvencia lesz. A 150 körüli, makacsul szabályos ritmus mindig felveti a flutter lehetőségét.',
+        highlight: 'rr',
+      }],
+    },
+    reference: {
+      kalibracio: 'Szabványos beállítás, értékelhető felvétel.',
+      frekvencia: 'Kamrai frekvencia kb. 150/perc; pitvari frekvencia kb. 300/perc.',
+      ritmus: 'Szabályos kamrai ritmus.',
+      p: 'Élettani P-hullám helyett folyamatos fűrészfog-mintázat, legjobban a II, III és aVF elvezetésben.',
+      pr: 'PR-intervallum nem értelmezhető.',
+      qrs: 'QRS kb. 92 ms — keskeny, supraventricularis eredet.',
+      tengely: 'Normál frontális tengely.',
+      qt: 'QT kb. 300 ms; gyors frekvencia mellett óvatosan értékelendő.',
+      st: 'Enyhe ST-depresszió a V4–V5 elvezetésben, amely frekvenciafüggő lehet.',
+      t: 'A T-hullámok a flutterhullámok miatt nehezen ítélhetők meg.',
+      osszegzes:
+        'Pitvari flutter 2:1 átvezetéssel: pitvari frekvencia kb. 300/perc, kamrai frekvencia kb. 150/perc, ' +
+        'szabályos kamrai ritmussal és keskeny QRS-sel. Enyhe lateralis ST-depresszió, amely frekvenciafüggő lehet. ' +
+        'A thromboemboliás kockázat felmérése és a további ellátás orvosi feladat.',
+    },
+    findings: [
+      {
+        title: 'Fűrészfog-mintázat',
+        what: 'Folyamatos, izoelektromos szakasz nélküli pitvari hullámok, jellegzetes fűrészfog alakkal.',
+        where: 'II, III és aVF elvezetés; a V1-ben gyakran diszkrét pozitív hullámokként látszik.',
+        meaning: 'Szervezett, körkörös pitvari elektromos aktivitás — ez különbözteti meg a pitvarfibrilláció rendezetlen mintázatától.',
+        ddx: ['Pitvari flutter', 'Pitvari tachycardia blokkal', 'Pitvarfibrilláció durva hullámokkal'],
+        why: 'A flutter felismerése megváltoztatja a kezelési stratégiát a pitvarfibrillációhoz képest, a thromboemboliás kockázat viszont hasonlóan felmérendő.',
+        leads: ['II', 'III', 'aVF'],
+      },
+      {
+        title: 'Szabályos 150/perc körüli kamrai frekvencia',
+        what: 'Egyenletes R–R távolságok, kb. 150/perc frekvenciával.',
+        where: 'A teljes felvételen.',
+        meaning: '2:1 átvezetés a kb. 300/perc pitvari frekvencia mellett.',
+        ddx: ['Pitvari flutter 2:1 átvezetéssel', 'Sinus tachycardia', 'Supraventricularis tachycardia'],
+        why: 'A makacsul 150/perc körüli szabályos ritmus mindig felveti a flutter gyanúját — a flutterhullámokat célzottan kell keresni.',
+      },
+    ],
+    evidence: [
+      { sourceId: 'esc-2024-af', note: 'A pitvari flutter és a pitvarfibrilláció ellátását közös keretben tárgyalja.' },
+    ],
+  },
+
+  /* ══════════════════ 7. Tüdőembólia ══════════════════ */
+  {
+    id: 'pulmonalis-embolia',
+    title: 'Hirtelen nehézlégzés, szúró mellkasi fájdalom',
+    age: 44, sex: 'nő',
+    vignette:
+      '44 éves nő. Ma reggel hirtelen kezdődött nehézlégzés, belégzésre fokozódó szúró mellkasi fájdalom. ' +
+      'Két hete térdműtéten esett át. Vérnyomás 118/72 Hgmm, pulzus 112/perc, SpO₂ 91% levegőn. Jobb lábszára duzzadtabb.',
+    difficulty: 'gyakorlott',
+    tags: ['pe', 'tachy', 'sinus'],
+    params: {
+      rate: 112, rhythm: 'sinus', p: 'normal', prMs: 150, qrsMs: 94, axis: 'right', qtMs: 330,
+      st: { V1: 0.8, III: 0.6 },
+      t: { V1: 'inverted', V2: 'inverted', V3: 'inverted', III: 'inverted' },
+      q: ['III'],
+      noise: 0.3,
+    },
+    questions: {
+      tengely: [{
+        id: 'q-axis', prompt: 'Milyen a frontális tengelyállás?',
+        options: [
+          { id: 'a', label: 'Normál' }, { id: 'b', label: 'Bal tengelyeltérés' },
+          { id: 'c', label: 'Jobb tengelyeltérés' }, { id: 'd', label: 'Extrém tengelyeltérés' },
+        ],
+        correct: ['c'],
+        explain: 'Az I. elvezetés nettó negatív, az aVF pozitív — jobb tengelyeltérés. Akut jobbszív-terhelés egyik jele lehet.',
+        highlight: 'qrs',
+      }],
+      t: [{
+        id: 'q-t', prompt: 'Mit látsz a jobb oldali mellkasi elvezetések T-hullámain?',
+        options: [
+          { id: 'a', label: 'Élettani, pozitív T-hullámok' },
+          { id: 'b', label: 'T-inverzió a V1–V3 elvezetésben' },
+          { id: 'c', label: 'Csúcsos, magas T-hullámok' },
+        ],
+        correct: ['b'],
+        explain: 'A V1–V3 elvezetésben T-inverzió látható. Akut jobbszív-terhelésnél ez az egyik leggyakoribb EKG-eltérés, és a súlyosság megítélésében is szerepet kap.',
+        highlight: 't',
+      }],
+      frekvencia: [{
+        id: 'q-freq', prompt: 'Mekkora a kamrai frekvencia?',
+        options: [
+          { id: 'a', label: '60–80/perc' }, { id: 'b', label: 'Kb. 110–120/perc' }, { id: 'c', label: '150/perc felett' },
+        ],
+        correct: ['b'],
+        explain: 'Kb. 112/perc — sinus tachycardia. Ez a leggyakoribb, de legkevésbé specifikus EKG-jel tüdőembóliában.',
+        highlight: 'rr',
+      }],
+      osszegzes: [{
+        id: 'q-sum', prompt: 'Elegendő-e ez az EKG a tüdőembólia igazolásához?',
+        options: [
+          { id: 'a', label: 'Igen, a jellegzetes mintázat bizonyító erejű' },
+          { id: 'b', label: 'Nem, az EKG csak támogató jel — a diagnózis képalkotással igazolható' },
+          { id: 'c', label: 'Az EKG kizárja a tüdőembóliát, ha normális' },
+        ],
+        correct: ['b'],
+        explain: 'Az EKG tüdőembóliában sem érzékeny, sem specifikus. A normális EKG nem zárja ki, a jellegzetes eltérések pedig nem igazolják. A klinikai valószínűség, a D-dimer és a képalkotás együtt vezet a diagnózishoz.',
+        highlight: 'none',
+      }],
+    },
+    reference: {
+      kalibracio: 'Szabványos beállítás, mérsékelt alapvonal-ingadozás.',
+      frekvencia: 'Kb. 112/perc — sinus tachycardia.',
+      ritmus: 'Szabályos kamrai ritmus, sinus eredettel.',
+      p: 'Minden QRS-t P-hullám előz meg.',
+      pr: 'PR kb. 150 ms — élettani.',
+      qrs: 'QRS kb. 94 ms, keskeny. A III. elvezetésben Q-hullám látható.',
+      tengely: 'Jobb tengelyeltérés.',
+      qt: 'QT kb. 330 ms.',
+      st: 'Enyhe ST-eleváció a V1 és a III. elvezetésben.',
+      t: 'T-inverzió a V1–V3 és a III. elvezetésben.',
+      osszegzes:
+        'Sinus tachycardia kb. 112/perc, jobb tengelyeltérés, a III. elvezetésben Q-hullámmal és ' +
+        'T-inverzióval, valamint T-inverzióval a V1–V3 elvezetésben — akut jobbszív-terheléssel ' +
+        'összeegyeztethető kép. Az EKG önmagában sem nem igazolja, sem nem zárja ki a tüdőembóliát: ' +
+        'a klinikai valószínűség (a friss műtét és a lábszárduzzanat miatt magas), a D-dimer és a ' +
+        'képalkotás együtt vezet a diagnózishoz.',
+    },
+    findings: [
+      {
+        title: 'Akut jobbszív-terhelés jelei',
+        what: 'Jobb tengelyeltérés, a III. elvezetésben Q-hullám és T-inverzió, a jobb oldali mellkasi elvezetésekben T-inverzió.',
+        where: 'III. elvezetés és V1–V3.',
+        meaning: 'A jobb kamra hirtelen megnövekedett nyomásterhelése. A klasszikusan leírt mintázat csak az esetek kisebb részében látható teljes formában.',
+        ddx: ['Akut tüdőembólia', 'Krónikus tüdőbetegség okozta jobbszív-terhelés', 'Jobb Tawara-szár blokk', 'Anterior ischaemia', 'Élettani változat fiatal nőknél'],
+        why: 'Jelenléte hemodinamikailag jelentősebb embóliára utalhat, hiánya viszont nem zárja ki a kórképet.',
+        leads: ['III', 'V1', 'V2', 'V3'],
+      },
+      {
+        title: 'Sinus tachycardia',
+        what: 'Sinus eredetű ritmus 100/perc feletti frekvenciával.',
+        where: 'A teljes felvételen.',
+        meaning: 'A leggyakoribb EKG-eltérés tüdőembóliában, de a legkevésbé specifikus.',
+        ddx: ['Tüdőembólia', 'Fájdalom, szorongás', 'Láz, fertőzés', 'Vérzés, hypovolaemia', 'Pajzsmirigy-túlműködés'],
+        why: 'Önmagában nem irányadó, de a klinikai kontextusban súlyt kap — friss műtét és lábszárduzzanat mellett a valószínűséget növeli.',
+      },
+    ],
+    evidence: [
+      { sourceId: 'esc-2019-pe', note: 'A tüdőembólia diagnosztikai algoritmusát és kockázatbecslését tárgyalja.' },
+    ],
+  },
+
+  /* ══════════════════ 8. Hypokalaemia, QT-megnyúlás ══════════════════ */
+  {
+    id: 'hypokalaemia-qt',
+    title: 'Gyengeség, izomgörcsök',
+    age: 71, sex: 'nő',
+    vignette:
+      '71 éves nő. Egy hete tartó általános gyengeség, lábikragörcsök, szívdobogásérzés. ' +
+      'Magas vérnyomás miatt vízhajtót szed, az elmúlt napokban hasmenése volt. Vérnyomás 138/84 Hgmm, pulzus 62/perc.',
+    difficulty: 'gyakorlott',
+    tags: ['hypok', 'sinus'],
+    params: {
+      rate: 62, rhythm: 'sinus', p: 'normal', prMs: 175, qrsMs: 95, axis: 'normal', qtMs: 520,
+      st: { V4: -0.9, V5: -1.0, V6: -0.8, II: -0.6 },
+      t: { V3: 'flat', V4: 'flat', V5: 'flat', V6: 'flat', II: 'flat' },
+      noise: 0.2,
+    },
+    questions: {
+      qt: [{
+        id: 'q-qt', prompt: 'Hogyan értékeled a QT-időt?',
+        options: [
+          { id: 'a', label: 'Élettani' }, { id: 'b', label: 'Rövidült' }, { id: 'c', label: 'Megnyúlt' },
+        ],
+        correct: ['c'],
+        explain: 'A mért QT kb. 520 ms, ami 62/perc mellett korrigálva is jelentősen megnyúlt. A megnyúlt QTc fokozza a kamrai ritmuszavar kockázatát.',
+        highlight: 'qt',
+      }],
+      t: [{
+        id: 'q-t', prompt: 'Milyenek a T-hullámok?',
+        options: [
+          { id: 'a', label: 'Magasak, csúcsosak' }, { id: 'b', label: 'Ellaposodtak' },
+          { id: 'c', label: 'Mélyen inverzek' }, { id: 'd', label: 'Élettani alakúak' },
+        ],
+        correct: ['b'],
+        explain: 'A T-hullámok ellaposodtak, több elvezetésben alig kivehetők. Hypokalaemiában ez jellegzetes, és gyakran U-hullám is megjelenik a T után.',
+        highlight: 't',
+      }],
+      st: [{
+        id: 'q-st', prompt: 'Mit látsz az ST-szakaszon?',
+        options: [
+          { id: 'a', label: 'Jelentős ST-eleváció' }, { id: 'b', label: 'Enyhe ST-depresszió több elvezetésben' },
+          { id: 'c', label: 'Élettani ST-szakasz' },
+        ],
+        correct: ['b'],
+        explain: 'Enyhe, diffúz ST-depresszió látható. Hypokalaemiában ez a lapos T-hullámmal és az U-hullámmal együtt alkot jellegzetes hármast.',
+        highlight: 'st',
+      }],
+    },
+    reference: {
+      kalibracio: 'Szabványos beállítás, jó minőségű felvétel.',
+      frekvencia: 'Kb. 62/perc.',
+      ritmus: 'Szabályos kamrai ritmus, sinus eredettel.',
+      p: 'Élettani alakú P-hullámok minden QRS előtt.',
+      pr: 'PR kb. 175 ms — élettani.',
+      qrs: 'QRS kb. 95 ms — keskeny.',
+      tengely: 'Normál frontális tengely.',
+      qt: 'QT kb. 520 ms — a frekvenciára korrigálva is jelentősen megnyúlt.',
+      st: 'Enyhe, diffúz ST-depresszió, kifejezettebben a lateralis elvezetésekben.',
+      t: 'Ellaposodott T-hullámok több elvezetésben.',
+      osszegzes:
+        'Sinus ritmus kb. 62/perc, normál tengely, keskeny QRS. Megnyúlt QT, ellaposodott T-hullámok ' +
+        'és enyhe diffúz ST-depresszió — hypokalaemiával összeegyeztethető kép, amelyet a vízhajtó ' +
+        'szedése és a hasmenés is alátámaszt. Sürgős kálium- és magnézium-meghatározás, szívmonitorozás ' +
+        'és orvosi értékelés szükséges, mert a megnyúlt QT ritmuszavar-kockázatot hordoz.',
+    },
+    findings: [
+      {
+        title: 'Megnyúlt QT-idő',
+        what: 'A QRS kezdetétől a T-hullám végéig tartó szakasz megnyúlása, a T-hullám elhúzódó lefutásával.',
+        where: 'Legjobban a II. és a V5 elvezetésben mérhető.',
+        meaning: 'A kamrai repolarizáció elhúzódása. Elektrolitzavar, gyógyszerhatás és veleszületett eltérés egyaránt okozhatja.',
+        ddx: ['Hypokalaemia', 'Hypomagnesaemia', 'Hypocalcaemia', 'QT-nyújtó gyógyszerek', 'Veleszületett hosszú QT szindróma'],
+        why: 'A jelentősen megnyúlt QTc polimorf kamrai tachycardia kockázatát hordozza, ezért a kiváltó ok felismerése sürgős.',
+        leads: ['II', 'V5'],
+      },
+      {
+        title: 'Ellaposodott T-hullámok és ST-depresszió',
+        what: 'Alacsony amplitúdójú, elmosódott T-hullámok enyhe, diffúz ST-depresszióval.',
+        where: 'Több elvezetésben, kifejezettebben lateralisan.',
+        meaning: 'Hypokalaemiára jellemző repolarizációs eltérés; gyakran U-hullám is társul hozzá.',
+        ddx: ['Hypokalaemia', 'Ischaemia', 'Gyógyszerhatás (digoxin)', 'Bal kamra hypertrophia'],
+        why: 'A kálium mellett a magnéziumot is ellenőrizni kell, mert alacsony magnéziumszint mellett a káliumpótlás hatástalan maradhat.',
+      },
+    ],
+    evidence: [
+      { sourceId: 'erc-2021-special', note: 'Az elektrolitzavarok felismerését és ellátását tárgyaló fejezet.' },
+      { sourceId: 'bm-002311-2025-hypertonia', note: 'A vízhajtó kezelés melletti elektrolit-ellenőrzés szempontjai.' },
     ],
   },
 ]

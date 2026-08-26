@@ -157,14 +157,21 @@ export interface CaseFinding {
   leads?: Lead[]      // vizuális kiemeléshez
 }
 
+/**
+ * Szakmai háttér egy esethez.
+ *
+ * A hivatkozás a KÖZPONTI FORRÁS-REGISZTERRE mutat (lib/sources/data.ts), nem
+ * másolja a forrás adatait. Így a kiadás éve, az utolsó ellenőrzés dátuma és a
+ * visszavonás ténye egy helyen tartható karban, és a verzió-ellenőrzés
+ * automatikusan kiterjed az EKG-esetekre is.
+ */
 export interface CaseEvidence {
-  name: string
-  org: string
-  year: string
-  identifier?: string
-  lastChecked?: string
-  level?: string      // bizonyíték szintje, ha releváns
+  /** GuidelineSource azonosító a lib/sources/data.ts regiszterből. */
+  sourceId: string
+  /** Miért releváns ez a forrás ennél az esetnél. */
   note?: string
+  /** Bizonyíték szintje, ha az adott ajánlásnál értelmezhető. */
+  level?: string
 }
 
 /* ─────────── Kompetencia-területek ─────────── */
