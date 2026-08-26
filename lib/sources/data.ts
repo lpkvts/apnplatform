@@ -16,13 +16,41 @@ export interface GuidelineSource {
   lastChecked?: string    // utolsó ellenőrzés (YYYY-MM-DD)
   reviewNext?: string     // következő felülvizsgálat (YYYY-MM-DD)
   usedIn?: string[]       // mely témakörök / kórképek hivatkozzák
+  registry?: RegistryKey  // melyik hivatalos regiszterben ellenőrizhető a legfrissebb verzió
+  registryUrl?: string    // a kiadó saját irányelv-gyűjtőoldala — CSAK ellenőrzött, valóban létező link
+  supersededBy?: string   // ha újabb kiadás váltotta fel: az új forrás azonosítója
+  versionNote?: string    // verzióval kapcsolatos megjegyzés (pl. "2024-es fókuszált frissítéssel")
+}
+
+// Hivatalos regiszterek, ahol egy irányelv aktuális verziója ellenőrizhető.
+// FONTOS: ide csak ellenőrzött, valóban létező hivatkozás kerülhet. Kitalált URL nem.
+// A kereső ezekből épít "Verzió ellenőrzése" gombot; regiszter nélküli forrásnál
+// csak a javasolt keresőkifejezés jelenik meg, link nélkül.
+export type RegistryKey = 'eszk' | 'okfo' | 'neak'
+
+export const REGISTRIES: Record<RegistryKey, { label: string; url: string; note: string }> = {
+  eszk: {
+    label: 'Egészségügyi Szakmai Kollégium — Irányelvek',
+    url: 'https://kollegium.okfo.gov.hu/iranyelvek',
+    note: 'Tagozat és kifejezés szerint kereshető. Az „Érvényesség vége” oszlop mutatja, ha az irányelv lejárt.',
+  },
+  okfo: {
+    label: 'OKFŐ — Egészségügyi Közlönyben megjelent irányelvek',
+    url: 'https://okfo.gov.hu/Hirek/szakmai-iranyelvek',
+    note: 'A megjelenés helye és ideje itt ellenőrizhető.',
+  },
+  neak: {
+    label: 'NEAK — szakmai irányelvek nyilvántartása',
+    url: 'https://www.neak.gov.hu/felso_menu/szakmai_oldalak/szakmai_iranyelvek/szakmai_iranyelvek',
+    note: 'Az érvényes irányelvek azonosító szerinti listája.',
+  },
 }
 
 export const GUIDELINE_SOURCES: GuidelineSource[] = [
   // ── Kardiológia ─────────────────────────────
   {
     id: 'bm-002272-2025-acs', title: 'Egészségügyi szakmai irányelv az akut koronária szindrómáról',
-    org: 'Belügyminisztérium', year: '2025', identifier: '002272-2025', category: 'Kardiológia',
+    org: 'Belügyminisztérium', year: '2025', identifier: '002272-2025', registry: 'eszk', category: 'Kardiológia',
     intl: false, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
     usedIn: ['Mellkasi fájdalom', 'Akut koronária szindróma'],
   },
@@ -34,7 +62,7 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
   },
   {
     id: 'bm-002271-2026-hf', title: 'Egészségügyi szakmai irányelv a krónikus szívelégtelenségről',
-    org: 'Belügyminisztérium', year: '2026', identifier: '002271-2026', category: 'Kardiológia',
+    org: 'Belügyminisztérium', year: '2026', identifier: '002271-2026', registry: 'eszk', category: 'Kardiológia',
     intl: false, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
     usedIn: ['Akut dyspnoe'],
   },
@@ -47,7 +75,7 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
   // ── Pulmonológia ────────────────────────────
   {
     id: 'bm-002230-2024-copd', title: 'Egészségügyi szakmai irányelv a COPD diagnosztikájáról, kezeléséről és gondozásáról',
-    org: 'Belügyminisztérium', year: '2024', identifier: '002230-2024', category: 'Pulmonológia',
+    org: 'Belügyminisztérium', year: '2024', identifier: '002230-2024', registry: 'eszk', category: 'Pulmonológia',
     intl: false, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
     usedIn: ['Akut dyspnoe', 'COPD exacerbatio'],
   },
@@ -69,4 +97,20 @@ export function sourcesByCategory(): [string, GuidelineSource[]][] {
   const map: Record<string, GuidelineSource[]> = {}
   for (const s of GUIDELINE_SOURCES) (map[s.category] ??= []).push(s)
   return Object.entries(map).sort((a, b) => a[0].localeCompare(b[0], 'hu'))
+}
+
+// A verzió-ellenőrzéshez javasolt keresőkifejezés.
+// Magyar irányelvnél az azonosító a legpontosabb; egyébként a cím eleje a kiadóval.
+export function checkQuery(s: GuidelineSource): string {
+  if (s.identifier) return s.identifier
+  const short = s.title.length > 60 ? s.title.slice(0, 60).replace(/\s+\S*$/, '') : s.title
+  return s.intl ? `${short} ${s.org}` : short
+}
+
+// A forráshoz tartozó regiszter-hivatkozás, ha rögzítve van. Egyébként null —
+// ilyenkor a felület nem ajánl linket, csak a keresőkifejezést mutatja.
+export function registryFor(s: GuidelineSource): { label: string; url: string; note: string } | null {
+  if (s.registryUrl) return { label: `${s.org} — irányelvek`, url: s.registryUrl, note: 'A kiadó saját gyűjtőoldala.' }
+  if (s.registry) return REGISTRIES[s.registry]
+  return null
 }
