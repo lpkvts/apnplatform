@@ -15,6 +15,19 @@
 //  - kiadott verzió dátumát soha ne módosítsuk visszamenőleg — különben eltűnik
 //    azoknál a felhasználóknál, akik még nem látták,
 //  - a legfrissebb kiadás áll a tömb elején.
+//
+// VERZIÓSZÁMOZÁS — mikor melyik számjegy nő:
+//
+//   MAJOR (2.0.0)  Áttörő változás: a felhasználónak újra kell tanulnia valamit,
+//                  vagy a korábbi működés megszűnik. Ritka.
+//   MINOR (1.5.0)  Új modul vagy önálló, nagy funkció, ami korábban nem létezett.
+//                  Például: interaktív EKG elemzés, felhasználókezelés.
+//   PATCH (1.4.1)  Meglévő modul bővítése, új szakmai tartalom, finomítás, javítás.
+//                  Ez a leggyakoribb: új témakör, új laborelemek, új esetek,
+//                  új források, hibajavítás.
+//
+// A napi munka tehát jellemzően a HARMADIK számjegyet lépteti. Ha bizonytalan,
+// hogy minor vagy patch: ha a modul már létezett, patch.
 
 export type ChangeKind = 'funkcio' | 'labor' | 'forras' | 'betegseg' | 'szakmai' | 'eszkoz' | 'javitas'
 
@@ -53,23 +66,23 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.5.0',
+    version: '1.4.1',
     date: '2026-08-26',
     title: 'Több EKG eset, forrásokkal összekötve',
     summary: 'Az EKG elemzés öt új esettel bővült, és a szakmai háttér mostantól a központi forrás-regiszterből él.',
     entries: [
       {
-        id: 'v15-cases', kind: 'szakmai', title: 'Öt új EKG eset',
+        id: 'v141-cases', kind: 'szakmai', title: 'Öt új EKG eset',
         body: 'Anterior ST-elevációval járó infarktus, teljes AV-blokk, pitvari flutter 2:1 átvezetéssel, tüdőembólia jobbszív-terheléssel, valamint hypokalaemia megnyúlt QT-vel. Mind a nyolc eset klinikai kontextussal indul, referenciaelemzéssel zárul, és a kiemelt eltéréseknél megadja a differenciáldiagnózist is.',
         href: '/klinika/ekg/elemzes',
       },
       {
-        id: 'v15-evidence', kind: 'forras', title: 'Szakmai háttér a forrás-regiszterből',
+        id: 'v141-evidence', kind: 'forras', title: 'Szakmai háttér a forrás-regiszterből',
         body: 'Az esetek már nem másolják a forrás adatait, hanem a központi regiszterre hivatkoznak. Így az évszám, az utolsó ellenőrzés és a visszavonás egy helyen tartható karban, és a verzió-ellenőrzés az EKG-esetekre is kiterjed: minden forrásnál látszik, ha felülvizsgálat esedékes, és onnan közvetlenül megnyitható a kiadó hivatalos regisztere.',
         href: '/klinika/tudastar',
       },
       {
-        id: 'v15-sources', kind: 'forras', title: 'Négy új forrás a regiszterben',
+        id: 'v141-sources', kind: 'forras', title: 'Négy új forrás a regiszterben',
         body: 'ESC pitvarfibrilláció (2024), ESC ingerképzés és ingervezetés (2021), Európai Újraélesztési Tanács különleges körülmények (2021), valamint a magasvérnyomás-betegség ellátásáról szóló hazai irányelv (002311, 2025). Ez utóbbi hazai és elsődleges — a pitvarfibrillációhoz továbbra sem találtam érvényes magyar irányelvet, ezt a forrás jegyzete jelzi.',
         href: '/klinika/tudastar',
       },
@@ -345,6 +358,12 @@ export function compareVersions(a: string, b: string): number {
  */
 export function releasesAfterVersion(seenVersion: string | null): Release[] {
   if (!seenVersion) return []
+  const latest = RELEASES[0]
+  // Ha a felhasználónál rögzített verzió magasabb a legfrissebb kiadásnál, akkor egy
+  // verziószámot utólag korrigáltunk. Ilyenkor a nyilvántartás beragadna: minden
+  // további kiadás alacsonyabb számot kapna, és soha nem jelenne meg. Ezért a
+  // legfrissebb kiadást egyszer megmutatjuk, és a megtekintés után az állapot helyreáll.
+  if (latest && compareVersions(seenVersion, latest.version) > 0) return [latest]
   return RELEASES.filter((r) => compareVersions(r.version, seenVersion) > 0)
 }
 
