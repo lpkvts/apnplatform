@@ -7,6 +7,17 @@ import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
 import { Landing } from '@/components/landing'
 
+const ACCENTS: Record<string, string> = {
+  '/betegsegtar/akut': '#EF4444',
+  '/klinika/vizsgalat': '#885CF6',
+  '/betegsegtar': '#3B82F6',
+  '/klinika/labor': '#22C55E',
+  '/klinika/ekg': '#F97316',
+  '/klinika/tesztek': '#FACC15',
+  '/klinika/tudastar': '#0F5B46',
+}
+const accentFor = (href: string) => ACCENTS[href]
+
 const TILES = [
   { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment', acc: '#885CF6' },
   { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score', acc: '#FACC15' },
@@ -78,7 +89,7 @@ export default async function DashboardPage() {
       <div className="qgrid">
         {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
           <Link key={t.href} className="qtile" href={t.href}>
-            <span className="qtile-i" style={'acc' in t && t.acc ? { color: t.acc, background: t.acc + '1A' } : undefined}><Icon name={t.icon} size={24} /></span>
+            <span className="qtile-i" style={accentFor(t.href) ? { color: accentFor(t.href), background: accentFor(t.href) + '1A' } : undefined}><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>
           </Link>
         ))}
