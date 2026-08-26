@@ -76,7 +76,7 @@ export const ANALYSIS_STEPS: AnalysisStep[] = [
   {
     id: 'pr', no: '05', title: 'PR-intervallum',
     aim: 'Mérd meg a P-hullám kezdetétől a QRS kezdetéig tartó időt.',
-    hint: 'Élettanosan 120–200 ms (3–5 kis kocka). A tartósan megnyúlt PR elsőfokú AV-blokkra utal. Ha a PR fokozatosan nyúlik és kimarad egy QRS, az Wenckebach-jelenség.',
+    hint: 'Élettanilag 120–200 ms (3–5 kis kocka). A tartósan megnyúlt PR elsőfokú AV-blokkra utal. Ha a PR fokozatosan nyúlik és kimarad egy QRS, az Wenckebach-jelenség.',
     teach: 'av1', teachLabel: 'AV-blokkok',
     highlight: 'pr',
   },

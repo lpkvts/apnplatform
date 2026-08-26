@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.3',
+    date: '2026-08-26',
+    title: 'Szóhasználat javítása',
+    summary: 'Nyelvhelyességi javítás az EKG elemzés magyarázataiban.',
+    entries: [
+      {
+        id: 'v143-elettanilag', kind: 'javitas', title: 'Élettanilag',
+        body: 'A PR-intervallum lépés segítségében az „élettanosan” alak szerepelt; a helyes „élettanilag” váltotta fel.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.4.2',
     date: '2026-08-26',
     title: 'Önálló EKG elemzés',
