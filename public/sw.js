@@ -1,4 +1,4 @@
-const CACHE = 'apn-v1'
+const CACHE = 'apn-v2'
 const SHELL = ['/offline.html', '/icon-192.png']
 
 self.addEventListener('install', (e) => {
