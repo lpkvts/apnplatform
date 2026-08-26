@@ -38,6 +38,9 @@ export interface Topic {
   oxygen: string[]
   related: TopicRelated
   sources: TopicSource[]
+  // Forráspolitika: elsődlegesen hazai szakmai irányelv; ennek hiányában a legfrissebb
+  // európai/nemzetközi ajánlás. Ha nincs hazai forrás, ezt a mezőt ki kell tölteni.
+  sourceNote?: string
   contentStatus?: string
   relatedTopics?: string[]
 }
@@ -215,7 +218,7 @@ export const TOPICS: Topic[] = [
       { name: '2021 ESC Guidelines for the diagnosis and treatment of acute and chronic heart failure', org: 'European Society of Cardiology', year: '2021', intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-25', reviewNext: '2027-08-25' },
     ],
     contentStatus: '⚪ Draft — szakmai ellenőrzés alatt',
-    relatedTopics: ['mellkasi-fajdalom', 'eszmeletvesztes'],
+    relatedTopics: ['mellkasi-fajdalom', 'eszmeletvesztes', 'laz'],
   },
   {
     slug: 'akut-hasi-fajdalom',
@@ -314,7 +317,7 @@ export const TOPICS: Topic[] = [
       { name: 'Tokyo Guidelines 2018 (TG18) — akut cholangitis és cholecystitis diagnosztikája, súlyossági besorolása', org: 'Japanese Society of Hepato-Biliary-Pancreatic Surgery', year: '2018', intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26' },
     ],
     contentStatus: '⚪ Draft — szakmai ellenőrzés alatt',
-    relatedTopics: ['mellkasi-fajdalom'],
+    relatedTopics: ['mellkasi-fajdalom', 'laz'],
   },
   {
     slug: 'eszmeletvesztes',
@@ -416,6 +419,115 @@ export const TOPICS: Topic[] = [
     ],
     contentStatus: '⚪ Draft — szakmai ellenőrzés alatt',
     relatedTopics: ['mellkasi-fajdalom', 'akut-dyspnoe'],
+  },
+  {
+    slug: 'laz',
+    title: 'Láz',
+    icon: '🌡️',
+    subtitle: 'Gyors klinikai orientáció lázas beteg esetén: a szepszis korai felismerése, vörös zászlók, góckeresés, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    orientation: [
+      'A láz tünet, nem diagnózis. A legfontosabb kérdés nem a hőmérséklet nagysága, hanem az, hogy a beteg állapota utal-e szervi elégtelenségre.',
+      'A kezdeti értékelés célja: a szepszis és a szeptikus sokk korai felismerése, a fertőzési góc célzott keresése, valamint a nem fertőzéses eredetű láz és a fokozott kockázatú betegcsoportok azonosítása.',
+      'Idős, immunszupprimált vagy neutropeniás betegnél a láz hiánya sem zárja ki a súlyos fertőzést — a hypothermia szintén a szepszis jele lehet.',
+    ],
+    redFlags: [
+      'Haemodinamikai instabilitás, hypotensio, szeptikus sokk jelei',
+      'Új keletű tudatzavar, zavartság vagy aluszékonyság',
+      'Emelkedő légzésszám, hypoxia',
+      'Nem halványodó (petechiás) bőrkiütés — meningococcaemia gyanúja',
+      'Tarkókötöttség, fényérzékenység, erős fejfájás',
+      'Neutropenia vagy folyamatban lévő daganatellenes kezelés',
+      'Immunszuppresszió, aszplénia, transzplantáció az előzményben',
+      'Friss műtét vagy behelyezett invazív eszköz (kanül, katéter, drén, protézis)',
+      'Közelmúltbeli trópusi utazás (malária lehetősége)',
+      'Oliguria, csökkenő diurézis',
+      'Emelkedő laktát',
+    ],
+    stability: [
+      'Tudatállapot', 'Légzésszám', 'Oxigénszaturáció', 'Szívfrekvencia', 'Vérnyomás',
+      'Testhőmérséklet', 'Kapilláris újratelődés és bőrszín', 'Diurézis', 'NEWS2 összpontszám',
+    ],
+    historyFeatures: [
+      'Kezdet és időtartam', 'A láz lefutása (folyamatos, hullámzó, visszatérő)',
+      'Legmagasabb mért érték és a mérés módja', 'Hidegrázás',
+      'Lázcsillapítóra adott válasz', 'Korábbi hasonló epizód',
+      'Aktuális vagy közelmúltbeli antibiotikum-kezelés',
+    ],
+    historySymptoms: [
+      'Köhögés, köpet, mellkasi fájdalom, dyspnoe', 'Dysuria, gyakori vizelés, deréktáji fájdalom',
+      'Hasi fájdalom, hasmenés, hányás', 'Fejfájás, tarkótáji panasz',
+      'Bőrpír, seb, fájdalmas duzzanat', 'Ízületi fájdalom és duzzanat',
+      'Torokfájás, fülfájás', 'Bőrkiütés', 'Fogyás, éjszakai izzadás',
+    ],
+    historyNote: 'A gócot célzottan kell keresni: légúti, húgyúti, hasi, bőr- és lágyrész-, központi idegrendszeri, illetve eszközzel összefüggő fertőzés. Az utazási, oltási, állatkontakt- és gyógyszer-anamnézis — különösen az immunszupresszív kezelés — éppolyan fontos, mint a fizikális lelet. A lázcsillapítóra bekövetkező hőmérséklet-csökkenés nem zárja ki a súlyos fertőzést, és nem alkalmas a kockázat megítélésére.',
+    ekgHeadline: 'EKG a kísérő ritmuszavar és a kardiális érintettség megítélésére',
+    ekgNote: [
+      'A láz és a szepszis jellemzően sinus tachycardiával jár; új keletű ritmuszavar (például pitvarfibrilláció) a szeptikus terhelés jele lehet.',
+      'Infektív endocarditis gyanújánál az új ingervezetési zavar figyelmeztető jel.',
+      'Elektroliteltérés és egyes gyógyszerek megnyújthatják a QT-időt — lázas, dehidrált betegnél ez fokozott figyelmet érdemel.',
+    ],
+    laborHeadline: 'Gyulladásos markerek, szervfunkciók és célzott mikrobiológiai mintavétel — hemokultúra az antibiotikum előtt',
+    laborKeyNote: [
+      'Vérkép fehérvérsejt-számmal (a neutropenia felismerése kulcsfontosságú), CRP, szükség szerint prokalcitonin.',
+      'Laktát a szöveti hipoperfúzió megítélésére; az emelkedett érték a súlyosság jelzője, az ismételt mérés a terápiaválaszt mutatja.',
+      'Vesefunkció, elektrolitok, májenzimek és bilirubin a szervi érintettség felméréséhez; alvadási paraméterek DIC gyanújánál.',
+      'Hemokultúra lehetőleg az antibiotikum megkezdése ELŐTT, aszeptikusan, két palackpárban — mellette a gyanított góc szerinti mintavétel (vizelet, köpet, sebváladék, liquor).',
+      'A mintavétel súlyos állapotú betegnél nem késleltetheti indokolatlanul az ellátást.',
+    ],
+    laborMore: ['Vérkép és kvalitatív vérkép', 'CRP', 'Prokalcitonin', 'Laktát', 'Vérgáz', 'Kreatinin / eGFR', 'Elektrolitok', 'Májenzimek, bilirubin', 'Alvadás (INR, fibrinogén, D-dimer)', 'Hemokultúra', 'Vizelet üledék és tenyésztés', 'Köpet, sebváladék, liquor a góc szerint', 'Malária-vizsgálat trópusi utazás után'],
+    scoreNote: 'A romlás és a szepszis-kockázat megítéléséhez NEWS2 — a NICE 2024-es frissítése óta felnőttben ez a javasolt eszköz. Gyors ágy melletti szűrésre qSOFA, intenzív osztályon SOFA. Pneumonia gyanújánál CURB-65, torokfájásnál Centor. Tudatállapothoz GCS vagy AVPU, delírium gyanújánál CAM-ICU.',
+    ddx: {
+      critical: ['Szepszis és szeptikus sokk', 'Meningitis, meningococcaemia', 'Neutropeniás láz', 'Infektív endocarditis', 'Nekrotizáló lágyrész-fertőzés'],
+      cardiac: ['Pneumonia', 'Húgyúti fertőzés, pyelonephritis', 'Hasi fertőzés (cholangitis, diverticulitis)', 'Bőr- és lágyrész-fertőzés', 'Eszközzel összefüggő fertőzés (kanül, katéter)', 'Felső légúti és vírusfertőzések'],
+      other: ['Malária és egyéb importált fertőzés', 'Gyógyszerláz', 'Vénás thromboembolia', 'Autoimmun betegség fellángolása', 'Daganatos láz', 'Thyreotoxikus krízis', 'Hőguta'],
+    },
+    apnFocus: [
+      'Vitális paraméterek és NEWS2 rendszeres, dokumentált mérése',
+      'A tudatállapot változásának figyelése',
+      'Bőr átvizsgálása kiütésre, sebre, nyomási sérülésre',
+      'Minden behelyezett eszköz ellenőrzése (kanül, katéter, drén)',
+      'Hemokultúra és célzott mintavétel előkészítése az antibiotikum előtt',
+      'Folyadékbevitel és diurézis pontos rögzítése',
+      'Az antibiotikum beadási idejének dokumentálása',
+      'Utazási, oltási és állatkontakt-anamnézis',
+      'Immunszuppresszív kezelés, daganatellenes terápia tisztázása',
+      'Izolációs szempontok mérlegelése',
+      'A lázcsillapítás hatásának és a beteg közérzetének követése',
+      'Hozzátartozó tájékoztatása a romlás jeleiről',
+    ],
+    apnWarning: 'A láz mértéke nem arányos a súlyossággal. Idős, immunszupprimált vagy neutropeniás betegnél a hőemelkedés hiánya, sőt a hypothermia is súlyos fertőzést jelezhet, és a klinikai kép megtévesztően szegényes lehet. A lázcsillapítás javíthatja a közérzetet, de nem befolyásolja a szepszis lefolyását, és nem használható a kockázat megítélésére. Neutropeniás betegnél a láz sürgősségi helyzet.',
+    escalation: [
+      'Szeptikus sokk vagy tartós hypotensio jelei',
+      'Emelkedő NEWS2 vagy gyorsan romló vitális paraméterek',
+      'Új keletű tudatzavar',
+      'Emelkedő laktát vagy csökkenő diurézis',
+      'Neutropeniás láz',
+      'Nem halványodó bőrkiütés vagy meningitis gyanúja',
+      'Nekrotizáló lágyrész-fertőzés gyanúja (aránytalanul erős fájdalom, gyors terjedés)',
+      'Trópusi utazás utáni, tisztázatlan okú láz',
+    ],
+    escalationNote: 'Az ellátás és eszkaláció a helyi intézményi protokollok, aktuális szakmai irányelvek és kompetenciahatárok figyelembevételével történjen. Ez az oldal klinikai orientációs és döntéstámogató tanulási eszköz — nem tartalmaz gyógyszerelési vagy terápiás algoritmust.',
+    oxygen: [
+      'Lázas betegnél az oxigén nem rutin beavatkozás; kizárólag hypoxia esetén, titrálva adandó.',
+      'Általános cél jellemzően 94–98%; CO₂-retenció kockázatával élő betegnél jellemzően 88–92%.',
+      'Szepszis vagy szeptikus sokk gyanújánál a magasabb áramlású oxigénadás a helyi protokoll szerint indokolt lehet, a célszaturáció folyamatos ellenőrzésével.',
+    ],
+    related: {
+      examSystems: ['eletjelek', 'altalanos', 'bor', 'legzo', 'uro'],
+      examLinks: [{ label: 'Célzott anamnézis (vizsgálati munkamenet)', href: '/klinika/vizsgalat/munkamenet' }],
+      ekg: ['tachy', 'afib', 'av1'],
+      labor: ['crp', 'pct', 'wbc', 'lact', 'bcult', 'krea', 'na', 'k', 'bili', 'alt', 'plt', 'fib', 'ddimer', 'used', 'hb'],
+      scores: ['news2', 'qsofa', 'sofa', 'curb65', 'centor', 'gcs', 'avpu', 'camicu'],
+      diseases: ['Szepszis', 'Pneumonia', 'Húgyúti fertőzés', 'Meningitis', 'Neutropenia', 'Infektív endocarditis', 'Cellulitis'],
+    },
+    sources: [
+      { name: 'Suspected sepsis in people aged 16 or over: recognition, diagnosis and early management (NG253)', org: 'National Institute for Health and Care Excellence', year: '2025', identifier: 'NG253', intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26' },
+      { name: 'Suspected sepsis in under 16s: recognition, diagnosis and early management (NG254)', org: 'National Institute for Health and Care Excellence', year: '2025', identifier: 'NG254', intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26' },
+      { name: 'Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock', org: 'Society of Critical Care Medicine / ESICM', year: '2021', intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26' },
+    ],
+    sourceNote: 'A platform alapelve szerint elsődlegesen hazai szakmai irányelvre hivatkozunk. A lázas beteg ellátásáról és a szepszisről az ellenőrzés időpontjában nem volt azonosítható önálló, érvényes hazai egészségügyi szakmai irányelv, ezért a források a legfrissebb nemzetközi ajánlások. A NICE 2025 novemberében három külön irányelvre bontotta a korábbi NG51-et (NG253, NG254, NG255) — a korábbi verzióra hivatkozó anyagok felülvizsgálandók. Hazai irányelv megjelenése esetén a forrásjegyzék frissítendő.',
+    contentStatus: '⚪ Draft — szakmai ellenőrzés alatt',
+    relatedTopics: ['akut-dyspnoe', 'akut-hasi-fajdalom'],
   },
 ]
 

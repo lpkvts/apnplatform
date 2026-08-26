@@ -183,7 +183,22 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
 
       {/* 13. Források */}
       <div className="sec-h"><span className="sec-t">Szakmai források</span></div>
-      {t.sources.map((src, i) => {
+      {t.sourceNote && (
+        <div className="safety-note" style={{ marginBottom: 10 }}>
+          <b>ⓘ Forráspolitika.</b> {t.sourceNote}
+        </div>
+      )}
+      {[...t.sources]
+        .sort((a, b) => {
+          // Hazai irányelv elöl, azon belül az elsődleges, majd a legfrissebb év.
+          const hu = (s: typeof a) => (s.intl ? 1 : 0)
+          if (hu(a) !== hu(b)) return hu(a) - hu(b)
+          const pr = (s: typeof a) => (s.primary ? 0 : 1)
+          if (pr(a) !== pr(b)) return pr(a) - pr(b)
+          const yr = (s: typeof a) => parseInt((s.year ?? '').match(/\d{4}/)?.[0] ?? '0', 10)
+          return yr(b) - yr(a)
+        })
+        .map((src, i) => {
         const today = new Date().toISOString().slice(0, 10)
         const due = src.reviewNext ? src.reviewNext <= today : false
         const soon = src.reviewNext && !due ? (new Date(src.reviewNext).getTime() - Date.now()) / 86400000 <= 90 : false

@@ -116,6 +116,33 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
     intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
     usedIn: ['Eszméletvesztés', 'Vasovagalis syncope'],
   },
+  // ── Infektológia / szepszis ─────────────────
+  {
+    id: 'nice-ng253-sepsis-16plus', title: 'Suspected sepsis in people aged 16 or over: recognition, diagnosis and early management (NG253)',
+    org: 'National Institute for Health and Care Excellence', year: '2025', identifier: 'NG253', category: 'Infektológia',
+    intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Láz', 'Szepszis'],
+    versionNote: 'A NICE 2025 novemberében a korábbi NG51-et három irányelvre bontotta: NG253 (16 év felett), NG254 (16 év alatt), NG255 (terhesség).',
+  },
+  {
+    id: 'nice-ng254-sepsis-under16', title: 'Suspected sepsis in under 16s: recognition, diagnosis and early management (NG254)',
+    org: 'National Institute for Health and Care Excellence', year: '2025', identifier: 'NG254', category: 'Infektológia',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Láz', 'Szepszis'],
+  },
+  {
+    id: 'ssc-2021', title: 'Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock',
+    org: 'Society of Critical Care Medicine / ESICM', year: '2021', category: 'Infektológia',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Láz', 'Szepszis'],
+  },
+  {
+    id: 'nice-ng51-sepsis', title: 'Sepsis: recognition, diagnosis and early management (NG51)',
+    org: 'National Institute for Health and Care Excellence', year: '2016', identifier: 'NG51', category: 'Infektológia',
+    intl: true, primary: false, status: 'Visszavonva', lastChecked: '2026-08-26', reviewNext: '2026-08-26',
+    supersededBy: 'NG253 / NG254 / NG255 (2025)',
+    versionNote: 'Nem használandó. 2025 novemberében három új irányelv váltotta fel — az erre hivatkozó korábbi anyagok felülvizsgálandók.',
+  },
 ]
 
 export function sourcesByCategory(): [string, GuidelineSource[]][] {

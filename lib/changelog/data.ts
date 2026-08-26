@@ -53,6 +53,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.2.0',
+    date: '2026-08-28',
+    title: 'Láz témakör és forráspolitika',
+    summary: 'Új akut témakör a szepszis korai felismerésére, és a forrásjegyzékek rendezése a hazai irányelvek elsőbbsége szerint.',
+    entries: [
+      {
+        id: 'v12-laz', kind: 'szakmai', title: 'Láz témakör',
+        body: 'A szepszis és a szeptikus sokk korai felismerése, célzott góckeresés, vörös zászlók, hemokultúra az antibiotikum előtt, differenciáldiagnózis és APN-fókusz. Külön kiemelve, hogy idős, immunszupprimált vagy neutropeniás betegnél a láz hiánya sem zárja ki a súlyos fertőzést.',
+        href: '/betegsegtar/akut/laz',
+      },
+      {
+        id: 'v12-forraspolitika', kind: 'forras', title: 'Forráspolitika a témakörökben',
+        body: 'A szakmai források mostantól hazai irányelv, elsődlegesség, majd frissesség szerint rendezve jelennek meg. Ahol nincs érvényes hazai irányelv, a témakör ezt kiírja, és megnevezi, miért nemzetközi forrásra épül.',
+        href: '/betegsegtar/akut/laz',
+      },
+      {
+        id: 'v12-nice-sepsis', kind: 'forras', title: 'NICE szepszis-irányelvek frissítése',
+        body: 'A NICE 2025 novemberében a korábbi NG51-et három irányelvre bontotta: NG253 (16 év felett), NG254 (16 év alatt), NG255 (terhesség). Az NG51 visszavont állapotban került a regiszterbe, figyelmeztetéssel. Felvéve a Surviving Sepsis Campaign 2021 is.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.1.0',
     date: '2026-08-27',
     title: 'Akut állapotok bővítése',
