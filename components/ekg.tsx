@@ -8,6 +8,7 @@ import Link from 'next/link'
 import { FavStar } from '@/components/favorites-context'
 import { ECG, EKG_CATS, type EcgItem } from '@/lib/ekg/data'
 import { ECG_WAVES } from '@/lib/ekg/waves'
+import { EKG_CASES } from '@/lib/ekg/cases'
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 const SEV_CLS: Record<string, string> = { 'Enyhe': 'sev-low', 'Közepes': 'sev-mid', 'Súlyos': 'sev-high', 'Életveszélyes': 'sev-crit' }
@@ -44,7 +45,7 @@ type Mode = 'atlas' | 'practice' | 'exam'
 interface Prac { qid: string; opts: string[]; picked: string | null }
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
-export function Ekg({ initialOpen, examEnabled = false, lookup = [] }: { initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[] }) {
+export function Ekg({ initialOpen, examEnabled = false, lookup = [], backCase, backStep }: { initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[]; backCase?: string; backStep?: string }) {
   const [mode, setMode] = useState<Mode>('atlas')
   const [prac, setPrac] = useState<Prac | null>(null)
   const [exam, setExam] = useState<Exam | null>(null)
@@ -91,8 +92,48 @@ export function Ekg({ initialOpen, examEnabled = false, lookup = [] }: { initial
 
   return (
     <>
-      <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
-      <h1 className="h1">EKG Tudástár</h1>
+      {backCase ? (
+        <Link className="sh-back" href={`/klinika/ekg/elemzes/${backCase}`}>‹ Vissza az elemzéshez</Link>
+      ) : (
+        <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
+      )}
+      <h1 className="h1">EKG</h1>
+
+      {backCase && (
+        <div className="ekg-hint" style={{ marginBottom: 12 }}>
+          <b>📚 Ismétlés</b>
+          <div className="sub" style={{ marginTop: 4 }}>
+            Nézd át a témát, majd térj vissza pontosan ugyanahhoz az elemzési lépéshez.
+          </div>
+          <Link className="btn sm" style={{ marginTop: 8 }} href={`/klinika/ekg/elemzes/${backCase}${backStep ? `#${backStep}` : ''}`}>
+            Vissza az elemzéshez →
+          </Link>
+        </div>
+      )}
+
+      {/* Interaktív elemzés — a tananyag és az esetek közötti kapocs */}
+      <Link className="card klink" href="/klinika/ekg/elemzes">
+        <div className="klink-t">🔬 EKG elemzés</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>
+          Tanuld meg lépésről lépésre értelmezni az EKG-t, majd gyakorold klinikai eseteken.
+        </div>
+        <div className="ekg-an-metrics">
+          <span>11 lépéses elemzés</span>
+          <span>{EKG_CASES.length} eset</span>
+          <span>Tananyaghoz kapcsolt segítség</span>
+        </div>
+        <span className="sec-l" style={{ display: 'inline-block', marginTop: 8 }}>Folytatás →</span>
+      </Link>
+
+      {/* Mai gyakorlás */}
+      <Link className="card klink" href={`/klinika/ekg/elemzes/${EKG_CASES[0].id}`}>
+        <div className="klink-t">🗓️ Mai EKG eset</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>{EKG_CASES[0].title}</div>
+        <div className="ekg-an-metrics"><span>5 perc</span><span>Interaktív elemzés</span><span>{EKG_CASES[0].difficulty}</span></div>
+        <span className="sec-l" style={{ display: 'inline-block', marginTop: 8 }}>Elemzés indítása →</span>
+      </Link>
+
+      <div className="sec-h" style={{ marginTop: 18 }}><span className="sec-t">Tananyag</span></div>
       <ModeBar />
       {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} lookup={lookup} />}
       {activeMode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}

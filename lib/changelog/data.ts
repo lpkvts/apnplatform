@@ -53,6 +53,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.0',
+    date: '2026-08-26',
+    title: 'Interaktív EKG elemzés',
+    summary: 'Az EKG modul kiegészült a strukturált, lépésről lépésre vezetett EKG-elemzéssel, klinikai eseteken.',
+    entries: [
+      {
+        id: 'v14-guided', kind: 'funkcio', title: 'Vezetett EKG elemzés',
+        body: 'Tizenegy lépéses strukturált elemzés a kalibrációtól az összegzésig. Minden lépésnél kérdés, azonnali visszajelzéssel és magyarázattal — nem olvasod az elemzést, hanem elvégzed. A segítség gomb kontextuális magyarázatot ad, és onnan egy koppintással a meglévő EKG tananyag pontos részére lehet ugrani, majd visszatérni ugyanahhoz a lépéshez.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v14-viewer', kind: 'eszkoz', title: '12 elvezetéses EKG megjelenítő',
+        body: 'Szabványos 3×4 elrendezés hosszú ritmuscsíkkal, 1 és 5 mm-es rácshálóval, hogy az intervallumok mérhetők legyenek. Nagyítható, és egy elvezetésre koppintva az teljes szélességben megnyílik. A görbék paraméterekből generálódnak, így egy új eset néhány sor adat.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v14-cases', kind: 'szakmai', title: 'Három kidolgozott EKG eset',
+        body: 'Inferior ST-elevációval járó infarktus, pitvarfibrilláció gyors kamrai válasszal, és hyperkalaemia. Mindegyik klinikai kontextussal indul, referenciaelemzéssel zárul, és minden kiemelt eltéréshez megadja, mit látunk, hol látjuk, mit jelenthet, milyen differenciáldiagnózis merül fel, és miért fontos. Külön szakmai háttér panel jelöli, mire épül a magyarázat.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.3.1',
     date: '2026-08-26',
     title: 'Színes gyors elérés',

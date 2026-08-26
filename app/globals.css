@@ -497,3 +497,20 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .acc-labor { color: var(--acc-labor); }
 .acc-ekg { color: var(--acc-ekg); }
 .acc-score { color: var(--acc-score); }
+
+/* ── 12 elvezetéses EKG megjelenítő ─────────────────────── */
+.ecg12 { background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.ecg12-bar { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+.ecg12-cal { font-size: 11px; font-weight: 600; color: var(--muted); letter-spacing: .02em; }
+.ecg12-zoom { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 42px; text-align: center; }
+.ecg12-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; background: #FFF9F9; }
+.ecg12-lbl { font-size: 9px; font-weight: 700; fill: var(--ink); font-family: inherit; }
+.ecg12-foot { padding: 8px 10px; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); }
+.ecg12-solo { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 10px; font-size: 12px; background: var(--brand-tint); }
+
+/* ── Vezetett EKG elemzés ───────────────────────────────── */
+.ekg-an-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin: 14px 0 6px; }
+.ekg-an-step { font-size: 15px; font-weight: 700; color: var(--brand); }
+.ekg-hint { margin-top: 10px; padding: 12px 14px; border-radius: 13px; background: var(--brand-tint); font-size: 14px; }
+.ekg-an-card { display: block; text-decoration: none; color: inherit; }
+.ekg-an-metrics { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: var(--muted); }
