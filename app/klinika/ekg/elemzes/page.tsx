@@ -39,16 +39,26 @@ export default function ElemzesHub() {
         </Link>
       ))}
 
-      <div className="sec-h"><span className="sec-t">Elérhető esetek</span><span className="sec-l" style={{ marginLeft: 'auto', fontWeight: 500 }}>{EKG_CASES.length}</span></div>
-      {EKG_CASES.map((c) => (
-        <Link key={c.id} className="sh-row" href={`/klinika/ekg/elemzes/${c.id}`}>
-          <span className="sh-row-main">
-            <span className="sh-row-name">{c.title}</span>
-            <span className="sh-row-sub">{c.age} éves {c.sex} · {c.difficulty} · {c.tags.slice(0, 3).join(', ')}</span>
+      {/* Alapértelmezetten csukott — a három mód marad a hangsúlyos, a lista csak kibontva. */}
+      <details className="kt-acc">
+        <summary className="kt-sum">
+          <span>Elérhető esetek</span>
+          <span style={{ color: 'var(--muted)', fontWeight: 600, fontSize: 13, marginLeft: 'auto', marginRight: 8 }}>
+            {EKG_CASES.length} eset
           </span>
-          <span className="sh-chev">›</span>
-        </Link>
-      ))}
+        </summary>
+        <div className="kt-body">
+          {EKG_CASES.map((c) => (
+            <Link key={c.id} className="sh-row" href={`/klinika/ekg/elemzes/${c.id}`}>
+              <span className="sh-row-main">
+                <span className="sh-row-name">{c.title}</span>
+                <span className="sh-row-sub">{c.age} éves {c.sex} · {c.difficulty} · {c.tags.slice(0, 3).join(', ')}</span>
+              </span>
+              <span className="sh-chev">›</span>
+            </Link>
+          ))}
+        </div>
+      </details>
 
       <div className="safety-note" style={{ marginTop: 12 }}>
         <b>ⓘ Oktatási eszköz.</b> A megjelenített EKG-görbék szintetizáltak, nem valódi betegfelvételek.

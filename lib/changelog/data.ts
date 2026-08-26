@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.4',
+    date: '2026-08-26',
+    title: 'Rendezettebb elemzés-kezdőlap',
+    summary: 'Az EKG elemzés belépő képernyőjén az esetlista alapból csukva marad.',
+    entries: [
+      {
+        id: 'v144-eset-lista', kind: 'eszkoz', title: 'Csukott esetlista',
+        body: 'Az „Elérhető esetek” lista alapértelmezetten összecsukott állapotban jelenik meg, így a három elemzési mód marad a hangsúlyos. A fejlécen látszik, hány eset érhető el, és egy koppintással kibontható.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.4.3',
     date: '2026-08-26',
     title: 'Szóhasználat javítása',
