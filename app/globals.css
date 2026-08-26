@@ -514,3 +514,25 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .ekg-hint { margin-top: 10px; padding: 12px 14px; border-radius: 13px; background: var(--brand-tint); font-size: 14px; }
 .ekg-an-card { display: block; text-decoration: none; color: inherit; }
 .ekg-an-metrics { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+/* ── Önálló EKG elemzés ─────────────────────────────────── */
+.solo-field { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.solo-field:first-child { padding-top: 4px; }
+.solo-lbl { font-size: 14px; font-weight: 700; }
+.eq-opt.picked { border-color: var(--brand); background: var(--brand-tint); color: var(--brand); font-weight: 700; }
+
+.solo-cmp { background: #fff; border: 1px solid var(--line); border-left-width: 4px; border-radius: 14px; padding: 12px 14px; margin-bottom: 8px; }
+.solo-cmp.sv-ok { border-left-color: #10b981; }
+.solo-cmp.sv-partial { border-left-color: #f59e0b; }
+.solo-cmp.sv-off { border-left-color: #dc2626; }
+.solo-cmp.sv-skip { border-left-color: var(--line); }
+.solo-cmp-h { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+.solo-verdict { font-size: 12px; font-weight: 700; white-space: nowrap; }
+.sv-ok .solo-verdict { color: #047857; }
+.sv-partial .solo-verdict { color: #b45309; }
+.sv-off .solo-verdict { color: #b91c1c; }
+.sv-skip .solo-verdict { color: var(--muted); }
+.solo-cmp-body { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.solo-cmp-k { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
+.solo-cmp-v { font-size: 14px; margin-top: 2px; }
+@media (max-width: 420px) { .solo-cmp-body { grid-template-columns: 1fr; gap: 8px; } }

@@ -66,6 +66,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.2',
+    date: '2026-08-26',
+    title: 'Önálló EKG elemzés',
+    summary: 'Segítség nélküli elemzés, majd kétoldalas összehasonlítás a referenciaelemzéssel.',
+    entries: [
+      {
+        id: 'v142-solo', kind: 'funkcio', title: 'Önálló elemzés mód',
+        body: 'Az EKG-t segítség és lépésenkénti visszajelzés nélkül elemzed: ritmus, frekvencia, tengely, PR, QRS, QT/QTc, ST- és T-eltérések a területük megjelölésével, végül saját szöveges összegzés. Az ellenőrzés után elemenként látod, mi egyezett a referenciával — helyes, részben helyes vagy eltérő minősítéssel. A kitöltetlen mezők nem rontják az eredményt.',
+        href: '/klinika/ekg/elemzes/onallo',
+      },
+      {
+        id: 'v142-modevalto', kind: 'eszkoz', title: 'Módváltó az eseteknél',
+        body: 'Ugyanaz az eset elvégezhető vezetett és önálló módban is, az eset tetején lévő váltóval. Érdemes előbb vezetetten végigmenni, majd önállóan ismételni.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v142-qtc', kind: 'javitas', title: 'Pontosabb QT-értékelés',
+        body: 'A rövid QT küszöbét a klinikai gyakorlathoz igazítottam. Szélsőséges frekvencián a rendszer mostantól jelzi, hogy a Bazett-képlet torzít — gyors ritmusnál túl-, lassúnál alulkorrigál —, és ilyenkor a szomszédos kategóriát is elfogadja helyes válaszként.',
+        href: '/klinika/ekg/elemzes/onallo',
+      },
+    ],
+  },
+  {
     version: '1.4.1',
     date: '2026-08-26',
     title: 'Több EKG eset, forrásokkal összekötve',
