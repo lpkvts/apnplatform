@@ -1,16 +1,40 @@
--- APN Hungary Platform — Admin felhasználókezelés.
+-- APN Hungary Platform — Admin felhasználókezelés (0029)
 --
--- Amit ez a migráció ad:
---   1. admin_user_get(uuid) — egy felhasználó teljes adatlapja (profil + auth adatok)
---   2. profiles: admin szerkesztheti bármely profilt (RLS policy)
---   3. admin_set_role(uuid, text) — szerepkör módosítása, az utolsó admin védelmével
---   4. admin_log(...) — audit bejegyzés írása admin műveletekhez
+-- ÖNHORDÓ ÉS ÚJRAFUTTATHATÓ: akkor is végigfut, ha a 0012 / 0025 / 0027 migráció
+-- kimaradt, és többször is lefuttatható következmény nélkül.
 --
--- A jelszó és az e-mail módosítása NEM itt történik: azt a Supabase Auth Admin API
--- végzi szerver oldalon, service role kulccsal (lib/supabase/admin.ts).
+-- Futtatás: Supabase → SQL Editor → beilleszt → Run.
+-- A végén egy ellenőrző lekérdezés kiírja, mi jött létre.
 
--- ── 1. Egy felhasználó adatlapja ─────────────────────────
-create or replace function public.admin_user_get(p_id uuid)
+-- ══ 0. Előfeltételek biztosítása ═══════════════════════════
+
+-- Az újdonságjelzés oszlopai (0027) — az admin_user_get hivatkozik rájuk.
+alter table public.profiles
+  add column if not exists updates_seen_at timestamptz,
+  add column if not exists updates_seen_version text;
+
+-- Audit napló (0012) — az admin_log ide ír.
+create table if not exists public.audit_log (
+  id uuid primary key default gen_random_uuid(),
+  actor_id uuid, actor_email text, action text not null, entity text not null,
+  entity_id uuid, entity_title text, details jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
+-- Admin-ellenőrző segédfüggvény (0025). Security definer, ezért nem okoz RLS-rekurziót.
+create or replace function public.is_admin()
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.profiles where id = auth.uid() and role = 'admin')
+$$;
+
+revoke all on function public.is_admin() from public, anon;
+grant execute on function public.is_admin() to authenticated;
+
+-- ══ 1. Egy felhasználó adatlapja ═══════════════════════════
+-- A visszatérési típus változhatott, ezért előbb eldobjuk.
+drop function if exists public.admin_user_get(uuid);
+
+create function public.admin_user_get(p_id uuid)
 returns table (
   id uuid, email text, email_confirmed_at timestamptz, last_sign_in_at timestamptz,
   full_name text, role text, apn_type text, title text, workplace text,
@@ -18,7 +42,7 @@ returns table (
   created_at timestamptz, updates_seen_at timestamptz, updates_seen_version text
 )
 language sql stable security definer set search_path = public as $$
-  select p.id, u.email, u.email_confirmed_at, u.last_sign_in_at,
+  select p.id, u.email::text, u.email_confirmed_at, u.last_sign_in_at,
          p.full_name, p.role, p.apn_type, p.title, p.workplace,
          p.specialty, p.qualification, p.qual_year, p.registration_no, p.phone,
          p.created_at, p.updates_seen_at, p.updates_seen_version
@@ -30,8 +54,9 @@ $$;
 revoke all on function public.admin_user_get(uuid) from public, anon;
 grant execute on function public.admin_user_get(uuid) to authenticated;
 
--- ── 2. Admin szerkesztheti bármely profilt ───────────────
--- Az is_admin() security definer, ezért nincs RLS-rekurzió.
+-- ══ 2. Admin szerkesztheti bármely profilt ═════════════════
+alter table public.profiles enable row level security;
+
 drop policy if exists "profil: admin olvasás" on public.profiles;
 create policy "profil: admin olvasás" on public.profiles
   for select using (public.is_admin());
@@ -40,8 +65,10 @@ drop policy if exists "profil: admin frissítés" on public.profiles;
 create policy "profil: admin frissítés" on public.profiles
   for update using (public.is_admin()) with check (public.is_admin());
 
--- ── 3. Szerepkör módosítása, utolsó admin védelmével ─────
-create or replace function public.admin_set_role(p_id uuid, p_role text)
+-- ══ 3. Szerepkör módosítása, az utolsó admin védelmével ════
+drop function if exists public.admin_set_role(uuid, text);
+
+create function public.admin_set_role(p_id uuid, p_role text)
 returns text language plpgsql security definer set search_path = public as $$
 declare v_old text; v_admins int;
 begin
@@ -76,9 +103,11 @@ $$;
 revoke all on function public.admin_set_role(uuid, text) from public, anon;
 grant execute on function public.admin_set_role(uuid, text) to authenticated;
 
--- ── 4. Audit bejegyzés admin műveletekhez ────────────────
+-- ══ 4. Audit bejegyzés admin műveletekhez ══════════════════
 -- A jelszó értékét SOHA nem naplózzuk, csak a művelet tényét.
-create or replace function public.admin_log(
+drop function if exists public.admin_log(text, text, uuid, text, jsonb);
+
+create function public.admin_log(
   p_action text, p_entity text, p_entity_id uuid, p_entity_title text, p_details jsonb default '{}'::jsonb
 )
 returns void language plpgsql security definer set search_path = public as $$
@@ -95,3 +124,13 @@ $$;
 
 revoke all on function public.admin_log(text, text, uuid, text, jsonb) from public, anon;
 grant execute on function public.admin_log(text, text, uuid, text, jsonb) to authenticated;
+
+-- ══ 5. Ellenőrzés ══════════════════════════════════════════
+-- Sikeres futás esetén négy sort ad vissza: admin_log, admin_set_role,
+-- admin_user_get, is_admin.
+select p.proname as fuggveny, pg_get_function_identity_arguments(p.oid) as parameterek
+from pg_proc p
+join pg_namespace n on n.oid = p.pronamespace
+where n.nspname = 'public'
+  and p.proname in ('is_admin','admin_user_get','admin_set_role','admin_log')
+order by p.proname;
