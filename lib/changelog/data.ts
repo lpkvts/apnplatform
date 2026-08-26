@@ -53,6 +53,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.2.1',
+    date: '2026-08-26',
+    title: 'Újdonságjelzés javítása',
+    summary: 'A harangon megjelenő jelzés mostantól minden fiókon megbízhatóan eltűnik, ha megtekintetted az újdonságokat.',
+    entries: [
+      {
+        id: 'v121-badge', kind: 'javitas', title: 'A jelzés eltűnik megtekintés után',
+        body: 'Az újdonság eldöntése dátum helyett verziószám alapján történik, így nem függ a szerver napjától. A harang a fejlécben ül, ezért a „Megtekintettem” gomb mostantól a fejlécet is frissíti — korábban a szám a régi értéken maradt, amíg az oldalt újra nem töltötted.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v121-profilok', kind: 'javitas', title: 'Minden fiókon működik',
+        body: 'A korábban regisztrált fiókok is bekapcsolódtak a verzió-alapú jelzésbe, és az új regisztrációk a fiók létrejöttétől számítva kapják az újdonságokat — visszamenőleg semmit.',
+        href: '/ujdonsagok',
+      },
+    ],
+  },
+  {
     version: '1.2.0',
     date: '2026-08-26',
     title: 'Láz témakör és forráspolitika',
