@@ -6,25 +6,18 @@ import { getFlag } from '@/lib/flags'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
 import { Landing } from '@/components/landing'
+import { accentStyle } from '@/lib/shortcuts'
 
-const ACCENTS: Record<string, string> = {
-  '/betegsegtar/akut': '#EF4444',
-  '/klinika/vizsgalat': '#885CF6',
-  '/betegsegtar': '#3B82F6',
-  '/klinika/labor': '#22C55E',
-  '/klinika/ekg': '#F97316',
-  '/klinika/tesztek': '#FACC15',
-  '/klinika/tudastar': '#0F5B46',
-}
-const accentFor = (href: string) => ACCENTS[href]
 
+// Az alapértelmezett csempék. A színt a központi paletta adja (lib/shortcuts.ts),
+// hogy a kezdőlap és a testreszabás nézet ne térhessen el egymástól.
 const TILES = [
-  { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment', acc: '#885CF6' },
-  { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score', acc: '#FACC15' },
-  { href: '/klinika/labor', label: 'Labor', icon: 'flask', acc: '#22C55E' },
-  { href: '/klinika/ekg', label: 'EKG', icon: 'ekg', acc: '#F97316' },
-  { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic', acc: '#3B82F6' },
-  { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book', acc: '#0F5B46' },
+  { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment' },
+  { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score' },
+  { href: '/klinika/labor', label: 'Labor', icon: 'flask' },
+  { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
+  { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },
+  { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
 ]
 
 const MODE_BADGE: Record<string, string> = { clinical: 'Klinikai', education: 'Oktatási', practice: 'Gyakorló' }
@@ -89,7 +82,7 @@ export default async function DashboardPage() {
       <div className="qgrid">
         {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
           <Link key={t.href} className="qtile" href={t.href}>
-            <span className="qtile-i" style={accentFor(t.href) ? { color: accentFor(t.href), background: accentFor(t.href) + '1A' } : undefined}><Icon name={t.icon} size={24} /></span>
+            <span className="qtile-i" style={accentStyle(t.href)}><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>
           </Link>
         ))}

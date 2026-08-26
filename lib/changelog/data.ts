@@ -53,6 +53,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.3.1',
+    date: '2026-08-26',
+    title: 'Színes gyors elérés',
+    summary: 'A kezdőlapi csempék mindegyike saját színt kapott, így ránézésre megkülönböztethetők.',
+    entries: [
+      {
+        id: 'v131-tile-colors', kind: 'eszkoz', title: 'Új csempeszínek',
+        body: 'Az Eseteim, az Új betegértékelés, a Klinikai kontextus, a Kedvenceim és a Profil csempe eddig szín nélkül jelent meg — mostantól mindegyiknek saját akcentusa van. A zöld a márka színe marad: a Labor és a Tudástár színe változatlan, és új csempéhez nem osztunk zöldet. A színek egy helyen, a testreszabás nézetben is ugyanúgy jelennek meg.',
+        href: '/testreszabas',
+      },
+    ],
+  },
+  {
     version: '1.3.0',
     date: '2026-08-26',
     title: 'Felhasználókezelés az adminban',
