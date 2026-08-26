@@ -536,3 +536,4 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .solo-cmp-k { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .03em; }
 .solo-cmp-v { font-size: 14px; margin-top: 2px; }
 @media (max-width: 420px) { .solo-cmp-body { grid-template-columns: 1fr; gap: 8px; } }
+.ecg-meas-lbl { font-size: 10px; font-weight: 700; fill: var(--brand); font-family: inherit; }

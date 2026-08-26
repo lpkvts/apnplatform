@@ -66,6 +66,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.6',
+    date: '2026-08-26',
+    title: 'Mérőjelek az EKG-görbén',
+    summary: 'Az elemzési lépéshez tartozó szakaszt a rendszer megjelöli a ritmuscsíkon.',
+    entries: [
+      {
+        id: 'v146-meres', kind: 'eszkoz', title: 'Mérőjelek és kalibrációs jel',
+        body: 'Az elemzés során a ritmuscsíkon zöld mérőjel mutatja, mit hol kell mérni: az R–R távolságokat a frekvenciánál és a ritmusnál, a PR-intervallumot, a QRS szélességét, a QT-t, az ST-szakaszt a J-ponttól, valamint a P- és T-hullámot. A kalibrációs lépésnél a 10 mm = 1 mV jel emelkedik ki. A jelöléseken a mért érték is szerepel, ha elfér.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v146-geometria', kind: 'javitas', title: 'Pontosabb görbegeometria',
+        body: 'A görbe időzítését összehangoltam a névleges intervallumokkal: a rácson lemért PR, QRS és QT mostantól pontosan azt az értéket adja, ami az eset paraméterében szerepel. Korábban a PR-nél kb. 30 ms eltérés volt.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v146-utesek', kind: 'javitas', title: 'Egyező ütésidőpontok az elvezetéseken',
+        body: 'Szabálytalan ritmusnál — például pitvarfibrillációnál — az egyes elvezetéseken eltérő helyre kerültek az ütések, mert az R–R szórása elvezetésenként külön számítódott. Egy szívről van szó, ezért az ütésidőpontok mostantól minden elvezetésen azonosak.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.4.5',
     date: '2026-08-26',
     title: 'Egységes red flag szóhasználat',

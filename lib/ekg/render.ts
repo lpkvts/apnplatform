@@ -73,6 +73,67 @@ function rnd(seed: number): () => number {
 const gauss = (t: number, center: number, width: number, amp: number) =>
   amp * Math.exp(-((t - center) ** 2) / (2 * width ** 2))
 
+// A P- és T-hullám fél szélessége másodpercben. A görbeszintézis és a mérőjelek
+// ugyanezt használják, így a rárajzolt jelölés pontosan a hullámra esik.
+const P_HALF = 0.055
+const T_HALF = 0.11
+
+/**
+ * Az ütések időpontjai másodpercben.
+ *
+ * FONTOS: ez elvezetés-FÜGGETLEN. Korábban a szabálytalan ritmus (pitvarfibrilláció)
+ * R–R szórása a görbeszintézis lead-függő álvéletlenéből jött, így ugyanaz az ütés
+ * a II. és a V1 elvezetésen más időpontra esett — ami fizikailag hibás, hiszen egy
+ * szívről van szó. Az ütésidőpontokat ezért közös magból számoljuk.
+ */
+export function beatTimes(p: EcgParams, seconds: number): number[] {
+  const rr = 60 / Math.max(20, p.rate)
+  const rand = rnd(Math.round(p.rate * 7 + p.qrsMs * 13 + p.prMs * 3 + 101))
+  const beats: number[] = []
+  let t = 0.25
+  while (t < seconds + rr) {
+    beats.push(t)
+    let step = rr
+    if (p.rhythm === 'afib' || p.rhythm === 'sinus-irregular') {
+      step = rr * (0.72 + rand() * 0.56)
+    }
+    t += step
+  }
+  return beats
+}
+
+/**
+ * Egy ütés mérési pontjai másodpercben. A generált görbével egyező geometria —
+ * így a rárajzolt mérőjelek pontosan oda esnek, ahol a hullámok vannak.
+ */
+export interface Landmarks {
+  beat: number
+  pStart: number; pEnd: number
+  qrsStart: number; qrsEnd: number
+  jPoint: number
+  tStart: number; tEnd: number
+  qtEnd: number
+}
+
+export function landmarks(p: EcgParams, beat: number): Landmarks {
+  const qrsS = p.qrsMs / 1000
+  const prS = p.prMs / 1000
+  const qtS = p.qtMs / 1000
+  const qrsStart = beat - qrsS / 2
+  const tCenter = qrsStart + qtS - T_HALF
+  return {
+    beat,
+    pStart: qrsStart - prS,
+    pEnd: qrsStart - prS + 2 * P_HALF,
+    qrsStart,
+    qrsEnd: beat + qrsS / 2,
+    jPoint: beat + qrsS * 0.6,
+    tStart: tCenter - T_HALF,
+    tEnd: tCenter + T_HALF,
+    qtEnd: qrsStart + qtS,
+  }
+}
+
 export interface RenderOptions {
   seconds?: number     // ábrázolt időtartam (alap: 2.5 s)
   mmPerS?: number      // papírsebesség (alap: 25)
@@ -99,19 +160,8 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
   const qtS = p.qtMs / 1000
   const rand = rnd(Math.round(p.rate * 7 + p.qrsMs * 13 + lead.length * 31))
 
-  // Ütésidőpontok. Szabálytalan ritmusnál az R–R szórása adja a jellegzetes képet.
-  const beats: number[] = []
-  let t = 0.25
-  while (t < o.seconds + rr) {
-    beats.push(t)
-    let step = rr
-    if (p.rhythm === 'afib' || p.rhythm === 'sinus-irregular') {
-      step = rr * (0.72 + rand() * 0.56)          // kifejezetten egyenetlen
-    } else if (p.rhythm === 'flutter') {
-      step = rr
-    }
-    t += step
-  }
+  // Az ütésidőpontok minden elvezetésen azonosak — lásd beatTimes().
+  const beats = beatTimes(p, o.seconds)
 
   const stMm = p.st?.[lead] ?? 0
   const stMv = stMm / 10                           // 10 mm = 1 mV
@@ -137,11 +187,13 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
     }
 
     for (const b of beats) {
-      // P-hullám
+      // P-hullám. A kezdete pontosan PR-nyi távolságra van a QRS kezdetétől,
+      // hogy a mért PR-intervallum megegyezzen a paraméterrel.
+      const qrsStart = b - qrsS / 2
       if (p.p === 'normal' || p.p === 'inverted' || p.p === 'varying') {
         const dir = p.p === 'inverted' ? -1 : 1
         const jitter = p.p === 'varying' ? (0.8 + ((b * 7) % 1) * 0.5) : 1
-        const pT = b - prS + 0.04
+        const pT = qrsStart - prS + P_HALF
         v += gauss(time, pT, 0.022, 0.13 * pg * dir * jitter)
       }
 
@@ -161,16 +213,18 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
         v += gauss(time, b + w * 1.0, w * 0.7, -0.22 * Math.abs(gain))
       }
 
-      // ST-szakasz: a J-ponttól a T-hullám elejéig emelt/süllyesztett platót ad
+      // ST-szakasz: a J-ponttól a T-hullám elejéig emelt/süllyesztett platót ad.
+      // A T közepét úgy helyezzük el, hogy a T vége a QT végére essen.
       const jPoint = b + qrsS * 0.6
-      const tStart = b + qtS * 0.55
+      const tCenterAligned = qrsStart + qtS - T_HALF
+      const tStart = tCenterAligned - T_HALF
       if (stMv !== 0 && time > jPoint && time < tStart) {
         const ramp = Math.min(1, (time - jPoint) / 0.03)
         v += stMv * ramp
       }
 
       // T-hullám
-      const tCenter = b + qtS * 0.75
+      const tCenter = tCenterAligned
       const baseT = 0.22 * (gain === 0 ? 0.5 : Math.sign(gain)) * (0.6 + Math.abs(gain) * 0.6)
       if (tShape === 'inverted') v += gauss(time, tCenter, 0.055, -Math.abs(baseT) * 1.1)
       else if (tShape === 'peaked') v += gauss(time, tCenter, 0.032, Math.abs(baseT) * 2.1)

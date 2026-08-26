@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { LEADS, leadPath, type EcgParams, type Lead } from '@/lib/ekg/render'
+import { LEADS, leadPath, beatTimes, landmarks, type EcgParams, type Lead } from '@/lib/ekg/render'
 import type { HighlightKind } from '@/lib/ekg/analysis'
 
 /**
@@ -38,6 +38,113 @@ function focusLeads(kind: HighlightKind, extra?: Lead[]): Lead[] {
     case 'st': case 't': return [...LEADS]
     default: return []
   }
+}
+
+
+/* ─────────── Mérőjelek ─────────── */
+
+/**
+ * A ritmuscsíkra rárajzolt mérőjelek. Az elemzési lépéshez tartozó szakaszt
+ * jelölik meg — R–R távolság, PR, QRS, QT, ST vagy az egyes hullámok —, hogy
+ * a felhasználó lássa, mit hol kell mérni.
+ *
+ * A geometria a lib/ekg/render.ts landmarks() függvényéből jön, tehát a jelölés
+ * pontosan a hullámra esik, nem közelítés.
+ */
+function Measures({
+  params, kind, width, height,
+}: {
+  params: EcgParams
+  kind: HighlightKind
+  width: number
+  height: number
+}) {
+  const seconds = width / (25 * U)
+  const beats = beatTimes(params, seconds).filter((b) => b > 0.15 && b < seconds - 0.2)
+  if (beats.length === 0 || kind === 'none' || kind === 'calib') return null
+
+  const x = (t: number) => (t / seconds) * width
+  const yBar = height - 14          // a mérősáv függőleges helye
+  const items: { from: number; to: number; label: string }[] = []
+
+  // A második ütést jelöljük, hogy a megelőző P is beleférjen a képbe.
+  const b = beats[1] ?? beats[0]
+  const L = landmarks(params, b)
+
+  if (kind === 'rr') {
+    for (let i = 0; i + 1 < Math.min(beats.length, 4); i++) {
+      const ms = Math.round((beats[i + 1] - beats[i]) * 1000)
+      items.push({ from: beats[i], to: beats[i + 1], label: `R–R ${ms} ms` })
+    }
+  } else if (kind === 'pr') {
+    if (params.prMs > 0) items.push({ from: L.pStart, to: L.qrsStart, label: `PR ${params.prMs} ms` })
+  } else if (kind === 'qrs') {
+    items.push({ from: L.qrsStart, to: L.qrsEnd, label: `QRS ${params.qrsMs} ms` })
+  } else if (kind === 'qt') {
+    items.push({ from: L.qrsStart, to: L.qtEnd, label: `QT ${params.qtMs} ms` })
+  } else if (kind === 'st') {
+    items.push({ from: L.jPoint, to: L.tStart, label: 'ST-szakasz' })
+  } else if (kind === 'p') {
+    if (params.prMs > 0) items.push({ from: L.pStart, to: L.pEnd, label: 'P-hullám' })
+  } else if (kind === 't') {
+    items.push({ from: L.tStart, to: L.tEnd, label: 'T-hullám' })
+  }
+
+  if (items.length === 0) return null
+
+  return (
+    <g className="ecg-meas">
+      {items.map((it, i) => {
+        const x1 = x(it.from)
+        const x2 = x(it.to)
+        const mid = (x1 + x2) / 2
+        const wide = x2 - x1 > 58
+        return (
+          <g key={i}>
+            {/* a mért szakasz halvány kiemelése a görbe mögött */}
+            <rect x={x1} y={6} width={Math.max(1, x2 - x1)} height={height - 26}
+              fill="var(--brand-3)" opacity="0.10" />
+            {/* függőleges határolók */}
+            <line x1={x1} y1={6} x2={x1} y2={yBar} stroke="var(--brand)" strokeWidth="1" strokeDasharray="3 2" />
+            <line x1={x2} y1={6} x2={x2} y2={yBar} stroke="var(--brand)" strokeWidth="1" strokeDasharray="3 2" />
+            {/* mérősáv végjelekkel */}
+            <line x1={x1} y1={yBar} x2={x2} y2={yBar} stroke="var(--brand)" strokeWidth="1.4" />
+            <line x1={x1} y1={yBar - 4} x2={x1} y2={yBar + 4} stroke="var(--brand)" strokeWidth="1.4" />
+            <line x1={x2} y1={yBar - 4} x2={x2} y2={yBar + 4} stroke="var(--brand)" strokeWidth="1.4" />
+            {wide && (
+              <text x={mid} y={yBar - 5} className="ecg-meas-lbl" textAnchor="middle">{it.label}</text>
+            )}
+          </g>
+        )
+      })}
+      {/* Ha a szakasz túl keskeny a felirathoz — például QRS vagy PR —, a címke
+          a jelölés mellé kerül. Nagyítással a szakasz kimérhető. */}
+      {!items.some((it) => x(it.to) - x(it.from) > 58) && (
+        <text x={x(items[0].to) + 6} y={yBar - 5} className="ecg-meas-lbl">{items[0].label}</text>
+      )}
+    </g>
+  )
+}
+
+/** Kalibrációs jel: 10 mm magas, 0,2 s széles négyszög a csík elején. */
+function CalibrationMark({ height, active }: { height: number; active: boolean }) {
+  const w = 0.2 * 25 * U          // 0,2 s = 5 mm
+  const h = 10 * U                // 10 mm = 1 mV
+  const base = height / 2 + h / 2
+  return (
+    <g>
+      <polyline
+        points={`0,${base} ${w * 0.3},${base} ${w * 0.3},${base - h} ${w},${base - h} ${w},${base} ${w * 1.4},${base}`}
+        fill="none" stroke={active ? 'var(--brand)' : 'var(--ecg-line, #111)'} strokeWidth={active ? 2 : 1.4}
+      />
+      {active && (
+        <>
+          <rect x={-2} y={base - h - 6} width={w * 1.5} height={h + 12} fill="var(--brand-3)" opacity="0.10" rx="3" />
+          <text x={w * 1.7} y={base - h / 2} className="ecg-meas-lbl">10 mm = 1 mV · 0,2 s</text>
+        </>
+      )}
+    </g>
+  )
 }
 
 export function EcgViewer({
@@ -101,9 +208,11 @@ export function EcgViewer({
 
           {solo ? (
             <g transform={`translate(${PAD}, ${PAD})`}>
+              <Measures params={params} kind={highlight} width={GRID_W} height={RHYTHM_H} />
               <text x="2" y="12" className="ecg12-lbl">{solo}</text>
               <polyline points={leadPath(solo, params, GRID_W, RHYTHM_H, { unitsPerMm: U })}
                 fill="none" stroke="var(--ecg-line, #111)" strokeWidth="1.6" strokeLinejoin="round" />
+              <CalibrationMark height={RHYTHM_H} active={highlight === 'calib'} />
             </g>
           ) : (
             <>
@@ -126,8 +235,10 @@ export function EcgViewer({
                 )),
               )}
               <g transform={`translate(${PAD}, ${PAD + CELL_H * 3 + PAD})`}>
+                <Measures params={params} kind={highlight} width={GRID_W} height={RHYTHM_H} />
                 <text x="3" y="12" className="ecg12-lbl">II — ritmuscsík</text>
                 <polyline points={rhythmPath} fill="none" stroke="var(--ecg-line, #111)" strokeWidth="1.5" strokeLinejoin="round" />
+                <CalibrationMark height={RHYTHM_H} active={highlight === 'calib'} />
               </g>
             </>
           )}
@@ -135,7 +246,9 @@ export function EcgViewer({
       </div>
 
       <div className="ecg12-foot">
-        {caption ?? 'Oktatási célú, szintetizált görbe — nem valódi betegfelvétel. Koppints egy elvezetésre a nagyításhoz.'}
+        {caption ?? (highlight !== 'none'
+          ? 'A ritmuscsíkon zöld mérőjel mutatja az aktuális lépéshez tartozó szakaszt. Koppints egy elvezetésre a nagyításhoz.'
+          : 'Oktatási célú, szintetizált görbe — nem valódi betegfelvétel. Koppints egy elvezetésre a nagyításhoz.')}
       </div>
     </div>
   )
