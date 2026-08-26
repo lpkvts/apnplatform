@@ -63,7 +63,7 @@ export default async function ErtesitesekPage() {
       <p className="sub" style={{ marginTop: 12 }}>
         A teendők a fiókod aktuális állapotából származnak. Az „Új a platformon” rész azt mutatja, milyen
         jóváhagyott szakmai tartalom került fel a legutóbbi megtekintésed óta. A teljes lista a{' '}
-        <Link href="/ujdonsagok">változásnaplóban</Link> érhető el.
+        <Link href="/ujdonsagok">verziókövetésben</Link> érhető el.
       </p>
     </>
   )

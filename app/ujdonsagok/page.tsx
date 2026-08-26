@@ -1,29 +1,23 @@
 import Link from 'next/link'
 import { Icon } from '@/components/icons'
-import { APP_VERSION, CHANGELOG, CHANGE_KIND_META } from '@/lib/changelog/data'
+import { APP_VERSION, RELEASES, CHANGE_KIND_META, type ChangeKind } from '@/lib/changelog/data'
 import { getContentUpdates } from '@/lib/notifications'
 import { markUpdatesSeen } from '@/app/ertesitesek/actions'
 
 export const dynamic = 'force-dynamic'
 
-export default async function UjdonsagokPage() {
+const KIND_ORDER: ChangeKind[] = ['funkcio', 'eszkoz', 'szakmai', 'betegseg', 'labor', 'forras', 'javitas']
+
+export default async function VerziokovetesPage() {
   const { items: updates, seenAt } = await getContentUpdates()
   const since = seenAt ? seenAt.slice(0, 10) : null
 
-  // Dátum szerinti csoportosítás
-  const byDate: [string, typeof CHANGELOG][] = []
-  for (const c of CHANGELOG) {
-    const last = byDate[byDate.length - 1]
-    if (last && last[0] === c.date) last[1].push(c)
-    else byDate.push([c.date, [c]])
-  }
-
   return (
     <>
-      <Link className="sh-back" href="/ertesitesek">‹ Értesítések</Link>
-      <h1 className="h1">Újdonságok</h1>
+      <Link className="sh-back" href="/profil">‹ Profil</Link>
+      <h1 className="h1">Verziókövetés</h1>
       <p className="sub">
-        Platform-verzió: <b>v{APP_VERSION}</b>
+        Jelenlegi verzió: <b>v{APP_VERSION}</b>
         {since && <> · Legutóbb megtekintve: {since}</>}
       </p>
 
@@ -40,44 +34,63 @@ export default async function UjdonsagokPage() {
         </div>
       )}
 
-      {byDate.map(([date, entries]) => (
-        <div key={date} style={{ marginBottom: 18 }}>
-          <div className="sec-h">
-            <span className="sec-t">{date}</span>
-            {entries.some((e) => e.version) && (
-              <span className="sec-l" style={{ marginLeft: 'auto' }}>
-                v{entries.find((e) => e.version)!.version}
+      {RELEASES.map((r) => {
+        const isNew = since ? r.date > since : false
+        // Bejegyzések típus szerint csoportosítva, rögzített sorrendben
+        const groups = KIND_ORDER
+          .map((k) => [k, r.entries.filter((e) => e.kind === k)] as const)
+          .filter(([, list]) => list.length > 0)
+
+        return (
+          <div key={r.version} style={{ marginBottom: 22 }}>
+            <div className="sec-h">
+              <span className="sec-t">
+                v{r.version} — {r.title}
+                {isNew && <span className="badge badge-uj" style={{ marginLeft: 8 }}>új</span>}
               </span>
-            )}
-          </div>
-          {entries.map((c) => {
-            const meta = CHANGE_KIND_META[c.kind]
-            const isNew = since ? c.date > since : false
-            const inner = (
-              <div className="notif">
-                <span className="notif-i"><Icon name={meta.icon} size={20} /></span>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div className="notif-t">
-                    {c.title}
-                    {isNew && <span className="badge badge-uj" style={{ marginLeft: 8 }}>új</span>}
+              <span className="sec-l" style={{ marginLeft: 'auto', fontWeight: 500 }}>{r.date}</span>
+            </div>
+
+            {r.summary && <p className="sub" style={{ marginTop: 0 }}>{r.summary}</p>}
+
+            {groups.map(([kind, list]) => {
+              const meta = CHANGE_KIND_META[kind]
+              return (
+                <details key={kind} className="kt-acc">
+                  <summary className="kt-sum">
+                    <span>{meta.label}</span>
+                    <span style={{ color: 'var(--muted)', fontWeight: 600, fontSize: 13, marginLeft: 'auto', marginRight: 8 }}>
+                      {list.length}
+                    </span>
+                  </summary>
+                  <div className="kt-body">
+                    {list.map((e) => {
+                      const inner = (
+                        <div className="notif">
+                          <span className="notif-i"><Icon name={meta.icon} size={20} /></span>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div className="notif-t">{e.title}</div>
+                            {e.body && <div className="notif-b">{e.body}</div>}
+                          </div>
+                          {e.href && <span className="sh-chev">›</span>}
+                        </div>
+                      )
+                      return e.href
+                        ? <Link key={e.id} href={e.href} style={{ textDecoration: 'none', color: 'inherit' }}>{inner}</Link>
+                        : <div key={e.id}>{inner}</div>
+                    })}
                   </div>
-                  <div className="notif-b" style={{ opacity: .7, fontSize: 12 }}>{meta.label}</div>
-                  {c.body && <div className="notif-b">{c.body}</div>}
-                </div>
-                {c.href && <span className="sh-chev">›</span>}
-              </div>
-            )
-            return c.href
-              ? <Link key={c.id} href={c.href} style={{ textDecoration: 'none', color: 'inherit' }}>{inner}</Link>
-              : <div key={c.id}>{inner}</div>
-          })}
-        </div>
-      ))}
+                </details>
+              )
+            })}
+          </div>
+        )
+      })}
 
       <p className="sub" style={{ marginTop: 12 }}>
         A betegségleírások, irányelvek és labor paraméterek újdonságát a rendszer az adatbázisból,
-        automatikusan ismeri fel. A kódban szállított tartalom (Labor Kisokos, forrás-regiszter,
-        eszközök) ezen a listán jelenik meg.
+        automatikusan ismeri fel — azok nem szerepelnek ezen a listán. A kódban szállított tartalom
+        és a funkciók itt jelennek meg, verziónként.
       </p>
     </>
   )
