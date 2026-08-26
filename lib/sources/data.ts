@@ -91,6 +91,31 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
     intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
     usedIn: ['Pneumothorax'],
   },
+  // ── Sebészet / akut has ─────────────────────
+  {
+    id: 'wses-2020-appendicitis', title: 'Diagnosis and treatment of acute appendicitis: 2020 update of the WSES Jerusalem guidelines',
+    org: 'World Society of Emergency Surgery', year: '2020', category: 'Sebészet',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Akut hasi fájdalom', 'Akut appendicitis'],
+  },
+  {
+    id: 'wses-2020-cholecystitis', title: '2020 WSES updated guidelines for the diagnosis and treatment of acute calculus cholecystitis',
+    org: 'World Society of Emergency Surgery', year: '2020', category: 'Sebészet',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Akut hasi fájdalom', 'Akut cholecystitis'],
+  },
+  {
+    id: 'tg18-biliary', title: 'Tokyo Guidelines 2018 (TG18) — akut cholangitis és cholecystitis diagnosztikája, súlyossági besorolása',
+    org: 'Japanese Society of Hepato-Biliary-Pancreatic Surgery', year: '2018', category: 'Sebészet',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Akut hasi fájdalom', 'Akut cholecystitis', 'Cholangitis'],
+  },
+  {
+    id: 'esc-2018-syncope', title: '2018 ESC Guidelines for the diagnosis and management of syncope',
+    org: 'European Society of Cardiology', year: '2018', category: 'Kardiológia',
+    intl: true, primary: true, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
+    usedIn: ['Eszméletvesztés', 'Vasovagalis syncope'],
+  },
 ]
 
 export function sourcesByCategory(): [string, GuidelineSource[]][] {

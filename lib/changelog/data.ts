@@ -53,6 +53,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.1.0',
+    date: '2026-08-27',
+    title: 'Akut állapotok bővítése',
+    summary: 'Két új klinikai témakör az akut állapotok között, teljes orientációs anyaggal és forrásjegyzékkel.',
+    entries: [
+      {
+        id: 'v11-akut-has', kind: 'szakmai', title: 'Akut hasi fájdalom témakör',
+        body: 'Vörös zászlók, stabilitás-értékelés, célzott anamnézis, EKG- és laborjavaslatok, differenciáldiagnózis (időkritikus, gyakori sebészeti és hasüregen kívüli okok), APN-fókusz és eszkalációs szempontok. Kapcsolódó vizsgálati rendszerek, laborok, EKG-eltérések és score-ok.',
+        href: '/betegsegtar/akut/akut-hasi-fajdalom',
+      },
+      {
+        id: 'v11-eszmeletvesztes', kind: 'szakmai', title: 'Eszméletvesztés témakör',
+        body: 'A syncope elkülönítése az egyéb átmeneti eszméletvesztéstől, kardiális kockázat felismerése, kötelező EKG, célzott laborok, differenciáldiagnózis és APN-fókusz — az elesés- és ismétlődéskockázat felmérésével együtt.',
+        href: '/betegsegtar/akut/eszmeletvesztes',
+      },
+      {
+        id: 'v11-forrasok', kind: 'forras', title: 'Négy új klinikai forrás a regiszterben',
+        body: 'WSES appendicitis (2020), WSES akut calculosus cholecystitis (2020), Tokyo Guidelines 2018 az epeúti fertőzésekről, valamint az ESC 2018 syncope irányelv.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.0.0',
     date: '2026-08-26',
     title: 'Első teljes kiadás',
