@@ -39,24 +39,26 @@ export function DiseaseList({ items }: { items: DiseaseRow[] }) {
       </div>
       {list.length === 0 && <p className="sub">Nincs találat.</p>}
       {specs.map((spec) => (
-        <div key={spec}>
-          <div className="sec-h">
-            <span className="sec-t">{spec}</span>
-            <span className="sec-l" style={{ pointerEvents: 'none', color: 'var(--muted)', fontWeight: 600 }}>
+        <details key={`${spec}-${nq ? 'q' : 'b'}`} className="kt-acc" open={nq ? true : undefined}>
+          <summary className="kt-sum">
+            <span>{spec}</span>
+            <span style={{ color: 'var(--muted)', fontWeight: 600, fontSize: 13, marginLeft: 'auto', marginRight: 8 }}>
               {specTotals[spec].total} kórkép{specTotals[spec].full < specTotals[spec].total ? ` · ${specTotals[spec].full} kidolgozott` : ''}
             </span>
+          </summary>
+          <div className="kt-body">
+            {groups[spec].map((d) => (
+              <Link key={d.id} className="sh-row" href={`/betegsegtar/${d.id}`}>
+                <span className="sh-row-main">
+                  <span className="sh-row-name">{d.name}{d.abbrev ? ` (${d.abbrev})` : ''}</span>
+                  <span className="sh-row-sub">{d.is_stub ? '⚪ Tartalom fejlesztés alatt' : (d.aliases && d.aliases.length > 0 ? d.aliases.slice(0, 3).join(' · ') : 'Kidolgozott adatlap')}{d.bno ? ` · BNO ${d.bno}` : ''}</span>
+                </span>
+                <FavStar type="disease" id={d.id} />
+                <span className="sh-chev">›</span>
+              </Link>
+            ))}
           </div>
-          {groups[spec].map((d) => (
-            <Link key={d.id} className="sh-row" href={`/betegsegtar/${d.id}`}>
-              <span className="sh-row-main">
-                <span className="sh-row-name">{d.name}{d.abbrev ? ` (${d.abbrev})` : ''}</span>
-                <span className="sh-row-sub">{d.is_stub ? '⚪ Tartalom fejlesztés alatt' : (d.aliases && d.aliases.length > 0 ? d.aliases.slice(0, 3).join(' · ') : 'Kidolgozott adatlap')}{d.bno ? ` · BNO ${d.bno}` : ''}</span>
-              </span>
-              <FavStar type="disease" id={d.id} />
-              <span className="sh-chev">›</span>
-            </Link>
-          ))}
-        </div>
+        </details>
       ))}
     </>
   )
