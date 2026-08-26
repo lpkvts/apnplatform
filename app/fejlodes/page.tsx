@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { getFlag } from '@/lib/flags'
 export const dynamic = 'force-dynamic'
 export default async function FejlodesHub() {
-  const [passportEnabled, careerEnabled] = await Promise.all([getFlag('kompetencia_passport', false), getFlag('apn_career', false)])
+  const [passportEnabled, careerEnabled, cpdEnabled] = await Promise.all([getFlag('kompetencia_passport', false), getFlag('apn_career', false), getFlag('cpd', false)])
   return (
     <>
       <h1 className="h1">Fejlődés</h1>
@@ -23,10 +23,12 @@ export default async function FejlodesHub() {
         </Link>
       )}
 
-      <Link className="card klink" href="/cpd">
-        <div className="klink-t">🎓 CPD – továbbképzés</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Folyamatos szakmai fejlődés követése</div>
-      </Link>
+      {cpdEnabled && (
+        <Link className="card klink" href="/cpd">
+          <div className="klink-t">🎓 CPD – továbbképzés</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>Folyamatos szakmai fejlődés követése</div>
+        </Link>
+      )}
 
       {careerEnabled && (
         <Link className="card klink" href="/career">

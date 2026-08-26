@@ -1,10 +1,13 @@
 import Link from 'next/link'
 import { EmptyState } from '@/components/empty-state'
 import { createClient } from '@/lib/supabase/server'
+import { getFlag } from '@/lib/flags'
+import { redirect } from 'next/navigation'
 import { addCpdEntry } from './actions'
 import type { CpdEntry } from '@/lib/types'
 
 export default async function CpdPage() {
+  if (!(await getFlag('cpd', false))) redirect('/fejlodes')
   const supabase = await createClient()
   const year = new Date().getFullYear()
 
