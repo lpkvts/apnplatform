@@ -1,13 +1,101 @@
 import { createClient } from '@/lib/supabase/server'
 import { STAFF, type Role } from '@/lib/roles'
+import { APP_VERSION, CHANGE_KIND_META, changesSince, type ChangeKind } from '@/lib/changelog/data'
 
 export interface Notif {
   id: string; icon: string; title: string; body?: string
   href?: string; when?: string; urgent?: boolean; stored?: boolean
+  update?: boolean   // új szakmai tartalom / platform-frissítés (nem teendő)
 }
 
 function daysBetween(d: string): number {
   return Math.round((new Date(d).getTime() - Date.now()) / 86400000)
+}
+
+/**
+ * Új szakmai tartalom a felhasználó legutóbbi megtekintése óta.
+ *
+ * Két forrásból dolgozik:
+ *  1. adatbázis — betegségleírás, irányelv, labor paraméter (created_at / published_at),
+ *  2. kódban tárolt tartalom — a lib/changelog/data.ts bejegyzései (Labor Kisokos,
+ *     forrás-regiszter, témakörök, platform-verzió).
+ *
+ * Több azonos típusú tételt összevon, hogy egy nagyobb szállítás ne árassza el a listát.
+ */
+export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: string | null; version: string }> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { items: [], seenAt: null, version: APP_VERSION }
+
+  const { data: prof } = await supabase
+    .from('profiles').select('updates_seen_at, updates_seen_version, created_at').eq('id', user.id)
+    .maybeSingle<{ updates_seen_at: string | null; updates_seen_version: string | null; created_at: string }>()
+
+  // Ha még sosem nézte meg, a fiók létrejötte a kiindulópont — így nem kapja meg
+  // visszamenőleg a regisztráció előtti teljes tartalmat.
+  const since = prof?.updates_seen_at ?? prof?.created_at ?? null
+  if (!since) return { items: [], seenAt: null, version: APP_VERSION }
+
+  const items: Notif[] = []
+
+  const [dzRes, glRes, labRes] = await Promise.all([
+    supabase.from('diseases').select('id, name, slug, created_at')
+      .eq('status', 'published').gt('created_at', since)
+      .order('created_at', { ascending: false }).limit(20)
+      .returns<{ id: string; name: string; slug: string; created_at: string }[]>(),
+    supabase.from('guidelines').select('id, title, published_at')
+      .eq('status', 'published').gt('published_at', since)
+      .order('published_at', { ascending: false }).limit(20)
+      .returns<{ id: string; title: string; published_at: string }[]>(),
+    supabase.from('lab_parameters').select('id, name_hu, slug, created_at')
+      .eq('status', 'active').gt('created_at', since)
+      .order('created_at', { ascending: false }).limit(20)
+      .returns<{ id: string; name_hu: string; slug: string; created_at: string }[]>(),
+  ])
+
+  // Kevés tételt nevesítünk, sokat összevonunk.
+  const pushGroup = (
+    kind: ChangeKind, prefix: string, list: { key: string; label: string; href: string }[],
+    manyTitle: (n: number) => string, manyHref: string,
+  ) => {
+    if (list.length === 0) return
+    const meta = CHANGE_KIND_META[kind]
+    if (list.length <= 3) {
+      for (const x of list) {
+        items.push({ id: `${prefix}-${x.key}`, icon: meta.icon, title: `${meta.label}: ${x.label}`, body: 'Új tartalom került fel a platformra.', href: x.href, update: true })
+      }
+    } else {
+      items.push({ id: `${prefix}-group`, icon: meta.icon, title: manyTitle(list.length), body: list.slice(0, 4).map((x) => x.label).join(', ') + (list.length > 4 ? ` és további ${list.length - 4}` : ''), href: manyHref, update: true })
+    }
+  }
+
+  pushGroup('betegseg', 'dz',
+    (dzRes.data ?? []).map((d) => ({ key: d.id, label: d.name, href: `/betegsegtar/${d.slug || d.id}` })),
+    (n) => `${n} új betegségleírás`, '/betegsegtar')
+
+  pushGroup('forras', 'gl',
+    (glRes.data ?? []).map((g) => ({ key: g.id, label: g.title, href: `/klinika/tudastar/${g.id}` })),
+    (n) => `${n} új klinikai irányelv`, '/klinika/tudastar')
+
+  pushGroup('labor', 'lp',
+    (labRes.data ?? []).map((l) => ({ key: l.id, label: l.name_hu, href: '/klinika/labor' })),
+    (n) => `${n} új labor paraméter`, '/klinika/labor')
+
+  // Kódban szállított tartalom (Labor Kisokos, forrás-regiszter, eszközök, verzió)
+  for (const c of changesSince(since)) {
+    const meta = CHANGE_KIND_META[c.kind]
+    items.push({
+      id: `ch-${c.id}`,
+      icon: meta.icon,
+      title: c.version ? `${c.title} — v${c.version}` : c.title,
+      body: c.body,
+      href: c.href ?? '/ujdonsagok',
+      when: c.date,
+      update: true,
+    })
+  }
+
+  return { items, seenAt: since, version: APP_VERSION }
 }
 
 export async function getNotifications(): Promise<{ items: Notif[]; count: number }> {
@@ -63,6 +151,10 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
     const byId = new Map((cs ?? []).map((x) => [x.id, x]))
     for (const fu of fups) { const cc = byId.get(fu.case_id); if (!cc) continue; items.push({ id: `fu-${fu.id}`, icon: 'assessment', title: 'Esedékes utánkövetés', body: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}${fu.horizon ? ` (${fu.horizon})` : ''}`, href: `/klinika/esetek/${fu.case_id}`, urgent: !!(fu.due_on && fu.due_on <= today) }) }
   }
+
+  // Új szakmai tartalom — a teendők után, saját jelöléssel
+  const { items: updates } = await getContentUpdates()
+  items.push(...updates)
 
   return { items, count: items.length }
 }
