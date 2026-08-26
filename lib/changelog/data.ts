@@ -54,7 +54,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 export const RELEASES: Release[] = [
   {
     version: '1.2.0',
-    date: '2026-08-28',
+    date: '2026-08-26',
     title: 'Láz témakör és forráspolitika',
     summary: 'Új akut témakör a szepszis korai felismerésére, és a forrásjegyzékek rendezése a hazai irányelvek elsőbbsége szerint.',
     entries: [
@@ -77,7 +77,7 @@ export const RELEASES: Release[] = [
   },
   {
     version: '1.1.0',
-    date: '2026-08-27',
+    date: '2026-08-26',
     title: 'Akut állapotok bővítése',
     summary: 'Két új klinikai témakör az akut állapotok között, teljes orientációs anyaggal és forrásjegyzékkel.',
     entries: [
@@ -227,6 +227,32 @@ export const RELEASES: Release[] = [
 
 export const APP_VERSION = RELEASES[0]?.version ?? '1.0.0'
 
+/**
+ * Két verziószám összehasonlítása (1.10.0 > 1.9.0).
+ * Visszatérés: negatív ha a < b, 0 ha egyenlő, pozitív ha a > b.
+ */
+export function compareVersions(a: string, b: string): number {
+  const pa = a.split('.').map((x) => parseInt(x, 10) || 0)
+  const pb = b.split('.').map((x) => parseInt(x, 10) || 0)
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] ?? 0) - (pb[i] ?? 0)
+    if (d !== 0) return d
+  }
+  return 0
+}
+
+/**
+ * A felhasználó által utoljára látott verzió ÓTA megjelent kiadások.
+ *
+ * Miért verzió és nem dátum: a dátum-összehasonlítás félrement, ha egy kiadás
+ * dátuma a szerver aktuális napjánál későbbi volt — ilyenkor a „megtekintettem”
+ * gomb után is újdonságként maradt. A verziószám ettől független.
+ */
+export function releasesAfterVersion(seenVersion: string | null): Release[] {
+  if (!seenVersion) return []
+  return RELEASES.filter((r) => compareVersions(r.version, seenVersion) > 0)
+}
+
 /** Minden kiadás bejegyzése lapítva, legfrissebb elöl. */
 export function allChanges(): ChangeEntry[] {
   return RELEASES.flatMap((r) => r.entries.map((e) => ({ ...e, date: r.date, version: r.version })))
@@ -236,7 +262,10 @@ export function allChanges(): ChangeEntry[] {
 export function changesSince(iso: string | null): ChangeEntry[] {
   if (!iso) return []
   const since = iso.slice(0, 10)
-  return allChanges().filter((c) => c.date > since)
+  const today = new Date().toISOString().slice(0, 10)
+  // A jövőbeli dátumú bejegyzés kiszűrése: ilyen elvileg nincs, de ha elgépelés
+  // folytán mégis bekerül, ne ragadjon be örökre olvasatlanként.
+  return allChanges().filter((c) => c.date > since && c.date <= today)
 }
 
 /** A megadott időpont óta megjelent kiadások. */

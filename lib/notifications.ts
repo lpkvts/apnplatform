@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { STAFF, type Role } from '@/lib/roles'
-import { APP_VERSION, CHANGE_KIND_META, changesSince, type ChangeKind } from '@/lib/changelog/data'
+import { APP_VERSION, CHANGE_KIND_META, changesSince, releasesAfterVersion, type ChangeKind } from '@/lib/changelog/data'
 
 export interface Notif {
   id: string; icon: string; title: string; body?: string
@@ -22,10 +22,10 @@ function daysBetween(d: string): number {
  *
  * Több azonos típusú tételt összevon, hogy egy nagyobb szállítás ne árassza el a listát.
  */
-export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: string | null; version: string }> {
+export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: string | null; seenVersion: string | null; version: string }> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { items: [], seenAt: null, version: APP_VERSION }
+  if (!user) return { items: [], seenAt: null, seenVersion: null, version: APP_VERSION }
 
   const { data: prof } = await supabase
     .from('profiles').select('updates_seen_at, updates_seen_version, created_at').eq('id', user.id)
@@ -34,7 +34,7 @@ export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: str
   // Ha még sosem nézte meg, a fiók létrejötte a kiindulópont — így nem kapja meg
   // visszamenőleg a regisztráció előtti teljes tartalmat.
   const since = prof?.updates_seen_at ?? prof?.created_at ?? null
-  if (!since) return { items: [], seenAt: null, version: APP_VERSION }
+  if (!since) return { items: [], seenAt: null, seenVersion: null, version: APP_VERSION }
 
   const items: Notif[] = []
 
@@ -81,13 +81,23 @@ export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: str
     (labRes.data ?? []).map((l) => ({ key: l.id, label: l.name_hu, href: '/klinika/labor' })),
     (n) => `${n} új labor paraméter`, '/klinika/labor')
 
-  // Kódban szállított tartalom (Labor Kisokos, forrás-regiszter, eszközök, verzió)
-  for (const c of changesSince(since)) {
+  // Kódban szállított tartalom (Labor Kisokos, forrás-regiszter, eszközök, verzió).
+  // Elsődlegesen VERZIÓ szerint döntünk, mert a kiadás dátuma és a szerver napja
+  // eltérhet; a dátum-összehasonlítás csak akkor jön szóba, ha a felhasználónak
+  // még nincs rögzített verziója (a 0027 migráció előtti fiókok).
+  const seenVersion = prof?.updates_seen_version ?? null
+  const codeChanges = seenVersion
+    ? releasesAfterVersion(seenVersion).flatMap((r) =>
+        r.entries.map((e) => ({ ...e, date: r.date, version: r.version })),
+      )
+    : changesSince(since)
+
+  for (const c of codeChanges) {
     const meta = CHANGE_KIND_META[c.kind]
     items.push({
       id: `ch-${c.id}`,
       icon: meta.icon,
-      title: c.version ? `${c.title} — v${c.version}` : c.title,
+      title: `${c.title} — v${c.version}`,
       body: c.body,
       href: c.href ?? '/ujdonsagok',
       when: c.date,
@@ -95,7 +105,7 @@ export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: str
     })
   }
 
-  return { items, seenAt: since, version: APP_VERSION }
+  return { items, seenAt: since, seenVersion: prof?.updates_seen_version ?? null, version: APP_VERSION }
 }
 
 export async function getNotifications(): Promise<{ items: Notif[]; count: number }> {

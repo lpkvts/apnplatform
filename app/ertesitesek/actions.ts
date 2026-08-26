@@ -9,8 +9,8 @@ export async function markAllRead() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return
   await supabase.from('notifications').update({ read: true }).eq('user_id', user.id).eq('read', false)
+  revalidatePath('/', 'layout')
   revalidatePath('/ertesitesek')
-  revalidatePath('/')
 }
 
 /**
@@ -25,7 +25,9 @@ export async function markUpdatesSeen() {
     .from('profiles')
     .update({ updates_seen_at: new Date().toISOString(), updates_seen_version: APP_VERSION })
     .eq('id', user.id)
+  // A harang a layoutban ül, ezért a layout szintjét is érvényteleníteni kell —
+  // különben a jelzés a régi számmal marad, amíg a felhasználó újra nem tölti az oldalt.
+  revalidatePath('/', 'layout')
   revalidatePath('/ertesitesek')
   revalidatePath('/ujdonsagok')
-  revalidatePath('/')
 }

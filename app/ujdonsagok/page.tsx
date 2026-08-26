@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { Icon } from '@/components/icons'
-import { APP_VERSION, RELEASES, CHANGE_KIND_META, type ChangeKind } from '@/lib/changelog/data'
+import { APP_VERSION, RELEASES, CHANGE_KIND_META, compareVersions, type ChangeKind } from '@/lib/changelog/data'
 import { getContentUpdates } from '@/lib/notifications'
 import { markUpdatesSeen } from '@/app/ertesitesek/actions'
 
@@ -9,7 +9,7 @@ export const dynamic = 'force-dynamic'
 const KIND_ORDER: ChangeKind[] = ['funkcio', 'eszkoz', 'szakmai', 'betegseg', 'labor', 'forras', 'javitas']
 
 export default async function VerziokovetesPage() {
-  const { items: updates, seenAt } = await getContentUpdates()
+  const { items: updates, seenAt, seenVersion } = await getContentUpdates()
   const since = seenAt ? seenAt.slice(0, 10) : null
 
   return (
@@ -35,7 +35,10 @@ export default async function VerziokovetesPage() {
       )}
 
       {RELEASES.map((r) => {
-        const isNew = since ? r.date > since : false
+        // Verzió szerint döntjük el, mi számít újnak — a dátum csak megjelenítés.
+        const isNew = seenVersion
+          ? compareVersions(r.version, seenVersion) > 0
+          : since ? r.date > since : false
         // Bejegyzések típus szerint csoportosítva, rögzített sorrendben
         const groups = KIND_ORDER
           .map((k) => [k, r.entries.filter((e) => e.kind === k)] as const)
