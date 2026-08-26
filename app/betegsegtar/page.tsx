@@ -11,14 +11,14 @@ export default async function BetegsegtarPage() {
     <>
       <Link className="sh-back" href="/klinika">‹ Klinikai mag</Link>
       <h1 className="h1">Betegségtár</h1>
-      <p className="sub">Kórképek strukturált, APN-fókuszú adatlapjai — mire figyelj, mit vizsgálj, vörös zászlók, APN-megközelítés.</p>
+      <p className="sub">Kórképek strukturált, APN-fókuszú adatlapjai — mire figyelj, mit vizsgálj, red flag jelek, APN-megközelítés.</p>
 
       <Link className="sh-row" href="/betegsegtar/panasz">
         <span className="sh-row-main"><span className="sh-row-name">🔍 Panasz alapján</span><span className="sh-row-sub">Tünetből a lehetséges kórképek felé</span></span>
         <span className="sh-chev">›</span>
       </Link>
       <Link className="sh-row" href="/betegsegtar/akut">
-        <span className="sh-row-main"><span className="sh-row-name">🚨 Akut állapotok</span><span className="sh-row-sub">Gyors klinikai orientáció, vörös zászlók</span></span>
+        <span className="sh-row-main"><span className="sh-row-name">🚨 Akut állapotok</span><span className="sh-row-sub">Gyors klinikai orientáció, red flag jelek</span></span>
         <span className="sh-chev">›</span>
       </Link>
 

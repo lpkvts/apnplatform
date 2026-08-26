@@ -103,7 +103,7 @@ export function DiseaseForm({ d }: { d?: DiseaseData }) {
       <div className="as-lbl">Differenciáldiagnózis (soronként „Név" vagy „Név | slug")</div>
       <textarea className="as-ta" name="ddx" rows={3} defaultValue={ddxToText(d?.ddx)} />
 
-      <div className="as-lbl">8. 🚨 Vörös zászlók (soronként egy)</div>
+      <div className="as-lbl">8. 🚨 Red flag jelek (soronként egy)</div>
       <textarea className="as-ta" name="red_flags" rows={3} defaultValue={nl(b.red_flags)} />
 
       <div className="as-lbl">9. APN fókuszpontok (soronként egy)</div>

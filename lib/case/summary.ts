@@ -20,7 +20,7 @@ export function buildSummary(d: CaseDoc): string {
   L.push('Score-ok:'); L.push(d.scores.length ? d.scores.map((s) => `  • ${s.score_name}: ${s.value ?? '—'}${s.band ? ` · ${s.band}` : ''}`).join('\n') : `  ${MISSING}`); L.push('')
   L.push('EKG:'); L.push(d.ekgs.length ? d.ekgs.map((e) => `  • ${e.name}${e.category ? ` (${e.category})` : ''}${e.note ? ` — ${e.note}` : ''}`).join('\n') : `  ${MISSING}`); L.push('')
   L.push(`APN problémák: ${(d.problems && d.problems.length) ? d.problems.join(', ') : MISSING}`)
-  L.push(`Vörös zászlók: ${(d.red_flags && d.red_flags.length) ? d.red_flags.join(', ') : MISSING}`)
+  L.push(`Red flag jelek: ${(d.red_flags && d.red_flags.length) ? d.red_flags.join(', ') : MISSING}`)
   L.push(`Döntéstámogatás: ${d.decision || MISSING}`)
   return L.join('\n')
 }
@@ -36,7 +36,7 @@ export function buildSbar(d: CaseDoc): Sbar {
   aParts.push(d.ekgs.length ? `EKG: ${d.ekgs.map((e) => e.name).join('; ')}.` : 'Rögzített EKG-lelet nincs.')
   const a = aParts.join(' ')
   const rParts: string[] = []
-  if (d.red_flags && d.red_flags.length) rParts.push(`Vörös zászló(k): ${d.red_flags.join(', ')} — sürgős értékelés mérlegelendő.`)
+  if (d.red_flags && d.red_flags.length) rParts.push(`Red flag jelek: ${d.red_flags.join(', ')} — sürgős értékelés mérlegelendő.`)
   if (d.decision) rParts.push(`Rögzített döntéstámogatás: ${d.decision}`)
   if (rParts.length === 0) rParts.push('Rögzített javaslat/döntéstámogatás nincs; a következő lépések a teljes klinikai kép és a vonatkozó irányelv alapján határozandók meg.')
   rParts.push('A klinikai döntés végső felelőssége a megfelelő szakemberé.')

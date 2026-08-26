@@ -81,7 +81,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
         <TopicBacklinksForDisease name={data.name} />
         <div className="card">
           <b>⚪ Tartalom fejlesztés alatt</b>
-          <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, vörös zászlók, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
+          <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, red flag jelek, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
         </div>
         {copilotEnabled && <Link className="sh-row" href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`}><span className="sh-row-main"><span className="sh-row-name">🤖 Kérdezd az APN Copilotot</span><span className="sh-row-sub">Amíg az adatlap készül</span></span><span className="sh-chev">›</span></Link>}
       </>
@@ -170,7 +170,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
       )}
 
       <div className="card" style={{ borderColor: '#fecaca', background: '#fff7f7' }}>
-        <b style={{ color: '#b91c1c' }}>8. 🚨 Vörös zászlók</b>
+        <b style={{ color: '#b91c1c' }}>8. 🚨 Red flag jelek</b>
         <div style={{ marginTop: 6 }}><UL items={b.red_flags} /></div>
         <p className="sub" style={{ margin: '8px 0 0' }}>Sürgős ellátás vagy magasabb szintű szakmai/orvosi konzultáció szükségességét jelzik.</p>
       </div>

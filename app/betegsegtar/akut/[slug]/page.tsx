@@ -47,9 +47,9 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
         {t.orientation.map((p, i) => <p key={i} style={{ margin: i === 0 ? 0 : '8px 0 0' }}>{p}</p>)}
       </Card>
 
-      {/* 2. Vörös zászlók */}
+      {/* 2. Red flag jelek */}
       <div style={danger}>
-        <b style={{ color: '#9B2C2C' }}>🚨 Vörös zászlók</b>
+        <b style={{ color: '#9B2C2C' }}>🚨 Red flag jelek</b>
         <div style={{ marginTop: 8 }}>
           {t.redFlags.map((r, i) => <div key={i} style={{ padding: '4px 0' }}>🚩 {r}</div>)}
         </div>

@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic'
 const CARDS = [
   { href: '/betegsegtar', icon: '🩺', title: 'Betegségtár', sub: 'Kórképek strukturált, APN-fókuszú adatlapjai' },
   { href: '/betegsegtar/panasz', icon: '🔍', title: 'Panasz alapján', sub: 'Tünetből a lehetséges kórképek felé' },
-  { href: '/betegsegtar/akut', icon: '🚨', title: 'Akut állapotok', sub: 'Gyors klinikai orientáció, vörös zászlók' },
+  { href: '/betegsegtar/akut', icon: '🚨', title: 'Akut állapotok', sub: 'Gyors klinikai orientáció, red flag jelek' },
   { href: '/klinika/tudastar', icon: '📋', title: 'Protokollok és irányelvek', sub: 'Evidence-alapú szakmai összefoglalók, források' },
   { href: '/kontextus', icon: '🧠', title: 'Klinikai kontextus', sub: 'Összekapcsolt klinikai témák és modulok' },
 ]

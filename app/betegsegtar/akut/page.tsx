@@ -8,7 +8,7 @@ export default function AkutPage() {
     <>
       <Link className="sh-back" href="/betegsegtar">‹ Betegségtár</Link>
       <h1 className="h1">Akut állapotok</h1>
-      <p className="sub">Gyors klinikai orientáció: első felismerés, vörös zászlók, elsődleges vizsgálatok, DDx, APN-teendők, eszkaláció.</p>
+      <p className="sub">Gyors klinikai orientáció: első felismerés, red flag jelek, elsődleges vizsgálatok, DDx, APN-teendők, eszkaláció.</p>
       <div className="sec-h"><span className="sec-t">Akut állapotok</span></div>
       {ACUTE.map((a) => {
         const t = topicForAcuteName(a)

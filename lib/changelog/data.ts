@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.5',
+    date: '2026-08-26',
+    title: 'Egységes red flag szóhasználat',
+    summary: 'A „vörös zászló” kifejezés helyét mindenhol a „red flag jel” vette át.',
+    entries: [
+      {
+        id: 'v145-redflag', kind: 'javitas', title: 'Red flag jelek',
+        body: 'A platform korábban két kifejezést használt ugyanarra: a betegségtárban és az akut témaköröknél „vörös zászló”, a vizsgálati modulban „red flag” szerepelt. Mostantól mindenhol a red flag alak jelenik meg — a betegségtár adatlapjain, az akut témaköröknél, a klinikai esetek összefoglalóiban és a szerkesztői űrlapokon is.',
+        href: '/betegsegtar/akut',
+      },
+    ],
+  },
+  {
     version: '1.4.4',
     date: '2026-08-26',
     title: 'Rendezettebb elemzés-kezdőlap',
@@ -217,7 +230,7 @@ export const RELEASES: Release[] = [
     entries: [
       {
         id: 'v12-laz', kind: 'szakmai', title: 'Láz témakör',
-        body: 'A szepszis és a szeptikus sokk korai felismerése, célzott góckeresés, vörös zászlók, hemokultúra az antibiotikum előtt, differenciáldiagnózis és APN-fókusz. Külön kiemelve, hogy idős, immunszupprimált vagy neutropeniás betegnél a láz hiánya sem zárja ki a súlyos fertőzést.',
+        body: 'A szepszis és a szeptikus sokk korai felismerése, célzott góckeresés, red flag jelek, hemokultúra az antibiotikum előtt, differenciáldiagnózis és APN-fókusz. Külön kiemelve, hogy idős, immunszupprimált vagy neutropeniás betegnél a láz hiánya sem zárja ki a súlyos fertőzést.',
         href: '/betegsegtar/akut/laz',
       },
       {
@@ -240,7 +253,7 @@ export const RELEASES: Release[] = [
     entries: [
       {
         id: 'v11-akut-has', kind: 'szakmai', title: 'Akut hasi fájdalom témakör',
-        body: 'Vörös zászlók, stabilitás-értékelés, célzott anamnézis, EKG- és laborjavaslatok, differenciáldiagnózis (időkritikus, gyakori sebészeti és hasüregen kívüli okok), APN-fókusz és eszkalációs szempontok. Kapcsolódó vizsgálati rendszerek, laborok, EKG-eltérések és score-ok.',
+        body: 'Red flag jelek, stabilitás-értékelés, célzott anamnézis, EKG- és laborjavaslatok, differenciáldiagnózis (időkritikus, gyakori sebészeti és hasüregen kívüli okok), APN-fókusz és eszkalációs szempontok. Kapcsolódó vizsgálati rendszerek, laborok, EKG-eltérések és score-ok.',
         href: '/betegsegtar/akut/akut-hasi-fajdalom',
       },
       {
@@ -308,7 +321,7 @@ export const RELEASES: Release[] = [
       // ── Tudástár ─────────────────────────────────
       {
         id: 'v1-betegsegtar', kind: 'betegseg', title: 'Betegségtár',
-        body: 'Kórképek APN-fókuszú adatlapjai: tünettan, differenciáldiagnózis, vörös zászlók, kapcsolódó laborok és score-ok.',
+        body: 'Kórképek APN-fókuszú adatlapjai: tünettan, differenciáldiagnózis, red flag jelek, kapcsolódó laborok és score-ok.',
         href: '/betegsegtar',
       },
       {

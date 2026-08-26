@@ -50,7 +50,7 @@ export const TOPICS: Topic[] = [
     slug: 'mellkasi-fajdalom',
     title: 'Mellkasi fájdalom',
     icon: '💔',
-    subtitle: 'Gyors klinikai orientáció akut mellkasi fájdalom esetén: első felismerés, vörös zászlók, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    subtitle: 'Gyors klinikai orientáció akut mellkasi fájdalom esetén: első felismerés, red flag jelek, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
     orientation: [
       'Az akut mellkasi fájdalom nem diagnózis, hanem tünet, amely mögött többféle állapot állhat — köztük időkritikus, potenciálisan életveszélyes kórképek.',
       'A kezdeti értékelés célja: a klinikai stabilitás gyors megítélése, az akut koronária szindróma felismerése vagy kizárása, és az egyéb életveszélyes differenciáldiagnózisok korai felismerése.',
@@ -136,7 +136,7 @@ export const TOPICS: Topic[] = [
     slug: 'akut-dyspnoe',
     title: 'Akut dyspnoe',
     icon: '🌬️',
-    subtitle: 'Gyors klinikai orientáció akut légszomj esetén: első felismerés, vörös zászlók, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    subtitle: 'Gyors klinikai orientáció akut légszomj esetén: első felismerés, red flag jelek, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
     orientation: [
       'Az akut dyspnoe (légszomj) nem diagnózis, hanem szubjektív tünet, amely mögött többféle — köztük időkritikus, életveszélyes — kardiális, pulmonális és egyéb ok állhat.',
       'A kezdeti értékelés célja: a klinikai stabilitás és a légzési distressz gyors megítélése, az azonnali beavatkozást igénylő okok (pl. tüdőoedema, tüdőembólia, feszülő pneumothorax, súlyos bronchospasmus, anaphylaxia) korai felismerése.',
@@ -224,7 +224,7 @@ export const TOPICS: Topic[] = [
     slug: 'akut-hasi-fajdalom',
     title: 'Akut hasi fájdalom',
     icon: '🩺',
-    subtitle: 'Gyors klinikai orientáció akut hasi fájdalom esetén: első felismerés, vörös zászlók, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    subtitle: 'Gyors klinikai orientáció akut hasi fájdalom esetén: első felismerés, red flag jelek, elsődleges vizsgálatok, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
     orientation: [
       'Az akut hasi fájdalom tünet, nem diagnózis. Hátterében sebészeti, belgyógyászati, nőgyógyászati, urológiai és hasüregen kívüli okok egyaránt állhatnak.',
       'A kezdeti értékelés célja: a klinikai stabilitás megítélése, az azonnali sebészeti vagy érsebészeti beavatkozást igénylő kórképek korai felismerése, és a hasüregen kívüli, életveszélyes okok kizárása.',
@@ -323,7 +323,7 @@ export const TOPICS: Topic[] = [
     slug: 'eszmeletvesztes',
     title: 'Eszméletvesztés',
     icon: '💫',
-    subtitle: 'Gyors klinikai orientáció átmeneti eszméletvesztés esetén: a syncope elkülönítése, vörös zászlók, kockázatbecslés, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    subtitle: 'Gyors klinikai orientáció átmeneti eszméletvesztés esetén: a syncope elkülönítése, red flag jelek, kockázatbecslés, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
     orientation: [
       'Az átmeneti eszméletvesztés gyűjtőfogalom. A syncope ennek az a formája, amelyet átmeneti agyi hipoperfúzió okoz, és amelyre a gyors kezdet, a rövid időtartam és a spontán, maradványtünet nélküli felépülés jellemző.',
       'A kezdeti értékelés célja három kérdés megválaszolása: valódi syncope történt-e, áll-e mögötte kardiális ok, és fennáll-e a rövid távú súlyos esemény kockázata.',
@@ -424,7 +424,7 @@ export const TOPICS: Topic[] = [
     slug: 'laz',
     title: 'Láz',
     icon: '🌡️',
-    subtitle: 'Gyors klinikai orientáció lázas beteg esetén: a szepszis korai felismerése, vörös zászlók, góckeresés, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
+    subtitle: 'Gyors klinikai orientáció lázas beteg esetén: a szepszis korai felismerése, red flag jelek, góckeresés, differenciáldiagnózis, kapcsolódó diagnosztika, APN-fókusz és eszkaláció.',
     orientation: [
       'A láz tünet, nem diagnózis. A legfontosabb kérdés nem a hőmérséklet nagysága, hanem az, hogy a beteg állapota utal-e szervi elégtelenségre.',
       'A kezdeti értékelés célja: a szepszis és a szeptikus sokk korai felismerése, a fertőzési góc célzott keresése, valamint a nem fertőzéses eredetű láz és a fokozott kockázatú betegcsoportok azonosítása.',
