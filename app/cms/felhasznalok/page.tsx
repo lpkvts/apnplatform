@@ -30,7 +30,7 @@ export default async function FelhasznalokPage() {
       </div>
 
       {users.map((u) => (
-        <div className="card" key={u.id}>
+        <Link className="card klink" key={u.id} href={`/cms/felhasznalok/${u.id}`} style={{ display: 'block' }}>
           <div className="row" style={{ border: 'none', padding: 0 }}>
             <b>{u.full_name || '(névtelen)'}</b>
             <span className={`cms-badge ${ROLE_CLS[u.role] ?? 's-draft'}`}>{ROLE_LABEL[u.role] ?? u.role}</span>
@@ -39,8 +39,10 @@ export default async function FelhasznalokPage() {
           <div className="sub" style={{ margin: '2px 0 0' }}>
             {[u.apn_type, u.title, u.workplace, u.specialty].filter(Boolean).join(' · ') || 'Nincs profiladat'}
           </div>
-          <div className="sub" style={{ margin: '4px 0 0', fontSize: 12 }}>Regisztráció: {new Date(u.created_at).toLocaleDateString('hu-HU')}</div>
-        </div>
+          <div className="sub" style={{ margin: '4px 0 0', fontSize: 12 }}>
+            Regisztráció: {new Date(u.created_at).toLocaleDateString('hu-HU')} · Szerkesztés ›
+          </div>
+        </Link>
       ))}
       {users.length === 0 && !error && <p className="sub">Nincs felhasználó.</p>}
     </>

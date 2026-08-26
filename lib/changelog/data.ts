@@ -53,6 +53,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.3.0',
+    date: '2026-08-26',
+    title: 'Felhasználókezelés az adminban',
+    summary: 'Az adminisztrátor szerkesztheti a felhasználók adatait, szerepkörét, jelszavát és belépési e-mail címét.',
+    entries: [
+      {
+        id: 'v13-user-edit', kind: 'funkcio', title: 'Felhasználó szerkesztése',
+        body: 'A Tartalomkezelés → Felhasználók listából megnyitható adatlapon módosítható a név, szakirány, beosztás, munkahely, végzettség, nyilvántartási szám és telefonszám, valamint a szerepkör. Az utolsó adminisztrátor nem fokozható le.',
+        href: '/cms/felhasznalok',
+      },
+      {
+        id: 'v13-password', kind: 'funkcio', title: 'Jelszó és belépési e-mail',
+        body: 'Az adminisztrátor beállíthat ideiglenes jelszót, vagy visszaállító levelet küldhet, hogy a felhasználó maga adja meg. A belépési e-mail cím is módosítható, a fiók pedig letiltható kilépő munkatársnál. Minden művelet bekerül az audit naplóba — a jelszó értéke soha.',
+        href: '/cms/felhasznalok',
+      },
+    ],
+  },
+  {
     version: '1.2.1',
     date: '2026-08-26',
     title: 'Újdonságjelzés javítása',
