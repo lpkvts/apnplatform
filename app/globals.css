@@ -1,28 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  /* Design paletta — kontrasztosabb változat */
-  --brand: #17543E;
-  --brand-dark: #0F3A2A;
-  --brand-2: #4C7A63;
-  --brand-3: #75887E;
-  --brand-tint: #DCEAE3;
-  --line: #C3D1CA;
-  --ink: #10201A;
-  --muted: #4B5A53;
-  --bg: #E9EEEB;
+  /* APN 2.0 — Design paletta */
+  --brand: #0F5B46;        /* elsődleges sötétzöld — fejléc, elsődleges gomb */
+  --brand-dark: #0B4635;   /* sötétebb árnyalat */
+  --brand-2: #147A5A;      /* közép zöld */
+  --brand-3: #22A878;      /* élénk zöld akcentus */
+  --brand-tint: #E7F1EC;   /* világos zöld háttér */
+  --line: #E5E7EB;         /* neutrális keret */
+  --ink: #0F172A;          /* fő szöveg */
+  --muted: #334155;        /* kisegítő szöveg */
+  --bg: #F8FAF9;           /* app háttér */
   --card: #FFFFFF;
+
+  /* Modul-akcentus színek */
+  --acc-akut: #EF4444;
+  --acc-vizsgalat: #885CF6;
+  --acc-betegsegtar: #3B82F6;
+  --acc-labor: #22C55E;
+  --acc-ekg: #F97316;
+  --acc-score: #FACC15;
 
   /* Kompatibilitási aliasok (a komponensek inline stílusaihoz) */
   --teal: var(--brand);
   --teal-700: var(--brand-dark);
   --teal-50: var(--brand-tint);
-  --slate-50: #F6F8F8;
-  --slate-100: #EEF1F1;
-  --slate-200: #C3D1CA;
-  --slate-400: #75887E;
-  --slate-500: #4B5A53;
-  --slate-600: #4B5563;
-  --slate-700: #374151;
+  --slate-50: #F8FAF9;
+  --slate-100: #F1F5F4;
+  --slate-200: #E5E7EB;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-600: #475569;
+  --slate-700: #334155;
   --slate-800: #1F2937;
 }
 
@@ -30,6 +39,8 @@
 html, body { margin: 0; padding: 0; }
 body {
   font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
   color: var(--ink);
   background: var(--bg);
   overscroll-behavior-y: none;
@@ -461,3 +472,28 @@ body {
 .nav-greet { font-size: 13px; color: var(--muted); margin-right: 8px; white-space: nowrap; max-width: 42vw; overflow: hidden; text-overflow: ellipsis; }
 .nav-greet b { color: var(--brand); font-weight: 700; }
 @media (max-width: 380px) { .nav-greet { display: none; } }
+
+/* APN 2.0 — tipográfia és segédosztályok */
+h2, .h2 { font-size: 20px; font-weight: 600; letter-spacing: -.2px; }
+h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
+.sec-t { font-size: 15px; font-weight: 700; }
+
+/* Badge-ek */
+.badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1.6; }
+.badge-uj { background: var(--brand-tint); color: var(--brand); }
+.badge-kiemelt { background: #FEE2E2; color: #B91C1C; }
+.badge-nepszeru { background: #FEF3C7; color: #92400E; }
+.badge-mentett { background: #F1F5F4; color: #334155; }
+
+/* Állapotjelzők (forrás/tartalom státusz) */
+.status-ok { color: var(--brand-2); font-weight: 600; }
+.status-warn { color: #B7791F; font-weight: 600; }
+.status-danger { color: #C0392B; font-weight: 600; }
+
+/* Modul-akcentus segédosztályok (ikon-háttér csempéhez) */
+.acc-akut { color: var(--acc-akut); }
+.acc-vizsgalat { color: var(--acc-vizsgalat); }
+.acc-betegsegtar { color: var(--acc-betegsegtar); }
+.acc-labor { color: var(--acc-labor); }
+.acc-ekg { color: var(--acc-ekg); }
+.acc-score { color: var(--acc-score); }

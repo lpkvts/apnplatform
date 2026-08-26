@@ -8,12 +8,12 @@ import { SHORTCUTS } from '@/lib/shortcuts'
 import { Landing } from '@/components/landing'
 
 const TILES = [
-  { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment' },
-  { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score' },
-  { href: '/klinika/labor', label: 'Labor', icon: 'flask' },
-  { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
-  { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },
-  { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
+  { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment', acc: '#885CF6' },
+  { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score', acc: '#FACC15' },
+  { href: '/klinika/labor', label: 'Labor', icon: 'flask', acc: '#22C55E' },
+  { href: '/klinika/ekg', label: 'EKG', icon: 'ekg', acc: '#F97316' },
+  { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic', acc: '#3B82F6' },
+  { href: '/klinika/tudastar', label: 'Tudástár', icon: 'book', acc: '#0F5B46' },
 ]
 
 const MODE_BADGE: Record<string, string> = { clinical: 'Klinikai', education: 'Oktatási', practice: 'Gyakorló' }
@@ -78,7 +78,7 @@ export default async function DashboardPage() {
       <div className="qgrid">
         {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
           <Link key={t.href} className="qtile" href={t.href}>
-            <span className="qtile-i"><Icon name={t.icon} size={24} /></span>
+            <span className="qtile-i" style={'acc' in t && t.acc ? { color: t.acc, background: t.acc + '1A' } : undefined}><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>
           </Link>
         ))}
