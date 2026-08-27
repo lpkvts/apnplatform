@@ -1,4 +1,4 @@
-import { signIn, signUp } from './actions'
+import { signIn, signUp, requestReset } from './actions'
 
 export default async function LoginPage({
   searchParams,
@@ -9,7 +9,7 @@ export default async function LoginPage({
   return (
     <>
       <h1 className="h1">Belépés</h1>
-      <p className="sub">APN Hungary Platform</p>
+      <p className="sub">APN-MED</p>
 
       {sp.error ? (
         <div className="card" style={{ borderColor: '#fca5a5', color: '#b91c1c' }}>
@@ -41,7 +41,17 @@ export default async function LoginPage({
               Regisztráció
             </button>
           </div>
+          <button
+            className="sec-l"
+            formAction={requestReset}
+            style={{ background: 'none', border: 0, padding: '10px 0 0', font: 'inherit', fontSize: 13.5, cursor: 'pointer' }}
+          >
+            Elfelejtettem a jelszavam
+          </button>
         </form>
+        <p className="sub" style={{ margin: '4px 0 0', fontSize: 12 }}>
+          A visszaállításhoz elég az e-mail címet kitölteni.
+        </p>
       </div>
     </>
   )

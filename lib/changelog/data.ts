@@ -66,6 +66,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.3',
+    date: '2026-08-27',
+    title: 'Elfelejtett jelszó',
+    summary: 'A felhasználó maga is kérhet jelszó-visszaállítást a bejelentkezésnél.',
+    entries: [
+      {
+        id: 'v153-elfelejtett', kind: 'funkcio', title: 'Elfelejtettem a jelszavam',
+        body: 'A bejelentkezésnél mostantól visszaállító levél kérhető: elég az e-mail címet kitölteni. A rendszer akkor is azonos választ ad, ha a címmel nincs fiók — így a válaszból nem lehet kideríteni, kinek van regisztrációja.',
+        href: '/login',
+      },
+      {
+        id: 'v153-linkek', kind: 'javitas', title: 'A linkek sablonmódosítás nélkül is működnek',
+        body: 'A hitelesítő levelek visszatérési címét a kód adja meg, nem a levélsablon. Erre azért volt szükség, mert a sablonok csak saját levélküldő beállítása mellett szerkeszthetők. A rendszer mindkét linkformátumot kezeli, így a későbbi váltás nem okoz kiesést.',
+        href: '/login',
+      },
+    ],
+  },
+  {
     version: '1.5.2',
     date: '2026-08-27',
     title: 'Jelszó-visszaállítás',

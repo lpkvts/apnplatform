@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { currentRole, isAdmin } from '@/lib/roles'
+import { siteUrl } from '@/lib/site-url'
 
 export interface ActionResult { ok: boolean; message: string }
 
@@ -122,7 +123,14 @@ export async function adminSendRecovery(targetId: string, email: string, name: s
     return { ok: false, message: 'Hiányzik a SUPABASE_SERVICE_ROLE_KEY környezeti változó.' }
   }
 
-  const { error } = await admin.auth.admin.generateLink({ type: 'recovery', email })
+  // A visszatérési címet itt adjuk meg, nem a levélsablonban — a sablonok csak
+  // saját SMTP mellett szerkeszthetők, ez viszont anélkül is működik.
+  const base = await siteUrl()
+  const { error } = await admin.auth.admin.generateLink({
+    type: 'recovery',
+    email,
+    options: { redirectTo: `${base}/auth/confirm?next=/auth/uj-jelszo` },
+  })
   if (error) return { ok: false, message: `Nem sikerült: ${error.message}` }
 
   await log('password_recovery_sent', targetId, name, { email })
