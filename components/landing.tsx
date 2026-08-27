@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { RingLogo } from '@/components/icons'
+import { InstallPrompt } from '@/components/install-prompt'
 
 /**
  * Nyitóoldal kijelentkezett látogatóknak.
@@ -255,6 +256,14 @@ export function Landing() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Telepítés ── */}
+      <section className="lp-sec" id="telepites">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Vidd magaddal</p>
+          <InstallPrompt variant="inline" />
         </div>
       </section>
 

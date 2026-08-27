@@ -66,6 +66,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.9',
+    date: '2026-08-27',
+    title: 'Telepíthető alkalmazás',
+    summary: 'A platform felajánlja a telefonra telepítést, eszköznek megfelelő módon.',
+    entries: [
+      {
+        id: 'v159-telepites', kind: 'funkcio', title: 'Telepítés felajánlása',
+        body: 'A nyitóoldalon külön szakasz, a bejelentkezett felületen pedig egy visszafogott sáv ajánlja fel a telepítést. Telepítve a platform saját ablakban indul, gyorsabban nyílik, és a korábban megnyitott tartalom hálózat nélkül is elérhető marad.',
+        href: '/',
+      },
+      {
+        id: 'v159-ios', kind: 'eszkoz', title: 'iPhone-on lépésről lépésre',
+        body: 'Androidon és asztali böngészőben egy gombnyomás a telepítés. iPhone-on és iPaden a rendszer nem engedi ezt a gombot, ezért ott a rendszer helyett leírjuk a három lépést: megosztás ikon, hozzáadás a kezdőképernyőhöz, megerősítés. A felajánlás nem jelenik meg, ha a platform már telepítve fut, és elutasítás után egy hónapig nem kérdez újra.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.5.8',
     date: '2026-08-27',
     title: 'Tömörebb nyitóoldal',

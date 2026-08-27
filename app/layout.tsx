@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next'
 import { Nav } from '@/components/nav'
 import { BottomNav } from '@/components/bottom-nav'
 import { PwaRegister } from '@/components/pwa-register'
+import { InstallPrompt } from '@/components/install-prompt'
 import { FavoritesProvider } from '@/components/favorites-context'
 import { getAllFavoriteKeys } from '@/lib/favorites'
 import { headers } from 'next/headers'
@@ -70,6 +71,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         </FavoritesProvider>
         {!isLanding && <BottomNav />}
         <PwaRegister />
+        {/* Telepítés felajánlása. Csak akkor jelenik meg, ha a platform még nincs
+            telepítve, és a felhasználó nem utasította el korábban. */}
+        <InstallPrompt />
       </body>
     </html>
   )
