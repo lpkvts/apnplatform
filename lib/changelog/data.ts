@@ -66,6 +66,37 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.5',
+    date: '2026-08-27',
+    title: 'Nyitóoldal elrendezés javítása',
+    summary: 'A nyitóoldal asztali gépen is a teljes szélességet használja.',
+    entries: [
+      {
+        id: 'v155-szelesseg', kind: 'javitas', title: 'Teljes szélességű nyitóoldal',
+        body: 'A nyitóoldal asztali gépen is keskeny, mobilra szabott sávban jelent meg. Az ok technikai volt: az útvonal-információ a válasz fejlécébe került a kérésé helyett, így az oldal nem ismerte fel, hogy nyitóoldalt mutat, és rajta maradt a belső felület szűk elrendezése. Ez javítva.',
+        href: '/',
+      },
+    ],
+  },
+  {
+    version: '1.5.4',
+    date: '2026-08-27',
+    title: 'Karbantartási mód',
+    summary: 'A platform adminból ideiglenesen lezárható, saját üzenettel.',
+    entries: [
+      {
+        id: 'v154-karbantartas', kind: 'funkcio', title: 'Karbantartási mód',
+        body: 'A Tartalomkezelés → Beállítások oldalon egy kapcsolóval lezárható a platform. Ilyenkor a felhasználók tájékoztató oldalt kapnak, az adminisztrátorok viszont továbbra is beléphetnek és dolgozhatnak — enélkül a karbantartás alatt maga a javítás sem lenne elvégezhető.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v154-uzenet', kind: 'eszkoz', title: 'Saját üzenet',
+        body: 'A tájékoztató szövege szerkeszthető, például a várható befejezés idejével. Üresen hagyva az alapértelmezett szöveg jelenik meg. Az üzenet a bejelentkezésnél is látszik, hogy a belépő tudja, mire számítson.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.5.3',
     date: '2026-08-27',
     title: 'Elfelejtett jelszó',

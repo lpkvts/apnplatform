@@ -38,11 +38,21 @@ export async function updateSession(request: NextRequest) {
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
-  // A layoutnak tudnia kell, melyik útvonalon vagyunk: a nyitóoldalon
-  // kijelentkezett látogatónak saját fejlécű, teljes szélességű landing jár,
-  // az alkalmazás fejléce nélkül. Szerver layoutban nincs pathname API,
-  // ezért fejlécben adjuk tovább.
-  response.headers.set('x-path', path)
-  response.headers.set('x-auth', user ? '1' : '0')
-  return response
+
+  // A layoutnak tudnia kell, melyik útvonalon vagyunk és be van-e jelentkezve
+  // a látogató: a nyitóoldalon saját fejlécű, teljes szélességű landing jár.
+  //
+  // FONTOS: ezt a KÉRÉS fejlécébe kell tenni, nem a válaszéba. A szerver
+  // komponensek a headers() hívással a kérés fejléceit olvassák; a válaszfejléc
+  // csak a böngészőhöz jut el, oda nem. Ezért a kérést újra kell építeni a
+  // kiegészített fejlécekkel, és a választ abból származtatni.
+  const headers = new Headers(request.headers)
+  headers.set('x-path', path)
+  headers.set('x-auth', user ? '1' : '0')
+
+  const forwarded = NextResponse.next({ request: { headers } })
+  // A sütiket át kell vinni az új válaszra, különben a frissített munkamenet
+  // elveszne, és a felhasználó minden kérésnél kijelentkezne.
+  response.cookies.getAll().forEach((c) => forwarded.cookies.set(c))
+  return forwarded
 }
