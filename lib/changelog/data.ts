@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.6',
+    date: '2026-08-27',
+    title: 'Tisztább karbantartási képernyő',
+    summary: 'Karbantartás alatt csak a tájékoztató látszik, bejelentkezési űrlap nélkül.',
+    entries: [
+      {
+        id: 'v156-login', kind: 'eszkoz', title: 'Csak az üzenet',
+        body: 'Bekapcsolt karbantartás alatt a bejelentkezés oldalon sem jelenik meg az űrlap — a látogató a logót, a címet és az üzenetet látja. Az adminisztrátori belépés egy visszafogott lenyitóval érhető el: az űrlap nem tűnhet el nyomtalanul, mert kijelentkezett állapotban akkor senki nem tudná feloldani a karbantartást. A regisztráció ilyenkor rejtve marad, mert új fiók nyitásának nincs értelme.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.5.5',
     date: '2026-08-27',
     title: 'Nyitóoldal elrendezés javítása',

@@ -654,3 +654,9 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .maint-admin { background: var(--brand-tint); border-radius: 14px; padding: 14px 18px; margin: 18px 0 14px; max-width: 42ch; }
 .maint-admin b { display: block; font-size: 14px; margin-bottom: 4px; }
 .maint-admin span { font-size: 13px; color: var(--muted); }
+.maint-login { text-align: center; }
+.maint-login > summary { list-style: none; cursor: pointer; font-size: 13px; color: var(--muted); padding: 8px; border-radius: 10px; }
+.maint-login > summary::-webkit-details-marker { display: none; }
+.maint-login > summary:hover { color: var(--brand); background: var(--brand-tint); }
+.maint-login[open] > summary { color: var(--brand); font-weight: 600; }
+.maint-login .card { text-align: left; }
