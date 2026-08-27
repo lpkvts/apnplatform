@@ -357,6 +357,11 @@ body {
 .lp-eyebrow.on-dark { color: var(--brand-3); }
 
 /* ── Fejléc ── */
+/* A menüpontokra kattintva a szekció a ragadó fejléc alatt jelenjen meg, kis
+   levegővel — enélkül a fejléc eltakarná a szakasz címét. */
+.lp [id] { scroll-margin-top: 92px; }
+.lp { scroll-behavior: smooth; }
+
 .lp-nav { position: sticky; top: 0; z-index: 20; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
 .lp-nav.stuck { border-bottom-color: var(--line); }
 .lp-nav-inner { display: flex; align-items: center; gap: 18px; padding: 13px 22px; max-width: 1140px; margin: 0 auto; }

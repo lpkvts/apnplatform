@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.13',
+    date: '2026-08-27',
+    title: 'Pontosabb menüugrás',
+    summary: 'A menüpontokra kattintva a szakasz teteje a fejléc alatt jelenik meg.',
+    entries: [
+      {
+        id: 'v1513-horgony', kind: 'javitas', title: 'Ugrás a szakasz tetejére',
+        body: 'A nyitóoldal menüpontjaira kattintva a ragadó fejléc eltakarta a szakasz elejét. Mostantól kis levegővel a fejléc alatt nyílik meg a szakasz, és a görgetés is folyamatos, nem ugrik.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.5.12',
     date: '2026-08-27',
     title: 'Nyitóoldal finomítások',
