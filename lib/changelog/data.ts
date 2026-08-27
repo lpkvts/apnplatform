@@ -66,6 +66,106 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.2',
+    date: '2026-08-27',
+    title: 'Jelszó-visszaállítás',
+    summary: 'Az e-mailes hitelesítő linkek végre célba érnek: regisztráció-megerősítés és jelszó-visszaállítás.',
+    entries: [
+      {
+        id: 'v152-auth', kind: 'javitas', title: 'Működő jelszó-visszaállítás',
+        body: 'A rendszer eddig publikusnak jelölte az /auth útvonalat, de az oldal nem létezett — a jelszó-visszaállító és regisztráció-megerősítő levelek üres helyre vezettek. Mostantól a linkek célba érnek: a token munkamenetre váltódik, és a felhasználó egy külön oldalon adja meg az új jelszavát.',
+        href: '/login',
+      },
+      {
+        id: 'v152-lejart', kind: 'javitas', title: 'Lejárt link kezelése',
+        body: 'A már felhasznált vagy lejárt link nem hibaoldalt ad, hanem érthető üzenetet a bejelentkezésnél. Az új jelszó oldal önmagában nem nyitható meg — csak érvényes visszaállító linkről.',
+        href: '/login',
+      },
+    ],
+  },
+  {
+    version: '1.5.1',
+    date: '2026-08-27',
+    title: 'Új név: APN-MED',
+    summary: 'A platform neve APN-MED lett, saját domainnel.',
+    entries: [
+      {
+        id: 'v151-nev', kind: 'funkcio', title: 'APN-MED',
+        body: 'A platform mostantól APN-MED néven fut. A név a böngészőfülön, a telepíthető alkalmazásban, a fejlécben, a bejelentkezésnél és a nyitóoldalon is átvezetve. A szakmai tartalomban az APN rövidítés változatlan maradt, mert ott a szakmát jelöli (Advanced Practice Nurse), nem a platformot — az APN-fókusz, a gyakorló APN-ek és az APN szakirány tehát érintetlen.',
+        href: '/',
+      },
+    ],
+  },
+  {
+    version: '1.5.0',
+    date: '2026-08-27',
+    title: 'Új nyitóoldal',
+    summary: 'A kijelentkezett látogatók új nyitóoldalt kapnak, a platform saját design rendszerével.',
+    entries: [
+      {
+        id: 'v150-landing', kind: 'funkcio', title: 'Nyitóoldal',
+        body: 'Teljesen új nyitóoldal: bemutatkozó szakasz működő felületmakettel, a négy fő modul, a szakmai út hat lépése, a mentorprogram, egy áttekintés a platform működéséről és a célcsoportok. A makettek nem képfájlok, hanem HTML-ből rajzolódnak, így minden felbontáson élesek maradnak.',
+        href: '/',
+      },
+      {
+        id: 'v150-design', kind: 'eszkoz', title: 'Egységes design a nyitóoldalon',
+        body: 'A nyitóoldal a platform saját tokenjeire épül, nem külön palettára. A modulkártyák a valódi modul-akcentusokat kapják: ugyanaz a szín jelöli itt a Tudástárat, mint odabent a csempéjét — így a nyitóoldal és a belső felület egy rendszernek látszik.',
+        href: '/',
+      },
+      {
+        id: 'v150-middleware', kind: 'javitas', title: 'A nyitóoldal végre látszik',
+        body: 'A nyitóoldal eddig soha nem jelent meg: a munkamenet-kezelő minden kijelentkezett látogatót azonnal a bejelentkezésre irányított, még mielőtt az oldal lefutott volna. Mostantól a nyitóoldal publikus, és a fejléc is hozzá igazodik — a landing saját navigációval, teljes szélességben jelenik meg.',
+        href: '/',
+      },
+    ],
+  },
+  {
+    version: '1.4.9',
+    date: '2026-08-27',
+    title: 'Nehézségi szintek és lokalizáció',
+    summary: 'A gyakorlás szint szerint választható, és a felismerés után megkérdezi, hol látszik az eltérés.',
+    entries: [
+      {
+        id: 'v149-szintek', kind: 'eszkoz', title: 'Nehézségi szintek',
+        body: 'Négy választható szűrő: vegyes, kezdő, haladó és gyakorlott. A besorolást nem az elméleti bonyolultság dönti el, hanem az, mennyire könnyű összetéveszteni — a kamrafibrilláció súlyos kórkép, felismerni mégis egyszerű, míg a hypo- és hypercalcaemia elkülönítése finom munka. Kilenc kezdő, tizenegy haladó és hét gyakorlott szintű elem.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v149-lokalizacio', kind: 'szakmai', title: 'Második kérdés: hol látod?',
+        body: 'A felismerés után tizenegy kórképnél egy második kérdés következik a lokalizációról — mely területen van az ST-eleváció, melyik elvezetésben látszik az rsR alak, melyik két elvezetés dönti el a tengelyállást. A puszta alakfelismerés kevés: a hely adja a klinikai jelentést. Az elvezetések kiemelése csak e után jelenik meg, hogy ne árulja el a választ.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
+    version: '1.4.8',
+    date: '2026-08-27',
+    title: 'Klinikai kontextus a gyakorlásban',
+    summary: 'A gyakorló és a vizsga mód kérdései klinikai képpel indulnak, a válaszlehetőségek pedig valódi tévesztési párok.',
+    entries: [
+      {
+        id: 'v148-vignette', kind: 'szakmai', title: 'Klinikai kép minden kérdésnél',
+        body: 'Az EKG-t a gyakorlatban sosem önmagában nézzük. Minden kérdés előtt megjelenik egy rövid bemutatás — életkor, panasz, vitális paraméterek —, ami megváltoztatja a gondolkodást: a 40 perces pulzus melletti szédülés más súlyú, mint ugyanaz a görbe panasz nélkül.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v148-csalik', kind: 'eszkoz', title: 'Valódi tévesztési párok',
+        body: 'A válaszlehetőségek eddig véletlenszerűek voltak, így a kamrafibrilláció mellett normál EKG is szerepelhetett — ott a találgatás is működik. Mostantól minden kérdésnél azok a kórképek a csalik, amelyekkel a gyakorlatban is összetéveszthető: jobb és bal szárblokk, Wenckebach és Mobitz II, ST-eleváció és pericarditis, hypo- és hyperkalaemia.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v148-tipp', kind: 'szakmai', title: 'Elkülönítési tipp a válasz után',
+        body: 'A magyarázat mellett megjelenik, mi különbözteti meg az adott kórképet a hozzá legközelebb állótól — például hogy a Wenckebachnál a PR ütésről ütésre nyúlik, Mobitz II-nél viszont állandó marad.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v148-uj-elemek', kind: 'szakmai', title: 'Két új gyakorló elem',
+        body: 'A kamrai extrasystole és a tengelyeltérés bekerült a gyakorolható kórképek közé — mindkettő felismerése a 12 elvezetéses nézetben értelmes feladat. A gyakorló mostantól 27 elemből válogat.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.4.7',
     date: '2026-08-27',
     title: '12 elvezetéses gyakorló és vizsga',
