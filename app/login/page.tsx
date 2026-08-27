@@ -1,4 +1,5 @@
 import { signIn, signUp, requestReset } from './actions'
+import { getMaintenance } from '@/lib/flags'
 
 export default async function LoginPage({
   searchParams,
@@ -6,10 +7,20 @@ export default async function LoginPage({
   searchParams: Promise<{ error?: string; message?: string }>
 }) {
   const sp = await searchParams
+  const maint = await getMaintenance()
+
   return (
     <>
       <h1 className="h1">Belépés</h1>
       <p className="sub">APN-MED</p>
+
+      {/* Karbantartás alatt is engedjük a belépést: az adminisztrátoroknak
+          dolgozniuk kell, a többieket a belépés után a tájékoztató fogadja. */}
+      {maint.on && (
+        <div className="safety-note" style={{ borderLeftColor: '#B45309' }}>
+          <b>🔧 Karbantartás.</b> {maint.message}
+        </div>
+      )}
 
       {sp.error ? (
         <div className="card" style={{ borderColor: '#fca5a5', color: '#b91c1c' }}>

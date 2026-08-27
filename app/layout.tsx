@@ -7,6 +7,9 @@ import { PwaRegister } from '@/components/pwa-register'
 import { FavoritesProvider } from '@/components/favorites-context'
 import { getAllFavoriteKeys } from '@/lib/favorites'
 import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
+import { getMaintenance } from '@/lib/flags'
+import { currentRole, isAdmin } from '@/lib/roles'
 
 export const metadata: Metadata = {
   title: 'APN-MED',
@@ -35,7 +38,28 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   // Nyitóoldal kijelentkezett látogatónak: a landing saját fejlécet hoz és teljes
   // szélességet igényel, ezért ilyenkor az alkalmazás navigációja kimarad.
   const h = await headers()
-  const isLanding = h.get('x-path') === '/' && h.get('x-auth') === '0'
+  const path = h.get('x-path') ?? '/'
+  const isLanding = path === '/' && h.get('x-auth') === '0'
+
+  // ── Karbantartási mód ──
+  // Bekapcsolva mindenki a tájékoztató oldalt kapja, kivéve az adminisztrátorokat
+  // — nekik dolgozniuk kell tudni a karbantartás alatt is.
+  // A bejelentkezés és a hitelesítő linkek elérhetők maradnak, különben az admin
+  // sem tudna belépni, hogy kikapcsolja.
+  const exempt =
+    path.startsWith('/karbantartas') ||
+    path.startsWith('/login') ||
+    path.startsWith('/auth') ||
+    path.startsWith('/manifest') ||
+    path.startsWith('/icon')
+
+  if (!exempt) {
+    const { on } = await getMaintenance()
+    if (on) {
+      const { role } = await currentRole()
+      if (!isAdmin(role)) redirect('/karbantartas')
+    }
+  }
 
   return (
     <html lang="hu">
