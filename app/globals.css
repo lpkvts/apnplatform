@@ -569,7 +569,10 @@ body {
 /* Felső sáv — üdvözlő szöveg a profil-ikon mellett */
 .nav-greet { font-size: 13px; color: var(--muted); margin-right: 8px; white-space: nowrap; max-width: 42vw; overflow: hidden; text-overflow: ellipsis; }
 .nav-greet b { color: var(--brand); font-weight: 700; }
-@media (max-width: 380px) { .nav-greet { display: none; } }
+@media (max-width: 480px) { .nav-greet { display: none; } }
+.topbar form { display: flex; }
+.icon-btn { cursor: pointer; font: inherit; transition: background .15s, border-color .15s; }
+.icon-btn:hover { background: var(--brand-tint); border-color: #C9D9D2; }
 
 /* APN 2.0 — tipográfia és segédosztályok */
 h2, .h2 { font-size: 20px; font-weight: 600; letter-spacing: -.2px; }

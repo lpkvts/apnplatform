@@ -11,6 +11,7 @@ const P: Record<string, ReactNode> = {
   copilot: (<><path d="M4 5.5h16v9H9.5L5 19v-4.5H4z" /><path d="M9 10h.01M12 10h.01M15 10h.01" /></>),
   book: (<><path d="M6 4h11a1 1 0 0 1 1 1v15H7a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1z" /><path d="M6 4v14" /></>),
   bell: (<><path d="M6 9.5a6 6 0 0 1 12 0c0 4.5 2 5.5 2 5.5H4s2-1 2-5.5z" /><path d="M10 18.5a2 2 0 0 0 4 0" /></>),
+  logout: (<><path d="M9.5 4.5H6A1.5 1.5 0 0 0 4.5 6v12A1.5 1.5 0 0 0 6 19.5h3.5" /><path d="M15 16l4.5-4L15 8" /><path d="M19.5 12h-10" /></>),
   grad: (<><path d="M12 4 2.5 9 12 14l9.5-5L12 4z" /><path d="M6.5 11v4.2c0 1.4 2.5 2.8 5.5 2.8s5.5-1.4 5.5-2.8V11" /></>),
   chevron: (<path d="M9 6l6 6-6 6" />),
   search: (<><circle cx="11" cy="11" r="7" /><path d="M20.5 20.5 17 17" /></>),

@@ -7,16 +7,10 @@ import { currentRole, isStaff } from '@/lib/roles'
 import type { Profile } from '@/lib/types'
 import { getFlag } from '@/lib/flags'
 import { APP_VERSION } from '@/lib/changelog/data'
+import { signOut } from '@/lib/actions/auth'
 
 const ROLE_LABEL: Record<string, string> = {
   apn: 'APN', szerkeszto: 'Szerkesztő', lektor: 'Lektor', admin: 'Adminisztrátor',
-}
-
-async function signOut() {
-  'use server'
-  const supabase = await createClient()
-  await supabase.auth.signOut()
-  redirect('/login')
 }
 
 function Field({ label, value }: { label: string; value?: string | number | null }) {

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { RingLogo, Icon } from '@/components/icons'
 import { createClient } from '@/lib/supabase/server'
 import { getNotifications } from '@/lib/notifications'
+import { signOut } from '@/lib/actions/auth'
 
 export async function Nav() {
   const supabase = await createClient()
@@ -35,6 +36,12 @@ export async function Nav() {
           </Link>
           {firstName && <span className="nav-greet">Üdvözlünk <b>{firstName}</b></span>}
           <Link href="/profil" className="avatar" aria-label="Profil">{initial}</Link>
+          {/* Kijelentkezés egy gombnyomásra, a profil megnyitása nélkül. */}
+          <form action={signOut}>
+            <button type="submit" className="icon-btn" aria-label="Kijelentkezés" title="Kijelentkezés">
+              <Icon name="logout" size={20} />
+            </button>
+          </form>
         </>
       )}
     </header>

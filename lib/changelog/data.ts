@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.7',
+    date: '2026-08-27',
+    title: 'Kijelentkezés a fejlécből',
+    summary: 'Egy gombnyomással kiléphetsz, a profil megnyitása nélkül.',
+    entries: [
+      {
+        id: 'v157-kijelentkezes', kind: 'eszkoz', title: 'Kijelentkezés gomb',
+        body: 'A fejlécben, a profilkép mellett megjelent egy kilépés gomb. Eddig ehhez be kellett menni a profilba és legörgetni. A profil oldalon lévő gomb továbbra is megmarad, és mindkettő ugyanazt a műveletet használja.',
+        href: '/profil',
+      },
+    ],
+  },
+  {
     version: '1.5.6',
     date: '2026-08-27',
     title: 'Tisztább karbantartási képernyő',
