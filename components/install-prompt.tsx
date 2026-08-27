@@ -124,7 +124,7 @@ export function InstallPrompt({ variant = 'banner' }: { variant?: 'banner' | 'in
     <div className="inst-bar" role="dialog" aria-label="Alkalmazás telepítése">
       <span className="inst-ic" aria-hidden="true">📲</span>
       <div className="inst-bar-txt">
-        <b>Telepítsd az APN-MED-et</b>
+        <b>APN-MED telepítése</b>
         <span>{ios ? 'Add hozzá a kezdőképernyődhöz' : 'Gyorsabb indulás, offline elérés'}</span>
         {ios && howTo && steps}
       </div>

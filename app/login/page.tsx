@@ -77,11 +77,11 @@ export default async function LoginPage({
   }
 
   return (
-    <>
+    <div className="auth-page">
       <h1 className="h1">Belépés</h1>
       <p className="sub">APN-MED</p>
       {messages}
       {form}
-    </>
+    </div>
   )
 }

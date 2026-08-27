@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.10',
+    date: '2026-08-27',
+    title: 'Keskenyebb bejelentkezés',
+    summary: 'A bejelentkezési űrlap széles képernyőn is olvasható méretű.',
+    entries: [
+      {
+        id: 'v1510-login', kind: 'javitas', title: 'Bejelentkezés elrendezése',
+        body: 'Asztali gépen a két mezős űrlap a teljes tartalomsávot kitöltötte, ami szokatlanul széles beviteli mezőket adott. Mostantól keskenyebb, középre igazított elrendezésben jelenik meg. Telefonon nincs változás.',
+        href: '/login',
+      },
+    ],
+  },
+  {
     version: '1.5.9',
     date: '2026-08-27',
     title: 'Telepíthető alkalmazás',
