@@ -22,8 +22,8 @@ export async function Nav() {
       <Link href="/" className="brand">
         <span className="brand-logo"><RingLogo /></span>
         <span className="brand-txt">
-          <span className="brand-name">APN</span>
-          <span className="brand-sub">Hungary Platform</span>
+          <span className="brand-name">APN-MED</span>
+          <span className="brand-sub">Szakmai platform</span>
         </span>
       </Link>
       <span className="spacer" />

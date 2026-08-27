@@ -106,7 +106,7 @@ export default async function ProfilPage() {
       </form>
 
       <p className="sub" style={{ marginTop: 18, textAlign: 'center', fontSize: 12 }}>
-        APN Hungary Platform · <Link href="/ujdonsagok" className="sec-l" style={{ fontWeight: 500 }}>v{APP_VERSION}</Link>
+        APN-MED · <Link href="/ujdonsagok" className="sec-l" style={{ fontWeight: 500 }}>v{APP_VERSION}</Link>
       </p>
     </>
   )

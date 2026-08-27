@@ -6,13 +6,14 @@ import { BottomNav } from '@/components/bottom-nav'
 import { PwaRegister } from '@/components/pwa-register'
 import { FavoritesProvider } from '@/components/favorites-context'
 import { getAllFavoriteKeys } from '@/lib/favorites'
+import { headers } from 'next/headers'
 
 export const metadata: Metadata = {
-  title: 'APN Hungary Platform',
-  description: 'Az APN digitális klinikai munkatársa',
+  title: 'APN-MED',
+  description: 'Az APN-MED digitális klinikai munkatársa',
   manifest: '/manifest.webmanifest',
-  applicationName: 'APN Platform',
-  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'APN Platform' },
+  applicationName: 'APN-MED',
+  appleWebApp: { capable: true, statusBarStyle: 'default', title: 'APN-MED' },
   icons: {
     icon: '/icon-192.png',
     apple: '/apple-touch-icon.png',
@@ -30,14 +31,20 @@ export const viewport: Viewport = {
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const favKeys = await getAllFavoriteKeys()
+
+  // Nyitóoldal kijelentkezett látogatónak: a landing saját fejlécet hoz és teljes
+  // szélességet igényel, ezért ilyenkor az alkalmazás navigációja kimarad.
+  const h = await headers()
+  const isLanding = h.get('x-path') === '/' && h.get('x-auth') === '0'
+
   return (
     <html lang="hu">
-      <body>
-        <Nav />
+      <body className={isLanding ? 'is-landing' : undefined}>
+        {!isLanding && <Nav />}
         <FavoritesProvider initial={favKeys}>
-          <main className="container">{children}</main>
+          {isLanding ? children : <main className="container">{children}</main>}
         </FavoritesProvider>
-        <BottomNav />
+        {!isLanding && <BottomNav />}
         <PwaRegister />
       </body>
     </html>

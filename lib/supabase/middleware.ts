@@ -29,11 +29,20 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   const path = request.nextUrl.pathname
-  const isPublic = path.startsWith('/login') || path.startsWith('/auth')
+  // A nyitóoldal publikus: kijelentkezett látogató a landinget kapja, belépett
+  // felhasználó a kezdőlapot (app/page.tsx dönti el). Enélkül a landing soha nem
+  // látszana, mert a middleware már itt átirányítana a bejelentkezésre.
+  const isPublic = path === '/' || path.startsWith('/login') || path.startsWith('/auth')
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
+  // A layoutnak tudnia kell, melyik útvonalon vagyunk: a nyitóoldalon
+  // kijelentkezett látogatónak saját fejlécű, teljes szélességű landing jár,
+  // az alkalmazás fejléce nélkül. Szerver layoutban nincs pathname API,
+  // ezért fejlécben adjuk tovább.
+  response.headers.set('x-path', path)
+  response.headers.set('x-auth', user ? '1' : '0')
   return response
 }

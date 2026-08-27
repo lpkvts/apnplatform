@@ -1,155 +1,315 @@
 import Link from 'next/link'
 import { RingLogo } from '@/components/icons'
 
+/**
+ * Nyitóoldal kijelentkezett látogatóknak.
+ *
+ * A platform saját design tokenjeire épül (app/globals.css :root), nem külön
+ * palettára — így a nyitóoldal és a belépés utáni felület egy rendszernek
+ * látszik. A modulkártyák a valódi modul-akcentusokat kapják: ugyanaz a szín
+ * jelöli itt a Klinikumot, mint odabent a Labor csempéjét.
+ */
+
 const FEATURES = [
-  { icon: '🩺', title: 'Klinikai támogatás', text: 'Betegvizsgálat, labordiagnosztika, EKG, score-ok és betegségtár a mindennapi döntésekhez.' },
-  { icon: '📖', title: 'Tudásbázis', text: 'Bizonyítékokon alapuló szakmai tartalmak, irányelvek és protokollok.' },
-  { icon: '📈', title: 'Folyamatos fejlődés', text: 'Kompetenciák, CPD, tanulási útvonalak és személyre szabott célok.' },
-  { icon: '🤝', title: 'Mentorprogram', text: 'Személyes mentorálás, esetmegbeszélések és fejlődési napló.' },
-  { icon: '🎓', title: 'Egyetemeknek', text: 'Oktatási felület, tananyagok, hallgatói csoportok és előrehaladás követése.' },
-  { icon: '🛡️', title: 'Biztonság', text: 'Adatvédelem és szakmai hitelesség az első helyen, magyar fejlesztés.' },
+  {
+    icon: '🩺', accent: 'var(--brand-3)', tint: 'var(--brand-tint)',
+    title: 'Klinikum', href: '/klinika',
+    text: 'Betegvizsgálat, labor, EKG, klinikai skálák és betegségtár a mindennapi döntésekhez.',
+  },
+  {
+    icon: '📖', accent: 'var(--acc-vizsgalat)', tint: '#EFE9FB',
+    title: 'Tudástár', href: '/klinika/tudastar',
+    text: 'Szakmai irányelvek és protokollok egy keresőben, forrásjegyzékkel és verziókövetéssel.',
+  },
+  {
+    icon: '📈', accent: 'var(--acc-ekg)', tint: '#FDEEDF',
+    title: 'Fejlődés', href: '/fejlodes',
+    text: 'Személyes fejlődési út, kompetenciák, továbbképzési pontok és szakmai célok.',
+  },
+  {
+    icon: '👤', accent: 'var(--acc-betegsegtar)', tint: '#E4EEF9',
+    title: 'Profil', href: '/profil',
+    text: 'A szakmai identitásod és a fejlődési történeted egyetlen helyen.',
+  },
+]
+
+const PATH = [
+  { icon: '🔑', title: 'Belépés', text: 'Hozd létre a profilod és ismerd meg a lehetőségeket.' },
+  { icon: '📚', title: 'Tanulás', text: 'Fedezz fel új tudást és fejleszd magad folyamatosan.' },
+  { icon: '🩻', title: 'Gyakorlat', text: 'Alkalmazd a tudást a mindennapi munkádban.' },
+  { icon: '📊', title: 'Fejlődés', text: 'Érj el mérföldköveket és kövesd az előrehaladásod.' },
+  { icon: '🤝', title: 'Mentorálás', text: 'Kapj támogatást és támogass másokat.' },
+  { icon: '🎯', title: 'Szakmai profil', text: 'Építs erős szakmai identitást és jövőképet.' },
 ]
 
 const AUDIENCE = [
-  { icon: '🧑\u200d🎓', title: 'APN hallgatóknak', text: 'Tanulj hatékonyabban strukturált tananyagokkal és klinikai esetekkel.' },
-  { icon: '👩\u200d⚕️', title: 'Gyakorló APN-eknek', text: 'Támogasd a mindennapi munkád bizonyítékokon alapuló eszközökkel és gyors eléréssel.' },
-  { icon: '👥', title: 'Mentoroknak', text: 'Kísérd végig mentoráltjaidat strukturált folyamatokkal és digitális eszközökkel.' },
-  { icon: '🏛️', title: 'Egyetemeknek', text: 'Modern oktatási környezet hallgatóid számára, saját tartalmakkal és nyomon követéssel.' },
+  { icon: '🌱', accent: 'var(--brand-3)', tint: 'var(--brand-tint)', title: 'Pályakezdőknek', text: 'Akik strukturáltan szeretnének elindulni és magabiztos alapokat építeni.' },
+  { icon: '🚀', accent: 'var(--acc-vizsgalat)', tint: '#EFE9FB', title: 'Gyakorló APN-eknek', text: 'Akik tudatosan építik a szakmai útjukat és új szintre emelnék a tudásukat.' },
+  { icon: '👥', accent: 'var(--acc-ekg)', tint: '#FDEEDF', title: 'Mentoroknak és oktatóknak', text: 'Akik támogatni szeretnének, megosztani a tapasztalatot és közösséget építeni.' },
 ]
 
-const MODULES = [
-  { title: 'Score Hub', items: ['CURB-65 – pneumonia súlyosság', 'Wells score – thrombosis', 'NEWS2 – korai figyelmeztetés'], link: 'Összes score', href: '/klinika/tesztek' },
-  { title: 'Betegségtár', items: ['COPD – krónikus légúti betegség', 'Diabetes mellitus', 'Szívelégtelenség'], link: 'Összes betegség', href: '/betegsegtar' },
-  { title: 'Betegvizsgálat', items: ['Strukturált, vezetett vizsgálat', 'Általános állapotfelmérés', 'Szervrendszeri vizsgálatok'], link: 'Összes vizsgálat', href: '/klinika/vizsgalat' },
-  { title: 'Fejlődés', items: ['Kompetenciák és CPD', 'Tanulási útvonalak', 'Szakmai portfólió'], link: 'Megnyitás', href: '/fejlodes' },
-  { title: 'Tudástár', items: ['Dyspnoe kivizsgálása', 'Akut állapotok', 'Sürgősségi algoritmusok'], link: 'Összes tartalom', href: '/tudastar' },
-]
+/** Kicsinyített felületmakett — HTML-ből rajzolva, hogy minden méretben éles legyen. */
+function DeskShot({ small = false }: { small?: boolean }) {
+  return (
+    <div className={`lp-shot lp-desk${small ? ' sm' : ''}`} aria-hidden="true">
+      <div className="lp-side">
+        <div className="lp-side-logo"><i />APN-MED</div>
+        <span className="lp-si on"><i />Kezdőlap</span>
+        <span className="lp-si"><i />Klinikai mag</span>
+        <span className="lp-si"><i />Tudástár</span>
+        <span className="lp-si"><i />Fejlődés</span>
+        {small && <span className="lp-si"><i />Profil</span>}
+      </div>
+      <div className="lp-body">
+        <div className="lp-top">
+          <div><b>Üdvözlünk, Anna!</b><small>Örülünk, hogy itt vagy az APN-MED-ben.</small></div>
+          <div className="lp-icons"><i /><i /><i className="av" /></div>
+        </div>
+        <p className="lp-lbl">Mai áttekintés</p>
+        <div className="lp-row3">
+          <div className="lp-mini"><span className="lp-dot lp-d1" /><b>Klinikai eszköz</b><small>3 új frissítés</small></div>
+          <div className="lp-mini"><span className="lp-dot lp-d2" /><b>Tudástár</b><small>2 új tartalom</small></div>
+          <div className="lp-mini"><span className="lp-dot lp-d3" /><b>Következő lépés</b><small>Mentor találkozó</small></div>
+        </div>
+        <div className="lp-mcard">
+          <div className="lp-mcard-h"><b>Fejlődési út</b>{!small && <span className="lp-pill">Részletek</span>}</div>
+          <small>Haladásod ezen a héten</small>
+          <div className="lp-bar"><span style={{ width: '72%' }} /></div>
+          <span className="lp-pct">72%</span>
+        </div>
+        <div className="lp-mcard">
+          <b>Legutóbbi tevékenységek</b>
+          <div className="lp-act"><span className="lp-dot lp-d1" />Kompetencia értékelés kitöltve<em>Tegnap 14:32</em></div>
+          <div className="lp-act"><span className="lp-dot lp-d2" />Új tartalom a Tudástárban<em>Tegnap 10:15</em></div>
+          <div className="lp-act"><span className="lp-dot lp-d4" />Mentor üzenet érkezett<em>Aug. 19. 09:45</em></div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 export function Landing() {
   return (
     <div className="lp">
-      {/* Fejléc */}
+      {/* ── Fejléc ── */}
       <header className="lp-nav">
-        <div className="lp-wrap lp-nav-inner">
+        <div className="lp-nav-inner">
           <Link href="/" className="lp-brand">
             <RingLogo size={30} />
-            <span className="lp-brand-txt"><b>APN</b><span>HUNGARY PLATFORM</span></span>
+            <span className="lp-brand-txt"><b>APN-MED</b><span>SZAKMAI PLATFORM</span></span>
           </Link>
           <nav className="lp-nav-links">
-            <a href="#top">Főoldal</a>
             <a href="#funkciok">Funkciók</a>
-            <a href="#kinek">Kinek szól</a>
-            <a href="#modulok">Modulok</a>
+            <a href="#ut">Szakmai út</a>
+            <a href="#mentor">Mentorprogram</a>
+            <a href="#kinek">Kinek készült</a>
           </nav>
-          <div className="lp-nav-cta">
-            <Link href="/login" className="lp-btn ghost">Bejelentkezés</Link>
-            <Link href="/login" className="lp-btn">Regisztráció</Link>
-          </div>
+          <Link className="lp-btn lp-btn-primary" href="/login">
+            Belépés a platformra <span className="lp-arw">→</span>
+          </Link>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="lp-hero lp-wrap" id="top">
-        <div className="lp-hero-text">
-          <h1>Az APN szakemberek <span>digitális szakmai</span> otthona.</h1>
-          <p className="lp-lead">Klinikai tudás, folyamatos fejlődés és kapcsolódás – egy platformon.</p>
-          <div className="lp-hero-cta">
-            <Link href="/login" className="lp-btn lg">Regisztrálok ingyen →</Link>
-            <a href="#modulok" className="lp-btn ghost lg">Megnézem a bemutatót</a>
-          </div>
-          <div className="lp-stats">
-            <div><b>1000+</b><span>APN szakember</span></div>
-            <div><b>10+</b><span>Egyetemi partner</span></div>
-            <div><b>Országos</b><span>mentorhálózat</span></div>
-          </div>
-        </div>
-        <div className="lp-hero-visual">
-          <div className="lp-mock">
-            <div className="lp-mock-top">Betegvizsgálat</div>
-            <div className="lp-mock-row">Általános állapot felmérése ›</div>
-            <div className="lp-mock-row">Vitális paraméterek ›</div>
-            <div className="lp-mock-row">Kardiovaszkuláris vizsgálat ›</div>
-            <div className="lp-mock-row">Neurológiai vizsgálat ›</div>
-            <div className="lp-mock-grid"><span>🩺</span><span>🧪</span><span>📈</span><span>🧮</span></div>
-          </div>
-          <div className="lp-badge">Egy platform.<br /><b>Végtelen szakmai lehetőség.</b></div>
-        </div>
-      </section>
-
-      {/* Funkció-sáv */}
-      <section className="lp-features" id="funkciok">
-        <div className="lp-wrap lp-feat-grid">
-          {FEATURES.map((f) => (
-            <div className="lp-feat" key={f.title}>
-              <div className="lp-feat-i">{f.icon}</div>
-              <b>{f.title}</b>
-              <p>{f.text}</p>
+      {/* ── Hero ── */}
+      <section className="lp-hero">
+        <span className="lp-blob lp-blob-a" aria-hidden="true" />
+        <span className="lp-blob lp-blob-b" aria-hidden="true" />
+        <div className="lp-wrap lp-hero-in">
+          <div>
+            <p className="lp-eyebrow">APN-MED – Ápolók szakmai platformja</p>
+            <h1 className="lp-h1">
+              Egy platform.<br />
+              <span className="lp-accent">Egy szakmai út.</span><br />
+              Egy közösség.
+            </h1>
+            <p className="lp-lead">
+              Digitális tér az ápolási szakemberek fejlődéséhez – klinikai tudással,
+              szakmai irányelvekkel, mentorálással és személyes fejlődési úttal.
+            </p>
+            <div className="lp-hero-cta">
+              <Link className="lp-btn lp-btn-primary" href="/login">
+                Belépés a platformra <span className="lp-arw">→</span>
+              </Link>
+              <a className="lp-btn lp-btn-ghost" href="#funkciok">Ismerd meg az APN-MED-et</a>
             </div>
-          ))}
-        </div>
-      </section>
+            <p className="lp-assure">✓ Ápolók által, ápolóknak. Magyar fejlesztés.</p>
+          </div>
 
-      {/* Kinek szól */}
-      <section className="lp-wrap lp-section" id="kinek">
-        <h2 className="lp-h2">Kinek szól az APN Hungary Platform?</h2>
-        <div className="lp-aud-grid">
-          {AUDIENCE.map((a) => (
-            <div className="lp-card" key={a.title}>
-              <div className="lp-aud-i">{a.icon}</div>
-              <b>{a.title}</b>
-              <p>{a.text}</p>
+          <div className="lp-shot-wrap">
+            <DeskShot />
+            <div className="lp-shot lp-phone" aria-hidden="true">
+              <div className="lp-ph-top"><span>Kezdőlap</span><div className="lp-icons"><i /><i className="av" /></div></div>
+              <p className="lp-lbl">Mai áttekintés</p>
+              <div className="lp-mini r"><span className="lp-dot lp-d1" /><b>Klinikai eszköz</b><small>3 új</small></div>
+              <div className="lp-mini r"><span className="lp-dot lp-d2" /><b>Tudástár</b><small>2 új</small></div>
+              <div className="lp-mini r"><span className="lp-dot lp-d3" /><b>Következő lépés</b><small>Mentor</small></div>
+              <div className="lp-mcard">
+                <b>Fejlődési út</b>
+                <div className="lp-ring"><span>72%</span></div>
+              </div>
+              <div className="lp-ph-nav"><i className="on" /><i /><i /><i /></div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* Főbb modulok */}
-      <section className="lp-wrap lp-section" id="modulok">
-        <h2 className="lp-h2">Főbb modulok</h2>
-        <div className="lp-mod-grid">
-          {MODULES.map((m) => (
-            <div className="lp-card lp-mod" key={m.title}>
-              <b className="lp-mod-t">{m.title}</b>
-              <ul>{m.items.map((it, i) => <li key={i}>{it}</li>)}</ul>
-              <Link href={m.href} className="lp-mod-link">{m.link} →</Link>
+      {/* ── Funkciók ── */}
+      <section className="lp-sec" id="funkciok">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Mit találsz az APN-MED-ben?</p>
+          <div className="lp-g4">
+            {FEATURES.map((f) => (
+              <article className="lp-card" key={f.title}>
+                <span className="lp-ic" style={{ background: f.tint, color: f.accent }}>{f.icon}</span>
+                <h3>{f.title}</h3>
+                <p>{f.text}</p>
+                <Link className="lp-more" href="/login">Tovább <span className="lp-arw">→</span></Link>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Szakmai út ── */}
+      <section className="lp-sec lp-sec-tint" id="ut">
+        <div className="lp-wrap lp-path-in">
+          <div>
+            <p className="lp-eyebrow">A te szakmai utad</p>
+            <p className="lp-path-txt">
+              Az APN-MED végigkísér a szakmai utadon – a belépéstől a fejlődésen át a mentorálásig.
+            </p>
+            <a className="lp-btn lp-btn-primary" href="#mukodes">
+              Hogyan működik <span className="lp-arw">→</span>
+            </a>
+          </div>
+          <ol className="lp-path">
+            {PATH.map((s) => (
+              <li key={s.title}>
+                <span className="lp-node">{s.icon}</span>
+                <b>{s.title}</b>
+                <small>{s.text}</small>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      {/* ── Mentorprogram ── */}
+      <section className="lp-sec" id="mentor">
+        <div className="lp-wrap">
+          <div className="lp-mentor">
+            <div>
+              <p className="lp-eyebrow on-dark">APN-MED Mentorprogram</p>
+              <h2 className="lp-h2 lp-on-dark">Nem kell egyedül<br />végigmenni az úton.</h2>
+              <p className="lp-mentor-lead">
+                Találj mentort, kövesd a fejlődésed, és építs valódi szakmai kapcsolatokat.
+              </p>
+              <Link className="lp-btn lp-btn-accent" href="/login">
+                Csatlakozom <span className="lp-arw">→</span>
+              </Link>
             </div>
-          ))}
+
+            <div className="lp-pair">
+              <article className="lp-pcard">
+                <p className="lp-role">Mentor</p>
+                <div className="lp-phead">
+                  <span className="lp-ava lp-ava-1" aria-hidden="true">👩‍⚕️</span>
+                  <div><b>Tapasztalt szakápoló</b><small>Intenzív terápia</small></div>
+                </div>
+                <p className="lp-plbl">Amit átad</p>
+                <ul className="lp-plist">
+                  <li>Klinikai döntéshozatal</li>
+                  <li>Betegoktatás</li>
+                  <li>Vezetői készségek</li>
+                </ul>
+              </article>
+
+              <span className="lp-link-i" aria-hidden="true">🤝</span>
+
+              <article className="lp-pcard">
+                <p className="lp-role">Mentorált</p>
+                <div className="lp-phead">
+                  <span className="lp-ava lp-ava-2" aria-hidden="true">🧑‍⚕️</span>
+                  <div><b>Gyakorló ápoló</b><small>Fejlődési szakasz</small></div>
+                </div>
+                <p className="lp-plbl">Amiben fejlődik</p>
+                <ul className="lp-plist">
+                  <li>Kritikus állapotok felismerése</li>
+                  <li>Strukturált betegvizsgálat</li>
+                  <li>Szakmai kommunikáció</li>
+                </ul>
+              </article>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Vélemény (szerkeszthető minta) */}
-      <section className="lp-wrap">
-        <div className="lp-quote">
-          <div className="lp-quote-mark">”</div>
-          <p>Az APN Hungary Platform nélkülözhetetlen része a mindennapi munkánknak és a szakmai fejlődésünknek.</p>
-          <div className="lp-quote-author"><b>APN szakápoló</b><span>gyakorló Advanced Practice Nurse</span></div>
+      {/* ── Így működik ── */}
+      <section className="lp-sec" id="mukodes">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Így működik a platform</p>
+          <div className="lp-how">
+            <div className="lp-how-col l">
+              <div className="lp-note"><i style={{ background: 'var(--brand-3)' }} /><b>Mai klinikai eszköz</b><small>Új frissítés érhető el a Labor Kisokosban.</small></div>
+              <div className="lp-note"><i style={{ background: 'var(--acc-vizsgalat)' }} /><b>Új szakmai tartalom</b><small>Akut hasi fájdalom – klinikai témakör.</small></div>
+              <div className="lp-note"><i style={{ background: 'var(--acc-ekg)' }} /><b>Fejlődési mérföldkő</b><small>Elérted a „Betegoktatás” mérföldkövet.</small></div>
+            </div>
+
+            <div aria-hidden="true">
+              <div className="lp-laptop-screen"><DeskShot small /></div>
+              <div className="lp-laptop-base" />
+            </div>
+
+            <div className="lp-how-col">
+              <div className="lp-note"><i style={{ background: 'var(--acc-betegsegtar)' }} /><b>Következő esemény</b><small>Mentor találkozó – holnap 16:00.</small></div>
+              <div className="lp-note"><i style={{ background: 'var(--brand-3)' }} /><b>Profilod frissült</b><small>Új kompetencia igazolás került a profilodba.</small></div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Záró CTA */}
+      {/* ── Kinek készült ── */}
+      <section className="lp-sec lp-sec-soft" id="kinek">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Kinek készült az APN-MED?</p>
+          <div className="lp-g3">
+            {AUDIENCE.map((a) => (
+              <article className="lp-card" key={a.title}>
+                <span className="lp-ic" style={{ background: a.tint, color: a.accent }}>{a.icon}</span>
+                <h3>{a.title}</h3>
+                <p>{a.text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Záró ── */}
       <section className="lp-final">
-        <div className="lp-wrap lp-final-inner">
-          <div className="lp-final-head">
-            <h2>Csatlakozz az ország legnagyobb APN szakmai közösségéhez!</h2>
-            <p>Kezdd el még ma a szakmai fejlődésedet.</p>
-          </div>
-          <div className="lp-final-bullets">
-            <div>✅ Egyszerű regisztráció<span>2 perc alatt elindíthatod</span></div>
-            <div>📱 Bármikor, bárhol elérhető<span>Mobilon és weben</span></div>
-            <div>📚 Folyamatosan bővülő tartalom<span>Szakértői támogatással</span></div>
-          </div>
-          <div className="lp-final-cta">
-            <Link href="/login" className="lp-btn light lg">Regisztráció ingyen →</Link>
-            <a href="#funkciok" className="lp-btn outline-light lg">További információ</a>
-          </div>
+        <span className="lp-dots" aria-hidden="true" />
+        <div className="lp-wrap lp-final-in">
+          <h2 className="lp-h2 lp-on-dark">
+            A szakmai fejlődés nem egy dokumentum.<br />
+            <span className="lp-accent">Hanem egy folyamatos út.</span>
+          </h2>
+          <Link className="lp-btn lp-btn-white" href="/login">
+            Belépés a platformra <span className="lp-arw">→</span>
+          </Link>
+          <nav className="lp-foot-nav">
+            <a href="#funkciok">Klinikum</a><span aria-hidden="true">·</span>
+            <a href="#funkciok">Tudástár</a><span aria-hidden="true">·</span>
+            <a href="#ut">Fejlődés</a><span aria-hidden="true">·</span>
+            <a href="#kinek">Közösség</a>
+          </nav>
         </div>
       </section>
 
-      {/* Lábléc */}
       <footer className="lp-footer">
-        <div className="lp-wrap lp-footer-inner">
-          <span>© {new Date().getFullYear()} APN Hungary Platform</span>
-          <Link href="/login">Belépés</Link>
+        <div className="lp-footer-inner">
+          <p>© {new Date().getFullYear()} APN-MED</p>
+          <p className="lp-footer-note">
+            Szakmai és oktatási célú platform. Nem helyettesíti az orvosi döntést vagy az intézményi protokollt.
+          </p>
         </div>
       </footer>
     </div>

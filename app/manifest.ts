@@ -2,8 +2,8 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'APN Hungary Platform',
-    short_name: 'APN Platform',
+    name: 'APN-MED',
+    short_name: 'APN-MED',
     description: 'Az APN digitális klinikai munkatársa',
     start_url: '/',
     scope: '/',
