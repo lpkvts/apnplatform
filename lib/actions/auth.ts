@@ -18,5 +18,8 @@ export async function signOut() {
   // teljes elrendezést érvényteleníteni kell — enélkül a régi név és az
   // értesítésszám még ott maradna.
   revalidatePath('/', 'layout')
-  redirect('/login')
+  // A nyitóoldalra visszük vissza, nem a bejelentkezésre: kilépés után a
+  // látogató szemszögéből nézzük a platformot, és onnan bármikor újra
+  // beléphet. A nyitóoldal kijelentkezve a landinget mutatja.
+  redirect('/')
 }

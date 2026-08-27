@@ -66,6 +66,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.11',
+    date: '2026-08-27',
+    title: 'Kijelentkezés a nyitóoldalra',
+    summary: 'Kilépés után a nyitóoldal fogad, nem a bejelentkezési űrlap.',
+    entries: [
+      {
+        id: 'v1511-kilepes', kind: 'eszkoz', title: 'Kilépés utáni oldal',
+        body: 'Kijelentkezés után a nyitóoldal jelenik meg a bejelentkezési űrlap helyett. Így a kilépés természetesebb lezárás, és onnan bármikor újra be lehet lépni a fejléc gombjával.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.5.10',
     date: '2026-08-27',
     title: 'Keskenyebb bejelentkezés',
