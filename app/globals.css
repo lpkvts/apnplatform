@@ -512,10 +512,12 @@ body {
 .lp-desk.sm .lp-body { padding: 10px 12px 12px; }
 
 /* ── Záró ── */
-.lp-final { background: linear-gradient(150deg, var(--brand-dark) 0%, #10614A 100%); padding: 50px 0 44px; position: relative; overflow: hidden; }
+/* A záró szakasz szándékosan tömör: egy gondolat és egy gomb. */
+.lp-final { background: linear-gradient(150deg, var(--brand-dark) 0%, #10614A 100%); padding: 34px 0 30px; position: relative; overflow: hidden; }
+.lp-final-h { font-size: clamp(21px, 2.6vw, 29px); line-height: 1.28; margin: 0 0 18px; }
 .lp-dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px); background-size: 22px 22px; -webkit-mask-image: radial-gradient(ellipse at center, #000 5%, transparent 68%); mask-image: radial-gradient(ellipse at center, #000 5%, transparent 68%); }
 .lp-final-in { position: relative; z-index: 1; text-align: center; }
-.lp-foot-nav { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+.lp-foot-nav { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
 .lp-foot-nav a { display: inline-flex; align-items: center; gap: 7px; color: #A8CCBF; text-decoration: none; font-size: 13.5px; }
 .lp-foot-nav a:hover { color: #fff; }
 .lp-foot-nav span { color: #3E6B5A; }

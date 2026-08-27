@@ -66,6 +66,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.12',
+    date: '2026-08-27',
+    title: 'Nyitóoldal finomítások',
+    summary: 'Pontosított szövegek a mentorprogramnál, tömörebb záró szakasz, működő telepítési útmutató.',
+    entries: [
+      {
+        id: 'v1512-mentor', kind: 'eszkoz', title: 'Pontosabb mentorkártyák',
+        body: 'A mentor és a mentorált is APN — gyakorlott, illetve pályakezdő —, nem általános ápoló. A címkék is beszédesebbek: „Amiben támogat” és „Fejlődési célok”.',
+        href: '/',
+      },
+      {
+        id: 'v1512-telepites', kind: 'javitas', title: 'Működő telepítési útmutató',
+        body: 'A „Vidd magaddal” szakasz üresen maradhatott, ha a böngésző nem kínálta fel a telepítést: a cím megjelent, a tartalom nem. Mostantól mindig van használható tartalom — natív gomb, ahol lehet, egyébként lépésről lépésre szóló útmutató. Ha a telepítés gomb valamiért nem működne, a rendszer átvált az útmutatóra ahelyett, hogy néma maradna.',
+        href: '/',
+      },
+      {
+        id: 'v1512-zaro', kind: 'eszkoz', title: 'Tömörebb záró szakasz',
+        body: 'A záró gondolat kisebb betűmérettel és szűkebb térközökkel jelenik meg, egyetlen mondatba fűzve. A szakmai út szakaszból elhagytam a gombot, mert csak visszavitt egy fentebbi részhez.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.5.11',
     date: '2026-08-27',
     title: 'Kijelentkezés a nyitóoldalra',

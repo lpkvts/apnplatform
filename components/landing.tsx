@@ -178,9 +178,6 @@ export function Landing() {
             <p className="lp-path-txt">
               Az APN-MED végigkísér a szakmai utadon – a belépéstől a fejlődésen át a mentorálásig.
             </p>
-            <a className="lp-btn lp-btn-primary" href="#funkciok">
-              Mit tartalmaz <span className="lp-arw">→</span>
-            </a>
           </div>
           <ol className="lp-path">
             {PATH.map((s) => (
@@ -213,12 +210,12 @@ export function Landing() {
                 <p className="lp-role">Mentor</p>
                 <div className="lp-phead">
                   <span className="lp-ava lp-ava-1" aria-hidden="true">👩‍⚕️</span>
-                  <div><b>Tapasztalt szakápoló</b><small>Intenzív terápia</small></div>
+                  <div><b>Gyakorlott APN</b><small>Intenzív terápia</small></div>
                 </div>
-                <p className="lp-plbl">Amit átad</p>
+                <p className="lp-plbl">Amiben támogat</p>
                 <ul className="lp-plist">
                   <li>Klinikai döntéshozatal</li>
-                  <li>Betegoktatás</li>
+                  <li>Komplex esetek átbeszélése</li>
                 </ul>
               </article>
 
@@ -228,9 +225,9 @@ export function Landing() {
                 <p className="lp-role">Mentorált</p>
                 <div className="lp-phead">
                   <span className="lp-ava lp-ava-2" aria-hidden="true">🧑‍⚕️</span>
-                  <div><b>Gyakorló ápoló</b><small>Fejlődési szakasz</small></div>
+                  <div><b>Pályakezdő APN</b><small>Első önálló év</small></div>
                 </div>
-                <p className="lp-plbl">Amiben fejlődik</p>
+                <p className="lp-plbl">Fejlődési célok</p>
                 <ul className="lp-plist">
                   <li>Kritikus állapotok felismerése</li>
                   <li>Strukturált betegvizsgálat</li>
@@ -259,21 +256,17 @@ export function Landing() {
         </div>
       </section>
 
-      {/* ── Telepítés ── */}
-      <section className="lp-sec" id="telepites">
-        <div className="lp-wrap">
-          <p className="lp-eyebrow c">Vidd magaddal</p>
-          <InstallPrompt variant="inline" />
-        </div>
-      </section>
+      {/* ── Telepítés — a komponens hozza a saját szakaszát, hogy telepített
+             állapotban nyomtalanul el tudjon tűnni ── */}
+      <InstallPrompt variant="inline" />
 
       {/* ── Záró ── */}
       <section className="lp-final">
         <span className="lp-dots" aria-hidden="true" />
         <div className="lp-wrap lp-final-in">
-          <h2 className="lp-h2 lp-on-dark">
-            A szakmai fejlődés nem egy dokumentum.<br />
-            <span className="lp-accent">Hanem egy folyamatos út.</span>
+          <h2 className="lp-h2 lp-on-dark lp-final-h">
+            A szakmai fejlődés nem egy dokumentum,<br />
+            <span className="lp-accent">hanem egy folyamatos út.</span>
           </h2>
           <Link className="lp-btn lp-btn-white" href="/login">
             Belépés a platformra <span className="lp-arw">→</span>
