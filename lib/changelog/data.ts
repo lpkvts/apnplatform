@@ -66,6 +66,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.8',
+    date: '2026-08-27',
+    title: 'Tömörebb nyitóoldal',
+    summary: 'A nyitóoldal harmadával rövidebb lett, a mentorprogram pedig hamarosan jelzést kapott.',
+    entries: [
+      {
+        id: 'v158-tomorites', kind: 'eszkoz', title: 'Kevesebb görgetés',
+        body: 'A nyitóoldal 3200 pixelről 2200-ra rövidült. A legnagyobb nyereség a „Így működik” szakasz elhagyása volt: ugyanazt a felületet mutatta, ami a bemutatkozó szakaszban már szerepel, tehát csak görgetést adott hozzá. A célcsoportok kártyák helyett kompakt sávba kerültek, a térközök és a kártyák pedig szűkebbek lettek.',
+        href: '/',
+      },
+      {
+        id: 'v158-mentor', kind: 'eszkoz', title: 'Mentorprogram: hamarosan',
+        body: 'A mentorprogram szakasz kiemelt „Hamarosan” jelzést kapott, és a szöveg is világossá teszi, hogy fejlesztés alatt áll. A korábbi „Csatlakozom” gomb lekerült — nem vezetett volna sehová, és azt ígérte volna, ami még nem elérhető.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.5.7',
     date: '2026-08-27',
     title: 'Kijelentkezés a fejlécből',

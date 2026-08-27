@@ -49,16 +49,15 @@ const AUDIENCE = [
 ]
 
 /** Kicsinyített felületmakett — HTML-ből rajzolva, hogy minden méretben éles legyen. */
-function DeskShot({ small = false }: { small?: boolean }) {
+function DeskShot() {
   return (
-    <div className={`lp-shot lp-desk${small ? ' sm' : ''}`} aria-hidden="true">
+    <div className="lp-shot lp-desk" aria-hidden="true">
       <div className="lp-side">
         <div className="lp-side-logo"><i />APN-MED</div>
         <span className="lp-si on"><i />Kezdőlap</span>
         <span className="lp-si"><i />Klinikai mag</span>
         <span className="lp-si"><i />Tudástár</span>
         <span className="lp-si"><i />Fejlődés</span>
-        {small && <span className="lp-si"><i />Profil</span>}
       </div>
       <div className="lp-body">
         <div className="lp-top">
@@ -72,7 +71,7 @@ function DeskShot({ small = false }: { small?: boolean }) {
           <div className="lp-mini"><span className="lp-dot lp-d3" /><b>Következő lépés</b><small>Mentor találkozó</small></div>
         </div>
         <div className="lp-mcard">
-          <div className="lp-mcard-h"><b>Fejlődési út</b>{!small && <span className="lp-pill">Részletek</span>}</div>
+          <div className="lp-mcard-h"><b>Fejlődési út</b><span className="lp-pill">Részletek</span></div>
           <small>Haladásod ezen a héten</small>
           <div className="lp-bar"><span style={{ width: '72%' }} /></div>
           <span className="lp-pct">72%</span>
@@ -178,8 +177,8 @@ export function Landing() {
             <p className="lp-path-txt">
               Az APN-MED végigkísér a szakmai utadon – a belépéstől a fejlődésen át a mentorálásig.
             </p>
-            <a className="lp-btn lp-btn-primary" href="#mukodes">
-              Hogyan működik <span className="lp-arw">→</span>
+            <a className="lp-btn lp-btn-primary" href="#funkciok">
+              Mit tartalmaz <span className="lp-arw">→</span>
             </a>
           </div>
           <ol className="lp-path">
@@ -199,14 +198,13 @@ export function Landing() {
         <div className="lp-wrap">
           <div className="lp-mentor">
             <div>
-              <p className="lp-eyebrow on-dark">APN-MED Mentorprogram</p>
+              <span className="lp-soon">Hamarosan</span>
+              <p className="lp-eyebrow on-dark" style={{ marginTop: 10 }}>APN-MED Mentorprogram</p>
               <h2 className="lp-h2 lp-on-dark">Nem kell egyedül<br />végigmenni az úton.</h2>
               <p className="lp-mentor-lead">
-                Találj mentort, kövesd a fejlődésed, és építs valódi szakmai kapcsolatokat.
+                Mentorprogram fejlesztés alatt: mentorválasztás, közös célok és
+                fejlődéskövetés. A platform többi része már most használható.
               </p>
-              <Link className="lp-btn lp-btn-accent" href="/login">
-                Csatlakozom <span className="lp-arw">→</span>
-              </Link>
             </div>
 
             <div className="lp-pair">
@@ -220,7 +218,6 @@ export function Landing() {
                 <ul className="lp-plist">
                   <li>Klinikai döntéshozatal</li>
                   <li>Betegoktatás</li>
-                  <li>Vezetői készségek</li>
                 </ul>
               </article>
 
@@ -236,33 +233,8 @@ export function Landing() {
                 <ul className="lp-plist">
                   <li>Kritikus állapotok felismerése</li>
                   <li>Strukturált betegvizsgálat</li>
-                  <li>Szakmai kommunikáció</li>
                 </ul>
               </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Így működik ── */}
-      <section className="lp-sec" id="mukodes">
-        <div className="lp-wrap">
-          <p className="lp-eyebrow c">Így működik a platform</p>
-          <div className="lp-how">
-            <div className="lp-how-col l">
-              <div className="lp-note"><i style={{ background: 'var(--brand-3)' }} /><b>Mai klinikai eszköz</b><small>Új frissítés érhető el a Labor Kisokosban.</small></div>
-              <div className="lp-note"><i style={{ background: 'var(--acc-vizsgalat)' }} /><b>Új szakmai tartalom</b><small>Akut hasi fájdalom – klinikai témakör.</small></div>
-              <div className="lp-note"><i style={{ background: 'var(--acc-ekg)' }} /><b>Fejlődési mérföldkő</b><small>Elérted a „Betegoktatás” mérföldkövet.</small></div>
-            </div>
-
-            <div aria-hidden="true">
-              <div className="lp-laptop-screen"><DeskShot small /></div>
-              <div className="lp-laptop-base" />
-            </div>
-
-            <div className="lp-how-col">
-              <div className="lp-note"><i style={{ background: 'var(--acc-betegsegtar)' }} /><b>Következő esemény</b><small>Mentor találkozó – holnap 16:00.</small></div>
-              <div className="lp-note"><i style={{ background: 'var(--brand-3)' }} /><b>Profilod frissült</b><small>Új kompetencia igazolás került a profilodba.</small></div>
             </div>
           </div>
         </div>
@@ -272,13 +244,15 @@ export function Landing() {
       <section className="lp-sec lp-sec-soft" id="kinek">
         <div className="lp-wrap">
           <p className="lp-eyebrow c">Kinek készült az APN-MED?</p>
-          <div className="lp-g3">
+          <div className="lp-aud">
             {AUDIENCE.map((a) => (
-              <article className="lp-card" key={a.title}>
-                <span className="lp-ic" style={{ background: a.tint, color: a.accent }}>{a.icon}</span>
-                <h3>{a.title}</h3>
-                <p>{a.text}</p>
-              </article>
+              <div className="lp-aud-i" key={a.title}>
+                <span className="lp-ic sm" style={{ background: a.tint, color: a.accent }}>{a.icon}</span>
+                <div>
+                  <b>{a.title}</b>
+                  <span>{a.text}</span>
+                </div>
+              </div>
             ))}
           </div>
         </div>
