@@ -66,6 +66,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.4.7',
+    date: '2026-08-27',
+    title: '12 elvezetéses gyakorló és vizsga',
+    summary: 'A gyakorló és a vizsga mód is teljes 12 elvezetéses EKG-t mutat, valódi morfológiával.',
+    entries: [
+      {
+        id: 'v147-gyakorlo', kind: 'eszkoz', title: 'Teljes 12 elvezetés a gyakorlásban',
+        body: 'A gyakorló és a vizsga mód eddig egyetlen sematikus vonalat mutatott. Mostantól mindkettő ugyanazt a 12 elvezetéses megjelenítőt használja, mint az EKG elemzés: szabványos 3×4 elrendezés, hosszú ritmuscsík, milliméterrács és nagyítás. Helyes válasz után a rendszer kiemeli azokat az elvezetéseket, ahol az eltérés a legjobban látszik, és egy gombbal átvisz a részletes leíráshoz.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v147-morfologia', kind: 'szakmai', title: 'Valódi EKG-morfológiák',
+        body: 'A görbegenerátor megtanulta a felismeréshez nélkülözhetetlen alakokat: jobb szárblokknál rsR a V1-ben és elhúzódó S a lateralis elvezetésekben, bal szárblokknál mély QS a V1–V3-ban és bevágott, széles R a V5–V6-ban, diszkordáns T-hullámokkal. Emellett Wenckebach-periodika nyúló PR-rel, Mobitz II hirtelen kimaradó QRS-sel, teljes AV-blokk független pitvari és kamrai ütemmel, kamrai extrasystole kompenzációs szünettel, valamint durva hullámú kamrafibrilláció.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v147-parameterek', kind: 'szakmai', title: 'Mind a 25 gyakorló elem paraméterezve',
+        body: 'Az atlasz minden kvízbe kerülő eleméhez elkészült a 12 elvezetéses paraméterezés — a normál EKG-tól a pericarditis diffúz elevációján és a digoxin teknőszerű ST-depresszióján át a gyermekkori sajátosságokig.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.4.6',
     date: '2026-08-26',
     title: 'Mérőjelek az EKG-görbén',

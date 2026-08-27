@@ -9,6 +9,9 @@ import { FavStar } from '@/components/favorites-context'
 import { ECG, EKG_CATS, type EcgItem } from '@/lib/ekg/data'
 import { ECG_WAVES } from '@/lib/ekg/waves'
 import { EKG_CASES } from '@/lib/ekg/cases'
+import { EcgViewer } from '@/components/ecg-viewer'
+import { paramsFor, ECG_FOCUS } from '@/lib/ekg/params'
+import type { Lead } from '@/lib/ekg/render'
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 const SEV_CLS: Record<string, string> = { 'Enyhe': 'sev-low', 'Közepes': 'sev-mid', 'Súlyos': 'sev-high', 'Életveszélyes': 'sev-crit' }
@@ -146,11 +149,28 @@ function Practice({ p, onPick, onNext }: { p: Prac; onPick: (id: string) => void
   const e = ECG.find((x) => x.id === p.qid)!
   const answered = p.picked != null
   const ok = p.picked === p.qid
+  const params = paramsFor(p.qid)
+  // A válasz után kiemeljük azokat az elvezetéseket, ahol az eltérés a legjobban
+  // látszik — így a felismerés helyhez kötődik, nem csak alakhoz.
+  const focus = (answered ? ECG_FOCUS[p.qid] : undefined) as Lead[] | undefined
+
   return (
     <div className="ekg-quiz">
       <div className="eq-h">Milyen eltérést látsz az EKG-n?</div>
-      <div className="card" style={{ padding: 8 }}><Trace wave={e.wave} /></div>
-      <div className="eq-opts">
+
+      {params ? (
+        <EcgViewer
+          params={params}
+          highlightLeads={focus}
+          caption={answered && focus
+            ? `Kiemelve: ${focus.join(', ')} — itt látszik a legjobban.`
+            : 'Oktatási célú, szintetizált 12 elvezetéses görbe. Koppints egy elvezetésre a nagyításhoz.'}
+        />
+      ) : (
+        <div className="card" style={{ padding: 8 }}><Trace wave={e.wave} /></div>
+      )}
+
+      <div className="eq-opts" style={{ marginTop: 12 }}>
         {p.opts.map((id) => {
           let cls = ''
           if (answered) { if (id === p.qid) cls = 'right'; else if (id === p.picked) cls = 'wrong' }
@@ -161,7 +181,10 @@ function Practice({ p, onPick, onNext }: { p: Prac; onPick: (id: string) => void
         <>
           <div className={`eq-fb ${ok ? 'ok' : 'no'}`}>{ok ? '✔ Helyes!' : '❌ Nem talált'} — {e.name}</div>
           {e.ai && <div className="eq-expl">{e.ai}{e.memory && <div className="eq-mem">🧠 {e.memory}</div>}</div>}
-          <button className="btn" style={{ marginTop: 12 }} onClick={onNext}>Következő EKG</button>
+          <div className="row" style={{ border: 'none', gap: 8, marginTop: 12 }}>
+            <Link className="btn ghost" href={`/klinika/ekg?open=${p.qid}`} style={{ flex: 1 }}>Részletes leírás</Link>
+            <button className="btn" onClick={onNext} style={{ flex: 1 }}>Következő EKG</button>
+          </div>
         </>
       )}
     </div>
@@ -205,8 +228,10 @@ function ExamView({ exam, best, onStart, onAnswer }: { exam: Exam | null; best: 
     <div className="ekg-quiz">
       <div className="eq-h">Kérdés {exam.idx + 1} / {exam.order.length} <span className="eq-prog">Pont: {exam.score}</span></div>
       <div className="ekg-prog-bar"><div style={{ width: `${Math.round((exam.idx / exam.order.length) * 100)}%` }} /></div>
-      <div className="card" style={{ padding: 8 }}><Trace wave={e.wave} /></div>
-      <div className="eq-opts">
+      {paramsFor(e.id)
+        ? <EcgViewer params={paramsFor(e.id)!} caption="Vizsga mód — a válasz után nincs visszajelzés, az eredményt a végén kapod." />
+        : <div className="card" style={{ padding: 8 }}><Trace wave={e.wave} /></div>}
+      <div className="eq-opts" style={{ marginTop: 12 }}>
         {exam.opts[exam.idx].map((oid) => <button key={oid} className="eq-opt" onClick={() => onAnswer(oid)}>{ekgName(oid)}</button>)}
       </div>
     </div>

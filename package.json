@@ -1,6 +1,6 @@
 {
   "name": "apn-platform",
-  "version": "1.4.6",
+  "version": "1.4.7",
   "private": true,
   "description": "APN Hungary Platform — az APN digitális klinikai munkatársa (B sáv: perzisztens platform)",
   "scripts": {
