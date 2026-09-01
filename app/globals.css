@@ -824,3 +824,27 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .ka-role span { display: block; font-size: 20px; line-height: 1; margin-bottom: 6px; }
 .ka-role b { font-size: 11px; font-weight: 600; line-height: 1.25; display: block; }
 @media (max-width: 520px) { .ka-roles { grid-template-columns: repeat(3, 1fr); } }
+
+/* ── Nyitóoldal: kompetencia-grafika ────────────────────── */
+.lg-wrap { display: flex; align-items: center; justify-content: center; }
+.lg-svg { width: 100%; max-width: 460px; height: auto; }
+.lg-mid { font-size: 20px; font-weight: 800; fill: #fff; font-family: inherit; letter-spacing: .5px; }
+.lg-mid-s { font-size: 11px; font-weight: 700; fill: var(--brand-3); font-family: inherit; letter-spacing: 2px; }
+.lg-rom { font-size: 9px; font-weight: 800; fill: #fff; font-family: inherit; }
+.lg-lbl { font-size: 11.5px; font-weight: 700; font-family: inherit; }
+.lg-cnt { font-size: 10px; font-family: inherit; }
+.lg-src { font-size: 9px; font-family: inherit; }
+@media (max-width: 860px) { .lg-svg { max-width: 380px; } }
+.lp-kt { display: grid; grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); gap: 34px; align-items: center; }
+.lp-kt-txt p { font-size: 14.5px; color: var(--muted); line-height: 1.6; margin: 0 0 12px; }
+.lp-kt-txt b { color: var(--ink); }
+.lp-kt-txt .lp-btn { margin-top: 4px; }
+.lp-kt-levels { list-style: none; margin: 0; padding: 0; }
+.lp-kt-levels li { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--line); border-left-width: 4px; border-radius: 13px; padding: 13px 15px; margin-bottom: 8px; }
+.lp-kt-n { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 9px; color: #fff; font-size: 12px; font-weight: 800; flex: none; }
+.lp-kt-l { flex: 1; min-width: 0; }
+.lp-kt-l b { display: block; font-size: 14px; }
+.lp-kt-l small { font-size: 11.5px; color: var(--muted); }
+.lp-kt-c { font-size: 17px; font-weight: 800; flex: none; }
+.lp-kt-src { font-size: 11.5px; color: var(--muted); line-height: 1.5; margin: 20px auto 0; max-width: 70ch; text-align: center; }
+@media (max-width: 860px) { .lp-kt { grid-template-columns: 1fr; gap: 22px; } }

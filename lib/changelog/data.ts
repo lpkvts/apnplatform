@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.9.1',
+    date: '2026-09-01',
+    title: 'Kompetenciatérkép a nyitóoldalon',
+    summary: 'A négy kompetenciaszint a bemutatkozó grafikán és külön szakaszban is megjelenik.',
+    entries: [
+      {
+        id: 'v191-grafika', kind: 'eszkoz', title: 'Új bemutatkozó grafika',
+        body: 'A felületmakett helyére a platform lényegét mutató ábra került: négy koncentrikus gyűrű, középen az APN, kifelé haladva növekvő orvosi együttműködéssel. A gyűrű a platform jelképének eleme, a négy szint pedig a hatályos keretrendszeré — így a kép egyszerre márkahű és tartalmilag pontos. Mellette a szintek neve és a hozzájuk tartozó tevékenységszám.',
+        href: '/',
+      },
+      {
+        id: 'v191-szekcio', kind: 'funkcio', title: 'Kompetenciatérkép szakasz',
+        body: 'A nyitóoldal új szakaszt kapott „Mérföldkő a szakmában" felvezetéssel. Elmondja, hogy 2025 áprilisában hatályba lépett a szakdolgozói kompetenciák keretrendszere, és először van egységes, jogszabályi válasz arra, mit végezhet az APN önállóan. Mellette a négy szint tevékenységszámmal. A menüben is megjelent a hozzá tartozó pont.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.9.0',
     date: '2026-09-01',
     title: 'Hogyan dolgozik az APN?',

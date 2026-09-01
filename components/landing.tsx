@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { RingLogo } from '@/components/icons'
 import { InstallPrompt } from '@/components/install-prompt'
+import { LandingGraphic } from '@/components/landing-graphic'
 
 /**
  * Nyitóoldal kijelentkezett látogatóknak.
@@ -101,6 +102,7 @@ export function Landing() {
           <nav className="lp-nav-links">
             <a href="#funkciok">Funkciók</a>
             <a href="#ut">Szakmai út</a>
+            <a href="#kompetencia">Kompetenciatérkép</a>
             <a href="#mentor">Mentorprogram</a>
             <a href="#kinek">Kinek készült</a>
           </nav>
@@ -135,21 +137,7 @@ export function Landing() {
             <p className="lp-assure">✓ Ápolók fejlesztik, a klinikai gyakorlatból. Magyar fejlesztés.</p>
           </div>
 
-          <div className="lp-shot-wrap">
-            <DeskShot />
-            <div className="lp-shot lp-phone" aria-hidden="true">
-              <div className="lp-ph-top"><span>Kezdőlap</span><div className="lp-icons"><i /><i className="av" /></div></div>
-              <p className="lp-lbl">Mai áttekintés</p>
-              <div className="lp-mini r"><span className="lp-dot lp-d1" /><b>Klinikai eszköz</b><small>3 új</small></div>
-              <div className="lp-mini r"><span className="lp-dot lp-d2" /><b>Tudástár</b><small>2 új</small></div>
-              <div className="lp-mini r"><span className="lp-dot lp-d3" /><b>Következő lépés</b><small>Mentor</small></div>
-              <div className="lp-mcard">
-                <b>Fejlődési út</b>
-                <div className="lp-ring"><span>72%</span></div>
-              </div>
-              <div className="lp-ph-nav"><i className="on" /><i /><i /><i /></div>
-            </div>
-          </div>
+          <LandingGraphic />
         </div>
       </section>
 
@@ -188,6 +176,56 @@ export function Landing() {
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      {/* ── Kompetenciatérkép ── */}
+      <section className="lp-sec lp-sec-soft" id="kompetencia">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Mérföldkő a szakmában</p>
+          <div className="lp-kt">
+            <div className="lp-kt-txt">
+              <h2 className="lp-h2">APN Kompetenciatérkép</h2>
+              <p>
+                2025 áprilisában hatályba lépett a szakdolgozói kompetenciák
+                keretrendszere. Először van egységes, jogszabályi válasz arra, mit
+                végezhet a kiterjesztett hatáskörű ápoló önállóan, és mihez kell
+                orvosi együttműködés.
+              </p>
+              <p>
+                A platformon mind a <b>274 tevékenység</b> megtalálható, a hozzá tartozó
+                szinttel — kereshetően, tevékenységi csoportok szerint, és összevetve
+                az általános ápolói szintekkel.
+              </p>
+              <Link className="lp-btn lp-btn-primary" href="/login">
+                Megnézem a térképet <span className="lp-arw">→</span>
+              </Link>
+            </div>
+
+            <ol className="lp-kt-levels">
+              {[
+                { n: 'I', t: 'Önállóan', d: 'Saját indikáció alapján', c: 174, col: '#22A878' },
+                { n: 'II', t: 'Szupervízió mellett', d: 'Utólagos tájékoztatással', c: 74, col: '#0891B2' },
+                { n: 'III', t: 'Orvosi indikáció után', d: 'Utána önálló végrehajtás', c: 19, col: '#B45309' },
+                { n: 'IV', t: 'Orvosi irányítás mellett', d: 'Személyes jelenléttel', c: 7, col: '#B91C1C' },
+              ].map((l) => (
+                <li key={l.n} style={{ borderLeftColor: l.col }}>
+                  <span className="lp-kt-n" style={{ background: l.col }}>{l.n}</span>
+                  <span className="lp-kt-l">
+                    <b>{l.t}</b>
+                    <small>{l.d}</small>
+                  </span>
+                  <span className="lp-kt-c" style={{ color: l.col }}>{l.c}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <p className="lp-kt-src">
+            Forrás: 13/2025. (IV. 17.) BM rendelet az egészségügyi szakdolgozói kompetenciák
+            keretrendszeréről. A tartalom edukációs célú összefoglaló, nem helyettesíti a
+            hatályos jogszabályok ismeretét.
+          </p>
         </div>
       </section>
 
