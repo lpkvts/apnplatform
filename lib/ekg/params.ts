@@ -88,7 +88,7 @@ export const ECG_PARAMS: Record<string, EcgParams> = {
     noise: 0.25,
   },
   hyperk: {
-    rate: 52, rhythm: 'sinus', p: 'varying', prMs: 235, qrsMs: 150, axis: 'normal', qtMs: 390,
+    rate: 52, rhythm: 'sinus', p: 'flattened', prMs: 235, qrsMs: 150, axis: 'normal', qtMs: 390,
     t: { I: 'peaked', II: 'peaked', III: 'peaked', aVF: 'peaked', V2: 'peaked', V3: 'peaked', V4: 'peaked', V5: 'peaked' },
     noise: 0.2,
   },

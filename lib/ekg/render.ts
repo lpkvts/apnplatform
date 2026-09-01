@@ -14,7 +14,7 @@ export type Lead = (typeof LEADS)[number]
 export type Rhythm = 'sinus' | 'sinus-irregular' | 'afib' | 'flutter' | 'vt' | 'paced' | 'junctional' | 'vfib'
 export type Bundle = 'lbbb' | 'rbbb'
 export type AvBlock = '1' | '2a' | '2b' | '3'
-export type PShape = 'normal' | 'absent' | 'fibrillatory' | 'flutter' | 'inverted' | 'varying'
+export type PShape = 'normal' | 'absent' | 'fibrillatory' | 'flutter' | 'inverted' | 'varying' | 'flattened'
 export type Axis = 'normal' | 'left' | 'right' | 'extreme'
 export type TShape = 'normal' | 'inverted' | 'peaked' | 'flat' | 'biphasic'
 
@@ -285,12 +285,17 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
     }
 
     // ── P-hullámok ──
-    if (p.p === 'normal' || p.p === 'inverted' || p.p === 'varying') {
+    if (p.p === 'normal' || p.p === 'inverted' || p.p === 'varying' || p.p === 'flattened') {
       const dir = p.p === 'inverted' ? -1 : 1
+      // A P-hullám az élettani tartomány felső részét kapja (kb. 2 mm a II.
+      // elvezetésben). Az alsó határon rajzolva a képernyőn alig lenne
+      // kivehető a jóval magasabb QRS mellett, és a „van-e P-hullám” kérdés
+      // megválaszolhatatlanná válna.
+      const base = p.p === 'flattened' ? 0.05 : 0.20
       for (const pt of pTimes) {
         if (Math.abs(time - (pt + P_HALF)) > 0.16) continue
-        const jitter = p.p === 'varying' ? (0.8 + ((pt * 7) % 1) * 0.5) : 1
-        v += gauss(time, pt + P_HALF, 0.022, 0.13 * pg * dir * jitter)
+        const jitter = p.p === 'varying' ? (0.75 + ((pt * 7) % 1) * 0.55) : 1
+        v += gauss(time, pt + P_HALF, 0.026, base * pg * dir * jitter)
       }
     }
 
@@ -333,7 +338,8 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
           v += gauss(time, b.t - w * 0.55, w * 0.7, 0.58)
           v += gauss(time, b.t + w * 0.75, w * 0.7, 0.66)        // bevágott, kétcsúcsú R
         } else {
-          v += gauss(time, b.t, w * 0.9, gain * 0.95)
+          const g = Math.sign(gain || 1) * Math.max(Math.abs(gain), 0.6)
+          v += gauss(time, b.t, w * 0.9, g * 0.95)
         }
       } else if (chest && c) {
         v += gauss(time, b.t - w * 0.9, 0.0075, -0.06)
@@ -343,7 +349,7 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
         // Széles komplexusnál minimális amplitúdót tartunk, hogy a ritmuscsíkon
         // is megszámolható legyen — bal tengelyeltérésnél a II. elvezetés
         // egyébként majdnem lapos lenne.
-        const g = b.wide ? Math.sign(gain || 1) * Math.max(Math.abs(gain), 0.5) : gain
+        const g = b.wide ? Math.sign(gain || 1) * Math.max(Math.abs(gain), 0.85) : gain
         v += gauss(time, b.t - w * 0.8, 0.0075, -0.05 * Math.sign(g || 1))
         v += gauss(time, b.t, w * 0.55, g * 1.15)
         v += gauss(time, b.t + w * 1.0, w * 0.7, -0.22 * Math.abs(g))

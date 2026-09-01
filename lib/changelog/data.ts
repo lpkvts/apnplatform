@@ -66,6 +66,57 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.6.2',
+    date: '2026-09-01',
+    title: 'A görbe és a helyes válasz összhangja',
+    summary: 'Javítva, hogy a megjelenített EKG mást mutatott, mint amit a rendszer helyesnek fogadott el.',
+    entries: [
+      {
+        id: 'v162-avblokk', kind: 'javitas', title: 'Teljes AV-blokk: hiányoztak a P-hullámok',
+        body: 'A teljes AV-blokk esetéből kimaradt a blokk beállítása, ezért P-hullám egyáltalán nem került a görbére — miközben a kérdés éppen a P-hullámok és a QRS-ek viszonyáról szólt. Aki azt válaszolta, hogy nincs P-hullám, jogosan tette, a rendszer mégis hibásnak jelölte. Most öt független P-hullám látszik három QRS mellett, ahogy a kórképnél kell.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v162-plathato', kind: 'javitas', title: 'Láthatóbb P-hullám',
+        body: 'A P-hullám az élettani tartomány alsó szélén rajzolódott, alig másfél milliméterrel a tízmilliméteres QRS mellett — a képernyőn ez nehezen volt kivehető, különösen telefonon. Mostantól a tartomány felső részét kapja, így a „van-e P-hullám” kérdés valóban megválaszolható a képről.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v162-hyperk', kind: 'javitas', title: 'Hyperkalaemia: valóban lapos P',
+        body: 'A hyperkalaemia esetnél a helyes válasz az ellaposodott P-hullám volt, a görbe viszont normál magasságú P-t mutatott. Új hullámforma került be, ami ténylegesen lapos.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v162-amplitudo', kind: 'javitas', title: 'Felismerhetőbb komplexusok',
+        body: 'Bal tengelyeltérés mellett a szárblokk és a pacemaker QRS-e a II. elvezetésben alig három milliméter volt, néhol alacsonyabb a P-hullámoknál. Alsó korlátot kaptak, hogy a ritmuscsíkon megszámolhatók és a P-től megkülönböztethetők legyenek.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
+    version: '1.6.1',
+    date: '2026-09-01',
+    title: 'Gyorsabb oldalbetöltés',
+    summary: 'Egy tipikus oldal húsz adatbázis-kör helyett ötből épül fel.',
+    entries: [
+      {
+        id: 'v161-harang', kind: 'javitas', title: 'A harang már nem lassít',
+        body: 'A fejlécben látható értesítésszám eddig úgy állt elő, hogy a rendszer minden oldalbetöltésnél összeállította a teljes értesítéslistát — több mint tíz külön lekérdezés, pusztán egy szám kedvéért. Mostantól egyetlen körben számolódik. A részletes lista az Értesítések oldalon változatlan.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v161-munkamenet', kind: 'javitas', title: 'Kevesebb hitelesítési kérés',
+        body: 'A bejelentkezett felhasználó adatait oldalanként négy-öt helyről kérdeztük le, és mindegyik külön hálózati kérés volt a hitelesítési szolgáltatás felé. Mostantól kérésenként egyszer történik meg.',
+        href: '/',
+      },
+      {
+        id: 'v161-kapcsolok', kind: 'javitas', title: 'Kapcsolók egy körben',
+        body: 'A funkciókapcsolókat oldalanként külön-külön kérdeztük le, pedig a tábla néhány sorból áll. Egyszerre beolvasva egyetlen kör is elég. A kedvencek és a karbantartás állapota szintén kérésenként egyszer töltődik be.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.6.0',
     date: '2026-09-01',
     title: 'EKG fejlődéskövetés',

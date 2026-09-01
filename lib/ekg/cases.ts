@@ -264,7 +264,7 @@ export const EKG_CASES: EcgCase[] = [
     difficulty: 'gyakorlott',
     tags: ['hyperk', 'brady'],
     params: {
-      rate: 46, rhythm: 'sinus', p: 'varying', prMs: 230, qrsMs: 145, axis: 'normal', qtMs: 380,
+      rate: 46, rhythm: 'sinus', p: 'flattened', prMs: 230, qrsMs: 145, axis: 'normal', qtMs: 380,
       t: { I: 'peaked', II: 'peaked', III: 'peaked', aVF: 'peaked', V2: 'peaked', V3: 'peaked', V4: 'peaked', V5: 'peaked' },
       noise: 0.2,
     },
@@ -466,7 +466,8 @@ export const EKG_CASES: EcgCase[] = [
     difficulty: 'gyakorlott',
     tags: ['av3', 'brady'],
     params: {
-      rate: 38, rhythm: 'junctional', p: 'varying', prMs: 0, qrsMs: 130, axis: 'left', qtMs: 480,
+      rate: 38, rhythm: 'junctional', p: 'normal', prMs: 0, qrsMs: 140, axis: 'left', qtMs: 480,
+      avBlock: '3', atrialRate: 84,
       t: { V5: 'flat', V6: 'flat' },
       noise: 0.25,
     },
