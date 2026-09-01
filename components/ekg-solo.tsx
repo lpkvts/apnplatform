@@ -7,6 +7,7 @@ import type { EcgCase } from '@/lib/ekg/analysis'
 import { ANALYSIS_STEPS } from '@/lib/ekg/analysis'
 import { GUIDELINE_SOURCES, registryFor } from '@/lib/sources/data'
 import { saveEkgAttempt } from '@/lib/ekg/progress'
+import { AxisDiagram, LeadRegionsDiagram } from '@/components/ekg-abrak'
 import type { StepId } from '@/lib/ekg/analysis'
 import {
   EMPTY_ANSWER, RHYTHM_OPTIONS, AXIS_OPTIONS, PR_OPTIONS, QRS_OPTIONS, QTC_OPTIONS,
@@ -256,12 +257,21 @@ export function SoloAnalysis({ ecgCase }: { ecgCase: EcgCase }) {
         </div>
 
         <Choice label="Elektromos tengely" value={a.axis} options={AXIS_OPTIONS} onChange={(v) => set('axis', v)} />
+        <details className="ekg-figtoggle">
+          <summary>Hogyan határozom meg a tengelyt?</summary>
+          <AxisDiagram />
+        </details>
         <Choice label="PR-intervallum" value={a.pr} options={PR_OPTIONS} onChange={(v) => set('pr', v)} />
         <Choice label="QRS-szélesség" value={a.qrs} options={QRS_OPTIONS} onChange={(v) => set('qrs', v)} />
         <Choice
           label="QT / QTc" value={a.qtc} options={QTC_OPTIONS} onChange={(v) => set('qtc', v)}
           hint="A mért QT-t korrigáld a frekvenciára, és a korrigált érték alapján válassz."
         />
+
+        <details className="ekg-figtoggle">
+          <summary>Melyik elvezetés melyik területet nézi?</summary>
+          <LeadRegionsDiagram />
+        </details>
 
         <Choice label="ST-szakasz" value={a.stDir} options={ST_DIR_OPTIONS} onChange={(v) => set('stDir', v)} />
         {a.stDir && a.stDir !== 'none' && (

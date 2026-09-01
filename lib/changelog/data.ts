@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.6',
+    date: '2026-09-01',
+    title: 'Magyarázó ábrák az EKG elemzésben',
+    summary: 'A tengelyállás és az elvezetés-területek ábrával is megjelennek a segítségben.',
+    entries: [
+      {
+        id: 'v186-tengely', kind: 'eszkoz', title: 'Tengelyállás négy negyedben',
+        body: 'A tengelyállás lépésnél a segítség mellett ott az ábra: négy negyed, mindegyikben az I. és az aVF elvezetés előjele és a hozzá tartozó tengelyállás. A „pozitív I. és negatív aVF" mondat így egy pillantással megjegyezhető.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v186-teruletek', kind: 'eszkoz', title: 'Melyik elvezetés melyik falat nézi',
+        body: 'Az ST- és T-lépésnél a tizenkét elvezetés a megszokott 3×4 elrendezésben, területek szerint színezve: inferior, anteroseptalis, lateralis. Mindegyikhez tartozik egy rövid magyarázat arról, melyik koszorúér ellátási területéről van szó. Az ábra kimondja azt is, hogy a területi érintettséghez két szomszédos elvezetés együttes eltérése kell.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v186-onallo', kind: 'eszkoz', title: 'Az önálló módban is elérhető',
+        body: 'Az önálló elemzésben a tengely és az ST mező mellett egy lenyitóval hívhatók elő ugyanezek az ábrák — ott nem automatikusan jelennek meg, mert az segítségnek számítana.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.8.5',
     date: '2026-09-01',
     title: 'Új nyitóüzenet',
