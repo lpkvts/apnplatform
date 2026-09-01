@@ -66,6 +66,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.5.14',
+    date: '2026-08-27',
+    title: 'Átvizsgálás utáni javítások',
+    summary: 'A Copilot kapcsolója hiányzott, és az oldalbetöltés fölösleges adatbázis-kérdéseket futtatott.',
+    entries: [
+      {
+        id: 'v1514-copilot-flag', kind: 'javitas', title: 'A Copilot kapcsolója',
+        body: 'Az APN Copilot kapcsolóját öt helyen kérdezte a rendszer, de soha nem került be a beállítások közé. Mivel a hiányzó kapcsoló kikapcsoltnak számít, a Copilot mindenhol rejtve maradt, és a Beállítások oldalon sem lehetett bekapcsolni. Most létrejön, alapból kikapcsolva — a Copilot API-kulcs nélkül nem működik, ezért csak akkor érdemes bekapcsolni, ha a kulcs be van állítva.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v1514-teljesitmeny', kind: 'javitas', title: 'Kevesebb adatbázis-kérdés',
+        body: 'Minden oldalbetöltés újra lekérdezte a karbantartás állapotát és a szerepkört, néha többször is ugyanazon az oldalon. Mostantól kérésenként egyszer kérdezzük le őket. Ez érezhetően gyorsítja a navigációt, és kíméli az adatbázis havi keretét.',
+        href: '/',
+      },
+      {
+        id: 'v1514-kapcsolok', kind: 'javitas', title: 'Hatástalan kapcsoló elrejtése',
+        body: 'A Beállítások oldalon szerepelt egy kapcsoló, amit a rendszer sehol nem használt — átkapcsolása semmit nem csinált. Az ilyen kapcsolók mostantól nem jelennek meg.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.5.13',
     date: '2026-08-27',
     title: 'Pontosabb menüugrás',

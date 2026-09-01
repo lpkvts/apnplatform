@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { cache } from 'react'
 export interface Flag { key: string; enabled: boolean; label: string | null; value?: string | null }
 export async function getFlag(key: string, def = false): Promise<boolean> {
   const supabase = await createClient()
@@ -17,7 +18,7 @@ export async function getFlags(): Promise<Flag[]> {
  * A kapcsoló és a szöveg egy lekérdezésben jön, mert ez minden oldalbetöltésnél
  * lefut — két külön kérés fölösleges terhelés lenne.
  */
-export async function getMaintenance(): Promise<{ on: boolean; message: string }> {
+export const getMaintenance = cache(async (): Promise<{ on: boolean; message: string }> => {
   const supabase = await createClient()
   const { data } = await supabase
     .from('feature_flags').select('enabled, value').eq('key', 'maintenance')
@@ -27,4 +28,4 @@ export async function getMaintenance(): Promise<{ on: boolean; message: string }
     message: data?.value?.trim() ||
       'A platform karbantartás miatt átmenetileg nem érhető el. Kérjük, próbáld újra később.',
   }
-}
+})

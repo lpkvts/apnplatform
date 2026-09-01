@@ -8,7 +8,9 @@ export default async function BeallitasokPage() {
   if (!isAdmin(role)) return <><h1 className="h1">Beállítások</h1><div className="card">Ehhez admin jogosultság szükséges.</div></>
   const flags = await getFlags()
   const maint = flags.find((f) => f.key === 'maintenance')
-  const others = flags.filter((f) => f.key !== 'maintenance')
+  // A címke nélküli kapcsolók a kódban már nincsenek használatban — ezeket
+  // nem mutatjuk, hogy ne legyen hatástalan kapcsoló a felületen.
+  const others = flags.filter((f) => f.key !== 'maintenance' && f.label)
 
   return (
     <>
