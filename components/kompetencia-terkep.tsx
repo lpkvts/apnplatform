@@ -6,6 +6,7 @@ import {
   type Competency, type Level,
 } from '@/lib/kompetencia/data'
 import { PAIRS, DIVERGENCES, QUALIFICATIONS } from '@/lib/kompetencia/osszehasonlitas'
+import { LevelFlow, RoleStrip } from '@/components/kompetencia-abrak'
 
 /**
  * APN Kompetenciatérkép — interaktív böngésző.
@@ -79,7 +80,12 @@ export function KompetenciaTerkep() {
       {/* ══ Kompetenciaszintek ══ */}
       {tab === 'szintek' && (
         <>
-          <p className="sub" style={{ marginTop: 14 }}>
+          <div className="sec-h" style={{ marginTop: 14 }}>
+            <span className="sec-t">Hol jelenik meg az APN tudása</span>
+          </div>
+          <RoleStrip />
+
+          <p className="sub" style={{ marginTop: 16 }}>
             A rendelet négy tevékenységvégzési szintet határoz meg. A különbség nem a
             tevékenység nehézsége, hanem az, hogy ki indikálja és milyen orvosi
             együttműködés mellett történik.
@@ -101,7 +107,19 @@ export function KompetenciaTerkep() {
                   <span className="kt-level-c">{counts[l.level]}</span>
                 </div>
 
+                {/* Az együttműködés képlete ábrán: a szintek közötti különbség
+                    így egy pillantással érthető. */}
+                <LevelFlow level={l.level} color={l.accent} />
+
                 <p className="kt-level-p">{l.plain}</p>
+
+                <p className="kt-level-note" style={{ borderLeftColor: l.accent }}>{l.note}</p>
+
+                {/* Néhány példa a rendelet tényleges tételeiből — nem kitalált
+                    felsorolás, hanem az adott szinthez besorolt tevékenységek. */}
+                <ul className="kt-ex">
+                  {list.slice(0, 4).map((c) => <li key={c.id}>{c.text}</li>)}
+                </ul>
 
                 <details className="kt-legal">
                   <summary>A rendelet szövege</summary>

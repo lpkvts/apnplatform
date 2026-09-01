@@ -75,6 +75,52 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.9.0',
+    date: '2026-09-01',
+    title: 'Hogyan dolgozik az APN?',
+    summary: 'A kompetenciaszintek ábrával, példákkal és a leggyakoribb félreértések tisztázásával.',
+    entries: [
+      {
+        id: 'v190-abrak', kind: 'eszkoz', title: 'Az együttműködés képlete ábrán',
+        body: 'Mind a négy szint kapott egy egyszerű folyamatábrát: az elsőnél az APN közvetlenül a beteghez, a másodiknál mellette a szupervízió szaggatott, utólagos vonallal, a harmadiknál az orvosi indikáció után önálló végrehajtás, a negyediknél orvos és APN együtt a betegnél. A szintek közötti különbség így egy pillantással érthető.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v190-peldak', kind: 'szakmai', title: 'Példák és tisztázások',
+        body: 'Minden szint kártyáján megjelenik néhány példa — a rendelet tényleges tételeiből, nem kitalált felsorolásból —, valamint a szinthez tartozó leggyakoribb félreértés tisztázása. A második szintnél például kiemelten szerepel, hogy a szupervízió nem jelent folyamatos személyes jelenlétet: az utólagos tájékoztatás is megfelel.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v190-teruletek', kind: 'eszkoz', title: 'Hol jelenik meg az APN tudása',
+        body: 'A nézet elején hét terület: betegvizsgálat, diagnosztika, terápia, szakápolás, betegedukáció, betegút és teammunka. Ez adja a keretet, mielőtt a szintek részletezésébe kezdene az olvasó.',
+        href: '/kompetenciaterkep',
+      },
+    ],
+  },
+  {
+    version: '1.8.9',
+    date: '2026-09-01',
+    title: 'Pitvari flutter görbéje',
+    summary: 'A flutterhullámok folytonosak lettek, és a kamrai ütésekhez igazodnak.',
+    entries: [
+      {
+        id: 'v189-tores', kind: 'javitas', title: 'Megszűnt a töréspont',
+        body: 'A pitvari flutter esetnél a fűrészfog lefutó ága a mélypontról hirtelen az alapvonalra ugrott, ami éles, természetellenes törést adott a görbén — leginkább a T-hullám környékén volt zavaró. A hullám mostantól folytonosan tér vissza, ugrás nélkül.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v189-szinkron', kind: 'javitas', title: 'A hullámok az ütésekhez igazodnak',
+        body: 'A flutterhullámok és a kamrai komplexusok egymástól függetlenül futottak, ezért a hullámok „vándoroltak" a QRS-hez képest. 2:1 átvezetésnél viszont minden ütésre pontosan két hullám jut, állandó fázisban — most már így is jelenik meg. A fűrészfog az inferior elvezetésekben markánsabb lett, mert az a kórkép ismertetőjegye.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v189-t', kind: 'szakmai', title: 'A T-hullám beleolvad',
+        body: 'Flutternél a T-hullám a valóságban nem különíthető el a flutterhullámoktól. Korábban önálló, kiemelkedő hullámként jelent meg, ami ellentmondott a klinikai képnek — most beleolvad, ahogy a leleten is.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.8.8',
     date: '2026-09-01',
     title: 'Kérdés minden elemzési lépésnél',

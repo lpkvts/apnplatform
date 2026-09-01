@@ -22,6 +22,8 @@ export interface LevelInfo {
   plain: string
   /** Az orvosi együttműködés vizuális képlete. */
   flow: string
+  /** A leggyakoribb félreértés tisztázása — a szint kártyáján kiemelve. */
+  note: string
   accent: string
 }
 
@@ -32,6 +34,7 @@ export const LEVELS: LevelInfo[] = [
     legal: 'Az adott tevékenységet az egészségügyi szakdolgozó saját indikáció alapján, önállóan végzi.',
     plain: 'Az APN maga dönt a tevékenység szükségességéről, és maga is végzi el. Nem kell hozzá orvosi utasítás vagy előzetes egyeztetés.',
     flow: 'APN → beteg',
+    note: 'Orvosi szupervízióra nincs szükség.',
     accent: '#22A878',
   },
   {
@@ -39,6 +42,7 @@ export const LEVELS: LevelInfo[] = [
     legal: 'Az adott tevékenységet az egészségügyi szakdolgozó saját indikáció alapján önállóan, szakorvosi szupervízió vagy magasabb szakmai végzettséggel rendelkező (MKKR besorolású) szakmai felettes szupervíziója mellett végzi; a szupervízió keretében a végzett tevékenységről utólag — sürgős esetben haladéktalanul — tájékoztatja a szupervízióval megbízott szakorvost vagy szakmai felettest.',
     plain: 'A döntés és a kivitelezés az APN-é, de a tevékenység szupervízió alatt áll, és utólag tájékoztatni kell róla. A szupervízió nem jelent folyamatos személyes jelenlétet.',
     flow: 'APN → beteg  ·  utólagos tájékoztatás a szupervizornak',
+    note: 'A szupervízió nem feltétlenül jelent folyamatos személyes jelenlétet: az utólagos tájékoztatás is megfelel, sürgős esetben haladéktalanul.',
     accent: '#0891B2',
   },
   {
@@ -46,6 +50,7 @@ export const LEVELS: LevelInfo[] = [
     legal: 'Az adott tevékenységet az egészségügyi szakdolgozó szakorvosi vagy magasabb szakmai végzettséggel rendelkező (MKKR besorolású) szakmai felettes indikációjára, vagy szakorvossal, illetve magasabb MKKR szintbesorolású szakmai felettessel történt kötelező, előzetes megbeszélés alapján, önállóan végzi.',
     plain: 'A tevékenység elindítása orvosi indikációhoz vagy kötelező előzetes megbeszéléshez kötött. Ezt követően viszont az APN önállóan hajtja végre.',
     flow: 'orvos → indikáció vagy egyeztetés → APN önállóan végzi',
+    note: 'Az indikáció után a végrehajtás önálló — ez különbözteti meg a IV. szinttől.',
     accent: '#B45309',
   },
   {
@@ -53,6 +58,7 @@ export const LEVELS: LevelInfo[] = [
     legal: 'Az adott tevékenységet az egészségügyi szakdolgozó szakorvos vagy magasabb szakmai végzettséggel rendelkező (MKKR besorolású) szakmai felettes indikációja alapján, személyes irányítása, jelenléte vagy közreműködése mellett, annak utasítása szerint önállóan vagy vele együtt végzi.',
     plain: 'A legszorosabb együttműködési szint: az orvos indikálja, és személyesen irányítja, jelen van vagy közreműködik.',
     flow: 'orvos ↔ APN ↔ beteg',
+    note: 'A tevékenység az orvos személyes irányítása, jelenléte vagy közreműködése mellett történik.',
     accent: '#B91C1C',
   },
 ]
