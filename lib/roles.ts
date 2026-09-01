@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { cache } from 'react'
 
 export type Role = 'apn' | 'szerkeszto' | 'lektor' | 'admin'
@@ -14,7 +15,7 @@ export const PUBLISHERS: Role[] = ['szerkeszto', 'admin']
  */
 export const currentRole = cache(async (): Promise<{ userId: string | null; role: Role | null }> => {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { userId: null, role: null }
   const { data } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle<{ role: Role }>()
   return { userId: user.id, role: data?.role ?? null }

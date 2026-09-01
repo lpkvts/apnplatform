@@ -1,10 +1,23 @@
 import { createClient } from '@/lib/supabase/server'
 import { cache } from 'react'
 export interface Flag { key: string; enabled: boolean; label: string | null; value?: string | null }
-export async function getFlag(key: string, def = false): Promise<boolean> {
+/**
+ * Az összes kapcsoló egyszerre, kérésenként egyszer lekérdezve.
+ *
+ * Több oldal három-négy kapcsolót is megnéz. Külön lekérdezésekkel ez ugyanannyi
+ * adatbázis-kör lenne, pedig a tábla néhány sorból áll — egyszerre beolvasva
+ * egyetlen kör is elég.
+ */
+const allFlags = cache(async (): Promise<Map<string, boolean>> => {
   const supabase = await createClient()
-  const { data } = await supabase.from('feature_flags').select('enabled').eq('key', key).maybeSingle<{ enabled: boolean }>()
-  return data?.enabled ?? def
+  const { data } = await supabase.from('feature_flags').select('key, enabled')
+    .returns<{ key: string; enabled: boolean }[]>()
+  return new Map((data ?? []).map((f) => [f.key, f.enabled]))
+})
+
+export async function getFlag(key: string, def = false): Promise<boolean> {
+  const flags = await allFlags()
+  return flags.get(key) ?? def
 }
 export async function getFlags(): Promise<Flag[]> {
   const supabase = await createClient()

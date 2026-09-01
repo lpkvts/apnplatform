@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 import { EKG_COMPETENCES, competenceForStep, type StepId } from '@/lib/ekg/analysis'
 
@@ -37,7 +38,7 @@ export async function saveEkgAttempt(
   answers: AnswerInput[],
 ): Promise<{ ok: boolean }> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { ok: false }
 
   // Csak azokat a válaszokat tartjuk meg, amelyek besorolhatók valamelyik

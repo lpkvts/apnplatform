@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { RingLogo, Icon } from '@/components/icons'
 import { createClient } from '@/lib/supabase/server'
-import { getNotifications } from '@/lib/notifications'
+import { getCurrentUser } from '@/lib/supabase/user'
+import { getNotificationCount } from '@/lib/notifications'
 import { signOut } from '@/lib/actions/auth'
 
 export async function Nav() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   let initial = ''
   let firstName = ''
   let notifCount = 0
@@ -15,8 +16,7 @@ export async function Nav() {
     initial = (p?.full_name?.trim()?.[0] ?? user.email?.[0] ?? 'A').toUpperCase()
     const parts = (p?.full_name?.trim() ?? '').split(/\s+/).filter(Boolean)
     firstName = parts.length ? parts[parts.length - 1] : '' // magyar névsorrend: a keresztnév az utolsó tag
-    const n = await getNotifications()
-    notifCount = n.count
+    notifCount = await getNotificationCount()
   }
   return (
     <header className="topbar">

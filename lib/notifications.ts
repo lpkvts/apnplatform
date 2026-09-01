@@ -1,6 +1,9 @@
+import { cache } from 'react'
 import { createClient } from '@/lib/supabase/server'
-import { STAFF, type Role } from '@/lib/roles'
+import { getCurrentUser } from '@/lib/supabase/user'
+import { STAFF, isAdmin, type Role } from '@/lib/roles'
 import { APP_VERSION, CHANGE_KIND_META, changesSince, releasesAfterVersion, type ChangeKind } from '@/lib/changelog/data'
+import { getFlag } from '@/lib/flags'
 
 export interface Notif {
   id: string; icon: string; title: string; body?: string
@@ -24,12 +27,12 @@ function daysBetween(d: string): number {
  */
 export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: string | null; seenVersion: string | null; version: string }> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { items: [], seenAt: null, seenVersion: null, version: APP_VERSION }
 
   const { data: prof } = await supabase
-    .from('profiles').select('updates_seen_at, updates_seen_version, created_at').eq('id', user.id)
-    .maybeSingle<{ updates_seen_at: string | null; updates_seen_version: string | null; created_at: string }>()
+    .from('profiles').select('updates_seen_at, updates_seen_version, created_at, role').eq('id', user.id)
+    .maybeSingle<{ updates_seen_at: string | null; updates_seen_version: string | null; created_at: string; role: Role }>()
 
   // Ha még sosem nézte meg, a fiók létrejötte a kiindulópont — így nem kapja meg
   // visszamenőleg a regisztráció előtti teljes tartalmat.
@@ -85,12 +88,16 @@ export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: str
   // Elsődlegesen VERZIÓ szerint döntünk, mert a kiadás dátuma és a szerver napja
   // eltérhet; a dátum-összehasonlítás csak akkor jön szóba, ha a felhasználónak
   // még nincs rögzített verziója (a 0027 migráció előtti fiókok).
+  // A felhasználók alapból csak a lényeges változásokról kapnak jelzést; a
+  // teljes naplót külön kapcsoló engedi. Az adminisztrátorok mindig mindent
+  // látnak, mert nekik a javítások követése is munkaeszköz.
+  const showAll = (await getFlag('changelog_full', false)) || isAdmin(prof?.role as Role ?? null)
   const seenVersion = prof?.updates_seen_version ?? null
   const codeChanges = seenVersion
-    ? releasesAfterVersion(seenVersion).flatMap((r) =>
+    ? releasesAfterVersion(seenVersion, showAll).flatMap((r) =>
         r.entries.map((e) => ({ ...e, date: r.date, version: r.version })),
       )
-    : changesSince(since)
+    : changesSince(since, showAll)
 
   for (const c of codeChanges) {
     const meta = CHANGE_KIND_META[c.kind]
@@ -110,7 +117,7 @@ export async function getContentUpdates(): Promise<{ items: Notif[]; seenAt: str
 
 export async function getNotifications(): Promise<{ items: Notif[]; count: number }> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { items: [], count: 0 }
 
   const today = new Date().toISOString().slice(0, 10)
@@ -168,3 +175,41 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
 
   return { items, count: items.length }
 }
+
+/**
+ * Csak az értesítések SZÁMA, egyetlen adatbázis-körben.
+ *
+ * A fejléc harangjához elég a szám. A teljes lista összeállítása több mint tíz
+ * lekérdezés, amit korábban minden oldalbetöltésnél elvégeztünk — ez volt a
+ * navigáció legnagyobb lassítója. A részletes listát a /ertesitesek oldal
+ * továbbra is a getNotifications() függvénnyel állítja össze.
+ */
+export const getNotificationCount = cache(async (): Promise<number> => {
+  const supabase = await createClient()
+  const user = await getCurrentUser()
+  if (!user) return 0
+
+  const { data } = await supabase.rpc('notification_counts')
+  const c = (data as Array<{
+    stored: number; certs: number; reviews: number; followups: number
+    new_dz: number; new_gl: number; new_lab: number
+    seen_at: string | null; seen_version: string | null
+  }> | null)?.[0]
+  if (!c) return 0
+
+  // A több azonos típusú tételt a lista összevonja egy sorrá, ezért a számnál is
+  // így teszünk — különben hét új betegségleírás hetet mutatna, a listában
+  // viszont egy sor állna.
+  const grouped = (n: number) => (n === 0 ? 0 : n <= 3 ? n : 1)
+
+  const dbCount =
+    c.stored + c.certs + c.reviews + c.followups +
+    grouped(c.new_dz) + grouped(c.new_gl) + grouped(c.new_lab)
+
+  // A kódban szállított újdonságok nem igényelnek adatbázis-hívást.
+  const code = c.seen_version
+    ? releasesAfterVersion(c.seen_version).reduce((n, r) => n + r.entries.length, 0)
+    : changesSince(c.seen_at).length
+
+  return dbCount + code
+})

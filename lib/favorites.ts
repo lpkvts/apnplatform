@@ -1,18 +1,20 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
+import { cache } from 'react'
 import { revalidatePath } from 'next/cache'
 
-export async function getAllFavoriteKeys(): Promise<string[]> {
+export const getAllFavoriteKeys = cache(async (): Promise<string[]> => {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return []
   const { data } = await supabase.from('favorites').select('item_type, item_id').eq('user_id', user.id).returns<{ item_type: string; item_id: string }[]>()
   return (data ?? []).map((f) => `${f.item_type}:${f.item_id}`)
-}
+})
 
 export async function getFavoritesByType(type: string): Promise<string[]> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return []
   const { data } = await supabase.from('favorites').select('item_id').eq('user_id', user.id).eq('item_type', type).returns<{ item_id: string }[]>()
   return (data ?? []).map((f) => f.item_id)
@@ -20,7 +22,7 @@ export async function getFavoritesByType(type: string): Promise<string[]> {
 
 export async function toggleFavorite(type: string, id: string): Promise<boolean> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return false
   const { data: existing } = await supabase.from('favorites').select('item_id').eq('user_id', user.id).eq('item_type', type).eq('item_id', id).maybeSingle()
   if (existing) {
