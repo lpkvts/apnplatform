@@ -116,14 +116,14 @@ export function Landing() {
         <span className="lp-blob lp-blob-b" aria-hidden="true" />
         <div className="lp-wrap lp-hero-in">
           <div>
-            <p className="lp-eyebrow">APN-MED – Ápolók szakmai platformja</p>
+            <p className="lp-eyebrow">APN-MED – Egészségügyi szakemberek szakmai platformja</p>
             <h1 className="lp-h1">
-              Egy platform.<br />
-              <span className="lp-accent">Egy szakmai út.</span><br />
-              Egy közösség.
+              A <span className="lp-accent">kiterjesztett</span><br />
+              szakmai tudás<br />
+              platformja.
             </h1>
             <p className="lp-lead">
-              Digitális tér az ápolási szakemberek fejlődéséhez – klinikai tudással,
+              Digitális tér az egészségügyi szakemberek fejlődéséhez – klinikai tudással,
               szakmai irányelvekkel, mentorálással és személyes fejlődési úttal.
             </p>
             <div className="lp-hero-cta">

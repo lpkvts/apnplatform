@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.4',
+    date: '2026-09-01',
+    title: 'Új nyitóüzenet',
+    summary: 'A nyitóoldal szélesebb szakmai körnek szól, és a kiterjesztett tudást emeli ki.',
+    entries: [
+      {
+        id: 'v184-uzenet', kind: 'eszkoz', title: 'Nyitóoldali szöveg',
+        body: 'A cím „A kiterjesztett szakmai tudás platformja” lett, a hangsúly a kiterjesztett szón — az utal az APN hatáskörére. A felcím és a bevezető is egészségügyi szakemberekre szól az ápolók helyett, így a platform megszólítása egybeesik a tényleges tartalommal: a klinikai modulok, a kompetenciatérkép és a tudástár szélesebb körnek hasznos.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.8.3',
     date: '2026-09-01',
     title: 'Új APN-MED jelkép',
