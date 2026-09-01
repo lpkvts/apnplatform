@@ -6,7 +6,7 @@ import { EcgViewer } from '@/components/ecg-viewer'
 import { ANALYSIS_STEPS, type AnalysisQuestion, type StepId } from '@/lib/ekg/analysis'
 import { qtc } from '@/lib/ekg/render'
 import { saveEkgAttempt } from '@/lib/ekg/progress'
-import { AxisDiagram, LeadRegionsDiagram } from '@/components/ekg-abrak'
+import { AxisDiagram, LeadRegionsFull } from '@/components/ekg-abrak'
 import { GUIDELINE_SOURCES, registryFor, checkQuery } from '@/lib/sources/data'
 import type { EcgCase } from '@/lib/ekg/analysis'
 
@@ -256,7 +256,7 @@ export function GuidedAnalysis({
             {/* Ahol az összefüggés térbeli, ott ábra is segít: a tengelyállásnál
                 a két meghatározó elvezetés, az ST-T eltéréseknél a területek. */}
             {step.id === 'tengely' && <AxisDiagram />}
-            {(step.id === 'st' || step.id === 't') && <LeadRegionsDiagram />}
+            {(step.id === 'st' || step.id === 't') && <LeadRegionsFull />}
 
             {step.teach && (
               <Link className="btn ghost sm" style={{ marginTop: 8 }}

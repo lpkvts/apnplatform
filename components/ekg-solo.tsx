@@ -7,7 +7,7 @@ import type { EcgCase } from '@/lib/ekg/analysis'
 import { ANALYSIS_STEPS } from '@/lib/ekg/analysis'
 import { GUIDELINE_SOURCES, registryFor } from '@/lib/sources/data'
 import { saveEkgAttempt } from '@/lib/ekg/progress'
-import { AxisDiagram, LeadRegionsDiagram } from '@/components/ekg-abrak'
+import { AxisDiagram, LeadRegionsFull } from '@/components/ekg-abrak'
 import type { StepId } from '@/lib/ekg/analysis'
 import {
   EMPTY_ANSWER, RHYTHM_OPTIONS, AXIS_OPTIONS, PR_OPTIONS, QRS_OPTIONS, QTC_OPTIONS,
@@ -270,7 +270,7 @@ export function SoloAnalysis({ ecgCase }: { ecgCase: EcgCase }) {
 
         <details className="ekg-figtoggle">
           <summary>Melyik elvezetés melyik területet nézi?</summary>
-          <LeadRegionsDiagram />
+          <LeadRegionsFull />
         </details>
 
         <Choice label="ST-szakasz" value={a.stDir} options={ST_DIR_OPTIONS} onChange={(v) => set('stDir', v)} />

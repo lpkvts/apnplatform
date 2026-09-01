@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.8.6',
+    version: '1.8.7',
     date: '2026-09-01',
     title: 'Magyarázó ábrák az EKG elemzésben',
     summary: 'A tengelyállás és az elvezetés-területek ábrával is megjelennek a segítségben.',
@@ -88,6 +88,11 @@ export const RELEASES: Release[] = [
       {
         id: 'v186-teruletek', kind: 'eszkoz', title: 'Melyik elvezetés melyik falat nézi',
         body: 'Az ST- és T-lépésnél a tizenkét elvezetés a megszokott 3×4 elrendezésben, területek szerint színezve: inferior, anteroseptalis, lateralis. Mindegyikhez tartozik egy rövid magyarázat arról, melyik koszorúér ellátási területéről van szó. Az ábra kimondja azt is, hogy a területi érintettséghez két szomszédos elvezetés együttes eltérése kell.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v186-gorbe', kind: 'eszkoz', title: 'A területek valódi görbén is',
+        body: 'A színes beosztás mellé bekerült ugyanez tényleges EKG-képen: a tizenkét elvezetés a megszokott elrendezésben, területek szerint árnyalt háttérrel. Alatta egy második görbe megmutatja, mit jelent, ha egy terület érintett — az inferior három elvezetése együtt emelkedik, miközben az I. és az aVL ellentétes irányba tér el. Ez a kettősség erősíti meg, hogy valódi területi eltérésről van szó, nem mérési hibáról.',
         href: '/klinika/ekg/elemzes',
       },
       {
