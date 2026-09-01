@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.0',
+    date: '2026-09-01',
+    title: 'APN Kompetenciatérkép',
+    summary: 'Új modul: mit végezhet a kiterjesztett hatáskörű ápoló, és milyen orvosi együttműködés mellett.',
+    entries: [
+      {
+        id: 'v180-terkep', kind: 'funkcio', title: 'Kompetenciatérkép',
+        body: 'Új modul mutatja be, mit csinálhat egy kiterjesztett hatáskörű ápoló. A tartalom a 13/2025. (IV. 17.) BM rendelet 2. mellékletéből származik, a kiterjesztett hatáskörű ápoló (MSc, MKKR 7. szint) oszlopából: 274 tevékenység, mindegyik a hozzá tartozó kompetenciaszinttel.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v180-szintek', kind: 'szakmai', title: 'Négy kompetenciaszint',
+        body: 'A rendelet szerinti négy tevékenységvégzési szint: saját indikáció alapján önállóan; önállóan, szakorvosi szupervízió mellett; orvosi indikáció vagy kötelező előzetes egyeztetés alapján; végül orvosi irányítás, jelenlét vagy közreműködés mellett. Mindegyiknél olvasható a rendelet szó szerinti szövege és egy közérthető magyarázat is. A különbség nem a tevékenység nehézsége, hanem az, hogy ki indikálja és milyen együttműködés mellett történik.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v180-kereses', kind: 'eszkoz', title: 'Háromféle böngészés',
+        body: 'A tartalom elérhető kompetenciaszint szerint, a rendelet tevékenységi főcsoportjai szerint, valamint kereséssel. A kereső ékezet-tűrő, tehát a „legutbiztositas” is talál. Minden találat mutatja a szintet és azt, melyik csoportba tartozik.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v180-korlatok', kind: 'szakmai', title: 'Amit a rendelet nem tartalmaz',
+        body: 'A keretrendszer egységes, nem bontja szakterületre a kompetenciákat — a sürgősségi, intenzív, geriátriai, közösségi és perioperatív APN részletes listáinak kidolgozása a rendelet megjelenésekor még folyamatban volt. Ezt a modul kimondja, és nem pótolja saját megfogalmazással. A tételek szövegét és szintbesorolását sem egészítettük ki.',
+        href: '/kompetenciaterkep',
+      },
+    ],
+  },
+  {
     version: '1.7.3',
     date: '2026-09-01',
     title: 'Rendezettebb kezdőlap',

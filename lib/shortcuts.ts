@@ -11,6 +11,7 @@ export const SHORTCUTS: Shortcut[] = [
   { key: 'tudastar', href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
   { key: 'kontextus', href: '/kontextus', label: 'Klinikai kontextus', icon: 'book' },
   { key: 'kedvencek', href: '/kedvencek', label: 'Kedvenceim', icon: 'star' },
+  { key: 'kompterkep', href: '/kompetenciaterkep', label: 'Kompetenciatérkép', icon: 'grad' },
   { key: 'profil', href: '/profil', label: 'Profil', icon: 'user' },
 ]
 
@@ -35,6 +36,7 @@ export const SHORTCUT_ACCENTS: Record<string, string> = {
   '/klinika/ertekeles': '#DB2777',    // pink — új betegértékelés
   '/kontextus': '#A16207',            // borostyán-barna — klinikai kontextus
   '/kedvencek': '#7C3AED',            // ibolya — kedvencek
+  '/kompetenciaterkep': '#0891B2',    // cián — szakmai keretrendszer
   '/profil': '#64748B',               // pala — nem klinikai tartalom, szándékosan semleges
 
   // ── további útvonalak, ha csempeként kerülnek fel ──
