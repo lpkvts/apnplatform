@@ -342,6 +342,22 @@ body {
 .cc-h { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .3px; margin: 8px 2px 5px; }
 
 /* Gyors elérés — Hozzáadás csempe */
+/* A betegvizsgálat a leggyakoribb belépési pont: két oszlopot foglal el,
+   erősebb kerettel és nagyobb felirattal. Így hangsúlyos marad anélkül, hogy
+   külön gombra lenne szüksége a keresőmező alatt. */
+.qtile-main {
+  grid-column: span 2;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-color: var(--brand-3);
+  border-width: 1.5px;
+  background: linear-gradient(120deg, var(--brand-tint) 0%, #fff 55%);
+}
+.qtile-main .qtile-i { width: 52px; height: 52px; border-radius: 15px; flex: none; }
+.qtile-main .qtile-l { font-size: 15px; text-align: left; }
+
 .qtile-add { border-style: dashed; }
 .qtile-add .qtile-i { font-size: 22px; font-weight: 700; color: var(--brand-2); }
 

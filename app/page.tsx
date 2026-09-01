@@ -1,8 +1,10 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import type { Profile } from '@/lib/types'
 import { Icon } from '@/components/icons'
 import { getFlag } from '@/lib/flags'
+import { getMemberships } from '@/lib/education/data'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
 import { Landing } from '@/components/landing'
@@ -25,7 +27,7 @@ const CASE_STATUS: Record<string, string> = { active: 'Aktív', draft: 'Folyamat
 
 export default async function DashboardPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return <Landing />
 
   const [profileRes, recentRes, examRes, caseRes] = await Promise.all([
@@ -44,9 +46,14 @@ export default async function DashboardPage() {
   const recent = recentRes.data ?? []
 
   const [copilotEnabled, careerEnabled] = await Promise.all([getFlag('apn_copilot', false), getFlag('apn_career', false)])
+  // Az oktatási belépő csak annak jelenik meg, aki tényleg tagja valamelyik
+  // képzőhelynek — másnak üres oldalra vinne.
+  const eduEnabled = await getFlag('education', false)
+  const eduMemberships = eduEnabled ? await getMemberships() : []
   const menuKeys = await getFavoritesByType('menu')
   const myShortcuts = SHORTCUTS.filter((sc) => menuKeys.includes(sc.key))
   const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
+  const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
 
   // Folytasd, ahol abbahagytad
   type Resume = { kind: 'exam' | 'case'; href: string; title: string; sub: string; at: string }
@@ -71,17 +78,19 @@ export default async function DashboardPage() {
         <input name="q" className="search-input" placeholder="Keresés a platformon…" autoComplete="off" aria-label="Keresés" />
       </form>
 
-      <Link href="/klinika/vizsgalat" className="btn" style={{ width: '100%', padding: '15px', fontSize: 16, margin: '4px 0 14px' }}>
-        🩺 Betegvizsgálat megnyitása
-      </Link>
-
       <div className="sec-h">
         <span className="sec-t">Gyors elérés</span>
         <Link className="sec-l" href="/testreszabas">Testreszabás →</Link>
       </div>
       <div className="qgrid">
         {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
-          <Link key={t.href} className="qtile" href={t.href}>
+          // A betegvizsgálat a leggyakoribb belépési pont, ezért a rácson belül
+          // kiemelt csempét kap — a korábbi külön gomb helyett.
+          <Link
+            key={t.href}
+            className={`qtile${t.href === '/klinika/vizsgalat' ? ' qtile-main' : ''}`}
+            href={t.href}
+          >
             <span className="qtile-i" style={accentStyle(t.href)}><Icon name={t.icon} size={24} /></span>
             <span className="qtile-l">{t.label}</span>
           </Link>
@@ -91,6 +100,18 @@ export default async function DashboardPage() {
           <span className="qtile-l">Hozzáadás</span>
         </Link>
       </div>
+
+      {/* Oktatási belépő — csak képzőhelyi tagoknak jelenik meg. */}
+      {eduMemberships.length > 0 && (
+        <Link className="card klink" href="/oktatas">
+          <div className="klink-t">🎓 {teaching ? 'Oktatói felület' : 'Kurzusaim'}</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>
+            {teaching
+              ? `${teaching.institution?.name} — kurzusok, hallgatók, eredmények`
+              : eduMemberships.map((m) => m.institution?.name).filter(Boolean).join(', ')}
+          </div>
+        </Link>
+      )}
 
       {resume.length > 0 && (
         <>

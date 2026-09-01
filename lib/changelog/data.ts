@@ -37,6 +37,15 @@ export interface FeatureEntry {
   title: string
   body?: string
   href?: string
+  /**
+   * Lényeges változás-e a felhasználó számára.
+   *
+   * Megadás nélkül a típus dönt: az új funkciók és a szakmai tartalom
+   * lényegesek, a hibajavítások és az apró finomítások nem. Kézzel bármelyik
+   * felülbírálható — egy eszköz-jellegű változás is lehet fontos, ha érdemben
+   * megváltoztatja a napi munkát.
+   */
+  major?: boolean
 }
 
 export interface Release {
@@ -66,6 +75,37 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.7.3',
+    date: '2026-09-01',
+    title: 'Rendezettebb kezdőlap',
+    summary: 'A betegvizsgálat a gyors elérésen belül kapott hangsúlyt, külön gomb helyett.',
+    entries: [
+      {
+        id: 'v173-kezdolap', kind: 'eszkoz', title: 'Kiemelt betegvizsgálat',
+        body: 'A keresőmező alatti hosszú gomb lekerült. Helyette a betegvizsgálat a gyors elérés rácsán belül kapott kiemelt csempét: két oszlopot foglal el, hangsúlyosabb kerettel és nagyobb felirattal. Így a leggyakoribb belépési pont továbbra is azonnal látszik, de nem szakítja meg a kezdőlap felépítését.',
+        href: '/',
+      },
+    ],
+  },
+  {
+    version: '1.7.2',
+    date: '2026-09-01',
+    title: 'Csendesebb verziókövetés',
+    summary: 'A felhasználók alapból csak a lényeges változásokról kapnak jelzést.',
+    entries: [
+      {
+        id: 'v172-szures', kind: 'funkcio', title: 'Szűrt változásnapló',
+        body: 'Eddig minden apró javítás megjelent a felhasználóknak és jelzett a harangon, ami elnyomta a lényeges változásokat. Mostantól alapból csak az új funkciók és a szakmai tartalom látszik — a hibajavítások és a finomítások nem. A Beállítások oldalon egy kapcsolóval a teljes napló is megjeleníthető.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v172-admin', kind: 'eszkoz', title: 'Az adminisztrátorok mindent látnak',
+        body: 'A kapcsoló állásától függetlenül az adminisztrátorok a teljes naplót látják a hibajavításokkal együtt, mert nekik ez munkaeszköz. A verziókövetés oldalon jelzés mutatja, hogy adminisztrátori nézetben vagy, és mit látnak ehhez képest a felhasználók.',
+        href: '/ujdonsagok',
+      },
+    ],
+  },
+  {
     version: '1.7.1',
     date: '2026-09-01',
     title: 'Nyolc új kórkép',
@@ -82,7 +122,7 @@ export const RELEASES: Release[] = [
         href: '/betegsegtar',
       },
       {
-        id: 'v171-kapcsolatok', kind: 'eszkoz', title: 'Modulokhoz kapcsolva',
+        id: 'v171-kapcsolatok', kind: 'eszkoz', major: true, title: 'Modulokhoz kapcsolva',
         body: 'Minden új kórkép a valós labor-, EKG- és pontozó-modulokra hivatkozik, gépi ellenőrzéssel. A vashiányos anaemia például a nemrég felvett vörösvértest-paraméterekre mutat, a nyomási sérülés a Braden- és Norton-skálára.',
         href: '/betegsegtar',
       },
@@ -310,7 +350,7 @@ export const RELEASES: Release[] = [
     summary: 'A platform felajánlja a telefonra telepítést, eszköznek megfelelő módon.',
     entries: [
       {
-        id: 'v159-telepites', kind: 'funkcio', title: 'Telepítés felajánlása',
+        id: 'v159-telepites', kind: 'funkcio', major: true, title: 'Telepítés felajánlása',
         body: 'A nyitóoldalon külön szakasz, a bejelentkezett felületen pedig egy visszafogott sáv ajánlja fel a telepítést. Telepítve a platform saját ablakban indul, gyorsabban nyílik, és a korábban megnyitott tartalom hálózat nélkül is elérhető marad.',
         href: '/',
       },
@@ -328,7 +368,7 @@ export const RELEASES: Release[] = [
     summary: 'A nyitóoldal harmadával rövidebb lett, a mentorprogram pedig hamarosan jelzést kapott.',
     entries: [
       {
-        id: 'v158-tomorites', kind: 'eszkoz', title: 'Kevesebb görgetés',
+        id: 'v158-tomorites', kind: 'eszkoz', major: true, title: 'Kevesebb görgetés',
         body: 'A nyitóoldal 3200 pixelről 2200-ra rövidült. A legnagyobb nyereség a „Így működik” szakasz elhagyása volt: ugyanazt a felületet mutatta, ami a bemutatkozó szakaszban már szerepel, tehát csak görgetést adott hozzá. A célcsoportok kártyák helyett kompakt sávba kerültek, a térközök és a kártyák pedig szűkebbek lettek.',
         href: '/',
       },
@@ -439,7 +479,7 @@ export const RELEASES: Release[] = [
     summary: 'A platform neve APN-MED lett, saját domainnel.',
     entries: [
       {
-        id: 'v151-nev', kind: 'funkcio', title: 'APN-MED',
+        id: 'v151-nev', kind: 'funkcio', major: true, title: 'APN-MED',
         body: 'A platform mostantól APN-MED néven fut. A név a böngészőfülön, a telepíthető alkalmazásban, a fejlécben, a bejelentkezésnél és a nyitóoldalon is átvezetve. A szakmai tartalomban az APN rövidítés változatlan maradt, mert ott a szakmát jelöli (Advanced Practice Nurse), nem a platformot — az APN-fókusz, a gyakorló APN-ek és az APN szakirány tehát érintetlen.',
         href: '/',
       },
@@ -475,7 +515,7 @@ export const RELEASES: Release[] = [
     summary: 'A gyakorlás szint szerint választható, és a felismerés után megkérdezi, hol látszik az eltérés.',
     entries: [
       {
-        id: 'v149-szintek', kind: 'eszkoz', title: 'Nehézségi szintek',
+        id: 'v149-szintek', kind: 'eszkoz', major: true, title: 'Nehézségi szintek',
         body: 'Négy választható szűrő: vegyes, kezdő, haladó és gyakorlott. A besorolást nem az elméleti bonyolultság dönti el, hanem az, mennyire könnyű összetéveszteni — a kamrafibrilláció súlyos kórkép, felismerni mégis egyszerű, míg a hypo- és hypercalcaemia elkülönítése finom munka. Kilenc kezdő, tizenegy haladó és hét gyakorlott szintű elem.',
         href: '/klinika/ekg',
       },
@@ -521,7 +561,7 @@ export const RELEASES: Release[] = [
     summary: 'A gyakorló és a vizsga mód is teljes 12 elvezetéses EKG-t mutat, valódi morfológiával.',
     entries: [
       {
-        id: 'v147-gyakorlo', kind: 'eszkoz', title: 'Teljes 12 elvezetés a gyakorlásban',
+        id: 'v147-gyakorlo', kind: 'eszkoz', major: true, title: 'Teljes 12 elvezetés a gyakorlásban',
         body: 'A gyakorló és a vizsga mód eddig egyetlen sematikus vonalat mutatott. Mostantól mindkettő ugyanazt a 12 elvezetéses megjelenítőt használja, mint az EKG elemzés: szabványos 3×4 elrendezés, hosszú ritmuscsík, milliméterrács és nagyítás. Helyes válasz után a rendszer kiemeli azokat az elvezetéseket, ahol az eltérés a legjobban látszik, és egy gombbal átvisz a részletes leíráshoz.',
         href: '/klinika/ekg',
       },
@@ -544,7 +584,7 @@ export const RELEASES: Release[] = [
     summary: 'Az elemzési lépéshez tartozó szakaszt a rendszer megjelöli a ritmuscsíkon.',
     entries: [
       {
-        id: 'v146-meres', kind: 'eszkoz', title: 'Mérőjelek és kalibrációs jel',
+        id: 'v146-meres', kind: 'eszkoz', major: true, title: 'Mérőjelek és kalibrációs jel',
         body: 'Az elemzés során a ritmuscsíkon zöld mérőjel mutatja, mit hol kell mérni: az R–R távolságokat a frekvenciánál és a ritmusnál, a PR-intervallumot, a QRS szélességét, a QT-t, az ST-szakaszt a J-ponttól, valamint a P- és T-hullámot. A kalibrációs lépésnél a 10 mm = 1 mV jel emelkedik ki. A jelöléseken a mért érték is szerepel, ha elfér.',
         href: '/klinika/ekg/elemzes',
       },
@@ -634,7 +674,7 @@ export const RELEASES: Release[] = [
         href: '/klinika/ekg/elemzes',
       },
       {
-        id: 'v141-evidence', kind: 'forras', title: 'Szakmai háttér a forrás-regiszterből',
+        id: 'v141-evidence', kind: 'forras', major: true, title: 'Szakmai háttér a forrás-regiszterből',
         body: 'Az esetek már nem másolják a forrás adatait, hanem a központi regiszterre hivatkoznak. Így az évszám, az utolsó ellenőrzés és a visszavonás egy helyen tartható karban, és a verzió-ellenőrzés az EKG-esetekre is kiterjed: minden forrásnál látszik, ha felülvizsgálat esedékes, és onnan közvetlenül megnyitható a kiadó hivatalos regisztere.',
         href: '/klinika/tudastar',
       },
@@ -657,7 +697,7 @@ export const RELEASES: Release[] = [
         href: '/klinika/ekg/elemzes',
       },
       {
-        id: 'v14-viewer', kind: 'eszkoz', title: '12 elvezetéses EKG megjelenítő',
+        id: 'v14-viewer', kind: 'eszkoz', major: true, title: '12 elvezetéses EKG megjelenítő',
         body: 'Szabványos 3×4 elrendezés hosszú ritmuscsíkkal, 1 és 5 mm-es rácshálóval, hogy az intervallumok mérhetők legyenek. Nagyítható, és egy elvezetésre koppintva az teljes szélességben megnyílik. A görbék paraméterekből generálódnak, így egy új eset néhány sor adat.',
         href: '/klinika/ekg/elemzes',
       },
@@ -835,7 +875,7 @@ export const RELEASES: Release[] = [
         href: '/klinika/tudastar',
       },
       {
-        id: 'v1-guideline-search', kind: 'eszkoz', title: 'Összesített irányelv-kereső',
+        id: 'v1-guideline-search', kind: 'eszkoz', major: true, title: 'Összesített irányelv-kereső',
         body: 'Keresés cím, kiadó, azonosító vagy témakör szerint, szűrőkkel és frissesség szerinti rendezéssel. Minden forrásnál ellenőrizhető a kiadó hivatalos regiszterében, van-e frissebb kiadás.',
         href: '/klinika/tudastar',
       },
@@ -890,6 +930,28 @@ export const RELEASES: Release[] = [
   },
 ]
 
+/** Alapból lényegesnek számító típusok. */
+const MAJOR_KINDS: ChangeKind[] = ['funkcio', 'szakmai', 'betegseg', 'labor', 'forras']
+
+/** Lényeges-e a bejegyzés. A kézi jelölés felülírja a típus szerinti alapértéket. */
+export function isMajor(e: FeatureEntry): boolean {
+  return e.major ?? MAJOR_KINDS.includes(e.kind)
+}
+
+/**
+ * A megjelenítendő kiadások.
+ *
+ * Teljes nézetben minden bejegyzés látszik. Szűkített nézetben csak a lényeges
+ * változások, és az olyan kiadás, amelyből minden bejegyzés kimaradna, egészében
+ * elmarad — üres kiadásfejléc semmit nem mondana.
+ */
+export function visibleReleases(showAll: boolean): Release[] {
+  if (showAll) return RELEASES
+  return RELEASES
+    .map((r) => ({ ...r, entries: r.entries.filter(isMajor) }))
+    .filter((r) => r.entries.length > 0)
+}
+
 export const APP_VERSION = RELEASES[0]?.version ?? '1.0.0'
 
 /**
@@ -913,30 +975,32 @@ export function compareVersions(a: string, b: string): number {
  * dátuma a szerver aktuális napjánál későbbi volt — ilyenkor a „megtekintettem”
  * gomb után is újdonságként maradt. A verziószám ettől független.
  */
-export function releasesAfterVersion(seenVersion: string | null): Release[] {
+export function releasesAfterVersion(seenVersion: string | null, showAll = true): Release[] {
   if (!seenVersion) return []
-  const latest = RELEASES[0]
+  const list = visibleReleases(showAll)
+  const latest = list[0]
   // Ha a felhasználónál rögzített verzió magasabb a legfrissebb kiadásnál, akkor egy
   // verziószámot utólag korrigáltunk. Ilyenkor a nyilvántartás beragadna: minden
   // további kiadás alacsonyabb számot kapna, és soha nem jelenne meg. Ezért a
   // legfrissebb kiadást egyszer megmutatjuk, és a megtekintés után az állapot helyreáll.
   if (latest && compareVersions(seenVersion, latest.version) > 0) return [latest]
-  return RELEASES.filter((r) => compareVersions(r.version, seenVersion) > 0)
+  return list.filter((r) => compareVersions(r.version, seenVersion) > 0)
 }
 
 /** Minden kiadás bejegyzése lapítva, legfrissebb elöl. */
-export function allChanges(): ChangeEntry[] {
-  return RELEASES.flatMap((r) => r.entries.map((e) => ({ ...e, date: r.date, version: r.version })))
+export function allChanges(showAll = true): ChangeEntry[] {
+  return visibleReleases(showAll)
+    .flatMap((r) => r.entries.map((e) => ({ ...e, date: r.date, version: r.version })))
 }
 
 /** A megadott időpont óta kelt bejegyzések, legfrissebb elöl. */
-export function changesSince(iso: string | null): ChangeEntry[] {
+export function changesSince(iso: string | null, showAll = true): ChangeEntry[] {
   if (!iso) return []
   const since = iso.slice(0, 10)
   const today = new Date().toISOString().slice(0, 10)
   // A jövőbeli dátumú bejegyzés kiszűrése: ilyen elvileg nincs, de ha elgépelés
   // folytán mégis bekerül, ne ragadjon be örökre olvasatlanként.
-  return allChanges().filter((c) => c.date > since && c.date <= today)
+  return allChanges(showAll).filter((c) => c.date > since && c.date <= today)
 }
 
 /** A megadott időpont óta megjelent kiadások. */
