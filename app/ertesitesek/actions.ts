@@ -1,12 +1,13 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 import { APP_VERSION } from '@/lib/changelog/data'
 
 export async function markAllRead() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return
   await supabase.from('notifications').update({ read: true }).eq('user_id', user.id).eq('read', false)
   revalidatePath('/', 'layout')
@@ -19,7 +20,7 @@ export async function markAllRead() {
  */
 export async function markUpdatesSeen() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return
   await supabase
     .from('profiles')

@@ -1,5 +1,6 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { LAB } from '@/lib/labor/data'
@@ -7,9 +8,9 @@ import { interpret, STATUS_LABEL } from '@/lib/labor/engine'
 import { TESTS } from '@/lib/scores/data'
 import { ECG } from '@/lib/ekg/data'
 export interface CaseState { saved?: boolean; error?: string }
-async function ownerGuard() { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); return { supabase, user } }
+async function ownerGuard() { const supabase = await createClient(); const user = await getCurrentUser(); return { supabase, user } }
 export async function createCase() {
-  const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) return
+  const supabase = await createClient(); const user = await getCurrentUser(); if (!user) return
   const { data, error } = await supabase.from('clinical_cases').insert({ owner_id: user.id, status: 'draft' }).select('id').single<{ id: string }>()
   if (error || !data) return; revalidatePath('/klinika/esetek'); redirect(`/klinika/esetek/${data.id}`)
 }

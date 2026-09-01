@@ -1,13 +1,12 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 
 export async function addCpdEntry(formData: FormData) {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return
 
   const title = String(formData.get('title') ?? '').trim()

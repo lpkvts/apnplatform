@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { currentRole, isStaff } from '@/lib/roles'
 import type { Profile } from '@/lib/types'
 import { getFlag } from '@/lib/flags'
@@ -25,7 +26,7 @@ function Field({ label, value }: { label: string; value?: string | number | null
 export default async function ProfilPage() {
   const [careerEnabled, passportEnabled] = await Promise.all([getFlag('apn_career', false), getFlag('kompetencia_passport', false)])
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   const { role } = await currentRole()
   const { data: p } = await supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>()
 

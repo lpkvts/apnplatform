@@ -2,12 +2,13 @@ export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import type { Profile } from '@/lib/types'
 import { ProfileForm } from '@/components/profile-form'
 
 export default async function ProfilSzerkesztes() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   const { data: p } = await supabase.from('profiles').select('*').eq('id', user?.id ?? '').single<Profile>()
   return (
     <>

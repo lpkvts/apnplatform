@@ -1,11 +1,12 @@
 'use server'
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 export interface ExamState { saved?: boolean; error?: string }
 
-async function owner() { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); return { supabase, user } }
+async function owner() { const supabase = await createClient(); const user = await getCurrentUser(); return { supabase, user } }
 
 export async function createExamSession(formData: FormData) {
   const { supabase, user } = await owner(); if (!user) return

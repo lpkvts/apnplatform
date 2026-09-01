@@ -1,13 +1,14 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 
 export interface ProfileState { saved?: boolean; error?: string }
 
 export async function updateProfile(_prev: ProfileState, formData: FormData): Promise<ProfileState> {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { error: 'Nincs bejelentkezve.' }
 
   const str = (k: string) => { const v = String(formData.get(k) ?? '').trim(); return v === '' ? null : v }

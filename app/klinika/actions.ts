@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { getCurrentUser } from '@/lib/supabase/user'
 import { revalidatePath } from 'next/cache'
 
 export interface AssessmentPayload {
@@ -15,7 +16,7 @@ export interface AssessmentPayload {
 
 export async function saveAssessment(data: AssessmentPayload) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { ok: false, error: 'Nincs bejelentkezve.' }
   const { error } = await supabase.from('assessments').insert({
     user_id: user.id,
@@ -43,7 +44,7 @@ export interface ScorePayload {
 
 export async function saveScore(data: ScorePayload) {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getCurrentUser()
   if (!user) return { ok: false, error: 'Nincs bejelentkezve.' }
   const { error } = await supabase.from('score_results').insert({
     user_id: user.id,

@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Icon } from '@/components/icons'
-import { APP_VERSION, RELEASES, CHANGE_KIND_META, compareVersions, type ChangeKind } from '@/lib/changelog/data'
+import { APP_VERSION, visibleReleases, CHANGE_KIND_META, compareVersions, type ChangeKind } from '@/lib/changelog/data'
+import { getFlag } from '@/lib/flags'
+import { currentRole, isAdmin } from '@/lib/roles'
 import { getContentUpdates } from '@/lib/notifications'
 import { markUpdatesSeen } from '@/app/ertesitesek/actions'
 
@@ -12,6 +14,13 @@ export default async function VerziokovetesPage() {
   const { items: updates, seenAt, seenVersion } = await getContentUpdates()
   const since = seenAt ? seenAt.slice(0, 10) : null
 
+  // Alapból a lényeges változások látszanak. A teljes naplót kapcsoló engedi,
+  // az adminisztrátorok pedig mindig mindent látnak.
+  const { role } = await currentRole()
+  const admin = isAdmin(role)
+  const showAll = (await getFlag('changelog_full', false)) || admin
+  const RELEASES = visibleReleases(showAll)
+
   return (
     <>
       <Link className="sh-back" href="/profil">‹ Profil</Link>
@@ -20,6 +29,14 @@ export default async function VerziokovetesPage() {
         Jelenlegi verzió: <b>v{APP_VERSION}</b>
         {since && <> · Legutóbb megtekintve: {since}</>}
       </p>
+
+      {admin && (
+        <div className="safety-note">
+          <b>ⓘ Adminisztrátori nézet.</b> Te a teljes naplót látod, a hibajavításokkal
+          együtt. A felhasználók {showAll && !admin ? 'ugyanezt' : 'csak a lényeges változásokat'} látják —
+          ez a Beállítások oldalon módosítható.
+        </div>
+      )}
 
       {updates.length > 0 && (
         <div className="card" style={{ marginBottom: 14 }}>
