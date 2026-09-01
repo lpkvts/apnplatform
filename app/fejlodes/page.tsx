@@ -8,6 +8,15 @@ export default async function FejlodesHub() {
       <h1 className="h1">Fejlődés</h1>
       <p className="sub">Szakmai fejlődés és mentorálás: hol tartasz, miben fejlődsz, mi a következő lépésed.</p>
 
+      {/* Az eseteim a saját munka visszatekintése, ezért a fejlődéshez tartozik:
+          a klinikumban az aktuális munkát támogató eszközök vannak. */}
+      <Link className="card klink" href="/klinika/esetek">
+        <div className="klink-t">🗂️ Eseteim és előzmények</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>
+          Klinikai esetek és korábbi betegértékelések
+        </div>
+      </Link>
+
       <div className="card" style={{ opacity: 0.85 }}>
         <div className="row" style={{ border: 'none', padding: 0 }}>
           <b>🤝 Mentorprogram</b>

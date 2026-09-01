@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.2',
+    date: '2026-09-01',
+    title: 'Rendezettebb menük',
+    summary: 'Az eseteim a Fejlődés menübe került, a Kompetenciatérkép pedig a Tudástárba.',
+    entries: [
+      {
+        id: 'v182-esetek', kind: 'eszkoz', title: 'Eseteim a Fejlődés menüben',
+        body: 'Az „Eseteim és előzmények" a Klinikumból a Fejlődés menübe került. A Klinikum az aktuális munkát támogató eszközöket tartalmazza — vizsgálat, értékelés, labor, EKG, skálák —, a saját esetek visszatekintése viszont a szakmai fejlődés része. Az útvonal változatlan, a mentett esetek és a linkek ugyanúgy működnek.',
+        href: '/fejlodes',
+      },
+      {
+        id: 'v182-terkep', kind: 'eszkoz', title: 'Kompetenciatérkép a Tudástárban',
+        body: 'Az APN Kompetenciatérkép megjelenik a Tudástár menüben, a többi szakmai referencia mellett. Bekapcsolt állapotban látszik; kikapcsolva a Tudástár változatlan marad. A modul minden más funkciója érintetlen.',
+        href: '/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.8.1',
     date: '2026-09-01',
     title: 'APN és ápoló összehasonlítás',
