@@ -889,7 +889,27 @@ export const RELEASES: Release[] = [
     ],
   },
 ]
+/** Alapból lényegesnek számító típusok. */
+const MAJOR_KINDS: ChangeKind[] = ['funkcio', 'szakmai', 'betegseg', 'labor', 'forras']
 
+/** Lényeges-e a bejegyzés. A kézi jelölés felülírja a típus szerinti alapértéket. */
+export function isMajor(e: FeatureEntry): boolean {
+  return e.major ?? MAJOR_KINDS.includes(e.kind)
+}
+
+/**
+ * A megjelenítendő kiadások.
+ *
+ * Teljes nézetben minden bejegyzés látszik. Szűkített nézetben csak a lényeges
+ * változások, és az olyan kiadás, amelyből minden bejegyzés kimaradna, egészében
+ * elmarad — üres kiadásfejléc semmit nem mondana.
+ */
+export function visibleReleases(showAll: boolean): Release[] {
+  if (showAll) return RELEASES
+  return RELEASES
+    .map((r) => ({ ...r, entries: r.entries.filter(isMajor) }))
+    .filter((r) => r.entries.length > 0)
+}
 export const APP_VERSION = RELEASES[0]?.version ?? '1.0.0'
 
 /**
