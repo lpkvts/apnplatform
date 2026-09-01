@@ -66,6 +66,52 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.7.1',
+    date: '2026-09-01',
+    title: 'Nyolc új kórkép',
+    summary: 'A betegségtár tizenkettőről húsz kórképre bővült, ápolási fókuszú válogatással.',
+    entries: [
+      {
+        id: 'v171-korkepek', kind: 'betegseg', title: 'Új kórképek a betegségtárban',
+        body: 'Akut coronaria szindróma, vénás thromboembolia, nyomási sérülés, húgyúti fertőzés, vashiányos anaemia, pajzsmirigy-alulműködés, csontritkulás eséskockázattal, valamint alultápláltság és táplálási kockázat.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v171-apolasi', kind: 'szakmai', title: 'Ápolási fókuszú válogatás',
+        body: 'A válogatás szempontja nem csak a gyakoriság volt, hanem az is, hogy az ápolói tevékenységnek önálló szerepe legyen. Ezért került be a nyomási sérülés, az alultápláltság és a húgyúti fertőzés — ezeknél a kockázatbecslés, a megelőzés és a felismerés érdemben ápolói feladat, nem csak orvosi döntést kísér.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v171-kapcsolatok', kind: 'eszkoz', title: 'Modulokhoz kapcsolva',
+        body: 'Minden új kórkép a valós labor-, EKG- és pontozó-modulokra hivatkozik, gépi ellenőrzéssel. A vashiányos anaemia például a nemrég felvett vörösvértest-paraméterekre mutat, a nyomási sérülés a Braden- és Norton-skálára.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
+    version: '1.7.0',
+    date: '2026-09-01',
+    title: 'Oktatói mód — alapok',
+    summary: 'A platform képzőhelyek számára is használható: intézmények, kurzusok, hallgatók.',
+    entries: [
+      {
+        id: 'v170-szerepkor', kind: 'funkcio', title: 'Oktatási szerepkörök',
+        body: 'Három szerepkör: hallgató, oktató és intézményi adminisztrátor. A szerepkör intézményhez kötött, nem a fiókhoz — ugyanaz a személy lehet az egyik képzőhelyen oktató, a másikon hallgató, és közben APN-ként használja a klinikai modulokat. Az egyéni használat semmiben nem változik.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v170-kurzus', kind: 'funkcio', title: 'Kurzuskezelés',
+        body: 'Az oktató kurzust hoz létre névvel, leírással, szakterülettel, szinttel és időtartammal. A célkompetenciák megadása a létrehozás része: a kurzus attól lesz kompetenciaalapú, hogy előre kimondjuk, mit fejleszt. A kurzus három állapotot vehet fel — piszkozat, aktív, lezárt —, és a hallgatók csak az aktívat látják.',
+        href: '/oktatas/uj',
+      },
+      {
+        id: 'v170-hallgatok', kind: 'funkcio', title: 'Hallgatók és haladás',
+        body: 'Hallgatók e-mail cím alapján adhatók a kurzushoz, és a kezdőlapon látszik a létszám, az aktív kurzusok száma és az átlagos haladás. A hallgatói nézetben a saját kurzusok jelennek meg haladásjelzővel.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.6.3',
     date: '2026-09-01',
     title: 'Az összes EKG-görbe átvizsgálva',
