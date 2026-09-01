@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.3',
+    date: '2026-09-01',
+    title: 'Új APN-MED jelkép',
+    summary: 'A nyitott gyűrűs logó a fejlécben, a nyitóoldalon és a telepíthető alkalmazásban is.',
+    entries: [
+      {
+        id: 'v183-logo', kind: 'eszkoz', title: 'Egységes jelkép',
+        body: 'Az APN-MED jelképe a nyitott gyűrű lett, a fejlécben és a nyitóoldalon a név előtt. Vektoros formában készült, ezért minden méretben éles marad, és a márkaszínt követi — sötét háttéren is használható.',
+        href: '/',
+      },
+      {
+        id: 'v183-ikonok', kind: 'eszkoz', title: 'Alkalmazás-ikonok',
+        body: 'A telepíthető alkalmazás ikonjai is az új jelképre cserélődtek, a böngészőfül ikonjával együtt. Kis méretben csak a gyűrű látszik — az APN MED felirat ott már olvashatatlan lenne —, nagyobb ikonokon a teljes jelkép. A telefonra kitett alkalmazásnál a régi ikon eltűnéséhez újratelepítés kell.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.8.2',
     date: '2026-09-01',
     title: 'Rendezettebb menük',

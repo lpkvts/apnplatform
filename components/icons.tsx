@@ -44,11 +44,55 @@ export function CpdRing({ total, target, size = 116 }: { total: number; target: 
   )
 }
 
-export function RingLogo({ size = 26 }: { size?: number }) {
+/**
+ * Az APN-MED jelkép: nyitott gyűrű, jobb oldalon két réssel.
+ *
+ * Két változatban létezik, mert a méret dönti el, mi fér el benne:
+ *  - `withText` nélkül csak a gyűrű — ezt használjuk ott, ahol a név úgyis
+ *    ott áll mellette (fejléc, nyitóoldal), vagy ahol kicsi a hely.
+ *  - `withText` mellett a gyűrűbe kerül az APN MED felirat is. Ez körülbelül
+ *    64 képpont alatt már olvashatatlan, ezért csak nagyobb méretben van értelme.
+ *
+ * A szín a márkaváltozóból jön, így sötét háttéren is felülírható a currentColor
+ * beállításával.
+ */
+export function RingLogo({
+  size = 26, withText = false, color = 'var(--brand)',
+}: {
+  size?: number
+  withText?: boolean
+  color?: string
+}) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" fill="none" aria-hidden="true">
-      <circle cx="16" cy="16" r="12" stroke="var(--brand)" strokeWidth="3" strokeLinecap="round"
-        strokeDasharray="56 20" transform="rotate(-90 16 16)" />
+    <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      {/* Hosszú ív: a jobb felső réstől a bal oldalon át a jobb alsó résig. */}
+      <path
+        d="M45.8 10A26 26 0 1 0 49.4 51.3"
+        stroke={color} strokeWidth="6" strokeLinecap="round"
+      />
+      {/* Rövid ív a jobb oldalon, a két rés között. */}
+      <path
+        d="M52.5 16A26 26 0 0 1 54.5 45"
+        stroke={color} strokeWidth="6" strokeLinecap="round"
+      />
+      {withText && (
+        <g fill={color}>
+          <text
+            x="32" y="34" textAnchor="middle"
+            fontSize="15.5" fontWeight="700" letterSpacing="0.5"
+            fontFamily="Inter, system-ui, sans-serif"
+          >
+            APN
+          </text>
+          <text
+            x="32" y="47" textAnchor="middle"
+            fontSize="11" fontWeight="600" letterSpacing="1.6"
+            fontFamily="Inter, system-ui, sans-serif"
+          >
+            MED
+          </text>
+        </g>
+      )}
     </svg>
   )
 }
