@@ -7,6 +7,7 @@ import { ANALYSIS_STEPS, type AnalysisQuestion, type StepId } from '@/lib/ekg/an
 import { qtc } from '@/lib/ekg/render'
 import { saveEkgAttempt } from '@/lib/ekg/progress'
 import { AxisDiagram, LeadRegionsFull } from '@/components/ekg-abrak'
+import { autoQuestion } from '@/lib/ekg/autoquestions'
 import { GUIDELINE_SOURCES, registryFor, checkQuery } from '@/lib/sources/data'
 import type { EcgCase } from '@/lib/ekg/analysis'
 
@@ -41,7 +42,11 @@ export function GuidedAnalysis({
   const [done, setDone] = useState(false)
 
   const step = ANALYSIS_STEPS[idx]
-  const questions: AnalysisQuestion[] = ecgCase.questions[step.id] ?? []
+  // Ahol az esethez nincs kézzel megírt kérdés, a görbe paramétereiből
+  // állítunk elő egyet — enélkül a referenciaszöveg elárulná a választ.
+  const written = ecgCase.questions[step.id] ?? []
+  const generated = written.length === 0 ? autoQuestion(step.id, ecgCase.params) : null
+  const questions: AnalysisQuestion[] = written.length > 0 ? written : (generated ? [generated] : [])
   const q: AnalysisQuestion | undefined = questions[qIdx]
   const reference = ecgCase.reference[step.id]
   const isLast = idx === ANALYSIS_STEPS.length - 1

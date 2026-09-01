@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.8',
+    date: '2026-09-01',
+    title: 'Kérdés minden elemzési lépésnél',
+    summary: 'A vezetett elemzés nem mondja ki előre a választ — mindenhol te döntesz először.',
+    entries: [
+      {
+        id: 'v188-kerdesek', kind: 'funkcio', title: 'Kérdés a tengelynél és mindenhol',
+        body: 'Több lépésnél — köztük a tengelyállásnál — nem volt kérdés, ezért a rendszer rögtön a referenciaszöveget mutatta, vagyis kimondta a választ, mielőtt gondolkodhattál volna rajta. Mostantól ahol nincs kézzel megírt kérdés, ott a rendszer a görbe paramétereiből állít össze egyet, négy választási lehetőséggel. Az esetenkénti kérdésszám 31-ről 73-ra nőtt.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v188-forras', kind: 'javitas', title: 'A kérdés és a görbe egy forrásból',
+        body: 'A generált kérdések helyes válasza ugyanabból az adatból származik, amelyből a görbe rajzolódik. Így nem fordulhat elő, hogy a kép mást mutat, mint amit a rendszer elfogad — ez a hiba korábban több esetnél is előjött.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v188-csalik', kind: 'eszkoz', title: 'Értelmes válaszlehetőségek',
+        body: 'A ritmusnál a csalik a helyeshez legközelebb álló ritmusok, nem véletlenszerűek. A frekvenciánál négy tartomány közül kell választani. A QT-nél szélsőséges frekvencia esetén a magyarázat jelzi, hogy a korrekció torzít, és a szomszédos kategória is védhető.',
+        href: '/klinika/ekg/elemzes',
+      },
+    ],
+  },
+  {
     version: '1.8.7',
     date: '2026-09-01',
     title: 'Magyarázó ábrák az EKG elemzésben',
