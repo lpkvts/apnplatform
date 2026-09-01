@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.9.2',
+    date: '2026-09-01',
+    title: 'Letisztultabb nyitóoldal',
+    summary: 'Egyhasábos bemutatkozó, a részletes számok pedig belépés után látszanak.',
+    entries: [
+      {
+        id: 'v192-hero', kind: 'eszkoz', title: 'Egyhasábos bemutatkozó',
+        body: 'A jobb oldali grafika lekerült, a cím és a bevezető középre került, nagyobb betűmérettel. A felszabadult helyet a modulkártyák töltik ki: nagyobb ikonnal és térközzel, de változatlan szöveggel, hogy ne váljon zsúfolttá.',
+        href: '/',
+      },
+      {
+        id: 'v192-szamok', kind: 'eszkoz', title: 'A számok belépés után',
+        body: 'A Kompetenciatérkép szakaszból lekerültek a pontos tevékenységszámok. A négy szint neve és rövid leírása marad — a részletes adatokat a bejelentkezett felhasználó látja a modulban.',
+        href: '/kompetenciaterkep',
+      },
+    ],
+  },
+  {
     version: '1.9.1',
     date: '2026-09-01',
     title: 'Kompetenciatérkép a nyitóoldalon',

@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { RingLogo } from '@/components/icons'
 import { InstallPrompt } from '@/components/install-prompt'
-import { LandingGraphic } from '@/components/landing-graphic'
 
 /**
  * Nyitóoldal kijelentkezett látogatóknak.
@@ -116,7 +115,7 @@ export function Landing() {
       <section className="lp-hero">
         <span className="lp-blob lp-blob-a" aria-hidden="true" />
         <span className="lp-blob lp-blob-b" aria-hidden="true" />
-        <div className="lp-wrap lp-hero-in">
+        <div className="lp-wrap lp-hero-in lp-hero-solo">
           <div>
             <p className="lp-eyebrow">APN-MED – Egészségügyi szakemberek szakmai platformja</p>
             <h1 className="lp-h1">
@@ -137,7 +136,6 @@ export function Landing() {
             <p className="lp-assure">✓ Ápolók fejlesztik, a klinikai gyakorlatból. Magyar fejlesztés.</p>
           </div>
 
-          <LandingGraphic />
         </div>
       </section>
 
@@ -193,9 +191,9 @@ export function Landing() {
                 orvosi együttműködés.
               </p>
               <p>
-                A platformon mind a <b>274 tevékenység</b> megtalálható, a hozzá tartozó
-                szinttel — kereshetően, tevékenységi csoportok szerint, és összevetve
-                az általános ápolói szintekkel.
+                A platformon minden tevékenység megtalálható a hozzá tartozó szinttel —
+                kereshetően, tevékenységi csoportok szerint, és összevetve az általános
+                ápolói szintekkel. Belépés után elérhető.
               </p>
               <Link className="lp-btn lp-btn-primary" href="/login">
                 Megnézem a térképet <span className="lp-arw">→</span>
@@ -204,10 +202,10 @@ export function Landing() {
 
             <ol className="lp-kt-levels">
               {[
-                { n: 'I', t: 'Önállóan', d: 'Saját indikáció alapján', c: 174, col: '#22A878' },
-                { n: 'II', t: 'Szupervízió mellett', d: 'Utólagos tájékoztatással', c: 74, col: '#0891B2' },
-                { n: 'III', t: 'Orvosi indikáció után', d: 'Utána önálló végrehajtás', c: 19, col: '#B45309' },
-                { n: 'IV', t: 'Orvosi irányítás mellett', d: 'Személyes jelenléttel', c: 7, col: '#B91C1C' },
+                { n: 'I', t: 'Önállóan', d: 'Saját indikáció alapján', col: '#22A878' },
+                { n: 'II', t: 'Szupervízió mellett', d: 'Utólagos tájékoztatással', col: '#0891B2' },
+                { n: 'III', t: 'Orvosi indikáció után', d: 'Utána önálló végrehajtás', col: '#B45309' },
+                { n: 'IV', t: 'Orvosi irányítás mellett', d: 'Személyes jelenléttel', col: '#B91C1C' },
               ].map((l) => (
                 <li key={l.n} style={{ borderLeftColor: l.col }}>
                   <span className="lp-kt-n" style={{ background: l.col }}>{l.n}</span>
@@ -215,7 +213,6 @@ export function Landing() {
                     <b>{l.t}</b>
                     <small>{l.d}</small>
                   </span>
-                  <span className="lp-kt-c" style={{ color: l.col }}>{l.c}</span>
                 </li>
               ))}
             </ol>
