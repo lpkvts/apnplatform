@@ -132,7 +132,7 @@ export function Landing() {
               </Link>
               <a className="lp-btn lp-btn-ghost" href="#funkciok">Ismerd meg az APN-MED-et</a>
             </div>
-            <p className="lp-assure">✓ Ápolók által, ápolóknak. Magyar fejlesztés.</p>
+            <p className="lp-assure">✓ Ápolók fejlesztik, a klinikai gyakorlatból. Magyar fejlesztés.</p>
           </div>
 
           <div className="lp-shot-wrap">
