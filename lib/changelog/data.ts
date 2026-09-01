@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.8.1',
+    date: '2026-09-01',
+    title: 'APN és ápoló összehasonlítás',
+    summary: 'Ugyanaz a tevékenység, két képzettségi szinten — a rendelet valós adataiból.',
+    entries: [
+      {
+        id: 'v181-ossze', kind: 'szakmai', title: 'Mi a különbség?',
+        body: 'Új nézet a Kompetenciatérképben: huszonhárom tevékenység, amelyet a rendelet mindkét oszlopban felsorol, eltérő szinttel. Ugyanabból a táblázatsorból származnak, tehát valóban azonos tevékenységről van szó — nem hasonlóról. Például az oxigénszaturáció mérése az általános ápolónál orvosi indikációhoz kötött, az APN saját indikáció alapján végzi.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v181-elteres', kind: 'szakmai', title: 'Ahol maga a tevékenység más',
+        body: 'A lényegi különbség nem az, hogy ugyanazt kevesebb felügyelettel végzi, hanem hogy mást végez. Hét ilyen terület: az EKG-t az ápoló kivitelezi, az APN elrendeli; a szakápolási feladatokat az ápoló kivitelezi, az APN elrendeli is; a laborvizsgálatot az APN elrendeli és az eredményt értelmezi; a védőoltást az ápoló beadja, az APN elrendeli és felírja.',
+        href: '/kompetenciaterkep',
+      },
+      {
+        id: 'v181-korlat', kind: 'eszkoz', title: 'Amit nem állítunk',
+        body: 'Az asszisztensi oszlop szintjeit nem szerepeltetjük, mert annak hiteles kivonatát nem tudtuk ellenőrizni — a keretrendszerben elfoglalt helyét viszont bemutatjuk. A nézet kimondja azt is, hogy ez nem rangsor: eltérő képzettségekhez eltérő kompetenciák tartoznak, és a betegellátás mindegyikre épül.',
+        href: '/kompetenciaterkep',
+      },
+    ],
+  },
+  {
     version: '1.8.0',
     date: '2026-09-01',
     title: 'APN Kompetenciatérkép',

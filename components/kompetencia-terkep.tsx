@@ -5,6 +5,7 @@ import {
   COMPETENCIES, GROUPS, LEVELS, levelInfo, searchCompetencies, countByLevel,
   type Competency, type Level,
 } from '@/lib/kompetencia/data'
+import { PAIRS, DIVERGENCES, QUALIFICATIONS } from '@/lib/kompetencia/osszehasonlitas'
 
 /**
  * APN Kompetenciatérkép — interaktív böngésző.
@@ -14,11 +15,12 @@ import {
  * „milyen szinten?" (kompetenciaszint szerint), illetve célzott keresés.
  */
 
-type Tab = 'szintek' | 'csoportok' | 'kereses'
+type Tab = 'szintek' | 'csoportok' | 'osszehasonlitas' | 'kereses'
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'szintek', label: 'Kompetenciaszintek' },
   { id: 'csoportok', label: 'Tevékenységek' },
+  { id: 'osszehasonlitas', label: 'Összehasonlítás' },
   { id: 'kereses', label: 'Keresés' },
 ]
 
@@ -153,6 +155,75 @@ export function KompetenciaTerkep() {
               </details>
             )
           })}
+        </>
+      )}
+
+      {/* ══ Összehasonlítás ══ */}
+      {tab === 'osszehasonlitas' && (
+        <>
+          <p className="sub" style={{ marginTop: 14 }}>
+            A rendelet egyetlen táblázat: minden sorban egy tevékenység áll, az
+            oszlopokban a különböző képzettségű szakdolgozók szintbesorolása. Az alábbi
+            párok ugyanabból a sorból származnak — nem hasonló, hanem azonos tevékenységről
+            van szó.
+          </p>
+
+          <div className="card">
+            <b style={{ fontSize: 14 }}>A keretrendszer képzettségi szintjei</b>
+            <ol className="kt-qual">
+              {QUALIFICATIONS.map((q) => (
+                <li key={q.mkkr} className={q.mkkr === 7 ? 'on' : undefined}>
+                  <span>MKKR {q.mkkr}</span>{q.name}
+                </li>
+              ))}
+            </ol>
+            <p className="sub" style={{ margin: '10px 0 0', fontSize: 12 }}>
+              Az összevetés az általános ápoló (MKKR 5.) és a kiterjesztett hatáskörű ápoló
+              (MKKR 7.) oszlopa között készült, mert ezekhez állt rendelkezésre hiteles kivonat.
+              Az asszisztensi oszlop szintjeit nem szerepeltetjük, mert azt nem tudtuk ellenőrizni.
+            </p>
+          </div>
+
+          <div className="sec-h"><span className="sec-t">Ahol nem a tevékenység, hanem a szint más</span></div>
+          {PAIRS.map((p, i) => (
+            <div className="card kt-pair" key={i}>
+              <p className="kt-pair-t">{p.text}</p>
+              <div className="kt-pair-row">
+                <div>
+                  <span className="kt-pair-l">Általános ápoló</span>
+                  <LevelBadge level={p.nurse} />
+                </div>
+                <span className="kt-pair-arrow" aria-hidden="true">→</span>
+                <div>
+                  <span className="kt-pair-l">Kiterjesztett hatáskörű ápoló</span>
+                  <LevelBadge level={p.apn} />
+                </div>
+              </div>
+              {p.note && <p className="kt-pair-n">{p.note}</p>}
+            </div>
+          ))}
+
+          <div className="sec-h"><span className="sec-t">Ahol maga a tevékenység más</span></div>
+          <p className="sub" style={{ marginTop: 0 }}>
+            Ez a lényegi különbség: nem ugyanazt csinálja alacsonyabb felügyelettel, hanem
+            mást csinál. A rendelet ilyenkor eltérő szöveget ad a két oszlopban.
+          </p>
+          {DIVERGENCES.map((d, i) => (
+            <div className="card" key={i} style={{ marginBottom: 8 }}>
+              <b style={{ fontSize: 14 }}>{d.topic}</b>
+              <div className="kt-div">
+                <div><span>Általános ápoló</span><p>{d.nurse}</p></div>
+                <div className="on"><span>Kiterjesztett hatáskörű ápoló</span><p>{d.apn}</p></div>
+              </div>
+            </div>
+          ))}
+
+          <div className="safety-note" style={{ marginTop: 10 }}>
+            <b>ⓘ Nem rangsor.</b> A keretrendszer eltérő képzettségekhez eltérő
+            kompetenciákat rendel. Az asszisztensi, ápolói és kiterjesztett hatáskörű ápolói
+            munka más felkészültséget igényel és más feladatokra szól — a betegellátás
+            mindegyikre épül.
+          </div>
         </>
       )}
 
