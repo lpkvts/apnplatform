@@ -4,7 +4,6 @@ import { getCurrentUser } from '@/lib/supabase/user'
 import type { Profile } from '@/lib/types'
 import { Icon } from '@/components/icons'
 import { getFlag } from '@/lib/flags'
-import { getMemberships } from '@/lib/education/data'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
 import { Landing } from '@/components/landing'
@@ -46,14 +45,10 @@ export default async function DashboardPage() {
   const recent = recentRes.data ?? []
 
   const [copilotEnabled, careerEnabled] = await Promise.all([getFlag('apn_copilot', false), getFlag('apn_career', false)])
-  // Az oktatási belépő csak annak jelenik meg, aki tényleg tagja valamelyik
-  // képzőhelynek — másnak üres oldalra vinne.
-  const eduEnabled = await getFlag('education', false)
-  const eduMemberships = eduEnabled ? await getMemberships() : []
+
   const menuKeys = await getFavoritesByType('menu')
   const myShortcuts = SHORTCUTS.filter((sc) => menuKeys.includes(sc.key))
   const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
-  const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
 
   // Folytasd, ahol abbahagytad
   type Resume = { kind: 'exam' | 'case'; href: string; title: string; sub: string; at: string }
@@ -100,18 +95,6 @@ export default async function DashboardPage() {
           <span className="qtile-l">Hozzáadás</span>
         </Link>
       </div>
-
-      {/* Oktatási belépő — csak képzőhelyi tagoknak jelenik meg. */}
-      {eduMemberships.length > 0 && (
-        <Link className="card klink" href="/oktatas">
-          <div className="klink-t">🎓 {teaching ? 'Oktatói felület' : 'Kurzusaim'}</div>
-          <div className="sub" style={{ margin: '4px 0 0' }}>
-            {teaching
-              ? `${teaching.institution?.name} — kurzusok, hallgatók, eredmények`
-              : eduMemberships.map((m) => m.institution?.name).filter(Boolean).join(', ')}
-          </div>
-        </Link>
-      )}
 
       {resume.length > 0 && (
         <>
