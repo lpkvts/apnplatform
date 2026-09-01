@@ -11,6 +11,8 @@ import { ECG_WAVES } from '@/lib/ekg/waves'
 import { EKG_CASES } from '@/lib/ekg/cases'
 import { EcgViewer } from '@/components/ecg-viewer'
 import { paramsFor, ECG_FOCUS } from '@/lib/ekg/params'
+import { practiceMeta, practiceOptions, PRACTICE_META, LEVEL_LABEL, type Level } from '@/lib/ekg/practice'
+import { saveEkgAttempt } from '@/lib/ekg/progress'
 import type { Lead } from '@/lib/ekg/render'
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -23,9 +25,18 @@ function shuffle<T>(a: T[]): T[] {
   for (let i = r.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1));[r[i], r[j]] = [r[j], r[i]] }
   return r
 }
+// A csalik elsősorban azok a kórképek, amelyekkel a gyakorlatban is
+// összetéveszthető — a véletlen válaszok túl könnyű kérdést adnának.
 function options(correct: string): string[] {
-  const pool = QUIZ.filter((e) => e.id !== correct).map((e) => e.id)
-  return shuffle([correct, ...shuffle(pool).slice(0, 3)])
+  const pool = QUIZ.map((e) => e.id)
+  return practiceOptions(correct, pool, shuffle)
+}
+
+/** A választott szintnek megfelelő elemek. Vegyesnél az összes. */
+function poolForLevel(level: Level | 'mind'): string[] {
+  const all = QUIZ.map((e) => e.id)
+  if (level === 'mind') return all
+  return all.filter((id) => PRACTICE_META[id]?.level === level)
 }
 
 function Trace({ wave }: { wave?: string }) {
@@ -45,18 +56,31 @@ function UL({ title, items }: { title: string; items?: string[] }) {
 }
 
 type Mode = 'atlas' | 'practice' | 'exam'
-interface Prac { qid: string; opts: string[]; picked: string | null }
+interface Prac { qid: string; opts: string[]; picked: string | null; loc: string | null }
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
-export function Ekg({ initialOpen, examEnabled = false, lookup = [], backCase, backStep }: { initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[]; backCase?: string; backStep?: string }) {
+export function Ekg({
+  initialOpen, examEnabled = false, lookup = [], backCase, backStep, progress,
+}: {
+  initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[]
+  backCase?: string; backStep?: string
+  progress?: { attempts: number; avg_pct: number; streak_days: number } | null
+}) {
   const [mode, setMode] = useState<Mode>('atlas')
   const [prac, setPrac] = useState<Prac | null>(null)
+  const [level, setLevel] = useState<Level | 'mind'>('mind')
   const [exam, setExam] = useState<Exam | null>(null)
   const [best, setBest] = useState<number | null>(null)
 
-  function newPractice() {
-    const pick = QUIZ[Math.floor(Math.random() * QUIZ.length)]
-    setPrac({ qid: pick.id, opts: options(pick.id), picked: null })
+  function newPractice(lvl: Level | 'mind' = level) {
+    const pool = poolForLevel(lvl)
+    const use = pool.length ? pool : QUIZ.map((e) => e.id)
+    const id = use[Math.floor(Math.random() * use.length)]
+    setPrac({ qid: id, opts: options(id), picked: null, loc: null })
+  }
+  function changeLevel(lvl: Level | 'mind') {
+    setLevel(lvl)
+    newPractice(lvl)
   }
   function goMode(m: Mode) {
     setMode(m)
@@ -121,12 +145,38 @@ export function Ekg({ initialOpen, examEnabled = false, lookup = [], backCase, b
           Tanuld meg lépésről lépésre értelmezni az EKG-t, majd gyakorold klinikai eseteken.
         </div>
         <div className="ekg-an-metrics">
-          <span>11 lépéses elemzés</span>
-          <span>{EKG_CASES.length} eset</span>
-          <span>Tananyaghoz kapcsolt segítség</span>
+          {progress && progress.attempts > 0 ? (
+            <>
+              <span>{progress.attempts} elvégzett feladat</span>
+              <span>{progress.avg_pct}% átlag</span>
+              <span>{EKG_CASES.length} eset</span>
+            </>
+          ) : (
+            <>
+              <span>11 lépéses elemzés</span>
+              <span>{EKG_CASES.length} eset</span>
+              <span>Tananyaghoz kapcsolt segítség</span>
+            </>
+          )}
         </div>
-        <span className="sec-l" style={{ display: 'inline-block', marginTop: 8 }}>Folytatás →</span>
+        <span className="sec-l" style={{ display: 'inline-block', marginTop: 8 }}>
+          {progress && progress.attempts > 0 ? 'Folytatás →' : 'Kezdés →'}
+        </span>
       </Link>
+
+      {/* Fejlődés — csak akkor mutatjuk, ha már van mit mutatni. */}
+      {progress && progress.attempts > 0 && (
+        <Link className="card klink" href="/klinika/ekg/fejlodes">
+          <div className="klink-t">📊 Saját fejlődés</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>
+            Kompetenciák területenként, és hogy min érdemes még dolgozni.
+          </div>
+          <div className="ekg-an-metrics">
+            <span>{progress.avg_pct}% átlag</span>
+            <span>{progress.streak_days} aktív nap</span>
+          </div>
+        </Link>
+      )}
 
       {/* Mai gyakorlás */}
       <Link className="card klink" href={`/klinika/ekg/elemzes/${EKG_CASES[0].id}`}>
@@ -139,23 +189,84 @@ export function Ekg({ initialOpen, examEnabled = false, lookup = [], backCase, b
       <div className="sec-h" style={{ marginTop: 18 }}><span className="sec-t">Tananyag</span></div>
       <ModeBar />
       {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} lookup={lookup} />}
-      {activeMode === 'practice' && prac && <Practice p={prac} onPick={(id) => setPrac({ ...prac, picked: id })} onNext={newPractice} />}
+      {activeMode === 'practice' && prac && (
+        <Practice
+          p={prac} level={level} onLevel={changeLevel}
+          onPick={(id) => {
+            setPrac({ ...prac, picked: id })
+            const meta = PRACTICE_META[prac.qid]
+            // Ha nincs lokalizációs kérdés, a feladat itt lezárul, és menthető.
+            if (!meta?.localize) {
+              void saveEkgAttempt('practice', prac.qid, [
+                { tag: prac.qid, verdict: id === prac.qid ? 'ok' : 'off' },
+              ])
+            }
+          }}
+          onLoc={(id) => {
+            setPrac({ ...prac, loc: id })
+            const meta = PRACTICE_META[prac.qid]
+            // Kétlépcsős feladatnál a felismerés és a lokalizáció együtt adja
+            // az eredményt — ezért itt mentünk, mindkét választ rögzítve.
+            void saveEkgAttempt('practice', prac.qid, [
+              { tag: prac.qid, verdict: prac.picked === prac.qid ? 'ok' : 'off' },
+              { tag: prac.qid, verdict: id === meta?.localize?.correct ? 'ok' : 'off' },
+            ])
+          }}
+          onNext={() => newPractice()}
+        />
+      )}
       {activeMode === 'exam' && examEnabled && <ExamView exam={exam} best={best} onStart={startExam} onAnswer={examAnswer} />}
     </>
   )
 }
 
-function Practice({ p, onPick, onNext }: { p: Prac; onPick: (id: string) => void; onNext: () => void }) {
+const LEVELS: (Level | 'mind')[] = ['mind', 'kezdo', 'halado', 'gyakorlott']
+
+function Practice({
+  p, level, onLevel, onPick, onLoc, onNext,
+}: {
+  p: Prac
+  level: Level | 'mind'
+  onLevel: (l: Level | 'mind') => void
+  onPick: (id: string) => void
+  onLoc: (id: string) => void
+  onNext: () => void
+}) {
   const e = ECG.find((x) => x.id === p.qid)!
   const answered = p.picked != null
   const ok = p.picked === p.qid
   const params = paramsFor(p.qid)
   // A válasz után kiemeljük azokat az elvezetéseket, ahol az eltérés a legjobban
   // látszik — így a felismerés helyhez kötődik, nem csak alakhoz.
-  const focus = (answered ? ECG_FOCUS[p.qid] : undefined) as Lead[] | undefined
+  // A kiemelést csak a lokalizációs kérdés után mutatjuk — különben elárulná a választ.
+  const meta = practiceMeta(p.qid)
+  const showFocus = p.picked != null && (!meta?.localize || p.loc != null)
+  const focus = (showFocus ? ECG_FOCUS[p.qid] : undefined) as Lead[] | undefined
+
+  // A lokalizációs kérdés csak ott jelenik meg, ahol a hely érdemi információ.
+  const loc = meta?.localize
+  const locDone = !loc || p.loc != null
+  const locOk = loc && p.loc === loc.correct
 
   return (
     <div className="ekg-quiz">
+      <div className="sh-chips" style={{ marginBottom: 12 }}>
+        {LEVELS.map((l) => (
+          <button
+            key={l} className={`sh-chip ${level === l ? 'on' : ''}`}
+            onClick={() => onLevel(l)}
+          >
+            {l === 'mind' ? 'Vegyes' : LEVEL_LABEL[l]}
+          </button>
+        ))}
+      </div>
+
+      {meta && (
+        <div className="ekg-vignette">
+          <b>Klinikai kép</b>
+          <p>{meta.vignette}</p>
+        </div>
+      )}
       <div className="eq-h">Milyen eltérést látsz az EKG-n?</div>
 
       {params ? (
@@ -180,11 +291,40 @@ function Practice({ p, onPick, onNext }: { p: Prac; onPick: (id: string) => void
       {answered && (
         <>
           <div className={`eq-fb ${ok ? 'ok' : 'no'}`}>{ok ? '✔ Helyes!' : '❌ Nem talált'} — {e.name}</div>
-          {e.ai && <div className="eq-expl">{e.ai}{e.memory && <div className="eq-mem">🧠 {e.memory}</div>}</div>}
-          <div className="row" style={{ border: 'none', gap: 8, marginTop: 12 }}>
-            <Link className="btn ghost" href={`/klinika/ekg?open=${p.qid}`} style={{ flex: 1 }}>Részletes leírás</Link>
-            <button className="btn" onClick={onNext} style={{ flex: 1 }}>Következő EKG</button>
-          </div>
+
+          {/* Második lépcső: hol látszik. A felismerés önmagában kevés —
+              a lokalizáció adja a klinikai jelentést. */}
+          {loc && (
+            <div className="ekg-step2">
+              <div className="eq-h" style={{ marginTop: 0 }}>{loc.question}</div>
+              <div className="eq-opts">
+                {loc.options.map((o) => {
+                  let cls = ''
+                  if (p.loc != null) { if (o.id === loc.correct) cls = 'right'; else if (o.id === p.loc) cls = 'wrong' }
+                  return (
+                    <button key={o.id} className={`eq-opt ${cls}`} disabled={p.loc != null}
+                      onClick={() => p.loc == null && onLoc(o.id)}>{o.label}</button>
+                  )
+                })}
+              </div>
+              {p.loc != null && (
+                <div className={`eq-fb ${locOk ? 'ok' : 'no'}`} style={{ marginTop: 8 }}>
+                  {locOk ? '✔ Helyes.' : '❌ Nem ott.'} {loc.explain}
+                </div>
+              )}
+            </div>
+          )}
+
+          {locDone && (
+            <>
+              {e.ai && <div className="eq-expl">{e.ai}{e.memory && <div className="eq-mem">🧠 {e.memory}</div>}</div>}
+              {meta?.tip && <div className="ekg-tip"><b>Mire figyelj</b><p>{meta.tip}</p></div>}
+              <div className="row" style={{ border: 'none', gap: 8, marginTop: 12 }}>
+                <Link className="btn ghost" href={`/klinika/ekg?open=${p.qid}`} style={{ flex: 1 }}>Részletes leírás</Link>
+                <button className="btn" onClick={onNext} style={{ flex: 1 }}>Következő EKG</button>
+              </div>
+            </>
+          )}
         </>
       )}
     </div>
@@ -228,6 +368,12 @@ function ExamView({ exam, best, onStart, onAnswer }: { exam: Exam | null; best: 
     <div className="ekg-quiz">
       <div className="eq-h">Kérdés {exam.idx + 1} / {exam.order.length} <span className="eq-prog">Pont: {exam.score}</span></div>
       <div className="ekg-prog-bar"><div style={{ width: `${Math.round((exam.idx / exam.order.length) * 100)}%` }} /></div>
+      {practiceMeta(e.id) && (
+        <div className="ekg-vignette">
+          <b>Klinikai kép</b>
+          <p>{practiceMeta(e.id)!.vignette}</p>
+        </div>
+      )}
       {paramsFor(e.id)
         ? <EcgViewer params={paramsFor(e.id)!} caption="Vizsga mód — a válasz után nincs visszajelzés, az eredményt a végén kapod." />
         : <div className="card" style={{ padding: 8 }}><Trace wave={e.wave} /></div>}

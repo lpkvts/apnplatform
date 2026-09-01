@@ -6,6 +6,8 @@ import { EcgViewer } from '@/components/ecg-viewer'
 import type { EcgCase } from '@/lib/ekg/analysis'
 import { ANALYSIS_STEPS } from '@/lib/ekg/analysis'
 import { GUIDELINE_SOURCES, registryFor } from '@/lib/sources/data'
+import { saveEkgAttempt } from '@/lib/ekg/progress'
+import type { StepId } from '@/lib/ekg/analysis'
 import {
   EMPTY_ANSWER, RHYTHM_OPTIONS, AXIS_OPTIONS, PR_OPTIONS, QRS_OPTIONS, QTC_OPTIONS,
   ST_DIR_OPTIONS, T_OPTIONS, REGIONS, compareSolo, soloScore,
@@ -85,6 +87,22 @@ export function SoloAnalysis({ ecgCase }: { ecgCase: EcgCase }) {
   const [a, setA] = useState<SoloAnswer>(EMPTY_ANSWER)
   const [checked, setChecked] = useState(false)
   const set = <K extends keyof SoloAnswer>(k: K, v: SoloAnswer[K]) => setA((s) => ({ ...s, [k]: v }))
+
+  // Az összehasonlító sorok kulcsai az elemzési lépésekhez igazodnak, így a
+  // válaszok ugyanabba a kompetencia-rendszerbe kerülnek, mint a vezetett módban.
+  const STEP_OF: Record<string, StepId> = {
+    rhythm: 'ritmus', rate: 'frekvencia', axis: 'tengely',
+    pr: 'pr', qrs: 'qrs', qtc: 'qt', st: 'st', t: 't',
+  }
+
+  const check = () => {
+    setChecked(true)
+    const rows = compareSolo(a, ecgCase.params).filter((r) => r.verdict !== 'skipped')
+    void saveEkgAttempt('solo', ecgCase.id, rows.map((r) => ({
+      step: STEP_OF[r.key],
+      verdict: r.verdict as 'ok' | 'partial' | 'off',
+    })))
+  }
 
   if (checked) {
     const rows = compareSolo(a, ecgCase.params)
@@ -267,7 +285,7 @@ export function SoloAnalysis({ ecgCase }: { ecgCase: EcgCase }) {
         </div>
       </div>
 
-      <button className="btn" style={{ width: '100%', marginTop: 12 }} onClick={() => setChecked(true)} disabled={filled === 0}>
+      <button className="btn" style={{ width: '100%', marginTop: 12 }} onClick={check} disabled={filled === 0}>
         Elemzésem ellenőrzése →
       </button>
       {filled === 0 && <p className="sub" style={{ marginTop: 6, fontSize: 12 }}>Tölts ki legalább egy mezőt az ellenőrzéshez.</p>}

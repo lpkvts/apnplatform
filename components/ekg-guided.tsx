@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { EcgViewer } from '@/components/ecg-viewer'
 import { ANALYSIS_STEPS, type AnalysisQuestion, type StepId } from '@/lib/ekg/analysis'
 import { qtc } from '@/lib/ekg/render'
+import { saveEkgAttempt } from '@/lib/ekg/progress'
 import { GUIDELINE_SOURCES, registryFor, checkQuery } from '@/lib/sources/data'
 import type { EcgCase } from '@/lib/ekg/analysis'
 
@@ -59,6 +60,13 @@ export function GuidedAnalysis({
     if (isLast) {
       setDone(true)
       onFinish?.(answers)
+      // A fejlődéskövetéshez lépésenként mentjük a válaszokat: a kompetencia
+      // abból derül ki, melyik elemzési lépésnél tévedett a felhasználó.
+      void saveEkgAttempt('guided', ecgCase.id, answers.map((a) => ({
+        step: a.step,
+        verdict: a.correct ? 'ok' : 'off',
+        usedHint: a.usedHint,
+      })))
       return
     }
     setIdx(idx + 1); setQIdx(0); setPicked(null); setShowHint(false); setUsedHint(false)

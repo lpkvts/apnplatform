@@ -66,6 +66,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.6.0',
+    date: '2026-09-01',
+    title: 'EKG fejlődéskövetés',
+    summary: 'A válaszaid mostantól mentődnek, és kompetencia-területenként mutatják, hol tartasz.',
+    entries: [
+      {
+        id: 'v160-mentes', kind: 'funkcio', title: 'Eredmények mentése',
+        body: 'A vezetett elemzés, az önálló elemzés és a gyakorló mód válaszai mentődnek, kompetencia-területhez rendelve. Nem az számít, hány esetet oldottál meg, hanem hogy mely területeken tévedsz rendszeresen. Az eredmények csak a saját fiókodhoz tartoznak.',
+        href: '/klinika/ekg/fejlodes',
+      },
+      {
+        id: 'v160-fejlodes', kind: 'funkcio', title: 'Saját fejlődés nézet',
+        body: 'Nyolc kompetencia-terület százalékos eredménnyel: ritmusfelismerés, frekvencia, AV-blokkok, vezetési zavarok, tengelyállás, ST-T eltérések, QT és elektrolitok, klinikai értelmezés. A még nem gyakorolt területek is látszanak, hogy a fehér foltok kiderüljenek. A százalék területenként az utolsó negyven válaszból számolódik, így a régi hibák nem rontják örökre az arányt.',
+        href: '/klinika/ekg/fejlodes',
+      },
+      {
+        id: 'v160-gyakorlas', kind: 'funkcio', title: 'Személyre szabott gyakorlás',
+        body: 'A korábban előkészítés alatt álló mód működik: a rendszer a leggyengébb területedet választja ki, és az ahhoz tartozó eseteket ajánlja. A fejlődés nézetből célzottan is indítható egy adott területre.',
+        href: '/klinika/ekg/elemzes/gyakorlas',
+      },
+      {
+        id: 'v160-kompetencia', kind: 'javitas', title: 'Pontosított kompetencia-hozzárendelés',
+        body: 'Két területcímke nem egyezett a tényleges elemazonosítókkal, és nyolc gyakorolható kórkép egyik területhez sem tartozott — azok válaszai kimaradtak volna a fejlődéskövetésből. Most minden gyakorolható elem és minden elemzési lépés besorolható.',
+        href: '/klinika/ekg/fejlodes',
+      },
+    ],
+  },
+  {
     version: '1.5.14',
     date: '2026-08-27',
     title: 'Átvizsgálás utáni javítások',

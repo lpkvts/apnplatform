@@ -186,13 +186,25 @@ export interface Competence {
 }
 
 export const EKG_COMPETENCES: Competence[] = [
-  { id: 'ritmus', label: 'Ritmusfelismerés', steps: ['ritmus', 'p'], tags: ['sinus', 'afib', 'flutter', 'vt', 'paced'] },
+  {
+    id: 'ritmus', label: 'Ritmusfelismerés', steps: ['ritmus', 'p'],
+    tags: ['normal', 'afib', 'aflutter', 'svt', 'vt', 'vfib', 'pvc'],
+  },
   { id: 'frekvencia', label: 'Frekvencia meghatározása', steps: ['frekvencia'], tags: ['brady', 'tachy'] },
   { id: 'avblokk', label: 'AV-blokkok', steps: ['pr'], tags: ['av1', 'av2a', 'av2b', 'av3'] },
-  { id: 'vezetes', label: 'Vezetési zavarok', steps: ['qrs'], tags: ['lbbb', 'rbbb'] },
+  { id: 'vezetes', label: 'Vezetési zavarok', steps: ['qrs'], tags: ['lbbb', 'rbbb', 'pacemaker'] },
   { id: 'tengely', label: 'Tengelyállás', steps: ['tengely'], tags: ['axis'] },
-  { id: 'stt', label: 'ST-T eltérések', steps: ['st', 't'], tags: ['stemi', 'nstemi', 'ischaemia', 'pericarditis'] },
+  {
+    id: 'stt', label: 'ST-T eltérések', steps: ['st', 't'],
+    tags: ['stemi', 'nstemi', 'ischaemia', 'pericarditis', 'pe', 'digoxin'],
+  },
   { id: 'qt', label: 'QT és elektrolitok', steps: ['qt'], tags: ['hyperk', 'hypok', 'hypoca', 'hyperca'] },
+  {
+    // A kalibráció és az összegzés nem egy-egy jelenség felismerése, hanem az
+    // elemzés kerete: helyes beállítások és a lelet klinikai értelmezése.
+    id: 'ertelmezes', label: 'Klinikai értelmezés', steps: ['kalibracio', 'osszegzes'],
+    tags: ['pediatric'],
+  },
 ]
 
 export const competenceForStep = (step: StepId): Competence | undefined =>
