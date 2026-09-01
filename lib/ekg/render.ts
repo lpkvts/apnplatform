@@ -83,6 +83,11 @@ const gauss = (t: number, center: number, width: number, amp: number) =>
 const P_HALF = 0.055
 const T_HALF = 0.11
 
+/** A T-hullám fél szélessége az adott ütéshez, a rendelkezésre álló időhöz igazítva. */
+function tHalf(qtS: number, qrsS: number): number {
+  return Math.max(0.03, Math.min(T_HALF, (qtS - qrsS) * 0.45))
+}
+
 /**
  * Az ütések időpontjai másodpercben.
  *
@@ -202,16 +207,17 @@ export function landmarks(p: EcgParams, beat: number): Landmarks {
   const prS = p.prMs / 1000
   const qtS = p.qtMs / 1000
   const qrsStart = beat - qrsS / 2
-  const tCenter = qrsStart + qtS - T_HALF
+  const th = tHalf(qtS, qrsS)
+  const tCenter = qrsStart + qtS - th
   return {
     beat,
     pStart: qrsStart - prS,
     pEnd: qrsStart - prS + 2 * P_HALF,
     qrsStart,
     qrsEnd: beat + qrsS / 2,
-    jPoint: beat + qrsS * 0.6,
-    tStart: tCenter - T_HALF,
-    tEnd: tCenter + T_HALF,
+    jPoint: beat + qrsS * 0.75,
+    tStart: tCenter - th,
+    tEnd: tCenter + th,
     qtEnd: qrsStart + qtS,
   }
 }
@@ -305,13 +311,13 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
       const w = (b.wide ? Math.max(qrsS, 0.14) : qrsS) / 2.6
       const qrsStart = b.t - (b.wide ? Math.max(qrsS, 0.14) : qrsS) / 2
 
-      if (hasQ && !b.wide) v += gauss(time, b.t - w * 0.45, 0.012, -0.28 * Math.abs(gain) - 0.08)
+      if (hasQ && !b.wide) v += gauss(time, b.t - w * 0.95, 0.016, -0.30 * Math.abs(gain) - 0.22)
 
       if (b.wide && b.early) {
         // Kamrai extrasystole: széles, bizarr, a fő iránnyal ellentétes komplexus.
         const dir = -Math.sign(gain || 1)
-        v += gauss(time, b.t, w * 0.9, dir * 1.5)
-        v += gauss(time, b.t + w * 1.6, w * 1.1, -dir * 0.5)
+        v += gauss(time, b.t, w * 0.9, dir * 1.05)
+        v += gauss(time, b.t + w * 1.6, w * 1.1, -dir * 0.42)
         v += gauss(time, b.t + qtS * 0.5, 0.07, -dir * 0.45)   // diszkordáns T
         continue
       }
@@ -323,8 +329,8 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
           v += gauss(time, b.t - w * 0.1, w * 0.5, -0.45)        // s
           v += gauss(time, b.t + w * 1.0, w * 0.6, 1.05)         // R'
         } else if (lead === 'I' || lead === 'V5' || lead === 'V6' || lead === 'aVL') {
-          v += gauss(time, b.t, w * 0.55, Math.abs(gain) * 1.0)
-          v += gauss(time, b.t + w * 1.5, w * 1.0, -0.55)        // elhúzódó S
+          v += gauss(time, b.t, w * 0.55, Math.max(Math.abs(gain), 0.75) * 1.15)
+          v += gauss(time, b.t + w * 1.6, w * 1.05, -0.38)       // elhúzódó, de sekélyebb S
         } else {
           v += gauss(time, b.t, w * 0.6, gain * 1.05)
           v += gauss(time, b.t + w * 1.3, w * 0.8, -0.28 * Math.abs(gain))
@@ -356,11 +362,17 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
       }
 
       // ── ST-szakasz ──
-      const jPoint = b.t + qrsS * 0.6
-      const tCenter = qrsStart + qtS - T_HALF
-      const tStart = tCenter - T_HALF
-      if (stMv !== 0 && time > jPoint && time < tStart) {
-        v += stMv * Math.min(1, (time - jPoint) / 0.03)
+      const jPoint = b.t + qrsS * 0.75
+      const th = tHalf(qtS, b.wide ? Math.max(qrsS, 0.14) : qrsS)
+      const tCenter = qrsStart + qtS - th
+      const tStart = tCenter - th
+      const tEndAll = tCenter + th
+      if (stMv !== 0 && time > jPoint && time < tEndAll) {
+        // Felfutás a J-ponttól, majd lecsengés a T végén — így az emelt szakasz
+        // és a T-hullám összefüggő egészet alkot, ahogy a valóságban is.
+        const up = Math.min(1, (time - jPoint) / 0.025)
+        const down = Math.min(1, (tEndAll - time) / 0.05)
+        v += stMv * up * down
       }
 
       // ── T-hullám ──
@@ -369,13 +381,14 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
       if (p.bundle === 'lbbb') baseT = (lead === 'V1' || lead === 'V2' || lead === 'V3') ? 0.3 : -0.3
       if (p.bundle === 'rbbb' && (lead === 'V1' || lead === 'V2')) baseT = -0.28
 
-      if (tShape === 'inverted') v += gauss(time, tCenter, 0.055, -Math.abs(baseT) * 1.1)
-      else if (tShape === 'peaked') v += gauss(time, tCenter, 0.032, Math.abs(baseT) * 2.1)
-      else if (tShape === 'flat') v += gauss(time, tCenter, 0.06, baseT * 0.2)
+      const tw = th / 2   // a gauss szórása a fél szélesség fele
+      if (tShape === 'inverted') v += gauss(time, tCenter, tw, -Math.abs(baseT) * 1.1)
+      else if (tShape === 'peaked') v += gauss(time, tCenter, tw * 0.6, Math.abs(baseT) * 2.1)
+      else if (tShape === 'flat') v += gauss(time, tCenter, tw * 1.1, baseT * 0.2)
       else if (tShape === 'biphasic') {
-        v += gauss(time, tCenter - 0.035, 0.03, Math.abs(baseT) * 0.8)
-        v += gauss(time, tCenter + 0.035, 0.03, -Math.abs(baseT) * 0.8)
-      } else v += gauss(time, tCenter, 0.055, baseT)
+        v += gauss(time, tCenter - tw * 0.65, tw * 0.55, Math.abs(baseT) * 0.8)
+        v += gauss(time, tCenter + tw * 0.65, tw * 0.55, -Math.abs(baseT) * 0.8)
+      } else v += gauss(time, tCenter, tw, baseT)
 
       // Ingerképző tüske pacemaker-ritmusnál
       if (p.rhythm === 'paced') v += gauss(time, qrsStart - 0.012, 0.002, 0.5)

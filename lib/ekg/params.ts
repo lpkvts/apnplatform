@@ -31,7 +31,7 @@ export const ECG_PARAMS: Record<string, EcgParams> = {
     rate: 186, rhythm: 'sinus', p: 'absent', prMs: 0, qrsMs: 84, axis: 'normal', qtMs: 260, noise: 0.2,
   },
   vt: {
-    rate: 168, rhythm: 'vt', p: 'absent', prMs: 0, qrsMs: 165, axis: 'extreme', qtMs: 340, noise: 0.25,
+    rate: 168, rhythm: 'vt', p: 'absent', prMs: 0, qrsMs: 165, axis: 'extreme', qtMs: 260, noise: 0.25,
     t: { I: 'inverted', II: 'inverted', V5: 'inverted', V6: 'inverted' },
   },
   vfib: {

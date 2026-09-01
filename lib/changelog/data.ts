@@ -66,6 +66,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.6.3',
+    date: '2026-09-01',
+    title: 'Az összes EKG-görbe átvizsgálva',
+    summary: 'Több görbe nem azt mutatta, amit a hozzá tartozó helyes válasz állított — mind javítva.',
+    entries: [
+      {
+        id: 'v163-st', kind: 'javitas', title: 'Látható ST-eleváció',
+        body: 'A szívinfarktus eseteinél a mellkasi elvezetésekben gyakorlatilag nem látszott ST-eleváció: az emelt szakasz túl rövid volt, és a mély S-hullám elnyelte. Mostantól az emelkedés a T-hullámba olvad, ahogy a valóságban is — ez adja a jellegzetes képet. A pericarditis diffúz elevációja szintén láthatóvá vált.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v163-t', kind: 'javitas', title: 'A T-hullám elfér a helyén',
+        body: 'Széles komplexusú, szapora ritmusnál — például kamrai tachycardiánál — a T-hullám belecsúszott a QRS-be, így az alakja értékelhetetlen volt: invertáltnak jelölve is pozitívnak látszott. A T szélessége mostantól a rendelkezésre álló időhöz igazodik.',
+        href: '/klinika/ekg/elemzes',
+      },
+      {
+        id: 'v163-tengely', kind: 'javitas', title: 'Jobb szárblokk tengelyállása',
+        body: 'Jobb szárblokknál az I. elvezetésben a széles S mélyebb volt az R-nél, így a nettó irány negatívba fordult — a tengelymeghatározás félrevezetett volna. Emellett a kamrai extrasystole kilógott a rácsból, a kóros Q-hullám pedig alig volt kivehető.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v163-ellenorzes', kind: 'eszkoz', title: 'Gépi görbe-ellenőrzés',
+        body: 'Mind a 36 görbe — nyolc eset és huszonnyolc gyakorló elem — automatikusan ellenőrizhető: frekvencia, QRS-szélesség, PR, tengely, ST a J+60 ms pontban, T-alak, kóros Q és a rácsba illeszkedés. Így a hasonló eltérések a jövőben azonnal kiderülnek.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.6.2',
     date: '2026-09-01',
     title: 'A görbe és a helyes válasz összhangja',
