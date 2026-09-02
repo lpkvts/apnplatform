@@ -9,6 +9,8 @@ import {
 import { CourseAdmin } from '@/components/course-admin'
 import { getAssignments } from '@/lib/education/assignments-data'
 import { CourseAssignments } from '@/components/course-assignments'
+import { getMaterials, getStudentMaterials } from '@/lib/education/materials-data'
+import { CourseMaterials } from '@/components/course-materials'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,10 +25,12 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
   const mine = memberships.find((m) => m.institution_id === course.institution_id)
   const canManage = mine?.role === 'instructor' || mine?.role === 'admin'
 
-  const [students, comps, assignments] = await Promise.all([
+  const [students, comps, assignments, materials] = await Promise.all([
     canManage ? getCourseStudents(id) : Promise.resolve([]),
     getCourseCompetencies(id),
     getAssignments(id),
+    // Az oktató az előkészítés alatt lévőket is látja, a hallgató csak a közzétettet.
+    canManage ? getMaterials(id) : getStudentMaterials(id),
   ])
 
   return (
@@ -64,6 +68,8 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
           </div>
         </>
       )}
+
+      <CourseMaterials courseId={id} materials={materials} canManage={canManage} />
 
       <CourseAssignments
         courseId={id} assignments={assignments} canManage={canManage}

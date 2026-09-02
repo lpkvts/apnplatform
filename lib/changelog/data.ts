@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.18.0',
+    date: '2026-09-02',
+    title: 'Tananyagok és klinikai esetek',
+    summary: 'Kurzushoz köthető esetek betegadatokkal, kérdéssel és kivetíthető nézettel.',
+    entries: [
+      {
+        id: 'v1180-eset', kind: 'funkcio', title: 'Klinikai eset a kurzushoz',
+        body: 'Az oktató klinikai esetet vehet fel: a helyzet leírása, a betegadatok és leletek, majd a csoportnak feltett kérdés. Az eltérő értékek külön jelölhetők, és kivetítve egy pillantással látszik, mi a kóros. A megoldást csak az oktató látja, és ő dönti el, mikor fedi fel.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1180-vetites', kind: 'funkcio', title: 'Kivetíthető eset',
+        body: 'Az eset teljes képernyőn megnyitható: a helyzet, a betegadatok nagyobb léptékben, a kérdés kiemelve, és a hozzá tartozó modul egy kattintással elérhető. A megoldás gombnyomásra jelenik meg, így a csoport előbb gondolkodhat rajta.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1180-modul', kind: 'eszkoz', title: 'A platform saját eszközeire mutat',
+        body: 'Minden tananyag összeköthető a platform meglévő moduljaival: klinikai skálák, vérgáz, EKG, Labor Kisokos, betegvizsgálat, betegségtár, kompetenciatérkép. Az oktatási tartalom így nem másolja a klinikai eszközöket, hanem rájuk mutat — a hallgató ugyanazt használja, mint a napi munkában.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1180-elokeszites', kind: 'eszkoz', title: 'Előkészítés láthatatlanul',
+        body: 'A tananyag alapból nem látszik a hallgatóknak: az oktató nyugodtan előkészítheti, majd egy kattintással teszi közzé. A szerkesztés alatt lévő tételek szaggatott kerettel és jelöléssel különülnek el.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.17.0',
     date: '2026-09-02',
     title: 'Oktatói munkafelület',
