@@ -34,6 +34,7 @@ export default async function UjJelszoPage({
 
   return (
     <>
+      <Link className="sh-back" href="/login">‹ Bejelentkezés</Link>
       <h1 className="h1">Új jelszó megadása</h1>
       <p className="sub">{user.email}</p>
 

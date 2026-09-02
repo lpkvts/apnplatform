@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.18.1',
+    date: '2026-09-02',
+    title: 'Visszalépés a bejelentkezésről',
+    summary: 'A nyitóoldalra vissza lehet jutni a belépési képernyőről is.',
+    entries: [
+      {
+        id: 'v1181-vissza', kind: 'javitas', title: 'Kiút a bejelentkezésből',
+        body: 'A nyitóoldalról a belépésre lépve nem volt visszaút. Böngészőben a vissza gomb megoldotta, a telepített alkalmazásban viszont nincs böngészőkeret — ott a képernyő zsákutca volt. Mostantól a bejelentkezés, a jelszó-visszaállítás és a karbantartási képernyő tetején is ott a visszalépés.',
+        href: '/login',
+      },
+    ],
+  },
+  {
     version: '1.18.0',
     date: '2026-09-02',
     title: 'Tananyagok és klinikai esetek',

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { signIn, signUp, requestReset } from './actions'
 import { LoginForm } from '@/components/login-form'
 import { getMaintenance } from '@/lib/flags'
@@ -44,7 +45,11 @@ export default async function LoginPage({
         <h1 className="maint-t">Karbantartás</h1>
         <p className="maint-m">{maint.message}</p>
 
-        <div style={{ width: '100%', maxWidth: 420, marginTop: 26 }}>
+        <Link className="sec-l" href="/" style={{ marginTop: 18, fontSize: 13.5 }}>
+          ‹ Nyitóoldal
+        </Link>
+
+        <div style={{ width: '100%', maxWidth: 420, marginTop: 20 }}>
           {messages}
           <details className="maint-login">
             <summary>Adminisztrátori belépés</summary>
@@ -57,6 +62,9 @@ export default async function LoginPage({
 
   return (
     <div className="auth-page">
+      <Link className="sh-back" href="/" style={{ display: 'inline-block', marginBottom: 6 }}>
+        ‹ Vissza a nyitóoldalra
+      </Link>
       <h1 className="h1">Belépés</h1>
       <p className="sub">APN-MED</p>
       {messages}
