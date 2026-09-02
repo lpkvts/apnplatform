@@ -11,6 +11,7 @@ import { getAssignments } from '@/lib/education/assignments-data'
 import { CourseAssignments } from '@/components/course-assignments'
 import { getMaterials, getStudentMaterials } from '@/lib/education/materials-data'
 import { CourseMaterials } from '@/components/course-materials'
+import { getCourseGroups } from '@/lib/education/student-data'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,6 +33,7 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
     // Az oktató az előkészítés alatt lévőket is látja, a hallgató csak a közzétettet.
     canManage ? getMaterials(id) : getStudentMaterials(id),
   ])
+  const groups = canManage ? await getCourseGroups(id) : []
 
   return (
     <>
@@ -83,7 +85,7 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
       )}
 
       {canManage ? (
-        <CourseAdmin course={course} students={students} />
+        <CourseAdmin course={course} students={students} groups={groups} />
       ) : (
         <>
           <div className="sec-h"><span className="sec-t">Tartalom</span></div>

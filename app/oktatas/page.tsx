@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
 import {
-  getMemberships, getTeachingMembership, getCourses, getMyCourses,
+  getMemberships, getTeachingMembership, getCourses,
   getInstructorSummary,
 } from '@/lib/education/data'
+import { getMyCoursesWithProgress, getMyTodo, napokMulva } from '@/lib/education/student-data'
 import { COURSE_STATUS_LABEL, EDU_ROLE_LABEL, type Course, type EnrolledCourse } from '@/lib/education/types'
 
 export const dynamic = 'force-dynamic'
@@ -39,7 +40,8 @@ export default async function OktatasPage() {
 
   /* ── Hallgatói nézet ── */
   if (!teaching) {
-    const courses = await getMyCourses()
+    const [courses, todo] = await Promise.all([getMyCoursesWithProgress(), getMyTodo()])
+
     return (
       <>
         <h1 className="h1">Kurzusaim</h1>
@@ -47,18 +49,74 @@ export default async function OktatasPage() {
           {memberships.map((m) => m.institution?.name).filter(Boolean).join(', ')}
         </p>
 
-        {courses.length === 0 && (
-          <div className="card"><p style={{ margin: 0 }}>Még nincs kurzusod.</p></div>
+        {/* Teendők: ami hátra van, a legsürgősebb elöl. A már beadott feladat
+            akkor sem szerepel itt, ha újra beadható — ez a lista arról szól,
+            mi hiányzik, nem arról, mit lehetne javítani. */}
+        {todo.length > 0 && (
+          <>
+            <div className="sec-h">
+              <span className="sec-t">Teendőid</span>
+              <span className="sub" style={{ margin: 0, fontSize: 13 }}>{todo.length}</span>
+            </div>
+            {todo.map((t) => {
+              const nap = napokMulva(t.due_at)
+              return (
+                <Link className="card klink" href={`/oktatas/feladat/${t.assignment_id}`} key={t.assignment_id}>
+                  <div className="row" style={{ border: 'none', padding: 0, alignItems: 'flex-start' }}>
+                    <span style={{ flex: 1 }}>
+                      <b style={{ fontSize: 15 }}>{t.title}</b>
+                      <span className="sub" style={{ display: 'block', margin: '2px 0 0', fontSize: 12.5 }}>
+                        {t.course_title}
+                      </span>
+                    </span>
+                    {t.due_at && (
+                      <span className={`mp-badge ${t.lejart ? 'rejected' : nap !== null && nap <= 3 ? 'pending' : 'inactive'}`}>
+                        {t.lejart ? 'Lejárt'
+                          : nap === 0 ? 'Ma jár le'
+                          : nap === 1 ? 'Holnap'
+                          : `${nap} nap`}
+                      </span>
+                    )}
+                  </div>
+                </Link>
+              )
+            })}
+          </>
         )}
 
-        {courses.map((c: EnrolledCourse) => (
+        <div className="sec-h"><span className="sec-t">Kurzusok</span></div>
+
+        {courses.length === 0 && (
+          <div className="card">
+            <p style={{ margin: 0 }}>
+              Még nincs kurzusod. Ha képzésen veszel részt, az oktató iratkoztat be.
+            </p>
+          </div>
+        )}
+
+        {courses.map((c) => (
           <Link key={c.id} className="card klink" href={`/oktatas/kurzus/${c.id}`}>
             <div className="klink-t">{c.icon ?? '📘'} {c.title}</div>
             <div className="sub" style={{ margin: '4px 0 8px' }}>
-              {[c.level, c.specialty].filter(Boolean).join(' · ')}
+              {[c.level, c.specialty].filter(Boolean).join(' · ') || c.institution_name}
             </div>
-            <div className="ekg-prog-bar"><div style={{ width: `${c.progress_pct}%` }} /></div>
-            <div className="sub" style={{ marginTop: 6, fontSize: 12 }}>{c.progress_pct}% teljesítve</div>
+
+            {c.haladas === null ? (
+              <p className="sub" style={{ margin: 0, fontSize: 12.5 }}>
+                A kurzuson még nincs megnyitott feladat.
+              </p>
+            ) : (
+              <>
+                <div className="ekg-prog-bar">
+                  <div style={{ width: `${c.haladas}%` }} />
+                </div>
+                <div className="sub" style={{ marginTop: 6, fontSize: 12 }}>
+                  {c.beadott} / {c.feladatok} feladat beadva
+                  {c.teljesitett > 0 && ` · ${c.teljesitett} teljesítve`}
+                  {c.beadott > 0 && ` · átlag ${c.atlag}%`}
+                </div>
+              </>
+            )}
           </Link>
         ))}
       </>

@@ -123,3 +123,48 @@ export async function removeStudent(courseId: string, userId: string): Promise<R
   revalidatePath(`/oktatas/kurzus/${courseId}`)
   return { ok: true, message: 'A hallgató eltávolítva.' }
 }
+
+/* ─────────── Csoportok ─────────── */
+
+/**
+ * Csoport létrehozása a kurzuson.
+ *
+ * A csoport nagyobb évfolyamnál kell: a feladat egy csoportnak is kiadható,
+ * és az eredmények is csoportonként nézhetők.
+ */
+export async function createGroup(courseId: string, name: string): Promise<Result> {
+  const n = name.trim()
+  if (!n) return { ok: false, message: 'A csoport neve kötelező.' }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('education_groups').insert({ course_id: courseId, name: n })
+  if (error) return { ok: false, message: error.message }
+
+  revalidatePath(`/oktatas/kurzus/${courseId}`)
+  return { ok: true, message: 'A csoport létrehozva.' }
+}
+
+export async function deleteGroup(id: string, courseId: string): Promise<Result> {
+  const supabase = await createClient()
+  // A beiratkozások megmaradnak, csak a csoport-hozzárendelés szűnik meg:
+  // a hallgató nem eshet ki a kurzusról egy csoport törlése miatt.
+  const { error } = await supabase.from('education_groups').delete().eq('id', id)
+  if (error) return { ok: false, message: error.message }
+  revalidatePath(`/oktatas/kurzus/${courseId}`)
+  return { ok: true, message: 'A csoport törölve. A hallgatók a kurzuson maradtak.' }
+}
+
+/** Hallgató csoportba sorolása. */
+export async function setStudentGroup(
+  courseId: string, userId: string, groupId: string | null,
+): Promise<Result> {
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from('education_enrollments')
+    .update({ group_id: groupId })
+    .eq('course_id', courseId).eq('user_id', userId)
+  if (error) return { ok: false, message: error.message }
+  revalidatePath(`/oktatas/kurzus/${courseId}`)
+  return { ok: true, message: groupId ? 'Csoportba sorolva.' : 'Kivéve a csoportból.' }
+}

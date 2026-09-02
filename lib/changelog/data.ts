@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.19.0',
+    date: '2026-09-02',
+    title: 'Hallgatói haladás és csoportok',
+    summary: 'Valós haladás, teendőlista és csoportkezelés a kurzusokon.',
+    entries: [
+      {
+        id: 'v1190-haladas', kind: 'javitas', title: 'A haladás valós értéket mutat',
+        body: 'A kurzuskártyákon minden hallgatónál nulla százalék állt, mert a haladást senki nem számolta ki. Mostantól a beadott és a megnyitott feladatok arányából adódik, a beadott darabszámmal és az átlaggal együtt. Ahol még nincs feladat, ott nem nulla százalék jelenik meg, hanem az, hogy nincs mihez mérni.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1190-teendok', kind: 'funkcio', title: 'Teendőlista a hallgatónak',
+        body: 'A hallgatói kezdőlapon megjelenik, mely feladatok vannak hátra, a legközelebbi határidővel elöl. A lejárt és a három napon belül esedékes tételek külön jelölést kapnak. A már beadott feladat akkor sem szerepel itt, ha újra beadható — ez a lista arról szól, mi hiányzik.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1190-csoportok', kind: 'funkcio', title: 'Csoportok kezelése',
+        body: 'A kurzuson csoportok hozhatók létre, és a hallgatók besorolhatók. A csoport törlésekor a hallgatók a kurzuson maradnak, csak a besorolás szűnik meg — senki nem eshet ki egy csoport törlése miatt.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1190-szamitas', kind: 'eszkoz', title: 'Számolt, nem tárolt haladás',
+        body: 'A haladást szándékosan nem tároljuk. A tárolt érték elavulna, amint az oktató új feladatot nyit meg — akkor minden korábbi százalék érvénytelenné válna, és valakinek frissítenie kellene őket. A számított érték mindig a pillanatnyi állapotot tükrözi.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.18.1',
     date: '2026-09-02',
     title: 'Visszalépés a bejelentkezésről',

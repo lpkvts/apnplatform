@@ -1,8 +1,12 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { setCourseStatus, enrollStudent, removeStudent, type Result } from '@/lib/education/actions'
+import {
+  setCourseStatus, enrollStudent, removeStudent, createGroup, deleteGroup, setStudentGroup,
+  type Result,
+} from '@/lib/education/actions'
 import type { Course, CourseStudent } from '@/lib/education/types'
+import type { Group } from '@/lib/education/student'
 
 const STATUSES: { id: Course['status']; label: string; note: string }[] = [
   { id: 'draft', label: 'Piszkozat', note: 'A hallgatók még nem látják.' },
@@ -10,7 +14,14 @@ const STATUSES: { id: Course['status']; label: string; note: string }[] = [
   { id: 'archived', label: 'Lezárt', note: 'Csak megtekinthető, új beiratkozás nincs.' },
 ]
 
-export function CourseAdmin({ course, students }: { course: Course; students: CourseStudent[] }) {
+export function CourseAdmin({
+  course, students, groups,
+}: {
+  course: Course
+  students: CourseStudent[]
+  groups: Group[]
+}) {
+  const [ujCsoport, setUjCsoport] = useState('')
   const [pending, start] = useTransition()
   const [res, setRes] = useState<Result | null>(null)
   const [status, setStatus] = useState(course.status)
@@ -41,6 +52,49 @@ export function CourseAdmin({ course, students }: { course: Course; students: Co
         >
           Állapot mentése
         </button>
+      </div>
+
+      {/* ── Csoportok ── */}
+      <div className="sec-h">
+        <span className="sec-t">Csoportok</span>
+        {groups.length > 0 && (
+          <span className="sub" style={{ margin: 0, fontSize: 13 }}>{groups.length}</span>
+        )}
+      </div>
+      <div className="card">
+        {groups.length === 0 && (
+          <p className="sub" style={{ margin: '0 0 10px' }}>
+            Nincs csoport. Nagyobb évfolyamnál érdemes csoportokat létrehozni — a feladat
+            egy csoportnak is kiadható.
+          </p>
+        )}
+        {groups.map((g) => (
+          <div className="row" key={g.id}>
+            <span>
+              <b>{g.name}</b>
+              <span className="sub" style={{ display: 'block', margin: 0, fontSize: 12 }}>
+                {g.letszam} hallgató
+              </span>
+            </span>
+            <button className="sec-l" disabled={pending}
+              style={{ background: 'none', border: 0, font: 'inherit', fontSize: 13, color: 'var(--muted)', cursor: 'pointer' }}
+              onClick={() => start(async () => setRes(await deleteGroup(g.id, course.id)))}>
+              Törlés
+            </button>
+          </div>
+        ))}
+        <div className="row" style={{ border: 'none', padding: '10px 0 0', gap: 8 }}>
+          <input className="field" style={{ margin: 0, flex: 1 }} value={ujCsoport}
+            onChange={(e) => setUjCsoport(e.target.value)}
+            placeholder="pl. A csoport" aria-label="Új csoport neve" />
+          <button className="btn sm" disabled={pending || !ujCsoport.trim()}
+            onClick={() => start(async () => {
+              setRes(await createGroup(course.id, ujCsoport))
+              setUjCsoport('')
+            })}>
+            Hozzáadás
+          </button>
+        </div>
       </div>
 
       {/* ── Hallgatók ── */}
@@ -80,13 +134,25 @@ export function CourseAdmin({ course, students }: { course: Course; students: Co
             <div className="ekg-prog-bar" style={{ marginTop: 8 }}>
               <div style={{ width: `${s.progress_pct}%` }} />
             </div>
-            <button
-              className="sec-l" disabled={pending}
-              style={{ background: 'none', border: 0, padding: '8px 0 0', font: 'inherit', fontSize: 13, cursor: 'pointer' }}
-              onClick={() => start(async () => setRes(await removeStudent(course.id, s.user_id)))}
-            >
-              Eltávolítás a kurzusról
-            </button>
+            <div className="row" style={{ border: 'none', padding: '10px 0 0', gap: 8 }}>
+              {groups.length > 0 && (
+                <select className="field" style={{ margin: 0, flex: 1, fontSize: 13 }}
+                  value={s.group_id ?? ''} disabled={pending}
+                  onChange={(e) => start(async () =>
+                    setRes(await setStudentGroup(course.id, s.user_id, e.target.value || null)))}
+                  aria-label="Csoport">
+                  <option value="">Nincs csoport</option>
+                  {groups.map((g) => <option key={g.id} value={g.id}>{g.name}</option>)}
+                </select>
+              )}
+              <button
+                className="sec-l" disabled={pending}
+                style={{ background: 'none', border: 0, font: 'inherit', fontSize: 13, cursor: 'pointer', flex: 'none' }}
+                onClick={() => start(async () => setRes(await removeStudent(course.id, s.user_id)))}
+              >
+                Eltávolítás
+              </button>
+            </div>
           </div>
         ))
       )}
