@@ -28,14 +28,6 @@ export default async function FejlodesHub() {
         </Link>
       )}
 
-      <div className="card" style={{ opacity: 0.85 }}>
-        <div className="row" style={{ border: 'none', padding: 0 }}>
-          <b>🤝 Mentorprogram</b>
-          <span className="cms-badge cs-followup">Hamarosan</span>
-        </div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>Mentor–mentorált kapcsolat, célok, esetmegbeszélés, fejlődési napló. Fejlesztés alatt.</div>
-      </div>
-
       {passportEnabled && (
         <Link className="card klink" href="/kompetenciak">
           <div className="klink-t">📈 Kompetenciák</div>

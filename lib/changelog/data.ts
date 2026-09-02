@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.13.0',
+    version: '1.13.1',
     date: '2026-09-02',
     title: 'Mentorprogram',
     summary: 'Mentorjelentkezés, kereshető mentorprofilok és adminisztrátori elbírálás.',
@@ -94,6 +94,11 @@ export const RELEASES: Release[] = [
         id: 'v1130-admin', kind: 'eszkoz', title: 'Elbírálás és moderálás',
         body: 'Az adminisztrátor a Tartalomkezelésben látja a jelentkezéseket, a függőben lévőket elöl. Jóváhagyhat, elutasíthat indoklással — amit a jelentkező is lát —, vagy inaktiválhat egy profilt. Az inaktiválás elrejti a keresésből, de nem törli.',
         href: '/cms/mentorok',
+      },
+      {
+        id: 'v1130-regi', kind: 'javitas', title: 'A Hamarosan jelzés lekerült',
+        body: 'A Fejlődés menüben ottmaradt a mentorprogram korábbi, „Hamarosan” jelzésű kártyája az új mellett. Mivel a modul elkészült, a jelzés lekerült — kikapcsolt állapotban egyszerűen nem jelenik meg semmi.',
+        href: '/fejlodes',
       },
       {
         id: 'v1130-kapcsolo', kind: 'eszkoz', title: 'Teljesen kikapcsolható',
