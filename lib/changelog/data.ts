@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.13.0',
+    date: '2026-09-02',
+    title: 'Mentorprogram',
+    summary: 'Mentorjelentkezés, kereshető mentorprofilok és adminisztrátori elbírálás.',
+    entries: [
+      {
+        id: 'v1130-modul', kind: 'funkcio', title: 'Mentorprogram modul',
+        body: 'Két belépési pont: „Mentort keresek” és „Mentor leszek”. A jelentkező megadja a szakterületét, tapasztalatát, a vállalt mentorálási témákat és formákat, valamint egy bemutatkozást. A profil adminisztrátori jóváhagyás után jelenik meg a keresésben.',
+        href: '/mentor',
+      },
+      {
+        id: 'v1130-kereses', kind: 'funkcio', title: 'Mentorkeresés',
+        body: 'Szűrés szakterület, mentorálási téma és tapasztalat szerint, valamint szabad szavas keresés, ami a bemutatkozásra is kiterjed. A szűrők csak azokat az értékeket kínálják, amelyekre ténylegesen van mentor — üres találati listákba így nem lehet belefutni.',
+        href: '/mentor/kereses',
+      },
+      {
+        id: 'v1130-admin', kind: 'eszkoz', title: 'Elbírálás és moderálás',
+        body: 'Az adminisztrátor a Tartalomkezelésben látja a jelentkezéseket, a függőben lévőket elöl. Jóváhagyhat, elutasíthat indoklással — amit a jelentkező is lát —, vagy inaktiválhat egy profilt. Az inaktiválás elrejti a keresésből, de nem törli.',
+        href: '/cms/mentorok',
+      },
+      {
+        id: 'v1130-kapcsolo', kind: 'eszkoz', title: 'Teljesen kikapcsolható',
+        body: 'A modul a Beállítások oldalról ki- és bekapcsolható. Kikapcsolva sehol nem jelenik meg a felhasználóknak, de a profilok megmaradnak, és újbóli bekapcsoláskor azonnal elérhetők. A saját állapotát a felhasználó nem módosíthatja jóváhagyottra: ezt az adatbázis szintjén védjük, és a jóváhagyott profil tartalmi módosítása után automatikusan visszakerül elbírálásra.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.12.2',
     date: '2026-09-02',
     title: 'Gyorsabb belépés és navigáció',

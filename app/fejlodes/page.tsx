@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { getFlag } from '@/lib/flags'
 export const dynamic = 'force-dynamic'
 export default async function FejlodesHub() {
+  const mentorEnabled = await getFlag('mentorprogram', false)
+
   const [passportEnabled, careerEnabled, cpdEnabled] = await Promise.all([getFlag('kompetencia_passport', false), getFlag('apn_career', false), getFlag('cpd', false)])
   return (
     <>
@@ -16,6 +18,15 @@ export default async function FejlodesHub() {
           Klinikai esetek és korábbi betegértékelések
         </div>
       </Link>
+
+      {mentorEnabled && (
+        <Link className="card klink" href="/mentor">
+          <div className="klink-t">🤝 Mentorprogram</div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>
+            Mentort keresel, vagy megosztanád a tapasztalatod?
+          </div>
+        </Link>
+      )}
 
       <div className="card" style={{ opacity: 0.85 }}>
         <div className="row" style={{ border: 'none', padding: 0 }}>
