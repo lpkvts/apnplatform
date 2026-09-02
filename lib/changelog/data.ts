@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.12.1',
+    date: '2026-09-02',
+    title: 'Adminisztrátori értesítések',
+    summary: 'Az új regisztrációk és a platform eseményei megjelennek az értesítések között.',
+    entries: [
+      {
+        id: 'v1121-admin', kind: 'funkcio', title: 'Mi történt a platformon',
+        body: 'Adminisztrátorként az Értesítések oldalon megjelenik, hány új felhasználó regisztrált a legutóbbi megtekintésed óta, és mennyi tartalomváltozás, felhasználó-módosítás és beállításváltozás történt. A számok mellett lenyitható a legutóbb regisztráltak listája és a legutóbbi naplóesemények, onnan pedig egy kattintással elérhető a felhasználókezelés és a teljes napló.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1121-harang', kind: 'eszkoz', title: 'A harang is jelez',
+        body: 'Az adminisztrátori tételek beleszámítanak a fejlécben látható értesítésszámba, így nem kell külön odanézni. A jogosultságot az adatbázis érvényesíti: aki nem adminisztrátor, annak a lekérdezés üres eredményt ad, tehát a felhasználók száma és a naplóesemények nem szivárognak ki.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1121-felcim', kind: 'eszkoz', title: 'Rövidebb nyitóoldali felcím',
+        body: 'A nyitóoldalon a felcím „APN-MED – Egészségügyi szakembereknek” lett.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.12.0',
     date: '2026-09-02',
     title: 'Olvashatóbb felület',

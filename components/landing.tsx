@@ -117,7 +117,7 @@ export function Landing() {
         <span className="lp-blob lp-blob-b" aria-hidden="true" />
         <div className="lp-wrap lp-hero-in lp-hero-solo">
           <div>
-            <p className="lp-eyebrow">APN-MED – Egészségügyi szakemberek szakmai platformja</p>
+            <p className="lp-eyebrow">APN-MED – Egészségügyi szakembereknek</p>
             <h1 className="lp-h1">
               A <span className="lp-accent">kiterjesztett</span><br />
               szakmai tudás<br />

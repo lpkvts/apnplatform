@@ -211,5 +211,82 @@ export const getNotificationCount = cache(async (): Promise<number> => {
     ? releasesAfterVersion(c.seen_version).reduce((n, r) => n + r.entries.length, 0)
     : changesSince(c.seen_at).length
 
-  return dbCount + code
+  // Az adminisztrátori tételek — új regisztráció, naplóesemény — hozzáadódnak.
+  // A szerepkört nem kell külön lekérdezni: a függvény nem adminisztrátornak
+  // üres eredményt ad, tehát a szám nulla marad.
+  const admin = await adminNotificationCount()
+
+  return dbCount + code + admin
 })
+
+/* ─────────── Adminisztrátori értesítések ─────────── */
+
+export interface AdminCounts {
+  uj_regisztracio: number
+  uj_szerepkor: number
+  uj_tartalom: number
+  karbantartas_valtas: number
+  seen_at: string | null
+}
+
+export interface Signup {
+  id: string
+  full_name: string | null
+  specialty: string | null
+  created_at: string
+}
+
+export interface AuditEvent {
+  id: string
+  action: string
+  entity: string
+  entity_title: string | null
+  actor_email: string | null
+  created_at: string
+}
+
+/**
+ * Adminisztrátori összesítés — mi történt a legutóbbi megtekintés óta.
+ *
+ * Nem adminisztrátornak üres eredményt ad: a jogosultságot az adatbázis
+ * függvénye érvényesíti, nem a felület.
+ */
+export const getAdminCounts = cache(async (): Promise<AdminCounts | null> => {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_notification_counts')
+  return (data as AdminCounts[] | null)?.[0] ?? null
+})
+
+/** Az összes adminisztrátori tétel száma — a harangon ez adódik hozzá. */
+export async function adminNotificationCount(): Promise<number> {
+  const c = await getAdminCounts()
+  if (!c) return 0
+  // A több azonos típusú tételt itt is összevonjuk egy sorrá, ahogy a lista teszi.
+  const g = (n: number) => (n === 0 ? 0 : 1)
+  return g(c.uj_regisztracio) + g(c.uj_szerepkor) + g(c.uj_tartalom) + g(c.karbantartas_valtas)
+}
+
+export async function getRecentSignups(limit = 10): Promise<Signup[]> {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_recent_signups', { p_limit: limit })
+  return (data as Signup[] | null) ?? []
+}
+
+export async function getRecentEvents(limit = 15): Promise<AuditEvent[]> {
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('admin_recent_events', { p_limit: limit })
+  return (data as AuditEvent[] | null) ?? []
+}
+
+/** Magyar megnevezés a naplóesemény típusához. */
+export function eventLabel(e: AuditEvent): string {
+  const ENTITY: Record<string, string> = {
+    profiles: 'Felhasználó', diseases: 'Betegségleírás', guidelines: 'Irányelv',
+    lab_parameters: 'Laborparaméter', feature_flags: 'Beállítás',
+    clinical_cases: 'Klinikai eset', competencies: 'Kompetencia',
+  }
+  const ACTION: Record<string, string> = {
+    insert: 'létrehozva', update: 'módosítva', delete: 'törölve', role_change: 'szerepkör módosítva',
+  }
+  return `${ENTITY[e.entity] ?? e.entity} ${ACTION[e.action] ?? e.action}`
+}
