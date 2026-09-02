@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.13.2',
+    date: '2026-09-02',
+    title: 'BISAP pontozó',
+    summary: 'Az akut hasnyálmirigy-gyulladás korai súlyossági rétegzése bekerült a Score Hubba.',
+    entries: [
+      {
+        id: 'v1132-bisap', kind: 'szakmai', title: 'BISAP',
+        body: 'Öt tétel, mindegyik egy pont, a felvételtől számított 24 órán belül értékelve: karbamid, tudatállapot-zavar, SIRS, életkor és mellkasi folyadékgyülem. Három kockázati sáv, a hármas pontszámtól jelentősen magasabb halálozási és szervelégtelenségi kockázattal.',
+        href: '/klinika/score',
+      },
+      {
+        id: 'v1132-urea', kind: 'szakmai', title: 'A karbamid a hazai leletnek megfelelően',
+        body: 'Az eredeti pontozó BUN-t használ mg/dl-ben, a hazai laborok viszont karbamidot adnak meg mmol/l-ben. A két érték nem ugyanaz: a 25 mg/dl BUN kb. 8,9 mmol/l karbamidnak felel meg. A tétel ezért azzal a mértékegységgel szerepel, ahogy a leleten látszik, és a súgó jelzi az átváltást — enélkül a küszöböt nem lehetne megtalálni a magyar leleten.',
+        href: '/klinika/score',
+      },
+      {
+        id: 'v1132-korlat', kind: 'eszkoz', title: 'Amit a pontszám nem mond meg',
+        body: 'A BISAP fajlagossága magas, az érzékenysége viszont mérsékelt: az alacsony pontszám nem zárja ki a súlyos lefolyást. A leírás ezt kimondja, és arra is figyelmeztet, hogy krónikus veseelégtelenségben a karbamid önmagában is emelkedett lehet.',
+        href: '/klinika/score',
+      },
+    ],
+  },
+  {
     version: '1.13.1',
     date: '2026-09-02',
     title: 'Mentorprogram',
