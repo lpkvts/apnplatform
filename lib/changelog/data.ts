@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.16.0',
+    date: '2026-09-02',
+    title: 'Csoportelemzés',
+    summary: 'Kompetenciánkénti, kérdésenkénti és hallgatónkénti bontás a kurzus eredményeiről.',
+    entries: [
+      {
+        id: 'v1160-kompetencia', kind: 'funkcio', title: 'Hol áll gyengén a csoport',
+        body: 'A kurzus eredményei kompetenciánként bontva, a leggyengébb terület elöl. Minden szám mellett ott van, mennyi válaszból és hány hallgatótól származik — kevés beadásból levont következtetés félrevezető. A kérdésekhez rendelt kompetencia adja a bontást; a besorolatlan kérdésekre a nézet külön figyelmeztet.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1160-kerdesek', kind: 'funkcio', title: 'Hol akadnak el',
+        body: 'Kérdésenkénti elemzés, a legtöbb hibát hozó tétel elöl. A nézet kimondja, hogy az alacsony arány kétfélét jelenthet: vagy a téma nem ment át, vagy maga a kérdés félreérthető — ennek elkülönítése oktatói mérlegelés, ezért a rendszer csak a nyers arányt mutatja.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1160-hallgatok', kind: 'funkcio', title: 'Ki maradt le',
+        body: 'Hallgatónkénti áttekintés a leggyengébb átlaggal elöl, és külön jelzéssel arról, ki nem adta be az összes feladatot. A hiányzó beadás gyakran fontosabb jelzés, mint a gyenge eredmény.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1160-utolso', kind: 'eszkoz', title: 'A legutolsó beadás számít',
+        body: 'Az elemzés hallgatónként és feladatonként a legutolsó beadásból dolgozik. Az ismételt beadás célja a javítás, ezért az utolsó tükrözi a jelenlegi tudást — ha az összes beadást átlagolnánk, a fejlődés elrejtőzne a korai hibák mögött.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.15.0',
     date: '2026-09-02',
     title: 'Oktatói mód — feladatok',

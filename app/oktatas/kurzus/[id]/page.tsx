@@ -69,6 +69,13 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
         courseId={id} assignments={assignments} canManage={canManage}
       />
 
+      {canManage && assignments.length > 0 && (
+        <Link className="btn ghost" href={`/oktatas/kurzus/${id}/elemzes`}
+          style={{ width: '100%', marginTop: 10 }}>
+          📊 Csoportelemzés
+        </Link>
+      )}
+
       {canManage ? (
         <CourseAdmin course={course} students={students} />
       ) : (
