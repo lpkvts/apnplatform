@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.12.0',
+    date: '2026-09-02',
+    title: 'Olvashatóbb felület',
+    summary: 'Erősebb szöveghierarchia és kontraszt — a hosszabb szakaszok nem folynak össze.',
+    entries: [
+      {
+        id: 'v1120-hierarchia', kind: 'javitas', title: 'Szétváló szövegszintek',
+        body: 'A fő és a kisegítő szöveg között mindössze 1,7-szeres különbség volt: mindkettő sötét, ezért hosszabb szakaszokban minden egyforma súlyúnak látszott. A kisegítő szín világosabb lett — fehéren továbbra is bőven olvasható —, a fő szövegtől viszont 3,2-szeresen elkülönül, így látszik a rangsor. Bekerült egy harmadik szint is a tisztán kiegészítő adatokra: mértékegység, referenciatartomány, felirat.',
+        href: '/',
+      },
+      {
+        id: 'v1120-akcentus', kind: 'javitas', title: 'Olvasható modulszínek',
+        body: 'A modulok akcentusszínei szövegként és ikonként olvashatatlanok voltak: a sárga fehéren 1,5-szeres, a zöld 2,3-szeres kontrasztot adott. A színek mostantól a világosságukhoz igazodva sötétednek — a világosabbak többet —, így mindegyik eléri az olvashatósági küszöböt, miközben a felismerhető árnyalatuk megmarad.',
+        href: '/',
+      },
+      {
+        id: 'v1120-tagolas', kind: 'eszkoz', title: 'Tagoltabb szerkezet',
+        body: 'A szakaszcímek zöld jelölést kaptak a bal oldalukon, a kártyák erősebb árnyékot és valamivel mélyebb hátteret, a címek pedig nagyobb méretugrást a szöveghez képest. Ez tagolja a hosszabb oldalakat anélkül, hogy elválasztó vonalakra lenne szükség.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.11.1',
     date: '2026-09-02',
     title: 'Vérgázlelet-nézet',

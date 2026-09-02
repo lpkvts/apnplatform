@@ -60,7 +60,25 @@ export function accentFor(href: string): string | null {
 }
 
 /** Inline stílus a csempe ikonjához. Szín nélküli útvonalnál az alapértelmezett marad. */
+/**
+ * Sötétebb árnyalat az akcentushoz.
+ *
+ * A telített szín a saját halvány hátterén gyakran olvashatatlan — a sárga
+ * fehéren mindössze 1,5:1. A sötétítés mértéke ezért a szín világosságához
+ * igazodik: a világos színek többet kapnak, így mindegyik eléri a szövegre
+ * elvárt kontrasztot.
+ */
+function sotetit(hex: string): string {
+  const n = parseInt(hex.slice(1), 16)
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255
+  // Érzékelt világosság — a zöldre a szem a legérzékenyebb.
+  const vil = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  const arany = Math.min(0.62, Math.max(0.28, vil * 0.72))
+  const f = (c: number) => Math.round(c * (1 - arany)).toString(16).padStart(2, '0')
+  return '#' + f(r) + f(g) + f(b)
+}
+
 export function accentStyle(href: string): { color: string; background: string } | undefined {
   const c = accentFor(href)
-  return c ? { color: c, background: c + '1A' } : undefined
+  return c ? { color: sotetit(c), background: c + '1F' } : undefined
 }
