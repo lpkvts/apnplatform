@@ -1,6 +1,30 @@
 import type { ReactNode } from 'react'
 
 const P: Record<string, ReactNode> = {
+  /* ── Klinikai eszközök ── */
+  stethoscope: (<><path d="M5 3v6a4 4 0 0 0 8 0V3" /><path d="M9 13v2a5 5 0 0 0 10 0v-2" /><circle cx="19" cy="9" r="2.2" /></>),
+  clipboard: (<><rect x="5" y="4.5" width="14" height="16" rx="2.5" /><path d="M9 4.5V3h6v1.5" /><path d="M9 10h6M9 14h4" /></>),
+  calculator: (<><rect x="5" y="3.5" width="14" height="17" rx="2.5" /><path d="M8.5 7.5h7" /><path d="M9 12h.01M12 12h.01M15 12h.01M9 16h.01M12 16h.01M15 16h.01" /></>),
+  droplet: (<><path d="M12 3.5c3.5 4 6 6.8 6 9.7a6 6 0 0 1-12 0c0-2.9 2.5-5.7 6-9.7Z" /></>),
+  pulse: (<><path d="M3 12h4l2.5-6 4 12 2.5-6h5" /></>),
+  lungs: (<><path d="M12 4v9" /><path d="M9 8c-2 1-3.5 3-3.5 6v3a2 2 0 0 0 3 1.7l2-1.2a2 2 0 0 0 1-1.7V9" /><path d="M15 8c2 1 3.5 3 3.5 6v3a2 2 0 0 1-3 1.7l-2-1.2a2 2 0 0 1-1-1.7V9" /></>),
+  brain: (<><path d="M12 5.5a3 3 0 0 0-5.4 1.8A2.8 2.8 0 0 0 5 12a2.8 2.8 0 0 0 1.6 4.7A3 3 0 0 0 12 18.5Z" /><path d="M12 5.5a3 3 0 0 1 5.4 1.8A2.8 2.8 0 0 1 19 12a2.8 2.8 0 0 1-1.6 4.7A3 3 0 0 1 12 18.5Z" /></>),
+  compass: (<><circle cx="12" cy="12" r="8.5" /><path d="M14.8 9.2 13.4 13.4 9.2 14.8l1.4-4.2Z" /></>),
+  alert: (<><path d="M12 4.5 3.5 19.5h17Z" /><path d="M12 10v4" /><path d="M12 17h.01" /></>),
+  search2: (<><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4 4" /></>),
+
+  /* ── Oktatás ── */
+  layout: (<><rect x="3.5" y="4.5" width="17" height="15" rx="2.5" /><path d="M3.5 9.5h17M9 9.5v10" /></>),
+  courses: (<><rect x="4" y="4.5" width="16" height="15" rx="2.5" /><path d="M8 9h8M8 12.5h8M8 16h4" /></>),
+  users: (<><circle cx="9" cy="9" r="3" /><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5" /><path d="M16 7.2a2.8 2.8 0 0 1 0 5.6" /><path d="M17 14.4c2 .6 3.5 2.3 3.5 4.6" /></>),
+  tasks: (<><rect x="4" y="4.5" width="16" height="15" rx="2.5" /><path d="M8 10l2 2 4-4" /><path d="M8 16h8" /></>),
+  chart: (<><path d="M4 20V4" /><path d="M4 20h16" /><path d="M8 20v-6M12.5 20V9M17 20v-9" /></>),
+  case: (<><rect x="3.5" y="7" width="17" height="12.5" rx="2.5" /><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" /></>),
+  settings: (<><circle cx="12" cy="12" r="3" /><path d="M12 3.5v2.2M12 18.3v2.2M20.5 12h-2.2M5.7 12H3.5M18 6l-1.6 1.6M7.6 16.4 6 18M18 18l-1.6-1.6M7.6 7.6 6 6" /></>),
+  handshake: (<><path d="M8 12.5 5 15.5a2 2 0 0 0 2.8 2.8l.7-.7" /><path d="M8.5 17.6 10 19a2 2 0 0 0 2.8-2.8" /><path d="M3.5 9.5 7 6h4l2 2h4l3.5 3.5" /><path d="M12.8 16.2 16 19.4a2 2 0 0 0 2.8-2.8L14 11.8" /></>),
+  play: (<><circle cx="12" cy="12" r="8.5" /><path d="M10.5 9l5 3-5 3Z" /></>),
+  expand: (<><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" /></>),
+
   home: (<><path d="M3 10 12 3l9 7" /><path d="M5 9.5V20h14V9.5" /></>),
   clinic: (<><rect x="3.5" y="3.5" width="17" height="17" rx="5" /><path d="M12 8.5v7M8.5 12h7" /></>),
   flask: (<><path d="M9.5 3h5M10.5 3v5.5l-4.7 8.2A2 2 0 0 0 7.5 20h9a2 2 0 0 0 1.7-3.3L13.5 8.5V3" /><path d="M8 14h8" /></>),

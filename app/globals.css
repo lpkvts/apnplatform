@@ -38,6 +38,37 @@
   --warn: #B45309;
   --alert: #B91C1C;
 
+  /* ── Térközök ──────────────────────────────────────────
+     Egyetlen skála az egész alkalmazásra. Korábban minden komponens
+     saját értéket használt (12/14, 13/15, 11/13 és így tovább), ami
+     apró, de mindenhol érzékelhető rendetlenséget okozott. */
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+
+  /* ── Tipográfiai skála ─────────────────────────────────
+     Hat szint, egyértelmű ugrásokkal. A méret és a súly együtt hordozza
+     a hierarchiát: nem elég az egyiket változtatni. */
+  --t-h1: 26px;
+  --t-h2: 19px;
+  --t-h3: 16px;
+  --t-body: 14.5px;
+  --t-small: 13px;
+  --t-caption: 11.5px;
+
+  /* ── Sugarak ───────────────────────────────────────────
+     Kevesebb lekerekítés, egységesen. A klinikai felület nyugodtabb,
+     ha nem minden elem külön lebegő kártyaként hat. */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-pill: 999px;
+
   /* Kompatibilitási aliasok (a komponensek inline stílusaihoz) */
   --teal: var(--brand);
   --teal-700: var(--brand-dark);
@@ -1138,3 +1169,67 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 
 .edu-kerdes { margin: 12px 0 0; padding: 10px 14px; background: var(--brand-tint); border-radius: 11px; font-size: 13.5px; line-height: 1.55; }
 .edu-kerdes b { color: var(--brand); }
+
+/* ══ EGYSÉGES ÁLLAPOTRENDSZER ═══════════════════════════
+   Hét állapot, egy vizuális logikával. Korábban minden modul saját
+   jelöléssel dolgozott — a mentorprofil máshogy jelezte a függőben lévőt,
+   mint a feladat vagy a kurzus. Ugyanaz az állapot mindenhol ugyanúgy néz ki. */
+.st {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: var(--t-caption); font-weight: 700;
+  padding: 3px 10px; border-radius: var(--r-pill);
+  white-space: nowrap; line-height: 1.4;
+}
+.st::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.st-none      { background: #EEF1F4; color: #52627A; }  /* Nincs megkezdve */
+.st-progress  { background: #E4F0FA; color: #1D5FD1; }  /* Folyamatban */
+.st-done      { background: #E7F1EC; color: #15803D; }  /* Befejezve */
+.st-passed    { background: #E7F1EC; color: #0F5B46; }  /* Teljesítve */
+.st-overdue   { background: #FBE9E9; color: #B91C1C; }  /* Lejárt */
+.st-failed    { background: #FDF0DC; color: #B45309; }  /* Nem sikerült */
+.st-locked    { background: #F1F3F5; color: #6B7A8C; }  /* Zárolva */
+.st-locked::before { border-radius: 1px; }
+
+/* ══ STRUKTURÁLT LISTA ══════════════════════════════════
+   Kártya helyett ott, ahol a tételek egy egységet alkotnak. Kevesebb
+   keret és árnyék, tisztább szerkezet — a klinikai felület így nyugodtabb. */
+.lst { background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+.lst-fej { padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line); background: var(--bg); }
+.lst-fej b { font-size: var(--t-small); font-weight: 800; letter-spacing: .02em; }
+.lst-sor {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: var(--s3) var(--s4); border-bottom: 1px solid var(--bg);
+  text-decoration: none; color: var(--ink); width: 100%;
+  background: none; border-left: 0; border-right: 0; border-top: 0;
+  font: inherit; text-align: left; cursor: pointer;
+}
+.lst-sor:last-child { border-bottom: 0; }
+.lst-sor:hover { background: var(--bg); }
+.lst-sor:focus-visible { outline: 2px solid var(--brand-3); outline-offset: -2px; }
+.lst-ik { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--r-sm); background: var(--bg); color: var(--muted); }
+.lst-fo { flex: 1; min-width: 0; }
+.lst-fo b { display: block; font-size: var(--t-body); font-weight: 650; line-height: 1.35; }
+.lst-fo span { display: block; font-size: var(--t-caption); color: var(--muted); margin-top: 2px; }
+.lst-veg { flex: none; display: flex; align-items: center; gap: var(--s2); }
+.lst-nyil { color: var(--faint); font-size: 15px; }
+
+/* Sorszámozott lista — a kurzus tananyagszerkezetéhez. */
+.lst-num { flex: none; width: 26px; font-size: var(--t-caption); font-weight: 800; color: var(--faint); font-variant-numeric: tabular-nums; }
+
+/* ══ ADATTÁBLA ══════════════════════════════════════════
+   Oktatói és adminisztratív felületre. Kevés dekoráció, jó olvashatóság,
+   a számok jobbra igazítva és azonos szélességű számjegyekkel. */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--card); }
+.tbl { width: 100%; border-collapse: collapse; font-size: var(--t-small); }
+.tbl th {
+  text-align: left; font-weight: 700; font-size: var(--t-caption);
+  letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+  padding: var(--s3) var(--s4); border-bottom: 1px solid var(--line-strong);
+  background: var(--bg); white-space: nowrap;
+}
+.tbl td { padding: var(--s3) var(--s4); border-bottom: 1px solid var(--bg); }
+.tbl tr:last-child td { border-bottom: 0; }
+.tbl tbody tr:hover { background: var(--bg); }
+.tbl .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
+.tbl .fo { font-weight: 650; }

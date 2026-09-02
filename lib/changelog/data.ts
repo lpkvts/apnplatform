@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.20.0',
+    date: '2026-09-02',
+    title: 'Egységes design rendszer — első lépés',
+    summary: 'Vonalas ikonok az emoji helyett, egységes térközök és állapotjelölés.',
+    entries: [
+      {
+        id: 'v1200-ikonok', kind: 'eszkoz', title: 'Vonalas ikonok',
+        body: 'A Klinikum és a Tudástár menüjében az emojik helyére egységes, vonalas ikonok kerültek: azonos vonalvastagság, azonos rács, kerek végződés. Az emoji minden készüléken máshogy nézett ki, és a vegyes stílus rendetlen összképet adott. Az ikonkészlet húsz új jellel bővült, hogy a többi felület is átállítható legyen.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1200-lista', kind: 'eszkoz', title: 'Kevesebb kártya, tisztább szerkezet',
+        body: 'A menük hat különálló, árnyékolt kártya helyett egyetlen strukturált listában állnak. Az elemek egy egységet alkotnak, ezért egy keretbe tartoznak — így kevesebb a vizuális zaj, és a szem gyorsabban végigfut rajtuk.',
+        href: '/tudastar',
+      },
+      {
+        id: 'v1200-rendszer', kind: 'eszkoz', title: 'Térköz- és állapotrendszer',
+        body: 'Egyetlen térközskála lépett a korábbi rendetlenség helyére, ahol szinte minden komponens saját értékeket használt. Emellett egységes állapotjelölés készült hét állapotra — nincs megkezdve, folyamatban, befejezve, teljesítve, lejárt, nem sikerült, zárolva —, hogy ugyanaz az állapot mindenhol ugyanúgy nézzen ki.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.19.0',
     date: '2026-09-02',
     title: 'Hallgatói haladás és csoportok',
