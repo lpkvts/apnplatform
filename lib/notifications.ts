@@ -189,12 +189,7 @@ export const getNotificationCount = cache(async (): Promise<number> => {
   const user = await getCurrentUser()
   if (!user) return 0
 
-  const { data } = await supabase.rpc('notification_counts')
-  const c = (data as Array<{
-    stored: number; certs: number; reviews: number; followups: number
-    new_dz: number; new_gl: number; new_lab: number
-    seen_at: string | null; seen_version: string | null
-  }> | null)?.[0]
+  const c = await rawCounts()
   if (!c) return 0
 
   // A több azonos típusú tételt a lista összevonja egy sorrá, ezért a számnál is
@@ -211,15 +206,40 @@ export const getNotificationCount = cache(async (): Promise<number> => {
     ? releasesAfterVersion(c.seen_version).reduce((n, r) => n + r.entries.length, 0)
     : changesSince(c.seen_at).length
 
-  // Az adminisztrátori tételek — új regisztráció, naplóesemény — hozzáadódnak.
-  // A szerepkört nem kell külön lekérdezni: a függvény nem adminisztrátornak
-  // üres eredményt ad, tehát a szám nulla marad.
-  const admin = await adminNotificationCount()
+  // Az adminisztrátori tételek ugyanabból a körből jönnek — külön lekérdezés
+  // nélkül. Nem adminisztrátornál ezek nullák.
+  const g = (n: number) => (n === 0 ? 0 : 1)
+  const admin = c.is_admin
+    ? g(c.adm_signup) + g(c.adm_role) + g(c.adm_content) + g(c.adm_flags)
+    : 0
 
   return dbCount + code + admin
 })
 
 /* ─────────── Adminisztrátori értesítések ─────────── */
+
+export interface RawCounts {
+  stored: number; certs: number; reviews: number; followups: number
+  new_dz: number; new_gl: number; new_lab: number
+  seen_at: string | null; seen_version: string | null
+  is_admin: boolean
+  adm_signup: number; adm_role: number; adm_content: number; adm_flags: number
+}
+
+/**
+ * Az összesítő lekérdezés — kérésenként egyszer.
+ *
+ * A felhasználói és az adminisztrátori számok egy körben érkeznek. Korábban két
+ * külön hívás futott minden oldalbetöltésnél, a második olyanoknál is, akiknek
+ * amúgy sem adott eredményt.
+ */
+const rawCounts = cache(async (): Promise<RawCounts | null> => {
+  const supabase = await createClient()
+  const user = await getCurrentUser()
+  if (!user) return null
+  const { data } = await supabase.rpc('notification_counts')
+  return (data as RawCounts[] | null)?.[0] ?? null
+})
 
 export interface AdminCounts {
   uj_regisztracio: number
@@ -252,19 +272,16 @@ export interface AuditEvent {
  * függvénye érvényesíti, nem a felület.
  */
 export const getAdminCounts = cache(async (): Promise<AdminCounts | null> => {
-  const supabase = await createClient()
-  const { data } = await supabase.rpc('admin_notification_counts')
-  return (data as AdminCounts[] | null)?.[0] ?? null
+  const c = await rawCounts()
+  if (!c || !c.is_admin) return null
+  return {
+    uj_regisztracio: c.adm_signup,
+    uj_szerepkor: c.adm_role,
+    uj_tartalom: c.adm_content,
+    karbantartas_valtas: c.adm_flags,
+    seen_at: c.seen_at,
+  }
 })
-
-/** Az összes adminisztrátori tétel száma — a harangon ez adódik hozzá. */
-export async function adminNotificationCount(): Promise<number> {
-  const c = await getAdminCounts()
-  if (!c) return 0
-  // A több azonos típusú tételt itt is összevonjuk egy sorrá, ahogy a lista teszi.
-  const g = (n: number) => (n === 0 ? 0 : 1)
-  return g(c.uj_regisztracio) + g(c.uj_szerepkor) + g(c.uj_tartalom) + g(c.karbantartas_valtas)
-}
 
 export async function getRecentSignups(limit = 10): Promise<Signup[]> {
   const supabase = await createClient()

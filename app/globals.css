@@ -982,3 +982,16 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .lel-sor.halvany { opacity: .35; }
 .lel-lab { font-size: 10.5px; color: var(--faint); line-height: 1.45; margin: 10px 0 0; }
 @media (max-width: 460px) { .lel-sor { grid-template-columns: 74px 1fr 48px 62px; gap: 5px; } .lel-ert { font-size: 14px; } }
+
+/* ── Folyamatjelző ──────────────────────────────────────── */
+.spin {
+  display: inline-block; width: 13px; height: 13px; margin-right: 8px;
+  border: 2px solid currentColor; border-right-color: transparent;
+  border-radius: 50%; animation: spin .6s linear infinite; vertical-align: -1px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn:disabled, .sec-l:disabled { opacity: .72; cursor: progress; }
+/* Csökkentett mozgás esetén nem forog, csak halványul. */
+@media (prefers-reduced-motion: reduce) {
+  .spin { animation: none; opacity: .6; }
+}

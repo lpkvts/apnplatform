@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.12.2',
+    date: '2026-09-02',
+    title: 'Gyorsabb belépés és navigáció',
+    summary: 'Folyamatjelző a bejelentkezésnél, és két fölösleges adatbázis-kör megszűnt.',
+    entries: [
+      {
+        id: 'v1122-jelzo', kind: 'funkcio', title: 'Folyamatjelző a belépésnél',
+        body: 'A hitelesítés hálózati kérés, ami eltarthat pár másodpercig. Visszajelzés nélkül úgy tűnt, nem történik semmi. Mostantól a megnyomott gomb jelzi, hogy dolgozik, és a küldés alatt a gombok tiltottak — így nem lehet véletlenül kétszer elindítani. Ugyanez érvényes a regisztrációra és a jelszó-visszaállításra is.',
+        href: '/login',
+      },
+      {
+        id: 'v1122-admin', kind: 'javitas', title: 'Az adminisztrátori lekérdezés beolvasztva',
+        body: 'Az adminisztrátori értesítések bevezetése óta minden oldalbetöltésnél lefutott egy külön lekérdezés — minden felhasználónál, pedig csak adminisztrátornak adott eredményt. Ez a szám mostantól ugyanabban a körben érkezik, mint a többi értesítés.',
+        href: '/',
+      },
+      {
+        id: 'v1122-kapcsolok', kind: 'javitas', title: 'A kapcsolók egy körben',
+        body: 'A karbantartás állapotát és a funkciókapcsolókat két külön kérdés hozta, pedig ugyanabból a táblából származnak. Most egyszerre töltődnek be. Egy tipikus oldalbetöltés így hat helyett négy adatbázis-körből épül fel.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.12.1',
     date: '2026-09-02',
     title: 'Adminisztrátori értesítések',

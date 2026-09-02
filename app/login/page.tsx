@@ -1,4 +1,5 @@
 import { signIn, signUp, requestReset } from './actions'
+import { LoginForm } from '@/components/login-form'
 import { getMaintenance } from '@/lib/flags'
 import { RingLogo } from '@/components/icons'
 
@@ -26,32 +27,10 @@ export default async function LoginPage({
   )
 
   const form = (
-    <div className="card">
-      <form>
-        <input className="field" name="email" type="email" placeholder="E-mail" required />
-        <input className="field" name="password" type="password" placeholder="Jelszó" required />
-        {!maint.on && (
-          <input className="field" name="full_name" placeholder="Teljes név (regisztrációhoz)" />
-        )}
-        <div style={{ display: 'flex', gap: 10 }}>
-          <button className="btn" formAction={signIn}>Belépés</button>
-          {/* Karbantartás alatt nincs értelme új fiókot nyitni. */}
-          {!maint.on && (
-            <button className="btn ghost" formAction={signUp}>Regisztráció</button>
-          )}
-        </div>
-        <button
-          className="sec-l"
-          formAction={requestReset}
-          style={{ background: 'none', border: 0, padding: '10px 0 0', font: 'inherit', fontSize: 13.5, cursor: 'pointer' }}
-        >
-          Elfelejtettem a jelszavam
-        </button>
-      </form>
-      <p className="sub" style={{ margin: '4px 0 0', fontSize: 12 }}>
-        A visszaállításhoz elég az e-mail címet kitölteni.
-      </p>
-    </div>
+    <LoginForm
+      signIn={signIn} signUp={signUp} requestReset={requestReset}
+      maintenance={maint.on}
+    />
   )
 
   /* ── Karbantartás alatt: csak a tájékoztató ──
