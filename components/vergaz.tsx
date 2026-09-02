@@ -8,6 +8,7 @@ import {
 import { FOGALMAK, fogalom } from '@/lib/vergaz/fogalmak'
 import { ESETEK, SZINT_LABEL, type Eset, type Szint } from '@/lib/vergaz/esetek'
 import { kerdesek, type Kerdes } from '@/lib/vergaz/kerdesek'
+import { VergazLelet } from '@/components/vergaz-lelet'
 
 /**
  * Vérgáz modul.
@@ -203,6 +204,9 @@ export function VergazElemzo() {
 
           {result && (
             <>
+              <div className="sec-h"><span className="sec-t">Lelet</span></div>
+              <VergazLelet values={vals} sample={sample} />
+
               <div className="sec-h"><span className="sec-t">Összefoglalás</span></div>
               <div className="card vg-sum"><b>{result.summary}</b></div>
 
@@ -243,7 +247,14 @@ export function VergazElemzo() {
               </p>
             </div>
           ) : (
-            <Gondolkodj qs={qs} qi={qi} setQi={setQi} picks={picks} setPicks={setPicks} />
+            <>
+              {/* A lelet végig látható, és az aktuális kérdéshez tartozó sorai
+                  kiemelve — így a válasz a leleten keresendő, nem fejből. */}
+              <div style={{ marginTop: 12 }}>
+                <VergazLelet values={vals} sample={sample} kiemelt={qs[qi]?.id ?? null} />
+              </div>
+              <Gondolkodj qs={qs} qi={qi} setQi={setQi} picks={picks} setPicks={setPicks} />
+            </>
           )}
         </>
       )}
@@ -270,16 +281,7 @@ export function VergazElemzo() {
                 <b style={{ fontSize: 15 }}>{e.cim}</b>
                 <p className="vg-vign">{e.vignetta}</p>
 
-                <div className="vg-vals">
-                  {REFS.filter((r) => e.values[r.key] != null).map((r) => (
-                    <span key={r.key}>
-                      <b>{r.label}</b> {String(e.values[r.key])}{r.unit ? ` ${r.unit}` : ''}
-                    </span>
-                  ))}
-                  {e.values.fio2 != null && (
-                    <span><b>FiO₂</b> {Math.round(e.values.fio2 * 100)}%</span>
-                  )}
-                </div>
+                <VergazLelet values={e.values} sample={e.sample} />
 
                 <div className="row" style={{ border: 'none', padding: '10px 0 0', gap: 8 }}>
                   <button className="btn sm" onClick={() => betolt(e)}>Betöltöm az elemzőbe</button>

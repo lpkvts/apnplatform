@@ -925,3 +925,30 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .vg-opt.rossz { border-color: #B45309; background: #FDF6EC; }
 .vg-prog { height: 5px; background: var(--line); border-radius: 3px; overflow: hidden; }
 .vg-prog div { height: 100%; background: var(--brand); border-radius: 3px; transition: width .25s; }
+
+/* ── Vérgázlelet ────────────────────────────────────────── */
+.lel { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; font-variant-numeric: tabular-nums; }
+.lel-fej { border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 4px; }
+.lel-fej > b { font-size: 14px; letter-spacing: .02em; }
+.lel-meta { display: flex; flex-wrap: wrap; gap: 3px 16px; margin-top: 5px; }
+.lel-meta span { font-size: 11.5px; color: var(--muted); }
+.lel-meta i { font-style: normal; font-weight: 700; }
+
+.lel-cs { margin-top: 10px; }
+.lel-cs-t { font-size: 10.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 4px 0; border-bottom: 1px solid var(--line); }
+
+.lel-sor { display: grid; grid-template-columns: 84px 1fr 62px 74px; align-items: baseline; gap: 8px; width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--bg); padding: 7px 4px; font: inherit; cursor: pointer; transition: background .15s, opacity .15s; border-radius: 6px; }
+.lel-sor:disabled { cursor: default; }
+.lel-sor:hover:not(:disabled) { background: var(--bg); }
+.lel-jel { font-size: 12.5px; font-weight: 700; }
+.lel-ert { font-size: 15px; font-weight: 700; text-align: right; }
+.lel-ert i { font-style: normal; margin-left: 4px; font-size: 13px; }
+.lel-ert i.up { color: #B45309; }
+.lel-ert i.down { color: #0891B2; }
+.lel-egys { font-size: 11px; color: var(--muted); }
+.lel-ref { font-size: 10.5px; color: var(--muted); text-align: right; }
+.lel-sor.el .lel-ert { color: #B45309; }
+.lel-sor.most { background: var(--brand-tint); box-shadow: inset 3px 0 0 var(--brand); }
+.lel-sor.halvany { opacity: .35; }
+.lel-lab { font-size: 10.5px; color: var(--muted); line-height: 1.45; margin: 10px 0 0; }
+@media (max-width: 460px) { .lel-sor { grid-template-columns: 74px 1fr 48px 62px; gap: 5px; } .lel-ert { font-size: 14px; } }

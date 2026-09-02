@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.11.1',
+    date: '2026-09-02',
+    title: 'Vérgázlelet-nézet',
+    summary: 'Az értékek úgy jelennek meg, ahogy a készülék kiadja őket, és az elemzés erre épül.',
+    entries: [
+      {
+        id: 'v1111-lelet', kind: 'funkcio', title: 'Lelet a beviteli mezők helyett',
+        body: 'Az értékek mostantól leletként jelennek meg: fejléc a mintatípussal és a belélegzett oxigénaránnyal, majd a szokásos csoportosítás — vérgáz, oximetria, elektrolitok, metabolitok, végül a számított értékek. Minden sornál a mért érték, a nyíljelölés és a referenciatartomány. Élesben is ilyen képet lát az ember, ezért a felismerés így gyakorolható.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1111-kiemeles', kind: 'eszkoz', title: 'A lépés kiemeli a vonatkozó sorokat',
+        body: 'A vezetett elemzés során a lelet végig látható, és az aktuális kérdéshez tartozó sorai világítanak, a többi elhalványul — ugyanaz az elv, mint az EKG-elemzésben a görbe mérőjelei. A pH kérdésnél a pH sor, a kompenzációnál a pCO₂ és a bikarbonát, az anionrésnél a nátrium, a klorid és az albumin.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1111-esetek', kind: 'eszkoz', title: 'A gyakorló esetek is leletként',
+        body: 'A tíz gyakorló eset értékei is leletnézetben jelennek meg, a klinikai helyzet alatt. Így az elemzés ugyanabból a képből indul, amit a valóságban is kézhez kap az ember.',
+        href: '/klinika/vergaz',
+      },
+    ],
+  },
+  {
     version: '1.11.0',
     date: '2026-09-02',
     title: 'Vérgáz modul — teljes változat',
