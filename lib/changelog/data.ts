@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.17.0',
+    date: '2026-09-02',
+    title: 'Oktatói munkafelület',
+    summary: 'Állandó oldalsó navigáció és desktop-orientált elrendezés az intézményi használathoz.',
+    entries: [
+      {
+        id: 'v1170-oldalsav', kind: 'funkcio', title: 'Állandó oldalsó navigáció',
+        body: 'Az oktatói felület asztali gépen saját oldalsávot kap: az intézmény neve, a szerepkör, és alatta a kurzusok listája a piszkozatok külön jelölésével. A szerkezet mindig látszik, a munka közben nem kell visszalépkedni. A kurzus megnyitásakor az oldalsávban is látszik, hol vagy.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1170-szerepkor', kind: 'eszkoz', title: 'A szerepkör dönti el az elrendezést',
+        body: 'A rendszer korábban az útvonalból következtetett a megjelenítési módra. Mostantól a szerepkört is figyeli: az oldalsávot és a széles munkafelületet csak az oktató és az intézményi adminisztrátor kapja meg. A hallgató ugyanazt a reszponzív felületet látja, mint az egyéni használatnál — a mobil nézet nem a desktop kicsinyítése.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1170-elrendezes', kind: 'eszkoz', title: 'Kihasznált munkafelület',
+        body: 'Széles képernyőn a kurzusok két hasábban állnak, a mutatók egy sorban, a tartalom pedig nem szorul a mobilra szabott sávba. Ezer képpont alatt az elrendezés visszavált az egyhasábosra, alsó navigációval.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.16.1',
     date: '2026-09-02',
     title: 'Az oktatói mód elérhetősége',

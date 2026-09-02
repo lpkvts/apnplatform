@@ -106,6 +106,7 @@ export default async function OktatasPage() {
         </div>
       )}
 
+      <div className="edu-2col">
       {courses.map((c: Course) => (
         <Link key={c.id} className="card klink" href={`/oktatas/kurzus/${c.id}`}>
           <div className="row" style={{ border: 'none', padding: 0 }}>
@@ -119,6 +120,7 @@ export default async function OktatasPage() {
           </div>
         </Link>
       ))}
+      </div>
     </>
   )
 }
