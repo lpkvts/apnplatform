@@ -75,6 +75,52 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.15.0',
+    date: '2026-09-02',
+    title: 'Oktatói mód — feladatok',
+    summary: 'Feladatlapok négyféle kérdéstípussal, automatikus pontozással és eredménykövetéssel.',
+    entries: [
+      {
+        id: 'v1150-feladat', kind: 'funkcio', title: 'Feladatok a kurzusokhoz',
+        body: 'Az oktató feladatot hoz létre határidővel, teljesítési küszöbbel és beadásszám-korláttal, majd kérdéseket vesz fel hozzá. A feladat piszkozatként indul, és csak akkor nyitható meg, ha van benne legalább egy kérdés — üres feladatlappal a hallgató nulla pontot kapna.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1150-kerdesek', kind: 'funkcio', title: 'Négy kérdéstípus',
+        body: 'Egy helyes válasz, több helyes válasz, igaz-hamis és rövid szöveges. A több helyes válaszú kérdésnél pont csak a pontos halmazért jár: a hiányzó felismerés ugyanúgy hiba, mint a téves jelölés. A rövid válasznál több elfogadható alak is megadható, és a kis- és nagybetű nem számít. Minden kérdés kompetenciához rendelhető.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1150-pontozas', kind: 'eszkoz', title: 'A megoldás nem kerül a böngészőbe',
+        body: 'A hallgató a kérdéseket a helyes válasz jelölése és a magyarázat nélkül kapja meg, a pontozás pedig az adatbázisban fut. Enélkül a megoldás a hálózati válaszban látszana — a felületi elrejtés önmagában nem védelem.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1150-eredmenyek', kind: 'funkcio', title: 'Eredmények és visszajelzés',
+        body: 'Az oktató látja a beadások számát, az átlagot és azt, hányan teljesítették. Hallgatónként szöveges visszajelzést írhat, amit az érintett a saját beadásánál lát. A hallgató követi a saját beadásait és a legjobb eredményét.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
+    version: '1.14.0',
+    date: '2026-09-02',
+    title: 'Teaching Mode és adaptív elrendezés',
+    summary: 'Kivetíthető bemutató mód, és szélesebb munkafelület az adminisztratív oldalakon.',
+    entries: [
+      {
+        id: 'v1140-teaching', kind: 'funkcio', title: 'Teljes képernyős bemutató',
+        body: 'Oktatóteremben vagy megbeszélésen a tartalom kivetíthető: nagyobb betű, semmi navigáció, állítható szövegméret. Egyelőre a vérgázelemzésnél és a klinikai skáláknál érhető el, de a megoldás bármely tartalomra ráhúzható, ezért a többi modul is megkaphatja anélkül, hogy külön oktatói változatot kellene írni hozzájuk. Kilépés az Escape billentyűvel.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1140-layout', kind: 'eszkoz', title: 'Szélesebb munkafelület',
+        body: 'Az adminisztratív oldalak — tartalomkezelés, mentorprogram — asztali gépen szélesebb elrendezést kapnak, mert ott táblázatok és listák a jellemzők. A klinikai modulok szándékosan megtartják a keskenyebb olvasási sávot: ott az olvashatóság és az egyetlen dologra összpontosítás a fontosabb. A különbség nem a képernyőméretből, hanem a munka jellegéből adódik.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.13.2',
     date: '2026-09-02',
     title: 'BISAP pontozó',
