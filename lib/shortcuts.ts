@@ -6,6 +6,7 @@ export const SHORTCUTS: Shortcut[] = [
   { key: 'ertekeles', href: '/klinika/ertekeles', label: 'Új betegértékelés', icon: 'assessment' },
   { key: 'score', href: '/klinika/tesztek', label: 'Score Hub', icon: 'score' },
   { key: 'labor', href: '/klinika/labor', label: 'Labor', icon: 'flask' },
+  { key: 'vergaz', href: '/klinika/vergaz', label: 'Vérgáz', icon: 'flask' },
   { key: 'ekg', href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
   { key: 'betegsegtar', href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },
   { key: 'tudastar', href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
@@ -24,6 +25,7 @@ export const SHORTCUTS: Shortcut[] = [
 export const SHORTCUT_ACCENTS: Record<string, string> = {
   // ── eredeti színek (nem változnak) ──
   '/klinika/labor': '#22C55E',        // zöld — márkaszín, marad
+  '/klinika/vergaz': '#0EA5E9',       // égkék — légzés és sav-bázis
   '/klinika/tudastar': '#0F5B46',     // sötétzöld — márkaszín, marad
   '/betegsegtar/akut': '#EF4444',     // piros — sürgősség
   '/klinika/vizsgalat': '#885CF6',    // lila

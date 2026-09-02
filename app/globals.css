@@ -864,3 +864,64 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .lp-g4 .lp-ic { width: 52px; height: 52px; border-radius: 15px; font-size: 23px; }
 .lp-g4 .lp-card h3 { font-size: 17.5px; margin: 15px 0 8px; }
 .lp-g4 .lp-card p { font-size: 14.5px; }
+
+/* ── Vérgázelemzés ──────────────────────────────────────── */
+.vg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 560px) { .vg-grid { grid-template-columns: repeat(2, 1fr); } }
+.vg-field { display: flex; flex-direction: column; gap: 4px; }
+.vg-lbl { font-size: 12px; font-weight: 700; display: flex; flex-direction: column; }
+.vg-lbl small { font-size: 10px; font-weight: 500; color: var(--muted); }
+.vg-field input { border: 1.5px solid var(--line); border-radius: 10px; padding: 9px 10px; font-size: 15px; font-weight: 600; font-family: inherit; background: #fff; color: var(--ink); width: 100%; }
+.vg-field input:focus { outline: none; border-color: var(--brand-2); }
+.vg-field input:disabled { background: var(--bg); color: var(--muted); }
+.vg-field.in input { border-color: #22A878; background: #F2FAF7; }
+.vg-field.low input, .vg-field.high input { border-color: #B45309; background: #FDF6EC; }
+
+.vg-sum { border-left: 4px solid var(--brand); }
+.vg-sum b { font-size: 15px; }
+.vg-find { margin-bottom: 8px; border-left: 4px solid var(--line); }
+.vg-find.warn { border-left-color: #B45309; }
+.vg-find.alert { border-left-color: #B91C1C; }
+.vg-find.ok { border-left-color: #22A878; }
+.vg-detail { margin: 6px 0 0; font-size: 13px; color: var(--muted); line-height: 1.55; }
+.vg-badge { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 20px; white-space: nowrap; }
+.vg-badge.ok { background: #E7F1EC; color: #0F5B46; }
+.vg-badge.warn { background: #FDF0DC; color: #B45309; }
+.vg-badge.alert { background: #FBE9E9; color: #B91C1C; }
+
+.vg-steps { margin: 0; padding-left: 20px; }
+.vg-steps li { margin-bottom: 12px; }
+.vg-steps b { display: block; font-size: 13.5px; }
+.vg-q { display: block; font-size: 13px; color: var(--ink); margin: 2px 0 3px; }
+.vg-h { display: block; font-size: 12.5px; color: var(--muted); line-height: 1.5; }
+.vg-field.bad input { border-color: #B91C1C; background: #FBE9E9; }
+.vg-err { font-size: 10.5px; color: #B91C1C; line-height: 1.3; }
+
+.vg-fog { margin-top: 10px; }
+.vg-fog > summary { cursor: pointer; font-size: 12px; color: var(--brand); list-style: none; padding: 4px 0; }
+.vg-fog > summary::-webkit-details-marker { display: none; }
+.vg-fog > summary::before { content: '💡 '; }
+.vg-fog-b p { font-size: 12.5px; line-height: 1.55; margin: 0 0 8px; color: var(--muted); }
+.vg-fog-b p b { color: var(--ink); }
+.vg-fog-b ul { margin: 0 0 10px; padding-left: 18px; }
+.vg-fog-b li { font-size: 12.5px; color: var(--muted); line-height: 1.5; margin-bottom: 3px; }
+.vg-fog-h { font-weight: 700; color: var(--ink) !important; font-size: 12.5px; margin-bottom: 4px !important; }
+.vg-fog-m { border-left: 3px solid var(--line); padding-left: 10px; font-style: italic; }
+
+.vg-vign { font-size: 13.5px; line-height: 1.6; margin: 6px 0 10px; }
+.vg-vals { display: flex; flex-wrap: wrap; gap: 4px 14px; background: var(--bg); border-radius: 10px; padding: 10px 12px; }
+.vg-vals span { font-size: 12.5px; color: var(--muted); }
+.vg-vals b { color: var(--ink); font-weight: 700; }
+.vg-megold { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 12px; }
+.vg-megold ol { margin: 0; padding-left: 18px; }
+.vg-megold li { font-size: 13px; line-height: 1.55; margin-bottom: 6px; }
+.vg-tanulsag { font-size: 12.5px; color: var(--muted); line-height: 1.55; background: var(--brand-tint); border-radius: 10px; padding: 10px 12px; margin: 10px 0 0; }
+.vg-tanulsag b { color: var(--brand); }
+
+.vg-opt { display: block; width: 100%; text-align: left; background: #fff; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; font: inherit; font-size: 14px; cursor: pointer; color: var(--ink); }
+.vg-opt:hover:not(:disabled) { border-color: var(--brand-2); }
+.vg-opt:disabled { cursor: default; }
+.vg-opt.jo { border-color: #22A878; background: #F2FAF7; font-weight: 600; }
+.vg-opt.rossz { border-color: #B45309; background: #FDF6EC; }
+.vg-prog { height: 5px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.vg-prog div { height: 100%; background: var(--brand); border-radius: 3px; transition: width .25s; }

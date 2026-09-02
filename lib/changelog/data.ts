@@ -75,6 +75,57 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.11.0',
+    date: '2026-09-02',
+    title: 'Vérgáz modul — teljes változat',
+    summary: 'Elemzés, lépésenkénti gondolkodás, tíz gyakorló eset és fogalomtár.',
+    entries: [
+      {
+        id: 'v1110-elemzes', kind: 'funkcio', title: 'Bővített elemzés',
+        body: 'A vérgáz mellett elektrolitok, ionizált kalcium, glükóz, hemoglobin, albumin, életkor és légzésszám is megadható. Az oxigénbeviteli mód kiválasztásával a FiO₂ becslése is egyszerűbb. A mezők élettanilag lehetetlen értékeknél jeleznek, és minden megállapítás mellett ott a számítás, amiből származik.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1110-gondolkodj', kind: 'funkcio', title: 'Gondolkodj végig mód',
+        body: 'A rendszer nem adja meg rögtön a választ: négy-öt kérdésen keresztül végigviszi a klinikai gondolatmenetet — a pH iránya, az elsődleges ok, a kompenzáció, az anionrés és az oxigenizáció. A kérdések ugyanabból a számításból származnak, mint az elemzés, ezért a helyes válasz sosem térhet el attól, amit a modul máshol mond. A végén összesítés a hibák magyarázatával.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1110-esetek', kind: 'szakmai', title: 'Tíz gyakorló eset',
+        body: 'Három nehézségi szinten: a négy alapzavartól a COPD-exacerbáción, ketoacidózison és sepsisen át a kevert zavarokig — köztük egy szalicilát-hatás és egy görcsroham utáni eset. A felhasználó először csak a helyzetet és az értékeket látja, a megoldás külön nyílik. Minden eset betölthető az elemzőbe és végiggondolható a kérdéses módban.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1110-fogalmak', kind: 'eszkoz', title: 'Fogalomtár és ellenőrzés',
+        body: 'Tizenegy fogalom magyarázata: mit mér, miért fontos, és mi állhat az eltérés két iránya mögött. Az elemzés eredményénél is előhívható. A számítási logikát 29 ellenőrzés méri ismert kimenetelű eseteken — köztük mind a tíz gyakorló eset —, hogy a leírt megoldás és a számított eredmény ne térhessen el.',
+        href: '/klinika/vergaz',
+      },
+    ],
+  },
+  {
+    version: '1.10.0',
+    date: '2026-09-01',
+    title: 'Vérgázelemzés modul',
+    summary: 'Sav-bázis elemzés lépésenként: irány, elsődleges ok, kompenzáció, anionrés és oxigenizáció.',
+    entries: [
+      {
+        id: 'v1100-modul', kind: 'funkcio', title: 'Új modul a Klinikumban',
+        body: 'Az értékek megadása után a rendszer végigviszi a klasszikus sav-bázis elemzést: megállapítja a zavar irányát, az elsődleges okot, megítéli a kompenzációt, kiszámolja az anionrést és értékeli az oxigenizációt. Minden megállapítás mellett ott a számítás, amiből származik — a cél nem az, hogy a rendszer helyett gondolkodjon, hanem hogy a gondolatmenet követhető legyen.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1100-szamitas', kind: 'szakmai', title: 'Amit kiszámol',
+        body: 'Winter-képlet a metabolikus acidózis várt pCO₂-jéhez, kompenzációs szabályok a légzési zavarokhoz akut és krónikus becsléssel, anionrés albumin-korrekcióval, delta-arány a társuló zavarok felismeréséhez, P/F-hányados és alveolo-arteriális gradiens. Vénás mintánál eltérő referenciatartományok, és jelzés arról, hogy az oxigenizáció úgy nem ítélhető meg.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1100-korlatok', kind: 'szakmai', title: 'Ahol nem foglal állást',
+        body: 'Az alveolo-arteriális gradiens szokásos felső határa csak szobalevegőn érvényes, ezért emelt oxigénadagolás mellett a modul nem minősíti, hanem a P/F-hányadosra irányít. Az akut és krónikus légzési zavar elkülönítésénél jelzi, hogy a vérgáz önmagában nem dönt — az anamnézis és a korábbi leletek szükségesek. Az anionrés határérték körüli sávja külön kategória, mert a küszöb laboronként eltér.',
+        href: '/klinika/vergaz',
+      },
+    ],
+  },
+  {
     version: '1.9.2',
     date: '2026-09-01',
     title: 'Letisztultabb nyitóoldal',
