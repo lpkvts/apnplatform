@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.16.1',
+    date: '2026-09-02',
+    title: 'Az oktatói mód elérhetősége',
+    summary: 'Megjelenik a kezdőlapon, a gyors elérésben és a Beállítások kapcsolói között.',
+    entries: [
+      {
+        id: 'v1161-nav', kind: 'javitas', title: 'Belépési pontok pótlása',
+        body: 'Az oktatói mód csak közvetlen címmel volt elérhető. A kezdőlapon most megjelenik egy belépő azoknak, akik tagjai valamelyik képzőhelynek, és a gyors elérés rácsába is bekerült egy csempe. A belépő megkülönbözteti az oktatót a hallgatótól, és az intézmény nevét is kiírja.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1161-kapcsolo', kind: 'javitas', title: 'A kapcsoló újra látszik',
+        body: 'A Beállítások oldal a címke nélküli kapcsolókat elrejti — így tüntettük el korábban a már nem használt EKG-kapcsolót. Ha ugyanez az oktatói módra is lefutott, a kapcsoló eltűnt, pedig a modul azóta elkészült. A címke visszaállt.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.16.0',
     date: '2026-09-02',
     title: 'Csoportelemzés',
