@@ -307,3 +307,36 @@ export function eventLabel(e: AuditEvent): string {
   }
   return `${ENTITY[e.entity] ?? e.entity} ${ACTION[e.action] ?? e.action}`
 }
+
+/* ─────────── Kezdőlapi áttekintés ─────────── */
+
+export interface DashCounts {
+  /** Esedékes teendők a saját klinikai eseteken. */
+  followups: number
+  /** Hatvan napon belül lejáró tanúsítványok. */
+  certs: number
+  /** Olvasatlan értesítések. */
+  stored: number
+  /** Új szakmai tartalom a legutóbbi megtekintés óta. */
+  ujTartalom: number
+  /** Felülvizsgálatra váró irányelvek — szerkesztőnek, lektornak, adminnak. */
+  reviews: number
+}
+
+/**
+ * A kezdőlap áttekintő sávjának adatai.
+ *
+ * Ugyanabból a lekérdezésből dolgozik, mint az értesítésszám — nem jelent
+ * külön adatbázis-kört.
+ */
+export const getDashCounts = cache(async (): Promise<DashCounts | null> => {
+  const c = await rawCounts()
+  if (!c) return null
+  return {
+    followups: c.followups,
+    certs: c.certs,
+    stored: c.stored,
+    ujTartalom: c.new_dz + c.new_gl + c.new_lab,
+    reviews: c.reviews,
+  }
+})

@@ -7,6 +7,7 @@ import { getFlag } from '@/lib/flags'
 import { getMemberships } from '@/lib/education/data'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS } from '@/lib/shortcuts'
+import { getDashCounts } from '@/lib/notifications'
 import { Landing } from '@/components/landing'
 import { accentStyle } from '@/lib/shortcuts'
 
@@ -55,6 +56,17 @@ export default async function DashboardPage() {
 
   const menuKeys = await getFavoritesByType('menu')
   const myShortcuts = SHORTCUTS.filter((sc) => menuKeys.includes(sc.key))
+
+  // Áttekintés: mi igényel figyelmet. Ugyanabból a lekérdezésből jön, mint az
+  // értesítésszám, tehát nem jelent külön adatbázis-kört.
+  const dash = await getDashCounts()
+  const figyelem = dash ? [
+    { n: dash.followups, cimke: 'esedékes teendő', href: '/ertesitesek', surgos: true },
+    { n: dash.certs, cimke: 'lejáró tanúsítvány', href: '/profil', surgos: true },
+    { n: dash.reviews, cimke: 'felülvizsgálat', href: '/cms/tartalomfigyelo', surgos: false },
+    { n: dash.stored, cimke: 'új értesítés', href: '/ertesitesek', surgos: false },
+    { n: dash.ujTartalom, cimke: 'új tartalom', href: '/ujdonsagok', surgos: false },
+  ].filter((x) => x.n > 0) : []
   const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
 
   // Folytasd, ahol abbahagytad
@@ -74,6 +86,19 @@ export default async function DashboardPage() {
           <span>{profile?.full_name || 'Üdvözöljük'} · {profile?.specialty || 'APN'}</span>
         </div>
       </div>
+
+      {/* Ami figyelmet igényel — csak akkor jelenik meg, ha van ilyen.
+          Üres sáv nem mond semmit, csak helyet foglal. */}
+      {figyelem.length > 0 && (
+        <div className="dash-fig">
+          {figyelem.map((f) => (
+            <Link key={f.cimke} href={f.href} className={`dash-fig-e ${f.surgos ? 'surgos' : ''}`}>
+              <b>{f.n}</b>
+              <span>{f.cimke}</span>
+            </Link>
+          ))}
+        </div>
+      )}
 
       <form action="/kereses" className="search-box">
         <Icon name="search" size={18} />

@@ -1310,3 +1310,34 @@ summary:focus-visible,
 .empty b { display: block; font-size: var(--t-h3); margin-bottom: var(--s1); }
 .empty p { font-size: var(--t-small); color: var(--muted); line-height: 1.6; margin: 0 auto; max-width: 42ch; }
 .empty .btn { margin-top: var(--s4); }
+
+/* ── Kezdőlapi áttekintő sáv ────────────────────────────
+   Ami figyelmet igényel, egy sorban, a lap tetején. Csak a nem nulla tételek
+   jelennek meg: az üres mutatók csak helyet foglalnának. A sürgős tételek
+   színnel is elkülönülnek, nem csak sorrenddel. */
+.dash-fig { display: flex; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s4); }
+.dash-fig-e {
+  display: flex; align-items: baseline; gap: 6px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 9px 13px;
+  text-decoration: none; color: var(--ink);
+}
+.dash-fig-e:hover { border-color: var(--brand-3); }
+.dash-fig-e b { font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.dash-fig-e span { font-size: var(--t-caption); color: var(--muted); }
+.dash-fig-e.surgos { background: #FDF6EC; border-color: #F0D9B5; }
+.dash-fig-e.surgos b { color: var(--warn); }
+
+/* ── Klinikai eszközök rácsa ────────────────────────────
+   A leggyakrabban használt pontozók közvetlen elérése. A rövidítés a
+   hangsúlyos elem: a napi munkában ezen a néven keresik őket. */
+.tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
+@media (max-width: 520px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
+.tool {
+  display: block; background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: var(--s3) var(--s3);
+  text-decoration: none; color: var(--ink);
+}
+.tool:hover { border-color: var(--brand-3); background: var(--brand-tint); }
+.tool b { display: block; font-size: var(--t-h3); font-weight: 800; letter-spacing: -.01em; }
+.tool span { display: block; font-size: var(--t-caption); color: var(--muted); margin-top: 2px; line-height: 1.35; }

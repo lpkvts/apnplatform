@@ -39,6 +39,29 @@ export default async function KlinikaPage() {
           </Link>
         )}
       </div>
+
+      {/* Gyakran használt pontozók — közvetlen belépés a Score Hubba.
+          A specifikáció szerint a klinikai eszközök legyenek felismerhetők,
+          ne kelljen ötvenhét tétel közül kikeresni a napi hatot. */}
+      <div className="sec-h">
+        <span className="sec-t">Gyakran használt pontozók</span>
+        <Link className="sec-l" href="/klinika/tesztek">Mind →</Link>
+      </div>
+      <div className="tool-grid">
+        {[
+          { id: 'news2', nev: 'NEWS2', mit: 'Korai állapotromlás' },
+          { id: 'qsofa', nev: 'qSOFA', mit: 'Szepszis kockázata' },
+          { id: 'gcs', nev: 'GCS', mit: 'Tudatállapot' },
+          { id: 'curb65', nev: 'CURB-65', mit: 'Pneumonia súlyossága' },
+          { id: 'bisap', nev: 'BISAP', mit: 'Akut pancreatitis' },
+          { id: 'wells-pe', nev: 'Wells-PE', mit: 'Tüdőembólia esélye' },
+        ].map((t) => (
+          <Link key={t.id} className="tool" href={`/klinika/tesztek?open=${t.id}`}>
+            <b>{t.nev}</b>
+            <span>{t.mit}</span>
+          </Link>
+        ))}
+      </div>
     </>
   )
 }

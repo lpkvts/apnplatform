@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.22.0',
+    date: '2026-09-02',
+    title: 'Áttekinthetőbb kezdőlap és klinikai eszközök',
+    summary: 'Ami figyelmet igényel, rögtön a lap tetején; a gyakori pontozók egy koppintásra.',
+    entries: [
+      {
+        id: 'v1220-attekintes', kind: 'funkcio', title: 'Ami figyelmet igényel',
+        body: 'A kezdőlap tetején megjelenik, mi vár rád: esedékes teendők, lejáró tanúsítványok, felülvizsgálatra váró irányelvek, új értesítések és tartalmak. Csak a nem nulla tételek látszanak — az üres mutatók semmit nem mondanának, csak helyet foglalnának. A sürgősek színnel is elkülönülnek. Az adat ugyanabból a lekérdezésből jön, mint az értesítésszám, tehát nem lassítja az oldalt.',
+        href: '/',
+      },
+      {
+        id: 'v1220-eszkozok', kind: 'eszkoz', title: 'Gyakran használt pontozók',
+        body: 'A Klinikum oldalán hat pontozó közvetlenül elérhető: NEWS2, qSOFA, GCS, CURB-65, BISAP és Wells-PE. A rövidítés a hangsúlyos elem, mert a napi munkában ezen a néven keresik őket. Nem kell ötvenhét tétel közül kiszűrni a mindennapos hatot.',
+        href: '/klinika',
+      },
+    ],
+  },
+  {
     version: '1.21.0',
     date: '2026-09-02',
     title: 'Billentyűzet, táblázatok, egységes jelölések',
