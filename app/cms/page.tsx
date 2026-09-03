@@ -47,6 +47,11 @@ export default async function CmsPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>Jelentkezések elbírálása és mentorprofilok</div>
       </Link>
 
+      <Link className="card klink" href="/cms/erdeklodesek">
+        <div className="klink-t">✉️ Képzőhelyi megkeresések</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>A nyitóoldalról érkező érdeklődések (admin)</div>
+      </Link>
+
       <Link className="card klink" href="/cms/beallitasok">
         <div className="klink-t">⚙️ Beállítások</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Modulrészek ki-/bekapcsolása (admin)</div>

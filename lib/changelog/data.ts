@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.25.0',
+    version: '1.25.1',
     date: '2026-09-03',
     title: 'APN-MED Education megjelenése',
     summary: 'Oktatói jelzés a fejlécben, és bemutatkozó oldal a képzőhelyeknek.',
@@ -94,6 +94,11 @@ export const RELEASES: Release[] = [
         id: 'v1250-oldal', kind: 'funkcio', title: 'Oldal a képzőhelyeknek',
         body: 'Új, bejelentkezés nélkül elérhető oldal mutatja be, mit ad a platform az egyetemeknek és képzőhelyeknek: kurzusok, klinikai esetek, feladatok, csoportelemzés, oktatótermi használat. A nyitóoldalon is megjelenik egy rövid szakasz, ami ide vezet.',
         href: '/kepzohelyeknek',
+      },
+      {
+        id: 'v1250-kezeles', kind: 'funkcio', title: 'Megkeresések kezelése',
+        body: 'A beérkezett érdeklődések a Tartalomkezelésben jelennek meg, az újak elöl. Az e-mail cím és a telefonszám kattintható: a válasz onnan azonnal indítható, nem kell másolgatni. Minden megkereséshez rögzíthető megjegyzés — mikor és hogyan kerestük meg, mi lett a megállapodás —, és jelölhető megkeresettként vagy lezártként.',
+        href: '/cms/erdeklodesek',
       },
       {
         id: 'v1250-urlap', kind: 'funkcio', title: 'Érdeklődési űrlap',
