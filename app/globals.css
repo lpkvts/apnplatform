@@ -1661,8 +1661,21 @@ body:not(.is-landing) .topbar {
 }
 body:not(.is-landing) .topbar .brand-name { color: var(--chrome-ink); }
 body:not(.is-landing) .topbar .brand-sub { color: var(--chrome-muted); }
-body:not(.is-landing) .topbar .icon-btn { color: var(--chrome-ink); }
-body:not(.is-landing) .topbar .icon-btn:hover { background: rgba(255,255,255,.09); }
+body:not(.is-landing) .topbar .icon-btn {
+  color: var(--chrome-ink);
+  background: rgba(255, 255, 255, .06);
+  border-color: var(--chrome-line);
+}
+body:not(.is-landing) .topbar .icon-btn:hover {
+  background: rgba(255, 255, 255, .13);
+  border-color: rgba(255, 255, 255, .22);
+}
+/* A profilkép a sötét sávban a világosabb márkaárnyalatot kapja: a mély zöld
+   itt beleolvadna a háttérbe. */
+body:not(.is-landing) .topbar .avatar {
+  background: var(--chrome-brand);
+  color: #0B2119;
+}
 body:not(.is-landing) .topbar .brand-edu b { color: #C4B0FF; }
 body:not(.is-landing) .topbar .brand-edu span { color: var(--chrome-muted); }
 body:not(.is-landing) .topbar .brand-edu { border-left-color: var(--chrome-line); }

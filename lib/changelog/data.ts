@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.27.1',
+    date: '2026-09-03',
+    title: 'Fejléc gombjai',
+    summary: 'A harang, a profilkép és a kilépés gombja a sötét sávba simul.',
+    entries: [
+      {
+        id: 'v1271-gombok', kind: 'javitas', title: 'Fehér foltok a fejlécben',
+        body: 'Az állandó sötét keret bevezetése után az értesítés- és a kilépés gomb világos módban fehér háttérrel maradt, ezért fehér foltként ült a sötét sávon. A gombok mostantól áttetsző háttéret és a sávhoz illő keretet kapnak, a profilkép pedig a világosabb márkaárnyalatot — a mély zöld a sötét sávban beleolvadt volna a háttérbe.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.27.0',
     date: '2026-09-03',
     title: 'Akut szédülés',
