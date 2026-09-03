@@ -1393,18 +1393,18 @@ summary:focus-visible,
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
     /* Rétegek: háttér → felület → kiemelt felület */
-    --bg: #0E1721;
-    --card: #16212D;
-    --surface: #16212D;
-    --surface-2: #1D2937;
+    --bg: #151E28;
+    --card: #1E2935;
+    --surface: #1E2935;
+    --surface-2: #27333F;
 
-    --line: #26333F;
-    --line-strong: #35424F;
+    --line: #333F4B;
+    --line-strong: #46525E;
 
     /* Szöveg: a tiszta fehér sötét háttéren vibrál, ezért törtfehér. */
-    --ink: #E8EEF3;
-    --muted: #84939F;
-    --faint: #7B8A96;
+    --ink: #F2F6F9;
+    --muted: #8D9CAB;
+    --faint: #84939F;
 
     /* Márkaszínek világosabb árnyalatban: a mély zöld sötét háttéren
        olvashatatlan lenne. */
@@ -1423,8 +1423,8 @@ summary:focus-visible,
   }
 
   /* A fejléc és az alsó navigáció áttetsző háttere a világos témára készült. */
-  .topbar { background: rgba(22, 33, 45, .92); }
-  .bottomnav { background: rgba(22, 33, 45, .94); }
+  .topbar { background: rgba(30, 41, 53, .93); }
+  .bottomnav { background: rgba(30, 41, 53, .95); }
 
   /* Az árnyékok sötét felületen nem látszanak; a keret veszi át a szerepüket. */
   .card, .lst, .tbl-wrap, .mp-card {
@@ -1455,18 +1455,18 @@ summary:focus-visible,
 /* Ugyanezek a kézi választásnál — a szkript ilyenkor beállítja az attribútumot. */
 :root[data-theme='dark'] {
     /* Rétegek: háttér → felület → kiemelt felület */
-    --bg: #0E1721;
-    --card: #16212D;
-    --surface: #16212D;
-    --surface-2: #1D2937;
+    --bg: #151E28;
+    --card: #1E2935;
+    --surface: #1E2935;
+    --surface-2: #27333F;
 
-    --line: #26333F;
-    --line-strong: #35424F;
+    --line: #333F4B;
+    --line-strong: #46525E;
 
     /* Szöveg: a tiszta fehér sötét háttéren vibrál, ezért törtfehér. */
-    --ink: #E8EEF3;
-    --muted: #84939F;
-    --faint: #7B8A96;
+    --ink: #F2F6F9;
+    --muted: #8D9CAB;
+    --faint: #84939F;
 
     /* Márkaszínek világosabb árnyalatban: a mély zöld sötét háttéren
        olvashatatlan lenne. */
@@ -1486,8 +1486,8 @@ summary:focus-visible,
 
 
 /* A fejléc és az alsó navigáció áttetsző háttere a világos témára készült. */
-.topbar { background: rgba(22, 33, 45, .92); }
-.bottomnav { background: rgba(22, 33, 45, .94); }
+.topbar { background: rgba(30, 41, 53, .93); }
+.bottomnav { background: rgba(30, 41, 53, .95); }
 
 /* Az árnyékok sötét felületen nem látszanak; a keret veszi át a szerepüket. */
 .card, .lst, .tbl-wrap, .mp-card {
@@ -1495,23 +1495,30 @@ summary:focus-visible,
   border-color: var(--line);
 }
 
-/* Az EKG- és a vérgázgörbe fehér alapra készült: sötét témában a rajzterület
-   világos marad, mert a klinikai görbe így olvasható. */
-.ecg-wrap, .lel, .ekg-fig-svg { background: #F8FAFB; }
-.lel { color: #0F172A; }
-.lel .lel-egys, .lel .lel-ref, .lel .lel-lab { color: #64748B; }
-.lel-fej { border-color: #0F172A; }
+/* Az alábbiak csak sötét témában érvényesek. Korábban feltétel nélkül
+   kerültek a stíluslapba, ezért világos módban is hatottak. */
+:root[data-theme='dark'] .ecg-wrap,
+:root[data-theme='dark'] .lel,
+:root[data-theme='dark'] .ekg-fig-svg { background: #F8FAFB; }
+:root[data-theme='dark'] .lel { color: #0F172A; }
+:root[data-theme='dark'] .lel .lel-egys,
+:root[data-theme='dark'] .lel .lel-ref,
+:root[data-theme='dark'] .lel .lel-lab { color: #64748B; }
+:root[data-theme='dark'] .lel-fej { border-color: #0F172A; }
 
-/* Beviteli mezők: a fehér háttér sötét témában vakít. */
-.field, .search-input, .vg-field input, .vg-opt {
+:root[data-theme='dark'] .field,
+:root[data-theme='dark'] .search-input,
+:root[data-theme='dark'] .vg-field input,
+:root[data-theme='dark'] .vg-opt {
   background: var(--surface-2);
   color: var(--ink);
   border-color: var(--line-strong);
 }
-.field::placeholder, .search-input::placeholder { color: var(--faint); }
+:root[data-theme='dark'] .field::placeholder,
+:root[data-theme='dark'] .search-input::placeholder { color: var(--faint); }
 
-/* A telepítési felajánló és a lebegő elemek. */
-.inst-card, .tm { background: var(--card); }
+:root[data-theme='dark'] .inst-card,
+:root[data-theme='dark'] .tm { background: var(--card); }
 
 /* A nyomtatás mindig világos: a sötét háttér elpazarolja a festéket, és
    a klinikai dokumentum papíron fehér alapon olvasható. */

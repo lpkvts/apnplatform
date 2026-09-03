@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.26.1',
+    date: '2026-09-03',
+    title: 'Témaváltás javítása',
+    summary: 'A kézi beállítás most már érvényesül, és a sötét téma világosabb lett.',
+    entries: [
+      {
+        id: 'v1261-valtas', kind: 'javitas', title: 'A kézi beállítás nem érvényesült',
+        body: 'A témaválasztás beállította a jelölést, de a React a betöltés után visszaírta az eredetit — így hiába választott valaki sötétet világos rendszeren, nem történt semmi. A keret mostantól tudja, hogy ez az eltérés szándékos, és nem nyúl hozzá.',
+        href: '/profil',
+      },
+      {
+        id: 'v1261-globalis', kind: 'javitas', title: 'Sötét szabályok világos módban',
+        body: 'A sötét témához tartozó szabályok egy része feltétel nélkül került a stíluslapba, ezért világos módban is hatott: a beviteli mezők háttere és a leletnézet színei nem oda illettek. Ezek most már csak sötét témában érvényesek.',
+        href: '/',
+      },
+      {
+        id: 'v1261-vilagosabb', kind: 'eszkoz', title: 'Világosabb sötét téma',
+        body: 'A korábbi mély alapszínen a felületek alig különültek el egymástól. Az egész skála egy fokkal világosabb lett — a háttér, a kártyák és a keretek is —, így a rétegek láthatóak, és a szem kevésbé fárad. A szövegszintek ehhez igazodtak, hogy továbbra is olvashatóak maradjanak és elváljanak egymástól.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.26.0',
     date: '2026-09-03',
     title: 'Biztonsági javítások',

@@ -80,7 +80,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   }
 
   return (
-    <html lang="hu">
+    <html lang="hu" suppressHydrationWarning>
       <head><ThemeInit /></head>
       <body className={isLanding ? 'is-landing' : bodyClassFor(mode)}>
         {!isLanding && <Nav education={mode === 'education'} />}

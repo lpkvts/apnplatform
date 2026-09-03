@@ -83,9 +83,9 @@ for (const [nev, c] of Object.entries(ACC)) {
 
 /* ── Sötét téma ── */
 const D = {
-  ink: '#E8EEF3', muted: '#84939F', faint: '#7B8A96',
-  card: '#16212D', bg: '#0E1721',
-  brand: '#3FBF91', brandDark: '#6FD4AE',
+  ink: '#F2F6F9', muted: '#8D9CAB', faint: '#84939F',
+  card: '#1E2935', bg: '#151E28',
+  brand: '#7FD3B4', brandDark: '#96DFC4',
   ok: '#4ADE80', warn: '#FBBF24', alert: '#F87171', info: '#60A5FA',
 }
 
