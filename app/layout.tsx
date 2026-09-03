@@ -83,7 +83,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang="hu">
       <head><ThemeInit /></head>
       <body className={isLanding ? 'is-landing' : bodyClassFor(mode)}>
-        {!isLanding && <Nav />}
+        {!isLanding && <Nav education={mode === 'education'} />}
         <FavoritesProvider initial={favKeys}>
           {isLanding ? children : mode === 'education' && oktatoTagsag ? (
           <div className="edu-shell">

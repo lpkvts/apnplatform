@@ -13,7 +13,6 @@ export const SHORTCUTS: Shortcut[] = [
   { key: 'kontextus', href: '/kontextus', label: 'Klinikai kontextus', icon: 'book' },
   { key: 'kedvencek', href: '/kedvencek', label: 'Kedvenceim', icon: 'star' },
   { key: 'kompterkep', href: '/kompetenciaterkep', label: 'Kompetenciatérkép', icon: 'grad' },
-  { key: 'oktatas', href: '/oktatas', label: 'Oktatás', icon: 'grad' },
   { key: 'profil', href: '/profil', label: 'Profil', icon: 'user' },
 ]
 

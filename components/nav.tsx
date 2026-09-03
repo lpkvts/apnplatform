@@ -5,7 +5,7 @@ import { getCurrentUser } from '@/lib/supabase/user'
 import { getNotificationCount } from '@/lib/notifications'
 import { signOut } from '@/lib/actions/auth'
 
-export async function Nav() {
+export async function Nav({ education = false }: { education?: boolean } = {}) {
   const supabase = await createClient()
   const user = await getCurrentUser()
   let initial = ''
@@ -27,6 +27,16 @@ export async function Nav() {
           <span className="brand-sub">Szakmai platform</span>
         </span>
       </Link>
+
+      {/* Oktatói felületen jelezzük, hogy más munkamódban vagyunk. A jelkép
+          és a márkanév változatlan: egy platform, két réteg. */}
+      {education && (
+        <span className="brand-edu">
+          <b>Education</b>
+          <span>Oktatói felület</span>
+        </span>
+      )}
+
       <span className="spacer" />
       {user && (
         <>

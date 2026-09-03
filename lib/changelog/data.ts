@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.25.0',
+    date: '2026-09-03',
+    title: 'APN-MED Education megjelenése',
+    summary: 'Oktatói jelzés a fejlécben, és bemutatkozó oldal a képzőhelyeknek.',
+    entries: [
+      {
+        id: 'v1250-fejlec', kind: 'eszkoz', title: 'Education jelzés a fejlécben',
+        body: 'Az oktatói felületen a márkanév mellett megjelenik az „Education — oktatói felület” jelzés. Nem külön logó: ugyanaz a jelkép és ugyanaz a név, mellette a réteg megnevezése. Az al-márkák elszaporodása gyengítené a fő márkát, és minden új jelkép külön karbantartást igényelne.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1250-gyorsindito', kind: 'eszkoz', title: 'Az oktatás lekerült a gyors indítóból',
+        body: 'A gyors indító a napi klinikai munkához használt modulokat sorolja; az oktatói felület külön réteg, nem klinikai eszköz. A kezdőlapi belépő megmarad annak, aki tagja valamelyik képzőhelynek, és a kapcsoló továbbra is szabályozza a modul elérhetőségét.',
+        href: '/',
+      },
+      {
+        id: 'v1250-oldal', kind: 'funkcio', title: 'Oldal a képzőhelyeknek',
+        body: 'Új, bejelentkezés nélkül elérhető oldal mutatja be, mit ad a platform az egyetemeknek és képzőhelyeknek: kurzusok, klinikai esetek, feladatok, csoportelemzés, oktatótermi használat. A nyitóoldalon is megjelenik egy rövid szakasz, ami ide vezet.',
+        href: '/kepzohelyeknek',
+      },
+      {
+        id: 'v1250-urlap', kind: 'funkcio', title: 'Érdeklődési űrlap',
+        body: 'A képzőhelyek megkeresést küldhetnek: intézmény, kapcsolattartó és e-mail kötelező, a hallgatói létszám és az üzenet önkéntes. A rövid űrlap szándékos — a hosszú elriaszt. A megkereséseket csak adminisztrátor látja, mert kapcsolattartói adatokat tartalmaznak.',
+        href: '/kepzohelyeknek',
+      },
+    ],
+  },
+  {
     version: '1.24.2',
     date: '2026-09-03',
     title: 'Sötét téma finomítása',

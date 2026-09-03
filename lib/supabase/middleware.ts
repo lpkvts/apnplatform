@@ -32,7 +32,10 @@ export async function updateSession(request: NextRequest) {
   // A nyitóoldal publikus: kijelentkezett látogató a landinget kapja, belépett
   // felhasználó a kezdőlapot (app/page.tsx dönti el). Enélkül a landing soha nem
   // látszana, mert a middleware már itt átirányítana a bejelentkezésre.
-  const isPublic = path === '/' || path.startsWith('/login') || path.startsWith('/auth')
+  const isPublic = path === '/'
+    || path.startsWith('/login')
+    || path.startsWith('/auth')
+    || path.startsWith('/kepzohelyeknek')
   if (!user && !isPublic) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'

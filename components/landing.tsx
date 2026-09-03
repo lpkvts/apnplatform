@@ -102,6 +102,7 @@ export function Landing() {
             <a href="#funkciok">Funkciók</a>
             <a href="#ut">Szakmai út</a>
             <a href="#kompetencia">Kompetenciatérkép</a>
+            <Link href="/kepzohelyeknek">Képzőhelyeknek</Link>
             <a href="#mentor">Mentorprogram</a>
             <a href="#kinek">Kinek készült</a>
           </nav>
@@ -223,6 +224,36 @@ export function Landing() {
             keretrendszeréről. A tartalom edukációs célú összefoglaló, nem helyettesíti a
             hatályos jogszabályok ismeretét.
           </p>
+        </div>
+      </section>
+
+      {/* ── Képzőhelyeknek ── */}
+      <section className="lp-sec" id="education">
+        <div className="lp-wrap">
+          <p className="lp-eyebrow c">Egyetemeknek és képzőhelyeknek</p>
+          <div className="lp-edu">
+            <div>
+              <h2 className="lp-h2">APN-MED Education</h2>
+              <p>
+                Az APN-képzés teljes oktatási folyamata egyetlen platformon: kurzusok,
+                klinikai esetek, feladatok automatikus értékeléssel és csoportelemzés.
+              </p>
+              <p>
+                A hallgató ugyanazt az alkalmazást használja a tanuláshoz, amit később az
+                ágy mellett is — nem kell külön rendszert megtanulnia.
+              </p>
+              <Link className="lp-btn lp-btn-primary" href="/kepzohelyeknek">
+                Részletek és érdeklődés <span className="lp-arw">→</span>
+              </Link>
+            </div>
+            <ul className="lp-edu-l">
+              <li>Saját kurzusstruktúra és csoportok</li>
+              <li>Klinikai esetek betegadatokkal</li>
+              <li>Feladatok automatikus pontozással</li>
+              <li>Csoportelemzés kompetenciánként</li>
+              <li>Kivetíthető oktatótermi nézet</li>
+            </ul>
+          </div>
         </div>
       </section>
 
