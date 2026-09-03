@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.26.3',
+    date: '2026-09-03',
+    title: 'Állandó sötét keret',
+    summary: 'A fejléc és az alsó sáv mindkét témában sötét; a téma a tartalom hátterét váltja.',
+    entries: [
+      {
+        id: 'v1263-keret', kind: 'eszkoz', title: 'A keret nem vált a témával',
+        body: 'A fejléc és az alsó navigáció világos módban is sötét marad. Ez a platform állandó kerete: a navigáció mindig ugyanúgy néz ki, a téma pedig a tartalom hátterét szabályozza. A keret saját színkészletet kapott, hogy ne függjön a témaváltástól — a márkanév, a feliratok és az aktív menüpont mindkét módban olvasható marad.',
+        href: '/',
+      },
+      {
+        id: 'v1263-oldalsav', kind: 'eszkoz', title: 'Az oktatói oldalsáv is a kerethez tartozik',
+        body: 'Az oktatói felület oldalsávja ugyanezt a sötét hátteret kapta: a fejléc alatt folytatódik, egy egységet alkotva vele.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1263-nyitooldal', kind: 'eszkoz', title: 'A nyitóoldal kivétel',
+        body: 'A bemutatkozó oldal fejléce világos marad — ott a márka bemutatása a cél, nem a napi munka kerete.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.26.2',
     date: '2026-09-03',
     title: 'Témaváltás javítása',
