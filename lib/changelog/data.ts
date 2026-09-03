@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.27.0',
+    date: '2026-09-03',
+    title: 'Akut szédülés',
+    summary: 'Új téma az akut állapotok között, a GRACE-3 irányelv alapján.',
+    entries: [
+      {
+        id: 'v1270-szedules', kind: 'betegseg', title: 'Akut szédülés',
+        body: 'Az akut állapotok új témával bővültek. A tartalom a GRACE-3 irányelvre épül, amely a Society for Academic Emergency Medicine 2023-as ajánlása a két hétnél rövidebb ideje fennálló akut szédülésre.',
+        href: '/betegsegtar/akut/szedules',
+      },
+      {
+        id: 'v1270-besorolas', kind: 'szakmai', title: 'Időbeli lefolyás és kiváltó tényező',
+        body: 'A besorolás nem a szédülés minősége szerint történik. A „forgó vagy émelygő?” típusú kérdés megbízhatatlan: ugyanaz a beteg más szóval írja le a panaszát öt perc múlva, és a szóhasználat nem különíti el a veszélyes okot a jóindulatútól. Helyette három kérdés dönt: mióta tart, folyamatos-e, és mi váltja ki.',
+        href: '/betegsegtar/akut/szedules',
+      },
+      {
+        id: 'v1270-ct', kind: 'szakmai', title: 'A negatív CT nem zárja ki a stroke-ot',
+        body: 'A hátsó scala stroke szédüléssel indulhat, góctünet nélkül. A natív koponya-CT ezt jellemzően nem mutatja, ezért a negatív lelet nem nyugtathat meg. A leírás ezt külön kiemeli, ahogy azt is, hogy a stroke-felismerő skálák elülső keringési eseményre készültek, és a hátsó scala eseményét gyakran nem fogják meg.',
+        href: '/betegsegtar/akut/szedules',
+      },
+      {
+        id: 'v1270-kompetencia', kind: 'szakmai', title: 'Kompetenciahatárok',
+        body: 'A fejmozgás-vizsgálat, a helyzetváltozási próba és a repozíciós manőver gyakorlatot igényel, és tévesen elvégezve félrevezető. A leírás kimondja, hogy ezek gyakorlott vizsgálót kívánnak és a kompetenciahatárok munkahelyi tisztázását, valamint azt is, mikor nem folytatható a vizsgálat.',
+        href: '/betegsegtar/akut/szedules',
+      },
+    ],
+  },
+  {
     version: '1.26.3',
     date: '2026-09-03',
     title: 'Állandó sötét keret',
