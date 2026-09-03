@@ -1408,9 +1408,9 @@ summary:focus-visible,
 
     /* Márkaszínek világosabb árnyalatban: a mély zöld sötét háttéren
        olvashatatlan lenne. */
-    --brand: #3FBF91;
-    --brand-dark: #6FD4AE;
-    --brand-2: #35A87E;
+    --brand: #7FD3B4;
+    --brand-dark: #96DFC4;
+    --brand-2: #6BC7A4;
     --brand-3: #4FCE9E;
     --brand-tint: #17332A;
     --on-brand: #06231A;
@@ -1470,9 +1470,9 @@ summary:focus-visible,
 
     /* Márkaszínek világosabb árnyalatban: a mély zöld sötét háttéren
        olvashatatlan lenne. */
-    --brand: #3FBF91;
-    --brand-dark: #6FD4AE;
-    --brand-2: #35A87E;
+    --brand: #7FD3B4;
+    --brand-dark: #96DFC4;
+    --brand-2: #6BC7A4;
     --brand-3: #4FCE9E;
     --brand-tint: #17332A;
     --on-brand: #06231A;
@@ -1522,4 +1522,51 @@ summary:focus-visible,
   }
   .topbar, .bottomnav, .inst-card, .btn { display: none !important; }
   .card { box-shadow: none; border: 1px solid #CCC; break-inside: avoid; }
+}
+
+/* ── A nyitóoldal mindig világos ─────────────────────────
+   A bemutatkozó oldal saját színvilággal dolgozik: gradiensekkel, halvány
+   háttérfoltokkal, világos kártyákkal. Ezek egy része a változókból, más
+   része rögzített értékekből jön, ezért sötét témában a kettő keveredne.
+   A márka bemutatása világos felületen a leghitelesebb, ezért a nyitóoldal
+   kimarad a témaváltásból. Belépés után a választott téma érvényesül. */
+:root:has(body.is-landing),
+body.is-landing {
+  color-scheme: light;
+  --bg: #F6F8F8;
+  --card: #FFFFFF;
+  --surface: #FFFFFF;
+  --surface-2: #F6F8F8;
+  --line: #E2E6EA;
+  --line-strong: #CBD3DA;
+  --ink: #0F172A;
+  --muted: #5A6A7D;
+  --faint: #64748B;
+  --brand: #0F5B46;
+  --brand-dark: #0B4635;
+  --brand-2: #147A5A;
+  --brand-3: #22A878;
+  --brand-tint: #E7F1EC;
+  --on-brand: #FFFFFF;
+  --ok: #15803D;      --ok-bg: #E7F1EC;      --ok-line: #BFDECD;
+  --warn: #B45309;    --warn-bg: #FDF0DC;    --warn-line: #F0D9B5;
+  --alert: #B91C1C;   --alert-bg: #FBE9E9;   --alert-line: #F0C4C4;
+  --info: #1D5FD1;    --info-bg: #E4F0FA;    --info-line: #BFD7F0;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ── Fejléc és alsó navigáció sötét témában ─────────────
+   A márkanév és az ikonfeliratok végig a szem előtt vannak. Telített zöldben
+   ezek „világítanak”, ami hosszabb használat közben fárasztó — ezért a szöveg
+   a szokásos színt kapja, és csak a jelkép meg az aktív elem marad zöld. */
+:root[data-theme='dark'] .brand-name { color: var(--ink); }
+:root[data-theme='dark'] .brand-sub { color: var(--faint); }
+:root[data-theme='dark'] .bottomnav a { color: var(--muted); }
+:root[data-theme='dark'] .bottomnav a.on { color: var(--brand-3); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .brand-name { color: var(--ink); }
+  :root:not([data-theme='light']) .brand-sub { color: var(--faint); }
+  :root:not([data-theme='light']) .bottomnav a { color: var(--muted); }
+  :root:not([data-theme='light']) .bottomnav a.on { color: var(--brand-3); }
 }

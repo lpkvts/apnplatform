@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.24.2',
+    date: '2026-09-03',
+    title: 'Sötét téma finomítása',
+    summary: 'Visszafogottabb zöldek, semleges fejléc, és ép nyitóoldal.',
+    entries: [
+      {
+        id: 'v1242-landing', kind: 'javitas', title: 'A nyitóoldal mindig világos',
+        body: 'A bemutatkozó oldal sötét témában széttört: saját, világosra tervezett színvilággal dolgozik, ahol a színek egy része változókból, más része rögzített értékekből jön — a kettő keveredett. A nyitóoldal mostantól kimarad a témaváltásból, mert a márka bemutatása világos felületen a leghitelesebb. Belépés után a választott téma érvényesül.',
+        href: '/',
+      },
+      {
+        id: 'v1242-zold', kind: 'javitas', title: 'Visszafogottabb zöld',
+        body: 'A telített zöld sötét háttéren világított, és mivel a fejlécben meg az alsó sávban végig a szem előtt van, hosszabb használat közben fárasztóvá vált. Az árnyalatok halványabbak és kevésbé telítettek lettek — olvashatóbbak, de nem vonják el a figyelmet a tartalomról.',
+        href: '/',
+      },
+      {
+        id: 'v1242-fejlec', kind: 'javitas', title: 'Semleges fejléc és navigáció',
+        body: 'A márkanév és az alsó sáv feliratai sötét témában a szokásos szövegszínt kapják; zöld már csak a jelkép és az éppen megnyitott menüpont. A folyamatosan látható elemek így nem versenyeznek a tartalommal.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.24.1',
     date: '2026-09-03',
     title: 'Sötét téma',
