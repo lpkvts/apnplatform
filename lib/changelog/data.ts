@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.23.1',
+    date: '2026-09-03',
+    title: 'Pontbontás a klinikai skáláknál',
+    summary: 'Nem csak az összpontszám látszik, hanem az is, melyik tétel mennyit adott.',
+    entries: [
+      {
+        id: 'v1230-gyors', kind: 'eszkoz', title: 'Gyakran használt pontozók',
+        body: 'A hat leggyakoribb pontozó — NEWS2, qSOFA, GCS, CURB-65, BISAP, Wells-PE — a Klinikai skálák oldalának tetejére került, a kereső alá. Korábban a Klinikum menüje alatt állt, ahol indokolatlanul lógott. Keresés vagy kategóriaszűrés közben elrejtőzik: olyankor a találatok a fontosak.',
+        href: '/klinika/tesztek',
+      },
+      {
+        id: 'v1230-bontas', kind: 'funkcio', title: 'Tételenkénti pontozás',
+        body: 'Az eredmény alatt megjelenik a bontás: minden kérdésnél látszik, hány pontot adott hozzá. A pontot adó tételek hangsúlyosabbak, mert azok magyarázzák az eredményt. Alul az összesítés zárja a sort.',
+        href: '/klinika/tesztek',
+      },
+      {
+        id: 'v1230-ellenorzes', kind: 'eszkoz', title: 'Ellenőrzési lehetőség',
+        body: 'A bontás nem csak tájékoztat: kiderül belőle, ha a rendszer másképp értette a választ, mint ahogy szántuk. Egy elnézett kattintás így a pontszám elfogadása előtt kiderül. A saját képlettel számoló skáláknál — például a testtömegindexnél — nincs értelmezhető tételbontás, ott nem is jelenik meg.',
+        href: '/klinika/tesztek',
+      },
+    ],
+  },
+  {
     version: '1.22.0',
     date: '2026-09-02',
     title: 'Áttekinthetőbb kezdőlap és klinikai eszközök',

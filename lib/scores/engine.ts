@@ -37,6 +37,50 @@ export function testScore(t: Test, a: Answers): number {
   return Math.round(s * 10) / 10
 }
 
+/** Egy tétel hozzájárulása a pontszámhoz. */
+export interface ItemScore {
+  /** A kérdés rövidített szövege — a bontásban ez azonosítja a tételt. */
+  label: string
+  /** Hány pontot adott ez a tétel. */
+  points: number
+  /** Megválaszolt-e egyáltalán. */
+  answered: boolean
+}
+
+/**
+ * Tételenkénti pontbontás.
+ *
+ * Eddig csak az összpontszám látszott, ami nem mutatta meg, melyik tétel
+ * mennyit adott hozzá. Ez a bontás egyben ellenőrzés is: a felhasználó látja,
+ * hogy a rendszer úgy értette-e a válaszait, ahogy gondolta.
+ *
+ * A saját számítású pontozóknál — ahol a képlet nem tételek összege, például
+ * a testtömegindexnél — nincs értelmezhető bontás, ilyenkor üres a lista.
+ */
+export function testItemScores(t: Test, a: Answers): ItemScore[] {
+  if (TEST_COMPUTE[t.id]) return []
+  return (t.items ?? []).map((it: TestItem, i: number) => {
+    const v = a[i]
+    let points = 0
+    let answered = false
+    if (it.type === 'check') {
+      if (Array.isArray(v) && v.length > 0) {
+        v.forEach((x) => (points += Number(x)))
+        answered = true
+      }
+    } else if (v != null && v !== ('' as unknown)) {
+      points = Number(v)
+      answered = true
+    }
+    return {
+      // A hosszú kérdéseket rövidítjük: a bontásban a felismerhetőség számít.
+      label: it.q.length > 46 ? it.q.slice(0, 44).trimEnd() + '…' : it.q,
+      points: Math.round(points * 10) / 10,
+      answered,
+    }
+  })
+}
+
 export function testComplete(t: Test, a: Answers): boolean {
   return (t.items ?? []).every((it: TestItem, i: number) =>
     it.type === 'check' ? true : a[i] != null && (a[i] as unknown) !== '',

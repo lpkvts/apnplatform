@@ -1,11 +1,12 @@
 'use client'
 import { TopicBacklinks } from '@/components/topic-backlinks'
+import { TeachingMode } from '@/components/teaching-mode'
 
 import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TESTS, TEST_CATS, type Test, type TestItem } from '@/lib/scores/data'
 import { FavStar } from '@/components/favorites-context'
-import { testScore, testComplete, testBand } from '@/lib/scores/engine'
+import { testScore, testComplete, testBand, testItemScores } from '@/lib/scores/engine'
 
 type AnsMap = Record<number, number | number[]>
 
@@ -61,6 +62,29 @@ export function ScoreHub() {
         value={q}
         onChange={(e) => setQ(e.target.value)}
       />
+
+      {!nq && (
+        <>
+          <div className="sec-h" style={{ marginTop: 14 }}>
+            <span className="sec-t">Gyakran használt</span>
+          </div>
+          <div className="tool-grid" style={{ marginBottom: 18 }}>
+            {[
+              { id: 'news2', nev: 'NEWS2', mit: 'Korai állapotromlás' },
+              { id: 'qsofa', nev: 'qSOFA', mit: 'Szepszis kockázata' },
+              { id: 'gcs', nev: 'GCS', mit: 'Tudatállapot' },
+              { id: 'curb65', nev: 'CURB-65', mit: 'Pneumonia súlyossága' },
+              { id: 'bisap', nev: 'BISAP', mit: 'Akut pancreatitis' },
+              { id: 'wellspe', nev: 'Wells-PE', mit: 'Tüdőembólia esélye' },
+            ].filter((x) => TESTS.some((t) => t.id === x.id)).map((x) => (
+              <button key={x.id} className="tool" onClick={() => setOpenId(x.id)}>
+                <b>{x.nev}</b>
+                <span>{x.mit}</span>
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       {!nq && (
         <div className="sh-chips">
@@ -124,6 +148,8 @@ function TestDetail({
 
   const complete = !t.refOnly && testComplete(t, a)
   const score = complete ? testScore(t, a) : 0
+  // Tételenkénti bontás: melyik kérdés mennyit adott hozzá.
+  const bontas = complete ? testItemScores(t, a) : []
   const band = complete ? testBand(t, score) : null
   const apn = band?.apn ?? t.apn
 
@@ -188,6 +214,26 @@ function TestDetail({
             ))}
           </div>
 
+          {/* Oktatóteremben a kitöltött pontozó és az eredmény kivetíthető. */}
+          {complete && band && (
+            <TeachingMode title={t.name} subtitle={`${score} pont · ${band.label}`}>
+              <div className={`sh-result ${RISK_CLS[band.risk] ?? ''}`}>
+                <div className="sh-res-top">
+                  <div className="sh-res-score">{score}<span> pont</span></div>
+                  <div className="sh-res-band">{band.label}</div>
+                </div>
+                {band.advice && <p className="sh-res-adv">{band.advice}</p>}
+              </div>
+              <div className="sec-h"><span className="sec-t">A pontozó tételei</span></div>
+              {(t.items ?? []).map((it, i) => (
+                <div className="card" key={i}>
+                  <b>{it.q}</b>
+                  {it.help && <p className="sub" style={{ margin: '6px 0 0' }}>{it.help}</p>}
+                </div>
+              ))}
+            </TeachingMode>
+          )}
+
           {complete && band ? (
             <div className={`sh-result ${RISK_CLS[band.risk] ?? ''}`}>
               <div className="sh-res-top">
@@ -198,6 +244,26 @@ function TestDetail({
                 <div className="sh-res-band">{band.label}</div>
               </div>
               {band.advice && <p className="sh-res-adv">{band.advice}</p>}
+
+              {/* Pontbontás: a felhasználó látja, melyik tétel mennyit adott,
+                  és így azt is ellenőrizheti, hogy a rendszer úgy értette-e
+                  a válaszait, ahogy gondolta. */}
+              {bontas.length > 0 && (
+                <div className="sh-bontas">
+                  <b>Pontozás</b>
+                  {bontas.map((b, i) => (
+                    <div key={i} className={b.points > 0 ? 'be' : undefined}>
+                      <span>{b.label}</span>
+                      <i>{b.points > 0 ? `+${b.points}` : b.points}</i>
+                    </div>
+                  ))}
+                  <div className="ossz">
+                    <span>Összesen</span>
+                    <i>{score}</i>
+                  </div>
+                </div>
+              )}
+
               {band.notify && (
                 <div className="sh-urgent">⚠ Orvos értesítése: {band.notify}</div>
               )}

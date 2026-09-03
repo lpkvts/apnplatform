@@ -1334,10 +1334,28 @@ summary:focus-visible,
 .tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s2); }
 @media (max-width: 520px) { .tool-grid { grid-template-columns: repeat(2, 1fr); } }
 .tool {
-  display: block; background: var(--card); border: 1px solid var(--line);
+  display: block; width: 100%; text-align: left; font: inherit; cursor: pointer;
+  background: var(--card); border: 1px solid var(--line);
   border-radius: var(--r-md); padding: var(--s3) var(--s3);
   text-decoration: none; color: var(--ink);
 }
 .tool:hover { border-color: var(--brand-3); background: var(--brand-tint); }
 .tool b { display: block; font-size: var(--t-h3); font-weight: 800; letter-spacing: -.01em; }
 .tool span { display: block; font-size: var(--t-caption); color: var(--muted); margin-top: 2px; line-height: 1.35; }
+
+/* ── Pontozó: tételenkénti bontás ───────────────────────
+   Nem csak az összpontszám látszik, hanem az is, melyik tétel mennyit adott.
+   Ez egyben ellenőrzés: kiderül, ha a rendszer másképp értette a választ. */
+.sh-bontas { margin-top: var(--s4); border-top: 1px solid rgba(255,255,255,.25); padding-top: var(--s3); }
+.sh-bontas > b { display: block; font-size: var(--t-caption); font-weight: 800; letter-spacing: .06em; text-transform: uppercase; opacity: .8; margin-bottom: var(--s2); }
+.sh-bontas > div { display: flex; align-items: baseline; gap: var(--s3); padding: 5px 0; font-size: var(--t-small); }
+.sh-bontas > div span { flex: 1; min-width: 0; opacity: .85; }
+.sh-bontas > div i { font-style: normal; font-weight: 700; font-variant-numeric: tabular-nums; opacity: .6; }
+/* A pontot adó tételek hangsúlyosabbak: azok magyarázzák az eredményt. */
+.sh-bontas > div.be span { opacity: 1; }
+.sh-bontas > div.be i { opacity: 1; }
+.sh-bontas > div.ossz {
+  border-top: 1px solid rgba(255,255,255,.3); margin-top: var(--s2); padding-top: var(--s2);
+  font-weight: 800; font-size: var(--t-body);
+}
+.sh-bontas > div.ossz span, .sh-bontas > div.ossz i { opacity: 1; }
