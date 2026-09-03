@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.26.1',
+    version: '1.26.2',
     date: '2026-09-03',
     title: 'Témaváltás javítása',
     summary: 'A kézi beállítás most már érvényesül, és a sötét téma világosabb lett.',
@@ -87,7 +87,7 @@ export const RELEASES: Release[] = [
       },
       {
         id: 'v1261-globalis', kind: 'javitas', title: 'Sötét szabályok világos módban',
-        body: 'A sötét témához tartozó szabályok egy része feltétel nélkül került a stíluslapba, ezért világos módban is hatott: a beviteli mezők háttere és a leletnézet színei nem oda illettek. Ezek most már csak sötét témában érvényesek.',
+        body: 'A sötét témához tartozó szabályok egy része feltétel nélkül került a stíluslapba, ezért világos módban is hatott. A fejléc és az alsó sáv sötét háttérrel jelent meg fehér felületen, a beviteli mezők és a leletnézet színei sem oda illettek, a kártyák pedig elvesztették az árnyékukat. Mindegyik szabály a helyére került: csak sötét témában érvényesek.',
         href: '/',
       },
       {

@@ -1485,12 +1485,15 @@ summary:focus-visible,
   }
 
 
-/* A fejléc és az alsó navigáció áttetsző háttere a világos témára készült. */
-.topbar { background: rgba(30, 41, 53, .93); }
-.bottomnav { background: rgba(30, 41, 53, .95); }
+/* A fejléc és az alsó sáv áttetsző háttere — csak sötét témában. */
+:root[data-theme='dark'] .topbar { background: rgba(30, 41, 53, .93); }
+:root[data-theme='dark'] .bottomnav { background: rgba(30, 41, 53, .95); }
 
 /* Az árnyékok sötét felületen nem látszanak; a keret veszi át a szerepüket. */
-.card, .lst, .tbl-wrap, .mp-card {
+:root[data-theme='dark'] .card,
+:root[data-theme='dark'] .lst,
+:root[data-theme='dark'] .tbl-wrap,
+:root[data-theme='dark'] .mp-card {
   box-shadow: none;
   border-color: var(--line);
 }
