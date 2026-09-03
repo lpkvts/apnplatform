@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.25.1',
+    version: '1.25.2',
     date: '2026-09-03',
     title: 'APN-MED Education megjelenése',
     summary: 'Oktatói jelzés a fejlécben, és bemutatkozó oldal a képzőhelyeknek.',
@@ -91,9 +91,9 @@ export const RELEASES: Release[] = [
         href: '/',
       },
       {
-        id: 'v1250-oldal', kind: 'funkcio', title: 'Oldal a képzőhelyeknek',
-        body: 'Új, bejelentkezés nélkül elérhető oldal mutatja be, mit ad a platform az egyetemeknek és képzőhelyeknek: kurzusok, klinikai esetek, feladatok, csoportelemzés, oktatótermi használat. A nyitóoldalon is megjelenik egy rövid szakasz, ami ide vezet.',
-        href: '/kepzohelyeknek',
+        id: 'v1250-kapcsolat', kind: 'funkcio', title: 'Kapcsolat oldal',
+        body: 'Új, bejelentkezés nélkül elérhető kapcsolat oldal négyféle megkereséshez: általános kérdés, hibajelzés, javaslat és képzőhelyi érdeklődés. A téma kiválasztása után csak az ahhoz tartozó mezők jelennek meg — az intézmény nevét például csak a képzőhelyi érdeklődésnél kérjük. A nyitóoldali oktatási szakasz is ide vezet, rögtön a megfelelő témára állítva.',
+        href: '/kapcsolat',
       },
       {
         id: 'v1250-kezeles', kind: 'funkcio', title: 'Megkeresések kezelése',
@@ -102,8 +102,8 @@ export const RELEASES: Release[] = [
       },
       {
         id: 'v1250-urlap', kind: 'funkcio', title: 'Érdeklődési űrlap',
-        body: 'A képzőhelyek megkeresést küldhetnek: intézmény, kapcsolattartó és e-mail kötelező, a hallgatói létszám és az üzenet önkéntes. A rövid űrlap szándékos — a hosszú elriaszt. A megkereséseket csak adminisztrátor látja, mert kapcsolattartói adatokat tartalmaznak.',
-        href: '/kepzohelyeknek',
+        body: 'Egyetlen űrlap fogadja mind a négy megkeresés-típust, így nem kell eldönteni, hova írjunk. Név, e-mail és üzenet kötelező; a többi a témától függ. A megkereséseket csak adminisztrátor látja, mert kapcsolattartói adatokat tartalmaznak.',
+        href: '/kapcsolat',
       },
     ],
   },

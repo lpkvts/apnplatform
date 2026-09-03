@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react'
 import { setInquiryStatus, type Res } from '@/lib/inquiry/actions'
-import { INQ_STATUS_LABEL, type Inquiry } from '@/lib/inquiry/types'
+import { INQ_STATUS_LABEL, KIND_LABEL, type Inquiry } from '@/lib/inquiry/types'
 
 /**
  * Képzőhelyi megkeresések kezelése.
@@ -67,9 +67,11 @@ export function InquiryAdmin({ list }: { list: Inquiry[] }) {
         <div className="card" key={i.id} style={{ marginTop: 10 }}>
           <div className="row" style={{ border: 'none', padding: 0, alignItems: 'flex-start' }}>
             <span style={{ flex: 1 }}>
-              <b style={{ fontSize: 'var(--t-h3)' }}>{i.institution}</b>
+              <b style={{ fontSize: 'var(--t-h3)' }}>
+                {i.institution || i.contact_name}
+              </b>
               <span className="sub" style={{ display: 'block', margin: '2px 0 0', fontSize: 'var(--t-caption)' }}>
-                {i.created_at.slice(0, 10)}
+                {KIND_LABEL[i.kind]} · {i.created_at.slice(0, 10)}
                 {i.student_count && ` · ${i.student_count} hallgató`}
               </span>
             </span>

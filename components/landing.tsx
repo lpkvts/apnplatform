@@ -102,7 +102,7 @@ export function Landing() {
             <a href="#funkciok">Funkciók</a>
             <a href="#ut">Szakmai út</a>
             <a href="#kompetencia">Kompetenciatérkép</a>
-            <Link href="/kepzohelyeknek">Képzőhelyeknek</Link>
+            <Link href="/kapcsolat">Kapcsolat</Link>
             <a href="#mentor">Mentorprogram</a>
             <a href="#kinek">Kinek készült</a>
           </nav>
@@ -242,8 +242,8 @@ export function Landing() {
                 A hallgató ugyanazt az alkalmazást használja a tanuláshoz, amit később az
                 ágy mellett is — nem kell külön rendszert megtanulnia.
               </p>
-              <Link className="lp-btn lp-btn-primary" href="/kepzohelyeknek">
-                Részletek és érdeklődés <span className="lp-arw">→</span>
+              <Link className="lp-btn lp-btn-primary" href="/kapcsolat?tema=kepzohely">
+                Érdeklődés <span className="lp-arw">→</span>
               </Link>
             </div>
             <ul className="lp-edu-l">

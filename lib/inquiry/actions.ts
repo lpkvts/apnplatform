@@ -4,10 +4,10 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 
 /**
- * Képzőhelyi érdeklődés beküldése.
+ * Megkeresés beküldése.
  *
  * Bejelentkezés nélkül is működik: az érdeklődő jellemzően még nem
- * felhasználó. Csak annyi adatot kérünk, amennyi a visszahíváshoz kell.
+ * felhasználó. Csak annyi adatot kérünk, amennyi a válaszhoz kell.
  */
 
 export interface Res { ok: boolean; message: string }
@@ -18,12 +18,25 @@ const t = (v: FormDataEntryValue | null) => {
 }
 
 export async function sendInquiry(form: FormData): Promise<Res> {
+  const kind = (t(form.get('kind')) ?? 'general') as
+    'general' | 'institution' | 'bug' | 'suggestion'
+  if (!['general', 'institution', 'bug', 'suggestion'].includes(kind)) {
+    return { ok: false, message: 'Ismeretlen megkeresés-típus.' }
+  }
+
   const institution = t(form.get('institution'))
   const contact_name = t(form.get('contact_name'))
   const email = t(form.get('email'))
+  const message = t(form.get('message'))
 
-  if (!institution) return { ok: false, message: 'Az intézmény neve kötelező.' }
-  if (!contact_name) return { ok: false, message: 'A kapcsolattartó neve kötelező.' }
+  // Az intézmény neve csak képzőhelyi érdeklődésnél szükséges.
+  if (kind === 'institution' && !institution) {
+    return { ok: false, message: 'Az intézmény neve kötelező.' }
+  }
+  if (!contact_name) return { ok: false, message: 'A neved megadása kötelező.' }
+  if (!message || message.length < 10) {
+    return { ok: false, message: 'Írd le néhány mondatban, miben segíthetünk.' }
+  }
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { ok: false, message: 'Adj meg egy érvényes e-mail címet.' }
   }
@@ -34,19 +47,20 @@ export async function sendInquiry(form: FormData): Promise<Res> {
 
   const supabase = await createClient()
   const { error } = await supabase.from('institution_inquiries').insert({
+    kind,
     institution,
     contact_name,
     email,
     phone: t(form.get('phone')),
-    student_count: t(form.get('student_count')),
-    message: t(form.get('message')),
+    student_count: kind === 'institution' ? t(form.get('student_count')) : null,
+    message,
     status: 'new',
   })
 
   if (error) return { ok: false, message: 'A beküldés nem sikerült. Próbáld újra később.' }
   return {
     ok: true,
-    message: 'Néhány napon belül keresünk a megadott elérhetőségen.',
+    message: 'Néhány napon belül válaszolunk a megadott e-mail címre.',
   }
 }
 
