@@ -182,30 +182,45 @@ export function CourseAnalytics({
             A leggyengébb átlag elöl. A hiányzó beadás gyakran fontosabb jelzés, mint a
             gyenge eredmény.
           </p>
-          {students.map((s) => {
-            const hianyzik = s.osszes_feladat - s.beadott
-            return (
-              <div className="card" key={s.user_id} style={{ marginBottom: 8 }}>
-                <div className="row" style={{ border: 'none', padding: 0 }}>
-                  <span style={{ flex: 1 }}>
-                    <b>{s.full_name || '(nincs név)'}</b>
-                    <span className="sub" style={{ display: 'block', margin: 0, fontSize: 12 }}>
-                      {s.beadott} / {s.osszes_feladat} feladat beadva
-                      {s.teljesitett > 0 && ` · ${s.teljesitett} teljesítve`}
-                    </span>
-                  </span>
-                  <b style={{ fontSize: 17, color: s.beadott === 0 ? 'var(--faint)' : savSzin(s.atlag) }}>
-                    {s.beadott === 0 ? '—' : `${s.atlag}%`}
-                  </b>
-                </div>
-                {hianyzik > 0 && (
-                  <p className="sub" style={{ margin: '8px 0 0', fontSize: 12.5, color: 'var(--warn)' }}>
-                    {hianyzik} feladatot nem adott be.
-                  </p>
-                )}
-              </div>
-            )
-          })}
+          <div className="tbl-wrap">
+            <table className="tbl">
+              <thead>
+                <tr>
+                  <th>Hallgató</th>
+                  <th className="num">Beadva</th>
+                  <th className="num">Teljesítve</th>
+                  <th className="num">Átlag</th>
+                  <th>Állapot</th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((s) => {
+                  const hianyzik = s.osszes_feladat - s.beadott
+                  return (
+                    <tr key={s.user_id}>
+                      <td className="fo">{s.full_name || '(nincs név)'}</td>
+                      <td className="num">{s.beadott} / {s.osszes_feladat}</td>
+                      <td className="num">{s.teljesitett}</td>
+                      <td className="num" style={{ color: s.beadott === 0 ? 'var(--faint)' : savSzin(s.atlag) }}>
+                        {s.beadott === 0 ? '—' : `${s.atlag}%`}
+                      </td>
+                      <td>
+                        {s.beadott === 0 ? (
+                          <span className="st st-none">Nem kezdte meg</span>
+                        ) : hianyzik > 0 ? (
+                          <span className="st st-progress">{hianyzik} hiányzik</span>
+                        ) : s.atlag >= GYENGE ? (
+                          <span className="st st-passed">Rendben</span>
+                        ) : (
+                          <span className="st st-failed">Figyelmet igényel</span>
+                        )}
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         </>
       )}
     </>

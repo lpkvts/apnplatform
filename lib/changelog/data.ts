@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.21.0',
+    date: '2026-09-02',
+    title: 'Billentyűzet, táblázatok, egységes jelölések',
+    summary: 'Látható fókusz, nagyobb érintőfelületek és adattáblák az oktatói nézetben.',
+    entries: [
+      {
+        id: 'v1210-fokusz', kind: 'javitas', title: 'Látható fókusz',
+        body: 'Billentyűzettel navigálva eddig alig látszott, hol jár a fókusz. Mostantól minden hivatkozás, gomb és mező jelölést kap — de csak billentyűzetnél, egérkattintásnál nem zavar. Ez nemcsak akadálymentességi kérdés: aki gyorsan dolgozik, gyakran tabulátorral halad.',
+        href: '/',
+      },
+      {
+        id: 'v1210-erintes', kind: 'javitas', title: 'Nagyobb érintőfelületek',
+        body: 'Érintőképernyőn a gombok, szűrők és listaelemek legalább 44 képpont magasak. A kisebb célpontot mozgás közben vagy kesztyűben nehéz eltalálni.',
+        href: '/',
+      },
+      {
+        id: 'v1210-tabla', kind: 'eszkoz', title: 'Adattábla a hallgatói listához',
+        body: 'A csoportelemzésben a hallgatók kártyák helyett táblázatban állnak: azonos szélességű oszlopok, jobbra igazított számok, egységes állapotjelölés. A hallgatókat egymáshoz mérve nézzük, és ehhez a kártyás elrendezés alkalmatlan volt.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1210-jelvenyek', kind: 'eszkoz', title: 'Egy jelöléslogika',
+        body: 'Három párhuzamos jelvényrendszer élt egymás mellett — a mentorprofil máshogy jelezte a függőben lévőt, mint a feladat vagy a kurzus. Mindegyik ugyanarra a vizuális logikára állt át, a régi osztálynevek megtartásával, hogy a meglévő felületek ne törjenek el.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.20.0',
     date: '2026-09-02',
     title: 'Egységes design rendszer — első lépés',

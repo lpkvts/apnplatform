@@ -1233,3 +1233,80 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .tbl tbody tr:hover { background: var(--bg); }
 .tbl .num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 650; }
 .tbl .fo { font-weight: 650; }
+
+/* ══ FÓKUSZ ÉS BILLENTYŰZET ═════════════════════════════
+   Billentyűzettel navigálva eddig alig látszott, hol jár a fókusz. Ez nemcsak
+   akadálymentességi kérdés: aki gyorsan dolgozik, gyakran tabulátorral halad.
+   A jelölés csak billentyűzetnél jelenik meg, egérkattintásnál nem zavar. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--brand-2);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+/* Sötét felületen világos jelölés kell, különben elvész. */
+.btn:focus-visible { outline-color: var(--brand-3); }
+.tm-eszkoz button:focus-visible { outline-color: var(--brand-2); }
+
+/* Az érintőfelületek legalább 44 képpontosak: kisebb célpontot mozgás
+   közben, kesztyűben nehéz eltalálni. */
+@media (pointer: coarse) {
+  .btn, .seg, .sh-chip, .lst-sor, .bottomnav a { min-height: 44px; }
+  .lst-sor { padding-top: var(--s3); padding-bottom: var(--s3); }
+}
+
+/* ══ GOMBOK ═════════════════════════════════════════════
+   Három méret, négy szerep. Több változatra nincs szükség, és a meglévő
+   osztályok érvényben maradnak. */
+.btn-danger {
+  background: var(--alert); border-color: var(--alert); color: #fff;
+}
+.btn-danger:hover { background: #9F2424; border-color: #9F2424; }
+
+.btn-lg { padding: 14px 22px; font-size: var(--t-h3); border-radius: var(--r-md); }
+
+/* Csak ikont tartalmazó gomb — a méret marad megfogható. */
+.btn-icon {
+  width: 38px; height: 38px; padding: 0;
+  display: inline-grid; place-items: center;
+}
+
+/* ══ JELVÉNYEK ══════════════════════════════════════════
+   A korábbi három párhuzamos rendszert egy vizuális logikára hozzuk.
+   A régi osztálynevek megmaradnak, hogy a meglévő felületek ne törjenek el,
+   de ugyanazt a megjelenést kapják. */
+.mp-badge, .badge {
+  display: inline-flex; align-items: center;
+  font-size: var(--t-caption); font-weight: 700;
+  padding: 3px 10px; border-radius: var(--r-pill);
+  white-space: nowrap; line-height: 1.4;
+}
+
+/* ══ ŰRLAPMEZŐK ═════════════════════════════════════════ */
+.field {
+  border-radius: var(--r-md);
+  padding: 11px 13px;
+  font-size: var(--t-body);
+}
+.field:focus { border-color: var(--brand-2); }
+.field[aria-invalid='true'] { border-color: var(--alert); background: #FDF5F5; }
+
+/* Kötelező mező jelölése — a csillag önmagában könnyen elsikkad. */
+.lbl-req::after { content: ' *'; color: var(--alert); font-weight: 700; }
+
+/* Hibaüzenet a mező alatt, nem külön dobozban: így egyértelmű, mire vonatkozik. */
+.field-err { display: block; font-size: var(--t-caption); color: var(--alert); margin: -8px 0 12px; }
+
+/* ══ ÜRES ÁLLAPOT ═══════════════════════════════════════
+   Egységes megjelenés ott, ahol még nincs adat. Az üres lista magyarázat
+   nélkül hibának látszik. */
+.empty { text-align: center; padding: var(--s6) var(--s4); }
+.empty-ik { color: var(--faint); margin-bottom: var(--s3); }
+.empty b { display: block; font-size: var(--t-h3); margin-bottom: var(--s1); }
+.empty p { font-size: var(--t-small); color: var(--muted); line-height: 1.6; margin: 0 auto; max-width: 42ch; }
+.empty .btn { margin-top: var(--s4); }
