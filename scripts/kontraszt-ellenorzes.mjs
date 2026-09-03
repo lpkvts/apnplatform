@@ -81,6 +81,32 @@ for (const [nev, c] of Object.entries(ACC)) {
   mer(nev, sotetit(c), keverd(c, 0.12), 4.5)
 }
 
+/* ── Sötét téma ── */
+const D = {
+  ink: '#E8EEF3', muted: '#84939F', faint: '#7B8A96',
+  card: '#16212D', bg: '#0E1721',
+  brand: '#3FBF91', brandDark: '#6FD4AE',
+  ok: '#4ADE80', warn: '#FBBF24', alert: '#F87171', info: '#60A5FA',
+}
+
+console.log('\n── Sötét téma: szöveg a kártyán ──')
+mer('fő szöveg', D.ink, D.card, 4.5)
+mer('kisegítő szöveg', D.muted, D.card, 4.5)
+mer('felirat', D.faint, D.card, 4.5)
+mer('márkaszín', D.brand, D.card, 4.5)
+mer('szakaszcím', D.brandDark, D.card, 4.5)
+
+console.log('\n── Sötét téma: állapotok ──')
+mer('rendben', D.ok, D.card, 4.5)
+mer('figyelendő', D.warn, D.card, 4.5)
+mer('sürgős', D.alert, D.card, 4.5)
+mer('információ', D.info, D.card, 4.5)
+
+console.log('\n── Sötét téma: szövegszintek elválása ──')
+const dh = kontr(D.ink, D.muted)
+console.log(`  ${dh >= 2.5 ? '✓' : '✗'} ${'fő ↔ kisegítő'.padEnd(38)} ${dh.toFixed(2).padStart(5)}:1  (min 2.5)`)
+if (dh < 2.5) bukott++
+
 console.log('\n' + '─'.repeat(58))
 console.log(bukott === 0 ? '✓ minden színpár megfelel' : `${bukott} színpár nem éri el a küszöböt`)
 process.exit(bukott === 0 ? 0 : 1)

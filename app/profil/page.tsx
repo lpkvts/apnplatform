@@ -1,3 +1,4 @@
+import { ThemeSwitch } from '@/components/theme-switch'
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'
@@ -103,6 +104,9 @@ export default async function ProfilPage() {
       <p className="sub" style={{ marginTop: 18, textAlign: 'center', fontSize: 12 }}>
         APN-MED · <Link href="/ujdonsagok" className="sec-l" style={{ fontWeight: 500 }}>v{APP_VERSION}</Link>
       </p>
+      <div className="sec-h"><span className="sec-t">Megjelenés</span></div>
+      <ThemeSwitch />
+
     </>
   )
 }

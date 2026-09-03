@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from 'next'
 import { Nav } from '@/components/nav'
 import { BottomNav } from '@/components/bottom-nav'
 import { modeForPath, bodyClassFor } from '@/lib/layout/mode'
+import { ThemeInit } from '@/components/theme-init'
 import { getTeachingMembership, getCourses } from '@/lib/education/data'
 import { EduSidebar } from '@/components/edu-sidebar'
 import { EDU_ROLE_LABEL } from '@/lib/education/types'
@@ -80,6 +81,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html lang="hu">
+      <head><ThemeInit /></head>
       <body className={isLanding ? 'is-landing' : bodyClassFor(mode)}>
         {!isLanding && <Nav />}
         <FavoritesProvider initial={favKeys}>

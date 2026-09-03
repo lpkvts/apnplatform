@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.24.1',
+    date: '2026-09-03',
+    title: 'Sötét téma',
+    summary: 'A platform követi a készülék beállítását — klinikai környezethez szabott sötét felülettel.',
+    entries: [
+      {
+        id: 'v1240-valaszthato', kind: 'funkcio', title: 'Választható megjelenés',
+        body: 'A Profil oldalon négy beállítás közül választhatsz: világos, sötét, rendszer szerint, vagy napszak szerint. Az utóbbi este nyolc és reggel hat között vált sötétre — éjszakai műszakban kíméletesebb. A választás a készüléken marad, nem a fiókban: ugyanaz a felhasználó másképp állítja be a telefonján és az osztályos gépen. A beállított téma már az első kirajzoláskor érvényes, tehát nincs világos felvillanás.',
+        href: '/profil',
+      },
+      {
+        id: 'v1240-dark', kind: 'funkcio', title: 'Sötét megjelenés',
+        body: 'A platform mostantól követi a készülék rendszerbeállítását. Nem egyszerű invertálás: a klinikai környezethez sötét, kékes alapszín illik, nem tiszta fekete, és a felületek egymás fölé rétegződnek — ami közelebb van a felhasználóhoz, világosabb. A márkajelzés és a színvilág karaktere változatlan.',
+        href: '/',
+      },
+      {
+        id: 'v1240-gorbek', kind: 'szakmai', title: 'A klinikai görbék világosak maradnak',
+        body: 'Az EKG-, a vérgáz- és a leletnézet sötét témában is világos alapon jelenik meg. A klinikai görbét fehér háttéren tanuljuk felismerni, és élesben is így látjuk — a sötét alapon rajzolt EKG idegen lenne, és a felismerés gyakorlását rontaná.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1240-tokenek', kind: 'eszkoz', title: 'Egységes színkezelés',
+        body: 'A sötét téma előkészítéseként 158 közvetlen színkód került át változókra. Korábban minden komponens saját árnyalatot használt ugyanarra az állapotra, ami apró eltéréseket okozott, és sötét témában használhatatlan lett volna. Az állapotokhoz mostantól három érték tartozik: szöveg, halvány háttér és keret.',
+        href: '/',
+      },
+      {
+        id: 'v1240-nyomtatas', kind: 'eszkoz', title: 'Nyomtatás mindig világos',
+        body: 'Nyomtatáskor a felület világos marad, a navigáció és a gombok pedig eltűnnek. A sötét háttér elpazarolná a festéket, és a klinikai dokumentum papíron fehér alapon olvasható.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.23.1',
     date: '2026-09-03',
     title: 'Pontbontás a klinikai skáláknál',
