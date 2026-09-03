@@ -1601,3 +1601,32 @@ body.is-landing {
   content: ''; width: 7px; height: 7px; border-radius: 50%;
   background: var(--brand-3); flex: none;
 }
+
+/* ── Nyitóoldal: modulblokk a bemutatkozó mellett ───────
+   A jobb oldal a platform szerkezetét mutatja meg, nem díszítés: a látogató
+   itt látja, mit kap, ha belép. Kis képernyőn a szöveg alá kerül. */
+.lp-modulok {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: var(--s3);
+  box-shadow: 0 1px 2px rgba(16,32,26,.06), 0 10px 26px rgba(16,32,26,.08);
+}
+.lp-mod-fej {
+  font-size: var(--t-caption); font-weight: 800; letter-spacing: .07em;
+  text-transform: uppercase; color: var(--faint);
+  padding: 6px 10px 10px;
+}
+.lp-mod {
+  display: flex; align-items: center; gap: var(--s3);
+  padding: 11px 10px; border-radius: var(--r-md);
+}
+.lp-mod + .lp-mod { border-top: 1px solid var(--bg); }
+.lp-mod-ik {
+  flex: none; width: 34px; height: 34px; display: grid; place-items: center;
+  border-radius: var(--r-sm); background: var(--brand-tint); color: var(--brand);
+}
+.lp-mod b { display: block; font-size: 14.5px; font-weight: 700; line-height: 1.3; }
+.lp-mod small { display: block; font-size: 12px; color: var(--muted); line-height: 1.4; margin-top: 2px; }
+
+@media (max-width: 860px) {
+  .lp-modulok { margin-top: var(--s5); }
+}

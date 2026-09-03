@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.25.3',
+    date: '2026-09-03',
+    title: 'Nyitóoldal elrendezés',
+    summary: 'Visszatért a kétoszlopos bemutatkozó, jobb oldalon a használati helyzetekkel.',
+    entries: [
+      {
+        id: 'v1253-hero', kind: 'eszkoz', title: 'Kétoszlopos bemutatkozó',
+        body: 'A cím és a bevezető visszakerült balra, a jobb oldalt pedig egy blokk tölti ki: mire használják a platformot. Ágy mellett telefonon, vizit előtt, gyakorlásra, oktatóteremben, és ha valaki elakad. Ez konkrétabb, mint a modulok felsorolása — és nem ismétli az alatta lévő szakaszt, ami úgyis a modulokat mutatja be.',
+        href: '/',
+      },
+      {
+        id: 'v1253-szoveg', kind: 'eszkoz', title: 'Rövidebb megnevezés',
+        body: 'Az oktatási szakasz felcíme „Képzőhelyeknek” lett: a szó magában foglalja az egyetemeket is.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.25.2',
     date: '2026-09-03',
     title: 'APN-MED Education megjelenése',

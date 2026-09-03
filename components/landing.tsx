@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { RingLogo } from '@/components/icons'
+import { RingLogo, Icon } from '@/components/icons'
 import { InstallPrompt } from '@/components/install-prompt'
 
 /**
@@ -116,7 +116,7 @@ export function Landing() {
       <section className="lp-hero">
         <span className="lp-blob lp-blob-a" aria-hidden="true" />
         <span className="lp-blob lp-blob-b" aria-hidden="true" />
-        <div className="lp-wrap lp-hero-in lp-hero-solo">
+        <div className="lp-wrap lp-hero-in">
           <div>
             <p className="lp-eyebrow">APN-MED – Egészségügyi szakembereknek</p>
             <h1 className="lp-h1">
@@ -135,6 +135,33 @@ export function Landing() {
               <a className="lp-btn lp-btn-ghost" href="#funkciok">Ismerd meg az APN-MED-et</a>
             </div>
             <p className="lp-assure">✓ Ápolók fejlesztik, a klinikai gyakorlatból. Magyar fejlesztés.</p>
+          </div>
+
+          {/* A jobb oldali blokk konkrét helyzeteket mutat, nem modullistát:
+              az alatta lévő szakasz úgyis a modulokat sorolja. Így a kettő
+              kiegészíti egymást ahelyett, hogy ugyanazt mondaná kétszer. */}
+          <div className="lp-modulok">
+            <div className="lp-mod-fej">Mire használják</div>
+            {[
+              { ik: 'droplet', cim: 'Ágy mellett, telefonon',
+                le: 'Vérgáz értelmezése, pontozó kitöltése, laborérték ellenőrzése' },
+              { ik: 'book', cim: 'Vizit előtt',
+                le: 'Betegség áttekintése, protokoll megnyitása, teendők átfutása' },
+              { ik: 'pulse', cim: 'Gyakorlásra',
+                le: 'EKG-esetek elemzése lépésenként, saját fejlődés követése' },
+              { ik: 'courses', cim: 'Oktatóteremben',
+                le: 'Klinikai eset kivetítve, kérdés a csoportnak, pontozó egy kattintásra' },
+              { ik: 'handshake', cim: 'Ha elakadsz',
+                le: 'Mentorkeresés szakterület és téma szerint' },
+            ].map((m) => (
+              <div className="lp-mod" key={m.cim}>
+                <span className="lp-mod-ik"><Icon name={m.ik} size={19} /></span>
+                <span>
+                  <b>{m.cim}</b>
+                  <small>{m.le}</small>
+                </span>
+              </div>
+            ))}
           </div>
 
         </div>
@@ -230,7 +257,7 @@ export function Landing() {
       {/* ── Képzőhelyeknek ── */}
       <section className="lp-sec" id="education">
         <div className="lp-wrap">
-          <p className="lp-eyebrow c">Egyetemeknek és képzőhelyeknek</p>
+          <p className="lp-eyebrow c">Képzőhelyeknek</p>
           <div className="lp-edu">
             <div>
               <h2 className="lp-h2">APN-MED Education</h2>
