@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.26.0',
+    date: '2026-09-03',
+    title: 'Biztonsági javítások',
+    summary: 'A szerepkör nem emelhető önhatalmúlag, és az oktató nem adhatja be a saját feladatát.',
+    entries: [
+      {
+        id: 'v1260-szerepkor', kind: 'javitas', title: 'A szerepkör védelme',
+        body: 'A felhasználó a saját profilját frissíthette, és a szabály csak azt vizsgálta, a saját sorát írja-e — azt nem, hogy melyik mezőt. Így a böngészőből közvetlenül hívva bárki adminisztrátorrá tehette volna magát. A platform saját kódja sosem írta a szerepkört, de a védelemnek nem a felületen a helye: mostantól adatbázisszintű ellenőrzés akadályozza meg. A névszerkesztés és a többi mező mentése változatlanul működik.',
+        href: '/profil',
+      },
+      {
+        id: 'v1260-oktato', kind: 'javitas', title: 'Az oktató nem adhatja be a saját feladatát',
+        body: 'A kurzus oktatója beadhatta a saját feladatlapját. Mivel a helyes válaszokat is látja, hibátlan eredményt ért volna el, ami a csoportelemzést torzítja. A beadás mostantól elutasításra kerül.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1260-elemzes', kind: 'javitas', title: 'Csak a hallgatók eredményei számítanak',
+        body: 'A csoportelemzés korábban minden beadást figyelembe vett. Mostantól csak a beiratkozott hallgatók eredményei kerülnek bele — ha korábban került be oktatói beadás, az sem torzít többé.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1260-atvizsgalas', kind: 'eszkoz', title: 'Átfogó átvizsgálás',
+        body: 'A javítás során átnéztem a teljes projektet: minden tábla jogosultsági szabályait, az adatbázis-függvények ellenőrzéseit és minden adatot író műveletet. A tizenhat írási művelet mindegyikét az adatbázis szabályai védik, tehát a felület megkerülésével sem lehet jogosulatlanul írni.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.25.3',
     date: '2026-09-03',
     title: 'Nyitóoldal elrendezés',
