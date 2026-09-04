@@ -83,3 +83,18 @@ export function accentStyle(href: string): { color: string; background: string }
   const c = accentFor(href)
   return c ? { color: sotetit(c), background: c + '1F' } : undefined
 }
+
+/**
+ * Az új felhasználó kezdőlapján megjelenő csempék.
+ *
+ * Aki most regisztrált, ne üres kezdőlapot lásson: a leggyakrabban használt
+ * modulok azonnal elérhetők. A készlet változtatható — a „Szerkesztés"
+ * gombbal bármikor átrendezhető, és onnantól a saját választás érvényes.
+ *
+ * A kompetenciatérkép csak akkor jelenik meg, ha a modul be van kapcsolva;
+ * ezt a kezdőlap szűri.
+ */
+export const ALAP_CSEMPEK = [
+  'labor', 'score', 'vergaz', 'ekg',
+  'betegsegtar', 'tudastar', 'kedvencek', 'kompterkep',
+] as const

@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.31.1',
+    date: '2026-09-04',
+    title: 'Kezdőlap új felhasználóknak',
+    summary: 'Aki most regisztrált, azonnal a leggyakoribb modulokat látja a kezdőlapon.',
+    entries: [
+      {
+        id: 'v1311-alapcsempek', kind: 'eszkoz', title: 'Alapértelmezett csempék',
+        body: 'Az új felhasználó kezdőlapján nyolc csempe jelenik meg: Labor, Score Hub, Vérgáz, EKG, Betegségtár, Tudástár, Kedvenceim és Kompetenciatérkép. Így nem üres kezdőlappal indul, hanem azzal, amit a napi munkában a leggyakrabban keresnek.',
+        href: '/',
+      },
+      {
+        id: 'v1311-testreszabas', kind: 'eszkoz', title: 'A testreszabás változatlan',
+        body: 'Az alapkészlet csak kiindulópont: a Hozzáadás gomb és a Testreszabás továbbra is a helyén van, és az első átrendezéstől a saját összeállítás érvényes — a felhasználó által megadott sorrendben. A kompetenciatérkép csempéje csak akkor jelenik meg, ha a modul be van kapcsolva.',
+        href: '/testreszabas',
+      },
+    ],
+  },
+  {
     version: '1.31.0',
     date: '2026-09-04',
     title: 'EKG-lelet átnézése — béta',

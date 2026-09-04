@@ -6,7 +6,7 @@ import { Icon } from '@/components/icons'
 import { getFlag } from '@/lib/flags'
 import { getMemberships } from '@/lib/education/data'
 import { getFavoritesByType } from '@/lib/favorites'
-import { SHORTCUTS } from '@/lib/shortcuts'
+import { SHORTCUTS, ALAP_CSEMPEK } from '@/lib/shortcuts'
 import { getDashCounts } from '@/lib/notifications'
 import { Landing } from '@/components/landing'
 import { accentStyle } from '@/lib/shortcuts'
@@ -51,11 +51,23 @@ export default async function DashboardPage() {
   // Az oktatási belépő csak annak jelenik meg, aki tagja valamelyik
   // képzőhelynek — másnak üres oldalra vinne.
   const eduEnabled = await getFlag('education', false)
+  const kompetenciaEnabled = await getFlag('kompetenciaterkep', false)
   const eduMemberships = eduEnabled ? await getMemberships() : []
   const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
 
   const menuKeys = await getFavoritesByType('menu')
-  const myShortcuts = SHORTCUTS.filter((sc) => menuKeys.includes(sc.key))
+
+  // Aki még nem rendezte át a kezdőlapját, egy alapkészletet lát: a
+  // leggyakrabban használt modulokat. Ez nem mentett választás, csak
+  // kiindulópont — az első szerkesztéstől a saját összeállítás érvényes.
+  const sajatValasztas = menuKeys.length > 0
+  const kulcsok: readonly string[] = sajatValasztas ? menuKeys : ALAP_CSEMPEK
+  const myShortcuts = SHORTCUTS
+    .filter((sc) => kulcsok.includes(sc.key))
+    // A kikapcsolt modulok csempéje nem jelenhet meg.
+    .filter((sc) => sc.key !== 'kompterkep' || kompetenciaEnabled)
+    // A saját választásnál a felhasználó sorrendje számít.
+    .sort((a, b) => (sajatValasztas ? kulcsok.indexOf(a.key) - kulcsok.indexOf(b.key) : 0))
 
   // Áttekintés: mi igényel figyelmet. Ugyanabból a lekérdezésből jön, mint az
   // értesítésszám, tehát nem jelent külön adatbázis-kört.
@@ -67,7 +79,6 @@ export default async function DashboardPage() {
     { n: dash.stored, cimke: 'új értesítés', href: '/ertesitesek', surgos: false },
     { n: dash.ujTartalom, cimke: 'új tartalom', href: '/ujdonsagok', surgos: false },
   ].filter((x) => x.n > 0) : []
-  const tiles = TILES.filter((t) => (t.href !== '/klinika/copilot' || copilotEnabled) && (t.href !== '/career' || careerEnabled))
 
   // Folytasd, ahol abbahagytad
   type Resume = { kind: 'exam' | 'case'; href: string; title: string; sub: string; at: string }
@@ -110,7 +121,7 @@ export default async function DashboardPage() {
         <Link className="sec-l" href="/testreszabas">Testreszabás →</Link>
       </div>
       <div className="qgrid">
-        {(myShortcuts.length > 0 ? myShortcuts : tiles).map((t) => (
+        {myShortcuts.map((t) => (
           // A betegvizsgálat a leggyakoribb belépési pont, ezért a rácson belül
           // kiemelt csempét kap — a korábbi külön gomb helyett.
           <Link
