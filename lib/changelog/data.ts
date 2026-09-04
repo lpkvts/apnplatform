@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.33.1',
+    date: '2026-09-04',
+    title: 'Rövidebb nyitóoldal',
+    summary: 'A záró szakasz lekerült a bemutatkozó oldalról.',
+    entries: [
+      {
+        id: 'v1331-zaro', kind: 'eszkoz', title: 'A záró szakasz törölve',
+        body: 'A nyitóoldal végéről lekerült a teljes záró szakasz a benne lévő szöveggel, gombbal és lábnavigációval. A lap a telepítési ajánlóval és a lábléccel zárul. A már nem használt stílusszabályok is eltávolításra kerültek, hogy ne maradjon holt kód a stíluslapban.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.33.0',
     date: '2026-09-04',
     title: 'Személyesebb kezdőlap, pontosabb béta szöveg',

@@ -361,25 +361,6 @@ export function Landing() {
              állapotban nyomtalanul el tudjon tűnni ── */}
       <InstallPrompt variant="inline" />
 
-      {/* ── Záró ── */}
-      <section className="lp-final">
-        <span className="lp-dots" aria-hidden="true" />
-        <div className="lp-wrap lp-final-in">
-          <h2 className="lp-h2 lp-on-dark lp-final-h">
-            A szakmai fejlődés nem egy dokumentum,<br />
-            <span className="lp-accent">hanem egy folyamatos út.</span>
-          </h2>
-          <Link className="lp-btn lp-btn-white" href="/login">
-            Belépés a platformra <span className="lp-arw">→</span>
-          </Link>
-          <nav className="lp-foot-nav">
-            <a href="#funkciok">Klinikum</a><span aria-hidden="true">·</span>
-            <a href="#funkciok">Tudástár</a><span aria-hidden="true">·</span>
-            <a href="#ut">Fejlődés</a><span aria-hidden="true">·</span>
-            <a href="#kinek">Közösség</a>
-          </nav>
-        </div>
-      </section>
 
       <footer className="lp-footer">
         <div className="lp-footer-inner">
