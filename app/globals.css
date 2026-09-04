@@ -1720,3 +1720,123 @@ body:not(.is-landing) .bottomnav a.on { color: var(--chrome-brand); }
 }
 /* Kis képernyőn csak az ikon marad: a felirat kiszorítaná a többi gombot. */
 @media (max-width: 620px) { .mode-switch span { display: none; } .mode-switch { padding: 8px 10px; } }
+/* Az aktuális kurzus kiemelése az oldalsávban — a törzsön lévő jelölés
+   alapján, mert az oldalsáv a szerveren készül és nem ismeri az útvonalat. */
+@media (min-width: 1000px) {
+  body[data-edu-course=""] .edu-side-nav > a[href="/oktatas"] { background: var(--brand-tint); color: var(--chrome-brand); }
+}
+
+/* ══ MOZGÁS ÉS VISSZAJELZÉS ═════════════════════════════
+   Két szabály vezérli az egészet.
+
+   Az első: csak olyan tulajdonságot mozgatunk, amit a videokártya kezel —
+   transform, opacity, background, color, border. A méret, a magasság vagy a
+   pozíció animálása újraszámoltatná az elrendezést minden képkockán, ami
+   érezhetően lassít.
+
+   A második: rövid időtartamok. A 120–180 ezredmásodperc gyorsnak érződik,
+   a 300 fölötti már várakozásnak. A cél a visszajelzés, nem a látvány.
+
+   Csökkentett mozgás beállítása mellett minden átmenet kikapcsol. */
+:root {
+  --mozgas-gyors: 120ms;
+  --mozgas: 170ms;
+  --gorbe: cubic-bezier(.2, .8, .3, 1);
+}
+
+/* ── Listaelemek ── */
+.lst-sor {
+  transition:
+    background var(--mozgas-gyors) var(--gorbe),
+    box-shadow var(--mozgas-gyors) var(--gorbe);
+  position: relative;
+}
+/* A háttér korábban alig különült el; most a bal szélen színes sáv és
+   erősebb háttér jelzi, hol áll az egér. */
+.lst-sor::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--brand-3); opacity: 0;
+  transform: scaleY(.3); transform-origin: center;
+  transition: opacity var(--mozgas-gyors) var(--gorbe), transform var(--mozgas) var(--gorbe);
+}
+.lst-sor:hover { background: var(--brand-tint); }
+.lst-sor:hover::before { opacity: 1; transform: scaleY(1); }
+.lst-sor:active { background: var(--brand-tint); }
+.lst-sor .lst-ik { transition: background var(--mozgas-gyors) var(--gorbe), color var(--mozgas-gyors) var(--gorbe); }
+.lst-sor:hover .lst-ik { background: var(--card); color: var(--brand); }
+.lst-nyil { transition: transform var(--mozgas) var(--gorbe), color var(--mozgas-gyors); }
+.lst-sor:hover .lst-nyil { transform: translateX(3px); color: var(--brand); }
+
+/* ── Kártyák és csempék ── */
+.card.klink, .mp-card, .tool, .qtile, .lp-card {
+  transition:
+    border-color var(--mozgas-gyors) var(--gorbe),
+    box-shadow var(--mozgas) var(--gorbe),
+    transform var(--mozgas-gyors) var(--gorbe);
+}
+.card.klink:hover, .mp-card:hover, .tool:hover, .qtile:hover, .lp-card:hover {
+  border-color: var(--brand-3);
+  box-shadow: 0 2px 4px rgba(16,32,26,.08), 0 12px 28px rgba(16,32,26,.10);
+  transform: translateY(-1px);
+}
+.card.klink:active, .tool:active, .qtile:active { transform: translateY(0) scale(.995); }
+
+/* ── Gombok ── */
+.btn, .seg, .sh-chip, .icon-btn, .mode-switch, .vg-opt {
+  transition:
+    background var(--mozgas-gyors) var(--gorbe),
+    border-color var(--mozgas-gyors) var(--gorbe),
+    color var(--mozgas-gyors) var(--gorbe),
+    transform 80ms var(--gorbe);
+}
+.btn:active, .seg:active, .sh-chip:active, .icon-btn:active, .mode-switch:active {
+  transform: scale(.97);
+}
+
+/* ── Lenyitók ── */
+.kt-acc > .kt-sum, .ekg-figtoggle > summary, .vg-fog > summary, .kt-legal > summary {
+  transition: color var(--mozgas-gyors) var(--gorbe), background var(--mozgas-gyors) var(--gorbe);
+}
+/* A lenyíló tartalom halkan jelenik meg. Magasságot nem animálunk: az
+   újraszámolást okozna, és ugrálna a lap. */
+.kt-body, .vg-fog-b {
+  animation: lenyit var(--mozgas) var(--gorbe);
+}
+@keyframes lenyit {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Állapotjelzők és jelvények ── */
+.st, .mp-badge, .badge { transition: background var(--mozgas-gyors), color var(--mozgas-gyors); }
+
+/* ── Táblázatsorok ── */
+.tbl tbody tr { transition: background var(--mozgas-gyors) var(--gorbe); }
+
+/* ── Oldalsáv ── */
+.edu-side-l { transition: background var(--mozgas-gyors) var(--gorbe), color var(--mozgas-gyors) var(--gorbe); }
+
+/* ── Oldalváltás ── */
+/* A tartalom halkan úszik be. Rövid és visszafogott: a klinikai felületen
+   a gyorsaság érzete fontosabb, mint a látvány. */
+main.container > *, .edu-main > * {
+  animation: belep 200ms var(--gorbe);
+}
+@keyframes belep {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Csökkentett mozgás ──────────────────────────────────
+   Aki ezt beállítja a rendszerében, jellemzően oka van rá: vesztibuláris
+   panasz, migrén, figyelemzavar. Ilyenkor minden mozgás elmarad, a
+   színes visszajelzés viszont megmarad. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .lst-sor::before { transform: scaleY(1); }
+}

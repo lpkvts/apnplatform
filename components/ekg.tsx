@@ -178,14 +178,6 @@ export function Ekg({
         </Link>
       )}
 
-      {/* Mai gyakorlás */}
-      <Link className="card klink" href={`/klinika/ekg/elemzes/${EKG_CASES[0].id}`}>
-        <div className="klink-t">🗓️ Mai EKG eset</div>
-        <div className="sub" style={{ margin: '4px 0 0' }}>{EKG_CASES[0].title}</div>
-        <div className="ekg-an-metrics"><span>5 perc</span><span>Interaktív elemzés</span><span>{EKG_CASES[0].difficulty}</span></div>
-        <span className="sec-l" style={{ display: 'inline-block', marginTop: 8 }}>Elemzés indítása →</span>
-      </Link>
-
       <div className="sec-h" style={{ marginTop: 18 }}><span className="sec-t">Tananyag</span></div>
       <ModeBar />
       {activeMode === 'atlas' && <Atlas initialOpen={initialOpen} lookup={lookup} />}

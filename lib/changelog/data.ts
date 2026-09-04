@@ -75,6 +75,67 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.30.0',
+    date: '2026-09-04',
+    title: 'Finomabb visszajelzések',
+    summary: 'Látható egérreakció a menükben, és visszafogott mozgás az egész platformon.',
+    entries: [
+      {
+        id: 'v1300-hover', kind: 'eszkoz', title: 'Látható egérreakció',
+        body: 'A Klinikum és a Tudástár listáiban alig lehetett látni, melyik soron áll az egér. Mostantól színes sáv jelenik meg a bal szélen, a háttér világosabbra vált, az ikon kiemelkedik, a nyíl pedig elmozdul jobbra. Így ránézésre látszik, mire kattintunk.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1300-mozgas', kind: 'eszkoz', title: 'Visszafogott mozgás mindenhol',
+        body: 'A kártyák, gombok, lenyitók és táblázatsorok finom átmenetet kaptak, az oldalak tartalma pedig halkan úszik be. Az időtartamok szándékosan rövidek: a cél a visszajelzés, nem a látvány.',
+        href: '/',
+      },
+      {
+        id: 'v1300-sebesseg', kind: 'eszkoz', title: 'A sebesség nem sérül',
+        body: 'Csak olyan tulajdonságok mozognak, amelyeket a videokártya kezel — elmozdulás, átlátszóság, szín. A méret vagy a magasság animálása minden képkockán újraszámoltatná az elrendezést, ami érezhetően lassítana. A lenyitóknál ezért nem a magasság változik, hanem a tartalom halványul be.',
+        href: '/',
+      },
+      {
+        id: 'v1300-csokkentett', kind: 'eszkoz', title: 'Csökkentett mozgás',
+        body: 'Aki a rendszerében csökkentett mozgást állít be, annál minden átmenet elmarad — a színes visszajelzés viszont megmarad. Ezt a beállítást jellemzően vesztibuláris panasz, migrén vagy figyelemzavar indokolja.',
+        href: '/',
+      },
+      {
+        id: 'v1300-ekg', kind: 'eszkoz', title: 'A mai EKG eset lekerült',
+        body: 'Az EKG modulból eltűnt a „Mai EKG eset” kártya. Nem váltakozott naponta, mindig ugyanazt az első esetet nyitotta meg — a gyakorló mód pedig ugyanezt adja, választható esetekkel.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
+    version: '1.29.0',
+    date: '2026-09-04',
+    title: 'Kurzusfájlok és szerkesztés',
+    summary: 'Dokumentumok csatolhatók a kurzushoz, és az adatai menet közben is módosíthatók.',
+    entries: [
+      {
+        id: 'v1290-fajlok', kind: 'funkcio', title: 'Fájlok a kurzushoz',
+        body: 'Jegyzet, diasor, protokoll vagy bármilyen dokumentum csatolható a kurzushoz: PDF, Word, Excel, PowerPoint, kép, szöveg és CSV, fájlonként legfeljebb 20 MB. Az oktató eldöntheti, mikor teszi közzé — a feltöltött fájl rejtve is maradhat, amíg elkészül vele.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1290-letoltes', kind: 'eszkoz', title: 'Védett letöltés',
+        body: 'A fájlok nem nyilvános tárolóba kerülnek, és rövid élettartamú, aláírt hivatkozáson keresztül érhetők el. A cím megosztása így nem ad tartós hozzáférést, és csak a kurzus résztvevői jutnak az anyagokhoz.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1290-szerkesztes', kind: 'funkcio', title: 'Kurzus szerkesztése menet közben',
+        body: 'A kurzus címe, leírása, képzési szintje, szakterülete és időpontjai bármikor módosíthatók, futó kurzusnál is. A hallgatók, a feladatok és az eredmények érintetlenek maradnak.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1290-fejlec', kind: 'javitas', title: 'Az oktatói fejléc beragadt',
+        body: 'Az oktatói felületről a kezdőlapra lépve az oktatói fejléc és az oldalsáv ottmaradt. Az ok az volt, hogy a keret elrendezése csak egyszer fut le, és nem frissül oldalváltáskor. Az oktatói felület mostantól saját elrendezéssel rendelkezik, ami magától eltűnik a szakaszból kilépve.',
+        href: '/oktatas',
+      },
+    ],
+  },
+  {
     version: '1.28.0',
     date: '2026-09-03',
     title: 'Váltás az oktatói felületre',
