@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.34.0',
+    date: '2026-09-04',
+    title: 'Egységes vizuális rendszer',
+    summary: 'A design tokenek átvették a rögzített értékek helyét az egész felületen.',
+    entries: [
+      {
+        id: 'v1340-audit', kind: 'eszkoz', title: 'Mit mutatott az átvizsgálás',
+        body: 'A stíluslapban 45 különböző betűméret, 29 sugárérték és 17 árnyékdefiníció szerepelt. A design tokenek megvoltak, de alig használtuk őket: a betűméretek 8, a térközök 7 százaléka jött belőlük. Ez volt a rendszertelenség forrása — nem az, hogy hiányzott a rendszer, hanem hogy nem alkalmaztuk.',
+        href: '/',
+      },
+      {
+        id: 'v1340-tipografia', kind: 'eszkoz', title: 'Hatfokú tipográfia',
+        body: 'A közeli betűméretek egy szintre kerültek: 234 helyen. A 13, 13,5 és 14 pixel közötti különbség nem hordozott jelentést, csak rendezetlenséget. A 17 pixel fölötti méreteket nem bántottuk — azok kiemelt számok és címek, saját szereppel.',
+        href: '/',
+      },
+      {
+        id: 'v1340-sugar', kind: 'eszkoz', title: 'Négy sugár, három árnyék',
+        body: 'A lekerekítés 106 helyen állt át négy egységes értékre. Az árnyékokból három szint maradt: sík felület, enyhén kiemelkedő, lebegő. A korábbi tizenhét változat között alig volt látható különbség, viszont mindegyiket külön karban kellett tartani.',
+        href: '/',
+      },
+      {
+        id: 'v1340-ellenorzes', kind: 'eszkoz', title: 'Gépi ellenőrzés',
+        body: 'A 350 csere után öt oldalt vizsgáltunk végig gépileg: van-e olvashatatlanul kicsi vagy aránytalanul nagy szöveg. Egy sem volt. A funkciók és az elrendezés változatlanok — csak a mögöttes értékek rendeződtek.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.33.1',
     date: '2026-09-04',
     title: 'Rövidebb nyitóoldal',
