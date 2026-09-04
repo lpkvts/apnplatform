@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.30.3',
+    date: '2026-09-04',
+    title: 'Egységes listastílus',
+    summary: 'A checklisták és találati listák ugyanúgy néznek ki, mint a Klinikum menüje.',
+    entries: [
+      {
+        id: 'v1303-lista', kind: 'eszkoz', title: 'Összefüggő lista a különálló kártyák helyett',
+        body: 'A vizsgálati checklisták, a betegségtár találatai és a többi hasonló lista korábban különálló, árnyékolt kártyákként jelent meg. Mostantól egy egységbe rendeződnek, közös kerettel és belső elválasztókkal — ahogy a Klinikum menüje. A jelölődoboz azonos méretű keretet kapott, így a sorok bal széle egy vonalban áll.',
+        href: '/klinika/vizsgalat',
+      },
+      {
+        id: 'v1303-alahuzas', kind: 'javitas', title: 'Nincs több aláhúzás',
+        body: 'A sorok szövege aláhúzva jelent meg, mert hivatkozásként viselkedik. A teljes sor kattintható, és ezt a nyíl meg az egérreakció jelzi — az aláhúzás csak zajt adott hozzá. Helyette a cím színe vált az egér alatt.',
+        href: '/klinika/vizsgalat',
+      },
+    ],
+  },
+  {
     version: '1.30.2',
     date: '2026-09-04',
     title: 'Kapcsolódó témakörök a lap alján',

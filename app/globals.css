@@ -218,12 +218,46 @@ body {
 .sh-chips { display: flex; gap: 7px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 6px; }
 .sh-chip { flex: 0 0 auto; white-space: nowrap; padding: 9px 14px; border: 1.5px solid var(--brand-3); border-radius: 999px; background: var(--surface); color: var(--ink); font: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .sh-chip.on { background: var(--brand); border-color: var(--brand); color: var(--surface); }
-.sh-row { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: var(--surface); border: 1px solid var(--line); border-radius: 13px; padding: 14px 16px; margin-bottom: 9px; cursor: pointer; font: inherit; box-shadow: 0 1px 2px rgba(16,32,26,.05); transition: border-color .15s, box-shadow .15s; }
-.sh-row:hover { border-color: var(--brand-2); box-shadow: 0 2px 6px rgba(16,32,26,.09); }
+.sh-row {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
+  text-align: left; background: var(--surface);
+  border: 1px solid var(--line); border-bottom: 0;
+  border-radius: 0; padding: var(--s3) var(--s4);
+  margin-bottom: 0; cursor: pointer; font: inherit; position: relative;
+  text-decoration: none; color: var(--ink);
+  transition: background var(--mozgas-gyors) var(--gorbe);
+}
+.sh-row:hover .sh-row-name { color: var(--brand); }
+/* Az első és az utolsó elem zárja a listát. A szomszéd-szelektor arra épül,
+   hogy a sorok közvetlenül egymás után állnak — ha közéjük más elem kerül,
+   ott új lista kezdődik, ami vizuálisan is helyes. */
+.sh-row:not(.sh-row + .sh-row) { border-top-left-radius: var(--r-lg); border-top-right-radius: var(--r-lg); }
+.sh-row:not(:has(+ .sh-row)) {
+  border-bottom: 1px solid var(--line);
+  border-bottom-left-radius: var(--r-lg); border-bottom-right-radius: var(--r-lg);
+  margin-bottom: var(--s3);
+}
+/* Belső elválasztó: halványabb, mint a külső keret. */
+.sh-row + .sh-row { border-top: 1px solid var(--bg); }
+
+/* Egérreakció ugyanaz, mint a Klinikum listáiban: színes sáv a bal szélen,
+   világosabb háttér, elmozduló nyíl. */
+.sh-row::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--brand-3); opacity: 0;
+  transform: scaleY(.3); transform-origin: center;
+  transition: opacity var(--mozgas-gyors) var(--gorbe), transform var(--mozgas) var(--gorbe);
+}
+.sh-row:hover { background: var(--brand-tint); }
+.sh-row:hover::before { opacity: 1; transform: scaleY(1); }
 .sh-row-main { flex: 1; min-width: 0; }
-.sh-row-name { display: block; font-weight: 600; color: var(--ink); font-size: 15px; }
-.sh-row-sub { display: block; color: var(--muted); font-size: 12.5px; margin-top: 2px; }
-.sh-chev { color: var(--brand-3); font-size: 20px; }
+.sh-row-name { display: block; font-weight: 650; color: var(--ink); font-size: var(--t-body); line-height: 1.35; }
+.sh-row-sub { display: block; color: var(--muted); font-size: var(--t-caption); margin-top: 2px; line-height: 1.4; }
+.sh-chev {
+  color: var(--faint); font-size: 15px; flex: none;
+  transition: transform var(--mozgas) var(--gorbe), color var(--mozgas-gyors);
+}
+.sh-row:hover .sh-chev { transform: translateX(3px); color: var(--brand); }
 .sh-back { display: inline-block; background: none; border: none; color: var(--brand); font: inherit; font-weight: 600; font-size: 14px; padding: 0 0 14px; cursor: pointer; text-decoration: none; }
 .sh-item { padding: 13px 0; border-top: 1px solid var(--line); }
 .sh-q { font-size: 14.5px; color: var(--ink); margin-bottom: 9px; }
@@ -666,7 +700,14 @@ body {
 
 
 /* Betegvizsgálat checklist ikon */
-.ck-box { font-size: 18px; color: var(--brand-2); margin-right: 4px; flex-shrink: 0; }
+.ck-box {
+  flex: none; width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: var(--r-sm); background: var(--bg);
+  color: var(--muted); font-size: 15px;
+  transition: background var(--mozgas-gyors) var(--gorbe), color var(--mozgas-gyors) var(--gorbe);
+}
+.sh-row:hover .ck-box { background: var(--surface); color: var(--brand); }
 
 /* Akut adatlap — Kapcsolódó tudás összecsukható fül */
 .kt-acc { border: 1px solid var(--line); border-radius: 14px; background: var(--card); margin: 10px 0; overflow: hidden; box-shadow: 0 1px 3px rgba(16,32,26,.06); }
