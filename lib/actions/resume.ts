@@ -20,7 +20,7 @@ export async function deleteExam(id: string): Promise<Res> {
 
   const supabase = await createClient()
   const { error } = await supabase
-    .from('exam_sessions').delete().eq('id', id).eq('user_id', user.id)
+    .from('exam_sessions').delete().eq('id', id).eq('owner_id', user.id)
 
   if (error) return { ok: false, message: error.message }
   revalidatePath('/')
