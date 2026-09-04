@@ -54,6 +54,7 @@ export default async function DashboardPage() {
   const eduEnabled = await getFlag('education', false)
   const kompetenciaEnabled = await getFlag('kompetenciaterkep', false)
   const ertekelesEnabled = await getFlag('ertekeles', false)
+  const tevekenysegEnabled = await getFlag('legutobbi_tevekenysegek', true)
   const eduMemberships = eduEnabled ? await getMemberships() : []
   const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
 
@@ -97,8 +98,13 @@ export default async function DashboardPage() {
     <>
       <div className="dash-top">
         <div className="dash-hi">
-          Kezdőlap
-          <span>{profile?.full_name || 'Üdvözöljük'} · {profile?.specialty || 'APN'}</span>
+          {/* A magyar névsorrendben a keresztnév az utolsó tag. */}
+          {profile?.full_name
+            ? `Jó napot, ${profile.full_name.trim().split(/\s+/).slice(-1)[0]}!`
+            : 'Üdvözöljük!'}
+          {/* A szakirány csak akkor jelenik meg, ha meg van adva — a
+              helykitöltő „APN" mindenkinél ugyanaz lenne, tehát semmit nem mond. */}
+          {profile?.specialty && <span>{profile.specialty}</span>}
         </div>
       </div>
 
@@ -155,6 +161,8 @@ export default async function DashboardPage() {
 
       <ResumeList items={resume} />
 
+      {tevekenysegEnabled && (
+        <>
       <div className="sec-h">
         <span className="sec-t">Legutóbbi tevékenységek</span>
         <Link className="sec-l" href="/klinika/esetek?type=assessment">Összes →</Link>
@@ -177,6 +185,8 @@ export default async function DashboardPage() {
             <span className="sh-chev">›</span>
           </Link>
         ))
+      )}
+        </>
       )}
     </>
   )

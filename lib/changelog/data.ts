@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.33.0',
+    date: '2026-09-04',
+    title: 'Személyesebb kezdőlap, pontosabb béta szöveg',
+    summary: 'Névre szóló köszöntés a szakiránnyal, és kapcsolható tevékenységlista.',
+    entries: [
+      {
+        id: 'v1330-koszontes', kind: 'eszkoz', title: 'Névre szóló köszöntés',
+        body: 'A kezdőlap tetején a „Kezdőlap" felirat helyett a köszöntés áll, alatta a profilban megadott szakirány. A szakirány csak akkor jelenik meg, ha meg is van adva — a korábbi helykitöltő „APN" mindenkinél ugyanaz volt, tehát semmit nem mondott.',
+        href: '/',
+      },
+      {
+        id: 'v1330-tevekenyseg', kind: 'eszkoz', title: 'Kapcsolható tevékenységlista',
+        body: 'A kezdőlapi „Legutóbbi tevékenységek" blokk a Beállítások oldalról ki- és bekapcsolható. Alapból bekapcsolva marad. Aki nem rögzít betegértékeléseket, annak a blokk csak helyet foglal — a kikapcsolás nem töröl semmit, az értékelések a Klinikai esetek alatt továbbra is elérhetők.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v1330-beta', kind: 'eszkoz', title: 'Pontosabb béta szöveg',
+        body: 'A tájékoztató már nem csak APN-eket említ, hiszen a tesztelők köre ennél szélesebb. A nyitóoldalon a „csatlakozz a teszteléshez" mostantól kattintható, és a regisztrációhoz vezet. A bejelentkezett felületen a szöveg a visszajelzésre hív, konkrét ígéret nélkül.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.32.2',
     date: '2026-09-04',
     title: 'Törlés javítása',

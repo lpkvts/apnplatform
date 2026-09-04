@@ -27,9 +27,9 @@ export function BetaBanner() {
     <div className="beta-sav" role="status">
       <span className="beta-jel">Béta</span>
       <p>
-        A platform fejlesztés és tesztelés alatt áll. Minél több APN használja,
-        annál gyorsabban derülnek ki a hibák — <Link href="/kapcsolat?tema=hiba">jelezd,
-        ha valami nem stimmel</Link>.
+        A platform fejlesztés és tesztelés alatt áll. A visszajelzés sokat segít:
+        ha valami nem működik vagy hiányzik, <Link href="/kapcsolat?tema=hiba">jelezd
+        nekünk</Link>.
       </p>
       <button
         onClick={() => { localStorage.setItem(KULCS, 'nem'); setLathato(false) }}
