@@ -75,52 +75,6 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.32.0',
-    date: '2026-09-04',
-    title: 'Törlés megerősítéssel, béta jelzés',
-    summary: 'Egységes megerősítő párbeszéd, kezdőlapi törlés, és nyílt béta tájékoztatás.',
-    entries: [
-      {
-        id: 'v1320-torles', kind: 'funkcio', title: 'Törlés a kezdőlapról',
-        body: 'A „Folytasd, ahol abbahagytad" tételei közvetlenül a kezdőlapról eltávolíthatók. A félbehagyott munka gyűlik, és ami már nem kell, azt ne kelljen külön oldalon megkeresni.',
-        href: '/',
-      },
-      {
-        id: 'v1320-megerosites', kind: 'eszkoz', title: 'Egységes megerősítő párbeszéd',
-        body: 'Minden visszafordíthatatlan művelet ugyanazon a megerősítésen keresztül fut. A párbeszéd konkrétan megnevezi, mi törlődik — nem általánosságban kérdez —, és a Mégsem gombra kerül a fókusz, hogy a véletlen Enter ne hajtsa végre a műveletet. A böngésző beépített kérdése helyett saját párbeszéd, mert az a telepített alkalmazásban idegenül hat.',
-        href: '/',
-      },
-      {
-        id: 'v1320-beta', kind: 'eszkoz', title: 'Béta jelzés',
-        body: 'A nyitóoldalon és a bejelentkezett felületen is megjelenik, hogy a platform fejlesztés és tesztelés alatt áll, felhívással a hibajelzésre. Aki tudja, hogy bétáról van szó, másképp értékeli a hibát, és szívesebben jelzi. A sáv bezárható, és a döntés a készüléken marad — nem tér vissza minden betöltésnél.',
-        href: '/',
-      },
-      {
-        id: 'v1320-ertekeles', kind: 'eszkoz', title: 'Az Új betegértékelés kikapcsolva',
-        body: 'A modul a következő fejlesztésig kikapcsolt állapotban van, és a Beállítások oldalról bármikor visszakapcsolható. A már rögzített értékelések nem vesznek el — csak a belépési pontok zárultak be.',
-        href: '/cms/beallitasok',
-      },
-    ],
-  },
-  {
-    version: '1.31.1',
-    date: '2026-09-04',
-    title: 'Kezdőlap új felhasználóknak',
-    summary: 'Aki most regisztrált, azonnal a leggyakoribb modulokat látja a kezdőlapon.',
-    entries: [
-      {
-        id: 'v1311-alapcsempek', kind: 'eszkoz', title: 'Alapértelmezett csempék',
-        body: 'Az új felhasználó kezdőlapján nyolc csempe jelenik meg: Labor, Score Hub, Vérgáz, EKG, Betegségtár, Tudástár, Kedvenceim és Kompetenciatérkép. Így nem üres kezdőlappal indul, hanem azzal, amit a napi munkában a leggyakrabban keresnek.',
-        href: '/',
-      },
-      {
-        id: 'v1311-testreszabas', kind: 'eszkoz', title: 'A testreszabás változatlan',
-        body: 'Az alapkészlet csak kiindulópont: a Hozzáadás gomb és a Testreszabás továbbra is a helyén van, és az első átrendezéstől a saját összeállítás érvényes — a felhasználó által megadott sorrendben. A kompetenciatérkép csempéje csak akkor jelenik meg, ha a modul be van kapcsolva.',
-        href: '/testreszabas',
-      },
-    ],
-  },
-  {
     version: '1.31.0',
     date: '2026-09-04',
     title: 'EKG-lelet átnézése — béta',
