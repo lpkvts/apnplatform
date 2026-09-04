@@ -129,13 +129,11 @@ export default async function DashboardPage() {
       </div>
 
       {/* Oktatási belépő — csak képzőhelyi tagoknak jelenik meg. */}
-      {eduMemberships.length > 0 && (
+      {eduMemberships.length > 0 && !teaching && (
         <Link className="card klink" href="/oktatas">
-          <div className="klink-t">🎓 {teaching ? 'Oktatói felület' : 'Kurzusaim'}</div>
+          <div className="klink-t">🎓 Kurzusaim</div>
           <div className="sub" style={{ margin: '4px 0 0' }}>
-            {teaching
-              ? `${teaching.institution?.name} — kurzusok, feladatok, csoportelemzés`
-              : eduMemberships.map((m) => m.institution?.name).filter(Boolean).join(', ')}
+            {eduMemberships.map((m) => m.institution?.name).filter(Boolean).join(', ')}
           </div>
         </Link>
       )}

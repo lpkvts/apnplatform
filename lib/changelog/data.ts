@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.28.0',
+    date: '2026-09-03',
+    title: 'Váltás az oktatói felületre',
+    summary: 'Az oktatók egy koppintással válthatnak a klinikai és az oktatói munkamód között.',
+    entries: [
+      {
+        id: 'v1280-valto', kind: 'funkcio', title: 'Munkamód-váltó a fejlécben',
+        body: 'Az oktatói felület eddig csak közvetlen címmel volt elérhető. Mostantól a fejlécben megjelenik egy váltógomb, ami mindig arra a felületre mutat, ahol éppen nem vagy: a klinikai oldalon az oktatóira, az oktatóin vissza a klinikaira. Kis képernyőn csak az ikon látszik, hogy ne szorítsa ki a többi gombot.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1280-kinek', kind: 'eszkoz', title: 'Csak azoknak, akiknek szól',
+        body: 'A váltó azoknak jelenik meg, akik ténylegesen oktatnak — oktatói vagy intézményi adminisztrátori tagsággal —, illetve a platform adminisztrátorának. A hallgatóknak és a többi felhasználónak nincs értelme: náluk üres felületre vinne. A hallgatók továbbra is a kezdőlapi „Kurzusaim” kártyán jutnak be, ami viszont oktatóknál már nem jelenik meg, hogy ne legyen két bejárat ugyanoda.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.27.1',
     date: '2026-09-03',
     title: 'Fejléc gombjai',
