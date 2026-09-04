@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.31.0',
+    date: '2026-09-04',
+    title: 'EKG-lelet átnézése — béta',
+    summary: 'Fotózott EKG strukturált átnézése: megfigyelések és kérdések, nem diagnózis.',
+    entries: [
+      {
+        id: 'v1310-lelet', kind: 'funkcio', title: 'Lelet fotóból',
+        body: 'Új, béta funkció az EKG modulban: egy lefotózott lelet átnézése a szokásos elemzési lépések szerint — ritmus, frekvencia, P-hullám, PR-táv, QRS, tengely, ST, T-hullám. A válasz külön szakaszban tér ki arra, mi látszik, mi érdemel figyelmet, milyen irányba vezet, és mi hiányzik a megítéléshez.',
+        href: '/klinika/ekg/lelet',
+      },
+      {
+        id: 'v1310-nem-diagnozis', kind: 'szakmai', title: 'Nem diagnózis, és ezt ki is mondja',
+        body: 'A funkció megfigyeléseket sorol és kérdéseket vet fel, de nem állít fel kórismét, nem ad terápiás javaslatot, és nem mond ki kizárást. Ez nem óvatoskodás: a fotóból készült átnézés technikailag is korlátozott — az elmosódás, a ferde szög és a hiányzó kalibráció mind torzít —, a klinikai kép pedig teljesen hiányzik belőle. A válasz első szakasza ezért mindig a képminőséget értékeli, és megnevezi, mely megállapítás bizonytalan.',
+        href: '/klinika/ekg/lelet',
+      },
+      {
+        id: 'v1310-adatvedelem', kind: 'eszkoz', title: 'Betegadat és tárolás',
+        body: 'A feltöltés előtt a felület külön képernyőn kéri a betegazonosító kitakarását — a leleten jellemzően szerepel a név, a születési dátum és az azonosító. A kép nem kerül tárolásra: a feldolgozás után eldobódik. A funkció alapból kikapcsolt, és az intézményi használat rendjét külön kell rögzíteni.',
+        href: '/klinika/ekg/lelet',
+      },
+    ],
+  },
+  {
     version: '1.30.3',
     date: '2026-09-04',
     title: 'Egységes listastílus',

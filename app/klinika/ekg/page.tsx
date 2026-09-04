@@ -5,13 +5,16 @@ import { getEkgProgress } from '@/lib/ekg/progress'
 export const dynamic = 'force-dynamic'
 export default async function EkgPage({ searchParams }: { searchParams: Promise<{ open?: string; vissza?: string; lepes?: string }> }) {
   const { open, vissza, lepes } = await searchParams
-  const examEnabled = await getFlag('ekg_exam', false)
+  const [examEnabled, leletEnabled] = await Promise.all([
+    getFlag('ekg_exam', false),
+    getFlag('ekg_lelet', false),
+  ])
   const supabase = await createClient()
   const { data: dz } = await supabase.from('diseases').select('id, name, aliases, is_stub').eq('status', 'published')
   const progress = await getEkgProgress()
   return (
     <Ekg
-      initialOpen={open} examEnabled={examEnabled} lookup={dz ?? []}
+      initialOpen={open} examEnabled={examEnabled} leletEnabled={leletEnabled} lookup={dz ?? []}
       backCase={vissza} backStep={lepes} progress={progress}
     />
   )

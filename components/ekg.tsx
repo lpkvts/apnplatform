@@ -60,9 +60,10 @@ interface Prac { qid: string; opts: string[]; picked: string | null; loc: string
 interface Exam { order: string[]; opts: string[][]; idx: number; picks: string[]; score: number; done: boolean }
 
 export function Ekg({
-  initialOpen, examEnabled = false, lookup = [], backCase, backStep, progress,
+  initialOpen, examEnabled = false, leletEnabled = false, lookup = [],
+  backCase, backStep, progress,
 }: {
-  initialOpen?: string; examEnabled?: boolean; lookup?: DzLite[]
+  initialOpen?: string; examEnabled?: boolean; leletEnabled?: boolean; lookup?: DzLite[]
   backCase?: string; backStep?: string
   progress?: { attempts: number; avg_pct: number; streak_days: number } | null
 }) {
@@ -174,6 +175,18 @@ export function Ekg({
           <div className="ekg-an-metrics">
             <span>{progress.avg_pct}% átlag</span>
             <span>{progress.streak_days} aktív nap</span>
+          </div>
+        </Link>
+      )}
+
+      {leletEnabled && (
+        <Link className="card klink" href="/klinika/ekg/lelet">
+          <div className="row" style={{ border: 'none', padding: 0, alignItems: 'center', gap: 8 }}>
+            <span className="klink-t" style={{ flex: 1 }}>📷 EKG-lelet átnézése</span>
+            <span className="st st-progress">Béta</span>
+          </div>
+          <div className="sub" style={{ margin: '4px 0 0' }}>
+            Fotózz le egy leletet — a rendszer végigmegy rajta az elemzési lépések szerint
           </div>
         </Link>
       )}

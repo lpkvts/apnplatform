@@ -1881,3 +1881,10 @@ main.container > *, .edu-main > * {
   }
   .lst-sor::before { transform: scaleY(1); }
 }
+
+/* ── EKG-lelet átnézése ─────────────────────────────────── */
+.ekg-lelet-kep {
+  width: 100%; height: auto; display: block;
+  border-radius: var(--r-md); border: 1px solid var(--line);
+  background: #fff;
+}
