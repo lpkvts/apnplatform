@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.30.1',
+    date: '2026-09-04',
+    title: 'EKG kiemelés javítása',
+    summary: 'A görbén megjelölt elvezetések egyeznek a magyarázat szövegével.',
+    entries: [
+      {
+        id: 'v1301-kiemeles', kind: 'javitas', title: 'A kiemelés és a szöveg eltért',
+        body: 'Két gyakorló elemnél a magyarázat más elvezetéseket nevezett meg, mint amiket a görbe kiemelt. Az NSTEMI esetnél a szöveg V2–V5-öt említett, a görbén viszont csak V2–V4 világított; a bal Tawara-szár-blokknál a V3 maradt ki. A tanuló így mást látott, mint amit olvasott — ami pont a felismerés gyakorlását rontja. A kiemelés mindkét helyen a tényleges eltéréshez igazodik.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1301-ellenorzes', kind: 'eszkoz', title: 'Gépi ellenőrzés a jövőre',
+        body: 'A görbe-ellenőrző mostantól azt is vizsgálja, hogy a magyarázatban megnevezett elvezetések szerepelnek-e a kiemelésben — a tartományokat is kibontva. Új gyakorló elem felvételekor így azonnal kiderül, ha a kettő elcsúszik.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.30.0',
     date: '2026-09-04',
     title: 'Finomabb visszajelzések',

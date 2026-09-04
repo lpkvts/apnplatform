@@ -136,3 +136,36 @@ Object.entries(ECG_PARAMS).forEach(([id, p]) => ellenoriz(id, p))
 console.log()
 if (gondok.length) { console.log(`${gondok.length} eltérés:`); gondok.forEach(g => console.log('  •', g)) }
 else console.log('✓ minden görbe egyezik a megadott paraméterekkel')
+
+/* ── Kiemelés és magyarázat egyezése ──────────────────────
+   A gyakorló elemeknél a magyarázat gyakran megnevezi az elvezetéseket
+   („a V2–V5 elvezetésben"). Ha a görbén más elvezetések világítanak, a
+   tanuló mást lát, mint amit olvas — ez rontja a felismerés gyakorlását. */
+function kiemelesEllenorzes(ECG_FOCUS, PRACTICE_META) {
+  const kibont = (szoveg) => {
+    const k = new Set()
+    // Tartományok kibontása: a „V2–V5" négy elvezetést jelent.
+    szoveg.replace(/V(\d)\s*[\u2013-]\s*V(\d)/g, (m, a, b) => {
+      for (let i = +a; i <= +b; i++) k.add('V' + i)
+      return m
+    })
+    szoveg.replace(/\bV([1-6])\b/g, (m) => { k.add(m); return m })
+    return [...k]
+  }
+
+  let hiba = 0
+  for (const [id, elem] of Object.entries(PRACTICE_META)) {
+    const loc = elem.localize
+    if (!loc?.explain) continue
+    const kiemelt = ECG_FOCUS[id]
+    if (!kiemelt) continue
+    const emlitett = kibont(loc.explain)
+    if (emlitett.length === 0) continue
+    const nincs = emlitett.filter((x) => !kiemelt.includes(x))
+    if (nincs.length) {
+      console.log(`  ✗ ${id}: a magyarázat említi (${nincs.join(', ')}), de a görbén nincs kiemelve`)
+      hiba++
+    }
+  }
+  return hiba
+}
