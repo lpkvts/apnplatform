@@ -78,12 +78,12 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
         <h1 className="h1">{data.name}</h1>
         <p className="sub">{data.specialty}{data.bno ? ` · BNO ${data.bno}` : ''}</p>
         <ClinicalDisclaimer />
-        <TopicBacklinksForDisease name={data.name} />
         <div className="card">
           <b>⚪ Tartalom fejlesztés alatt</b>
           <p style={{ margin: '6px 0 0' }}>Ez a kórkép még katalógus-tétel: a strukturált, forrásolt adatlap (epidemiológia, DDx, labor/EKG, kezelés, red flag jelek, APN-megközelítés) lektorálással, fokozatosan készül el.</p>
         </div>
         {copilotEnabled && <Link className="sh-row" href={`/klinika/copilot?q=${encodeURIComponent(data.name)}`}><span className="sh-row-main"><span className="sh-row-name">🤖 Kérdezd az APN Copilotot</span><span className="sh-row-sub">Amíg az adatlap készül</span></span><span className="sh-chev">›</span></Link>}
+        <TopicBacklinksForDisease name={data.name} />
       </>
     )
   }
@@ -124,7 +124,6 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
       )}
 
       <ClinicalDisclaimer />
-      <TopicBacklinksForDisease name={data.name} />
 
       <Sec title="1. Röviden">
         {b.brief_what && <p style={{ margin: '0 0 6px' }}>{b.brief_what}</p>}
@@ -219,6 +218,8 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
         )}
         {b.source_url && <a className="btn ghost sm" href={b.source_url} target="_blank" rel="noopener" style={{ marginTop: 8 }}>Forrás megnyitása</a>}
       </Sec>
+
+      <TopicBacklinksForDisease name={data.name} />
 
       <SafetyNote />
     </>

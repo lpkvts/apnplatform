@@ -28,8 +28,6 @@ export default async function RendszerPage({ params, searchParams }: { params: P
         ))}
       </div>
 
-      <TopicBacklinks kind="examSystems" id={sys} />
-
       {tab === 'attekintes' && (
         <>
           {system.overview && <div className="card"><b>A vizsgálat célja</b><p className="sub" style={{ margin: '4px 0 0' }}>{system.overview}</p></div>}
@@ -53,6 +51,8 @@ export default async function RendszerPage({ params, searchParams }: { params: P
           ))}
         </>
       )}
+
+      <TopicBacklinks kind="examSystems" id={sys} />
     </>
   )
 }

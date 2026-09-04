@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.30.2',
+    date: '2026-09-04',
+    title: 'Kapcsolódó témakörök a lap alján',
+    summary: 'A kiegészítő hivatkozások már nem szakítják meg a fő tartalmat.',
+    entries: [
+      {
+        id: 'v1302-sorrend', kind: 'javitas', title: 'A kiegészítő blokk a végére került',
+        body: 'A kapcsolódó klinikai témakörök blokkja több helyen a fő tartalom elé került. A betegvizsgálatnál ez volt a legzavaróbb: a rendszer megnyitása után előbb a hivatkozások jöttek, és csak utánuk a vizsgálati checklist — vagyis az, amiért az ember az oldalra lépett. A blokk mostantól mindenhol a tartalom után áll, a betegségtár mindkét nézetében és a vizsgálati munkamenetben is.',
+        href: '/klinika/vizsgalat',
+      },
+    ],
+  },
+  {
     version: '1.30.1',
     date: '2026-09-04',
     title: 'EKG kiemelés javítása',

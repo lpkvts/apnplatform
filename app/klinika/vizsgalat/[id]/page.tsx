@@ -40,7 +40,7 @@ export default async function VizsgalatDetail({ params, searchParams }: { params
         ))}
       </div>
 
-      <ClinicalContext keywords={[String((data.anamnesis as Record<string, unknown>)?.complaint ?? ''), String((data.anamnesis as Record<string, unknown>)?.complaint_cat ?? ''), data.focus ?? '']} />
+      
 
       {sec === 'anamnezis' && (
         <ExamAnamnesisForm id={id} initial={data.anamnesis ?? {}} education={data.mode !== 'clinical'} />
@@ -88,6 +88,7 @@ export default async function VizsgalatDetail({ params, searchParams }: { params
         <form action={setExamStatus} style={{ display: 'inline' }}><input type="hidden" name="id" value={id} /><input type="hidden" name="status" value="archived" /><button className="btn ghost sm" type="submit">Archiválás</button></form>
       </div>
       <p className="sub" style={{ marginTop: 10, fontSize: 12 }}>A további szekciók (vitálisok, fizikális vizsgálat, red flags, összegzés, dokumentáció) a következő fejlesztési fázisokban épülnek be.</p>
+      <ClinicalContext keywords={[String((data.anamnesis as Record<string, unknown>)?.complaint ?? ''), String((data.anamnesis as Record<string, unknown>)?.complaint_cat ?? ''), data.focus ?? '']} />
     </>
   )
 }
