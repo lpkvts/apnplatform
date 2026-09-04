@@ -619,7 +619,7 @@ body {
 .lp-path small { font-size: var(--t-caption); color: var(--muted); line-height: 1.45; display: block; }
 
 /* ── Mentorprogram ── */
-.lp-mentor { background: linear-gradient(150deg, var(--brand-dark) 0%, #10614A 60%, #0D4E3C 100%); border-radius: var(--r-pill); padding: 32px 34px; display: grid; grid-template-columns: minmax(0,.86fr) minmax(0,1.14fr); gap: 32px; align-items: center; }
+.lp-mentor { background: linear-gradient(150deg, var(--brand-dark) 0%, #10614A 60%, #0D4E3C 100%); border-radius: var(--r-lg); padding: 32px 34px; display: grid; grid-template-columns: minmax(0,.86fr) minmax(0,1.14fr); gap: 32px; align-items: center; }
 .lp-soon { display: inline-block; font-size: var(--t-caption); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #06231A; background: var(--brand-3); padding: 5px 12px; border-radius: var(--r-pill); }
 .lp-h2 { font-size: clamp(27px, 4vw, 40px); line-height: 1.18; letter-spacing: -.022em; font-weight: 800; margin: 10px 0 16px; }
 .lp-on-dark { color: var(--surface); }

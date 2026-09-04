@@ -75,7 +75,7 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
-    version: '1.34.0',
+    version: '1.34.1',
     date: '2026-09-04',
     title: 'Egységes vizuális rendszer',
     summary: 'A design tokenek átvették a rögzített értékek helyét az egész felületen.',
@@ -88,6 +88,11 @@ export const RELEASES: Release[] = [
       {
         id: 'v1340-tipografia', kind: 'eszkoz', title: 'Hatfokú tipográfia',
         body: 'A közeli betűméretek egy szintre kerültek: 234 helyen. A 13, 13,5 és 14 pixel közötti különbség nem hordozott jelentést, csak rendezetlenséget. A 17 pixel fölötti méreteket nem bántottuk — azok kiemelt számok és címek, saját szereppel.',
+        href: '/',
+      },
+      {
+        id: 'v1340-mentor', kind: 'javitas', title: 'A mentorprogram blokk visszaállt',
+        body: 'A sugár-egységesítésnél a nyitóoldali mentorprogram-blokk tévesen a jelvényekkel került egy csoportba — mindkettő ugyanazt az értéket használta —, ezért teljesen kerek lett. A nagy felületek most a megfelelő lekerekítést kapják.',
         href: '/',
       },
       {
