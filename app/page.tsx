@@ -7,6 +7,7 @@ import { getFlag } from '@/lib/flags'
 import { getMemberships } from '@/lib/education/data'
 import { getFavoritesByType } from '@/lib/favorites'
 import { SHORTCUTS, ALAP_CSEMPEK } from '@/lib/shortcuts'
+import { ResumeList } from '@/components/resume-list'
 import { getDashCounts } from '@/lib/notifications'
 import { Landing } from '@/components/landing'
 import { accentStyle } from '@/lib/shortcuts'
@@ -52,6 +53,7 @@ export default async function DashboardPage() {
   // képzőhelynek — másnak üres oldalra vinne.
   const eduEnabled = await getFlag('education', false)
   const kompetenciaEnabled = await getFlag('kompetenciaterkep', false)
+  const ertekelesEnabled = await getFlag('ertekeles', false)
   const eduMemberships = eduEnabled ? await getMemberships() : []
   const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
 
@@ -66,6 +68,7 @@ export default async function DashboardPage() {
     .filter((sc) => kulcsok.includes(sc.key))
     // A kikapcsolt modulok csempéje nem jelenhet meg.
     .filter((sc) => sc.key !== 'kompterkep' || kompetenciaEnabled)
+    .filter((sc) => sc.key !== 'ertekeles' || ertekelesEnabled)
     // A saját választásnál a felhasználó sorrendje számít.
     .sort((a, b) => (sajatValasztas ? kulcsok.indexOf(a.key) - kulcsok.indexOf(b.key) : 0))
 
@@ -81,12 +84,13 @@ export default async function DashboardPage() {
   ].filter((x) => x.n > 0) : []
 
   // Folytasd, ahol abbahagytad
-  type Resume = { kind: 'exam' | 'case'; href: string; title: string; sub: string; at: string }
+  // Az azonosító is kell, mert a tételek innen közvetlenül törölhetők.
+  type Resume = { kind: 'exam' | 'case'; id: string; href: string; title: string; sub: string; at: string }
   const resume: Resume[] = []
   const ex = examRes.data?.[0]
-  if (ex) resume.push({ kind: 'exam', href: `/klinika/vizsgalat/${ex.id}`, title: ex.title, sub: `Betegvizsgálat · ${MODE_BADGE[ex.mode] ?? ex.mode}`, at: ex.updated_at })
+  if (ex) resume.push({ kind: 'exam', id: ex.id, href: `/klinika/vizsgalat/${ex.id}`, title: ex.title, sub: `Betegvizsgálat · ${MODE_BADGE[ex.mode] ?? ex.mode}`, at: ex.updated_at })
   const cc = caseRes.data?.[0]
-  if (cc) resume.push({ kind: 'case', href: `/klinika/esetek/${cc.id}`, title: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}`, sub: `Klinikai eset · ${CASE_STATUS[cc.status] ?? cc.status}`, at: cc.updated_at })
+  if (cc) resume.push({ kind: 'case', id: cc.id, href: `/klinika/esetek/${cc.id}`, title: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}`, sub: `Klinikai eset · ${CASE_STATUS[cc.status] ?? cc.status}`, at: cc.updated_at })
   resume.sort((a, b) => (a.at < b.at ? 1 : -1))
 
   return (
@@ -149,21 +153,7 @@ export default async function DashboardPage() {
         </Link>
       )}
 
-      {resume.length > 0 && (
-        <>
-          <div className="sec-h"><span className="sec-t">Folytasd, ahol abbahagytad</span></div>
-          {resume.map((r) => (
-            <Link key={r.href} className="sh-row" href={r.href}>
-              <span className="qtile-i" style={{ width: 38, height: 38, marginRight: 4 }}><Icon name={r.kind === 'exam' ? 'assessment' : 'clinic'} size={20} /></span>
-              <span className="sh-row-main">
-                <span className="sh-row-name">{r.title}</span>
-                <span className="sh-row-sub">{r.sub} · {new Date(r.at).toLocaleDateString('hu-HU')}</span>
-              </span>
-              <span className="sh-chev">›</span>
-            </Link>
-          ))}
-        </>
-      )}
+      <ResumeList items={resume} />
 
       <div className="sec-h">
         <span className="sec-t">Legutóbbi tevékenységek</span>

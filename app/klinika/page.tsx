@@ -4,7 +4,10 @@ import { Icon } from '@/components/icons'
 export const dynamic = 'force-dynamic'
 
 export default async function KlinikaPage() {
-  const copilotEnabled = await getFlag('apn_copilot', false)
+  const [copilotEnabled, ertekelesEnabled] = await Promise.all([
+    getFlag('apn_copilot', false),
+    getFlag('ertekeles', false),
+  ])
   const cards = [
     { href: '/klinika/vizsgalat', icon: 'stethoscope', title: 'Betegvizsgálat', sub: 'Strukturált propedeutikai vizsgálat — klinikai és oktatási mód' },
     { href: '/klinika/ertekeles', icon: 'clipboard', title: 'Új betegértékelés', sub: 'Gyors, 12 lépéses klinikai értékelés' },
@@ -18,7 +21,7 @@ export default async function KlinikaPage() {
       <h1 className="h1">Klinikum</h1>
       <p className="sub">A napi klinikai munka támogatása — vizsgálat, értékelés, labor, vérgáz, EKG és klinikai skálák.</p>
       <div className="lst">
-        {cards.map((c) => (
+        {cards.filter((c) => c.href !== '/klinika/ertekeles' || ertekelesEnabled).map((c) => (
           <Link key={c.href} className="lst-sor" href={c.href}>
             <span className="lst-ik"><Icon name={c.icon} size={18} /></span>
             <span className="lst-fo">

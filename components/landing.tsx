@@ -119,6 +119,11 @@ export function Landing() {
         <div className="lp-wrap lp-hero-in">
           <div>
             <p className="lp-eyebrow">APN-MED – Egészségügyi szakembereknek</p>
+            <p className="lp-beta">
+              <span>Béta</span>
+              A platform fejlesztés alatt áll. Minél több APN használja és jelzi a hibákat,
+              annál gyorsabban lesz kész — csatlakozz a teszteléshez.
+            </p>
             <h1 className="lp-h1">
               A <span className="lp-accent">kiterjesztett</span><br />
               szakmai tudás<br />
