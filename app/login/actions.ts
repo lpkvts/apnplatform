@@ -3,13 +3,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { siteUrl } from '@/lib/site-url'
+import { authHiba } from '@/lib/auth-errors'
 
 export async function signIn(formData: FormData) {
   const supabase = await createClient()
   const email = String(formData.get('email') ?? '')
   const password = String(formData.get('password') ?? '')
   const { error } = await supabase.auth.signInWithPassword({ email, password })
-  if (error) redirect('/login?error=' + encodeURIComponent(error.message))
+  if (error) redirect('/login?error=' + encodeURIComponent(authHiba(error.message)))
   redirect('/')
 }
 
@@ -23,8 +24,11 @@ export async function signUp(formData: FormData) {
     password,
     options: { data: { full_name } },
   })
-  if (error) redirect('/login?error=' + encodeURIComponent(error.message))
-  redirect('/login?message=' + encodeURIComponent('Sikeres regisztráció — most jelentkezz be.'))
+  if (error) redirect('/login?error=' + encodeURIComponent(authHiba(error.message)))
+  redirect('/login?message=' + encodeURIComponent(
+    'Sikeres regisztráció. Ha megerősítő levelet kaptál, kattints benne a hivatkozásra, '
+    + 'majd jelentkezz be.',
+  ))
 }
 
 /**

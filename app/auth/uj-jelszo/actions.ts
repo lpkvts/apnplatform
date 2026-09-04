@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from '@/lib/supabase/server'
+import { authHiba } from '@/lib/auth-errors'
 import { redirect } from 'next/navigation'
 
 const MIN = 12
@@ -24,7 +25,7 @@ export async function setNewPassword(formData: FormData) {
   if (!user) err('Lejárt a munkamenet. Kérj új visszaállító levelet.')
 
   const { error } = await supabase.auth.updateUser({ password })
-  if (error) err(error.message)
+  if (error) err(authHiba(error.message))
 
   redirect('/?jelszo=ok')
 }
