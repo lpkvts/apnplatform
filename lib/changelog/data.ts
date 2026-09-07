@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.36.0',
+    date: '2026-09-07',
+    title: 'APN World',
+    summary: 'A nemzetközi kitekintés kereshető, összehasonlítható és adminból bővíthető modullá alakult.',
+    entries: [
+      {
+        id: 'v1360-adatmodell', kind: 'eszkoz', title: 'Adatbázisba került',
+        body: 'Az országadatok korábban a kódba voltak beépítve, ezért csak fejlesztéssel lehetett bővíteni őket. Mostantól adatbázisban vannak: négy tábla kezeli az országokat, a modelleket, a forrásokat és az idővonalat. A szerkezet elbír száznál több országot is.',
+        href: '/apn-world',
+      },
+      {
+        id: 'v1360-hataskor', kind: 'szakmai', title: 'Tizennégy hatásköri dimenzió',
+        body: 'Állapotfelméréstől az önálló betegellátásig minden dimenzió külön értéket kap, négy fokozatban: igen, feltételesen, nem, nincs elég adat. Minden jelölésnél látszik az is, hogy a jogosultság országos, területi vagy intézményi szinten áll fenn, és mi a hozzá tartozó feltétel.',
+        href: '/apn-world',
+      },
+      {
+        id: 'v1360-osszehasonlitas', kind: 'funkcio', title: 'Országok összehasonlítása',
+        body: 'Két–négy ország hatásköre egymás mellett, táblázatban. A puszta igen-nem félrevezető lenne, mert a jogosultságok jelentős része feltételhez kötött — a jelölés fölé állva megjelenik a pontos magyarázat.',
+        href: '/apn-world',
+      },
+      {
+        id: 'v1360-forrasok', kind: 'szakmai', title: 'Források és adatmegbízhatóság',
+        body: 'Minden országprofilnál szerepel, mely forrásokból származik az adat, és mikor ellenőriztük utoljára. A profil egésze megbízhatósági jelölést kap. Ahol nincs elegendő forrás, ott ez látszik — nem töltjük fel feltételezéssel.',
+        href: '/apn-world',
+      },
+      {
+        id: 'v1360-admin', kind: 'eszkoz', title: 'Adminisztrátori kezelés',
+        body: 'A Tartalomkezelésben új menüpont: országprofilok létrehozása, szerkesztése, források kezelése. Az új profil piszkozatként jön létre, és külön lépésben tehető közzé — a hiányosan kitöltött profil félrevezetőbb, mint a semmi. A modul egésze kapcsolóval ki- és bekapcsolható.',
+        href: '/cms/apn-world',
+      },
+    ],
+  },
+  {
     version: '1.35.0',
     date: '2026-09-04',
     title: 'Nemzetközi kitekintés',

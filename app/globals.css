@@ -1983,3 +1983,65 @@ main.container > *, .edu-main > * {
   .nk-reszlet dl { grid-template-columns: 1fr; gap: 2px; }
   .nk-reszlet dt { margin-top: 8px; }
 }
+
+/* ── APN World ──────────────────────────────────────────── */
+.aw-stat { grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); }
+.aw-flag { flex: none; font-size: 22px; width: 30px; text-align: center; line-height: 1; }
+
+.aw-fej { display: flex; align-items: center; gap: var(--s3); margin-top: var(--s2); }
+.aw-fej-flag { font-size: 40px; line-height: 1; flex: none; }
+
+/* A hatásköri jelölések színe a jelentést hordozza, de a jel maga is
+   megkülönböztethető — színvakság mellett is olvasható marad. */
+.aw-yes { color: var(--ok); }
+.aw-conditional { color: var(--warn); }
+.aw-no { color: var(--alert); }
+.aw-unknown { color: var(--faint); }
+
+.aw-jel { font-size: var(--t-h3); font-weight: 700; cursor: help; }
+.aw-jel-box {
+  flex: none; width: 30px; height: 30px; display: grid; place-items: center;
+  border-radius: var(--r-sm); background: var(--bg); font-weight: 700;
+}
+.aw-jel-box.aw-yes { background: var(--ok-bg); }
+.aw-jel-box.aw-conditional { background: var(--warn-bg); }
+.aw-jel-box.aw-no { background: var(--alert-bg); }
+
+.aw-tbl td.aw-jel { text-align: center; }
+.aw-tbl th:first-child, .aw-tbl td:first-child { min-width: 168px; }
+
+.aw-jelmagy {
+  display: flex; gap: var(--s4); flex-wrap: wrap;
+  padding: var(--s3) 0 var(--s2); font-size: var(--t-caption); color: var(--muted);
+}
+.aw-jelmagy b { font-size: var(--t-body); margin-right: 4px; }
+
+.aw-dl { margin: 0; display: grid; grid-template-columns: 148px 1fr; gap: 6px var(--s3); }
+.aw-dl dt { font-size: var(--t-caption); font-weight: 700; color: var(--faint); }
+.aw-dl dd { margin: 0; font-size: var(--t-small); line-height: 1.5; }
+
+.aw-ul { margin: var(--s2) 0 0; padding-left: 18px; }
+.aw-ul li { font-size: var(--t-small); line-height: 1.55; margin-bottom: 4px; color: var(--muted); }
+
+.aw-2col { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s3); }
+@media (max-width: 620px) {
+  .aw-2col { grid-template-columns: 1fr; }
+  .aw-dl { grid-template-columns: 1fr; gap: 2px; }
+  .aw-dl dt { margin-top: 8px; }
+}
+
+/* Idővonal */
+.aw-ido { border-left: 2px solid var(--line); margin: var(--s3) 0 0 10px; padding-left: var(--s4); }
+.aw-ido-e { position: relative; padding-bottom: var(--s5); }
+.aw-ido-e::before {
+  content: ''; position: absolute; left: calc(-1 * var(--s4) - 6px); top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--brand-3); border: 2px solid var(--card);
+}
+.aw-ido-p {
+  display: block; font-size: var(--t-caption); font-weight: 800;
+  letter-spacing: .05em; text-transform: uppercase; color: var(--brand);
+  margin-bottom: 3px;
+}
+.aw-ido-e b { font-size: var(--t-h3); }
+.aw-ido-e p { margin: 4px 0 0; font-size: var(--t-small); line-height: 1.6; color: var(--muted); }
