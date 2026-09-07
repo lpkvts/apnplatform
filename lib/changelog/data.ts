@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.37.0',
+    date: '2026-09-07',
+    title: 'Forrásáttekintés',
+    summary: 'A platformon megjelenő összes evidenciaforrás egy helyen, modulonként.',
+    entries: [
+      {
+        id: 'v1370-attekintes', kind: 'eszkoz', title: 'Minden forrás egy helyen',
+        body: 'A Tartalomkezelésben új nézet gyűjti össze a platform teljes evidenciaállományát: klinikai források, irányelvek, betegségtári hivatkozások, akut témák és az APN World forrásai. Kereshető cím, szervezet és kapcsolódó tartalom szerint, szűrhető modul szerint.',
+        href: '/cms/forras-attekintes',
+      },
+      {
+        id: 'v1370-modulonkent', kind: 'eszkoz', title: 'Hol vékony a lefedettség',
+        body: 'A modulonkénti bontás megmutatja, melyik területen hány forrás áll a tartalom mögött. Ez legalább olyan fontos, mint maga a lista: a hiány így válik láthatóvá.',
+        href: '/cms/forras-attekintes',
+      },
+      {
+        id: 'v1370-tarolas', kind: 'eszkoz', title: 'Kétféle tárolás, egy nézetben',
+        body: 'A források egy része az adatbázisban van, ahol szerkeszthető; másik része a klinikai tartalommal együtt, a kódban. Az áttekintés mindkettőt mutatja, és jelzi, melyik hol módosítható. A kódban tárolt források szándékosan maradnak ott: a tartalommal együtt kell változniuk.',
+        href: '/cms/forras-attekintes',
+      },
+    ],
+  },
+  {
     version: '1.36.0',
     date: '2026-09-07',
     title: 'APN World',

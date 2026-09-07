@@ -30,6 +30,11 @@ export default async function CmsPage() {
         <div className="klink-t">📡 Tartalomfigyelő</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Felülvizsgálatra esedékes és lejárt tartalmak</div>
       </Link>
+      <Link className="card klink" href="/cms/forras-attekintes">
+        <div className="klink-t">📚 Forrásáttekintés</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>A platform teljes evidenciaállománya, modulonként</div>
+      </Link>
+
       <Link className="card klink" href="/cms/forrasok">
         <div className="klink-t">📚 Klinikai források</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Evidenciaforrások nyilvántartása és verziói</div>
