@@ -2045,3 +2045,15 @@ main.container > *, .edu-main > * {
 }
 .aw-ido-e b { font-size: var(--t-h3); }
 .aw-ido-e p { margin: 4px 0 0; font-size: var(--t-small); line-height: 1.6; color: var(--muted); }
+
+/* ── Forrásblokk ────────────────────────────────────────── */
+.fb-link {
+  color: var(--brand); font-weight: 650; font-size: var(--t-small);
+  text-decoration: none;
+}
+.fb-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+.fb-figy {
+  margin: var(--s3) 0 0; padding: 10px 13px;
+  background: var(--warn-bg); border-radius: var(--r-md);
+  font-size: var(--t-caption); line-height: 1.55; color: var(--muted);
+}

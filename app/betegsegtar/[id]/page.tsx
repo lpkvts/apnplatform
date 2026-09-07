@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { ForrasBlokk } from '@/components/forras-blokk'
 import { createClient } from '@/lib/supabase/server'
 import { TESTS } from '@/lib/scores/data'
 import { LAB } from '@/lib/labor/data'
@@ -203,20 +204,18 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
       </Sec>
 
       <Sec title="13. Források, evidencia és felülvizsgálat">
-        <div className="row"><span className="sub" style={{ margin: 0 }}>Forrás</span><b style={{ textAlign: 'right' }}>{b.source_name || '—'}</b></div>
-        <div className="row"><span className="sub" style={{ margin: 0 }}>Verzió</span><b>{b.version || data.version || '—'}</b></div>
-        <div className="row"><span className="sub" style={{ margin: 0 }}>Utolsó frissítés</span><b>{b.updated || '—'}</b></div>
-        <div className="row"><span className="sub" style={{ margin: 0 }}>Következő felülvizsgálat</span><b>{data.review_on || '—'}</b></div>
-        <div className="row" style={{ borderBottom: reviewers.length ? undefined : 'none' }}><span className="sub" style={{ margin: 0 }}>Bizonyíték</span><b style={{ textAlign: 'right' }}>{b.evidence || '—'}</b></div>
+        <ForrasBlokk b={b} reviewOn={data.review_on} />
+
         {reviewers.length > 0 && (
-          <div style={{ marginTop: 8 }}>
-            <b style={{ fontSize: 13 }}>Szakmai felülvizsgálat</b>
+          <div style={{ marginTop: 12, borderTop: '1px solid var(--line)', paddingTop: 12 }}>
+            <b style={{ fontSize: 'var(--t-small)' }}>Szakmai felülvizsgálat</b>
             {reviewers.map((r, i) => (
-              <p key={i} className="sub" style={{ margin: '4px 0 0' }}>{r.name}{r.specialty ? ` – ${r.specialty}` : ''}{r.role ? ` (${r.role})` : ''}{r.date ? ` · ${r.date}` : ''}</p>
+              <p key={i} className="sub" style={{ margin: '4px 0 0' }}>
+                {r.name}{r.specialty ? ` – ${r.specialty}` : ''}{r.role ? ` (${r.role})` : ''}{r.date ? ` · ${r.date}` : ''}
+              </p>
             ))}
           </div>
         )}
-        {b.source_url && <a className="btn ghost sm" href={b.source_url} target="_blank" rel="noopener" style={{ marginTop: 8 }}>Forrás megnyitása</a>}
       </Sec>
 
       <TopicBacklinksForDisease name={data.name} />

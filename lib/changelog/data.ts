@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.39.0',
+    date: '2026-09-07',
+    title: 'Kattintható források, GOLD ajánlás',
+    summary: 'A források megnyithatók, a koruk látszik, és a GOLD bekerült az irányelvtárba.',
+    entries: [
+      {
+        id: 'v1390-forras', kind: 'eszkoz', title: 'Kattintható források',
+        body: 'A kórképek forrásblokkjában a forrás neve mostantól közvetlenül megnyitható, ha van hozzá hivatkozás. Ha ugyanaz a dokumentum a platform irányelvtárában is szerepel, a blokk odavezet — ott a teljes szakmai összefoglaló olvasható.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1390-kor', kind: 'eszkoz', title: 'A forrás kora',
+        body: 'Minden forrásnál látszik az évszáma és az, hány éves. Az öt évnél régebbi források külön jelölést kapnak, alatta magyarázattal: ez nem azt jelenti, hogy elavult — egyes területeken évtizedekig nem születik új ajánlás —, hanem hogy érdemes ellenőrizni, megjelent-e azóta frissebb. A további tartalmi fejlesztéseknél az öt éven belüli forrás a cél.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1390-gold', kind: 'szakmai', title: 'GOLD 2026 az irányelvtárban',
+        body: 'A COPD nemzetközi alapdokumentuma eddig csak a kórkép forrásmezőjében szerepelt, önálló irányelvként nem — pedig a hazai ajánlások is erre hivatkoznak. Mostantól a Protokollok és irányelvek között is megtalálható, hat szakaszban összefoglalva.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1390-copd', kind: 'szakmai', title: 'A COPD frissítése',
+        body: 'A kórkép a 2026-os GOLD kiadáshoz igazodik. A két érdemi változás: az ABE besorolásban az E csoport küszöbe csökkent — már egyetlen közepes exacerbáció is ide sorol —, és a kezelés kiindulópontja a kettős hörgtágítás, amelyre az inhalációs szteroid csak ráépülhet, a vér eozinofilszáma alapján. A béta-agonista és szteroid kettős kombinációja nem javasolt.',
+        href: '/betegsegtar/copd',
+      },
+    ],
+  },
+  {
     version: '1.38.0',
     date: '2026-09-07',
     title: 'Allergia és immunológia',
