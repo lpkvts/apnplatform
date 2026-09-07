@@ -4,7 +4,7 @@ export const SHORTCUTS: Shortcut[] = [
   { key: 'vizsgalat', href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment' },
   { key: 'esetek', href: '/klinika/esetek', label: 'Eseteim', icon: 'clinic' },
   { key: 'ertekeles', href: '/klinika/ertekeles', label: 'Új betegértékelés', icon: 'assessment' },
-  { key: 'score', href: '/klinika/tesztek', label: 'Score Hub', icon: 'score' },
+  { key: 'score', href: '/klinika/tesztek', label: 'Skálák', icon: 'score' },
   { key: 'labor', href: '/klinika/labor', label: 'Labor', icon: 'flask' },
   { key: 'vergaz', href: '/klinika/vergaz', label: 'Vérgáz', icon: 'flask' },
   { key: 'ekg', href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },

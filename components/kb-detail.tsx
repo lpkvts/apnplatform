@@ -18,7 +18,7 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
           <Link key={t.id} className="sh-row" href={`/klinika/tesztek?open=${t.id}`} style={{ marginTop: 8 }}>
             <span className="sh-row-main">
               <span className="sh-row-name">{t.name}</span>
-              <span className="sh-row-sub">{t.abbr ?? ''} · Score Hub</span>
+              <span className="sh-row-sub">{t.abbr ?? ''} · Skálák és score-ok</span>
             </span>
             <span className="sh-chev">›</span>
           </Link>

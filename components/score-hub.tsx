@@ -53,7 +53,7 @@ export function ScoreHub() {
 
   return (
     <>
-      <h1 className="h1">Klinikai tesztek és skálák</h1>
+      <h1 className="h1">Skálák és score-ok</h1>
       <p className="sub">{TESTS.length} skála · pontozás, rizikósáv, APN-teendők</p>
 
       <input

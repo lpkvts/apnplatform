@@ -50,7 +50,7 @@ export function ExamSummaryForm({ id, data }: { id: string; data: SessionData })
             <a className="btn ghost sm" href="/klinika/labor">Labor</a>
             {related.ekg && <a className="btn ghost sm" href="/klinika/ekg">EKG</a>}
             <a className="btn ghost sm" href="/betegsegtar">Betegségtár</a>
-            <a className="btn ghost sm" href="/klinika/tesztek">Score Hub</a>
+            <a className="btn ghost sm" href="/klinika/tesztek">Skálák és score-ok</a>
           </div>
         </div>
       )}

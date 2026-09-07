@@ -169,7 +169,7 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
         </Card>
       )}
       {t.related.scores && t.related.scores.length > 0 && (
-        <Card title="🧮 Score Hub">
+        <Card title="🧮 Skálák és score-ok">
           {t.related.scores.map((id) => (
             <a key={id} className="sh-row" href={`/klinika/tesztek?open=${id}`}>
               <span className="sh-row-main"><span className="sh-row-name">{testName(id)}</span></span><span className="sh-chev">›</span>

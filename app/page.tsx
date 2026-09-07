@@ -17,7 +17,7 @@ import { accentStyle } from '@/lib/shortcuts'
 // hogy a kezdőlap és a testreszabás nézet ne térhessen el egymástól.
 const TILES = [
   { href: '/klinika/vizsgalat', label: 'Betegvizsgálat', icon: 'assessment' },
-  { href: '/klinika/tesztek', label: 'Score Hub', icon: 'score' },
+  { href: '/klinika/tesztek', label: 'Skálák és score-ok', icon: 'score' },
   { href: '/klinika/labor', label: 'Labor', icon: 'flask' },
   { href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
   { href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },

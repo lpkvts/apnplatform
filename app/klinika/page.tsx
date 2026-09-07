@@ -11,7 +11,7 @@ export default async function KlinikaPage() {
   const cards = [
     { href: '/klinika/vizsgalat', icon: 'stethoscope', title: 'Betegvizsgálat', sub: 'Strukturált propedeutikai vizsgálat — klinikai és oktatási mód' },
     { href: '/klinika/ertekeles', icon: 'clipboard', title: 'Új betegértékelés', sub: 'Gyors, 12 lépéses klinikai értékelés' },
-    { href: '/klinika/tesztek', icon: 'calculator', title: 'Score Hub', sub: '56 klinikai skála és pontozó' },
+    { href: '/klinika/tesztek', icon: 'calculator', title: 'Skálák és score-ok', sub: 'Klinikai pontozók és rizikóbecslő skálák' },
     { href: '/klinika/labor', icon: 'flask', title: 'Labor', sub: 'Laborértékek, referencia és értelmezés' },
     { href: '/klinika/vergaz', icon: 'droplet', title: 'Vérgáz', sub: 'Vérgáz elemzés és klinikai értelmezés' },
     { href: '/klinika/ekg', icon: 'pulse', title: 'EKG', sub: 'EKG-atlasz és gyakorlás' },

@@ -51,7 +51,7 @@ export type StudentMaterial = Omit<Material, 'answer' | 'visible' | 'course_id'>
  * napi munkában is használ.
  */
 export const MODULES = [
-  { href: '/klinika/tesztek', label: 'Klinikai skálák (Score Hub)' },
+  { href: '/klinika/tesztek', label: 'Skálák és score-ok' },
   { href: '/klinika/vergaz', label: 'Vérgázelemzés' },
   { href: '/klinika/ekg', label: 'EKG modul' },
   { href: '/klinika/ekg/elemzes', label: 'EKG elemzés — esetek' },

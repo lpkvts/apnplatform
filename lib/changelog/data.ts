@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.37.1',
+    date: '2026-09-07',
+    title: 'Skálák és score-ok',
+    summary: 'A Score Hub magyar nevet kapott.',
+    entries: [
+      {
+        id: 'v1371-nev', kind: 'eszkoz', title: 'Új megnevezés',
+        body: 'A modul mostantól „Skálák és score-ok” néven szerepel a Klinikumban, a kezdőlapi gyors elérésben, a keresőben és mindenütt, ahol korábban a Score Hub név állt. A gyors elérés csempéjén a rövidebb „Skálák” felirat jelenik meg, mert ott kevés a hely. A modul útvonala és minden mentett hivatkozás változatlan.',
+        href: '/klinika/tesztek',
+      },
+    ],
+  },
+  {
     version: '1.37.0',
     date: '2026-09-07',
     title: 'Forrásáttekintés',
