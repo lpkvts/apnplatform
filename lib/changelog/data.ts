@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.39.1',
+    date: '2026-09-07',
+    title: 'Szepszis-irányelvek kiegészítése',
+    summary: 'A NICE harmadik utódirányelve bekerült a forrásjegyzékbe.',
+    entries: [
+      {
+        id: 'v1391-ng255', kind: 'szakmai', title: 'NG255 — terhesség és szepszis',
+        body: 'A NICE korábbi szepszis-irányelve, az NG51 három önálló dokumentumra vált szét. Ebből kettő már szerepelt a forrásjegyzékben, a harmadik — a terhes és nemrég szült betegekre vonatkozó NG255 — csak megjegyzésben. Így az a betegcsoport, amelynél a kockázati küszöbök és az ellátási út eltér, nem volt megtalálható a forrásjegyzékben. Most önálló bejegyzést kapott.',
+        href: '/cms/forras-attekintes',
+      },
+      {
+        id: 'v1391-pontositas', kind: 'eszkoz', title: 'Pontosabb megjegyzés a visszavont irányelvnél',
+        body: 'Az NG51 nem új kiadást kapott, hanem korcsoport és terhesség szerint három irányelvre vált szét. A visszavont bejegyzés megjegyzése most ezt mondja ki — a különbség lényeges, mert nem elég egy hivatkozást lecserélni, hanem el kell dönteni, melyik utód vonatkozik az adott betegre.',
+        href: '/cms/forras-attekintes',
+      },
+    ],
+  },
+  {
     version: '1.39.0',
     date: '2026-09-07',
     title: 'Kattintható források, GOLD ajánlás',

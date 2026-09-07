@@ -131,6 +131,13 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
     usedIn: ['Láz', 'Szepszis'],
   },
   {
+    id: 'nice-ng255-sepsis-pregnancy', title: 'Suspected sepsis in people who are pregnant or have recently been pregnant: recognition, diagnosis and early management (NG255)',
+    org: 'National Institute for Health and Care Excellence', year: '2025', identifier: 'NG255', category: 'Infektológia',
+    intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-09-07', reviewNext: '2027-09-07',
+    usedIn: ['Láz', 'Szepszis'],
+    versionNote: 'A korábbi NG51 harmadik utódja. A terhes és nemrég szült betegek szepszise külön kockázati küszöböket és eltérő ellátási utat kíván.',
+  },
+  {
     id: 'ssc-2021', title: 'Surviving Sepsis Campaign: International Guidelines for Management of Sepsis and Septic Shock',
     org: 'Society of Critical Care Medicine / ESICM', year: '2021', category: 'Infektológia',
     intl: true, primary: false, status: 'Publikálva', lastChecked: '2026-08-26', reviewNext: '2027-08-26',
@@ -141,7 +148,7 @@ export const GUIDELINE_SOURCES: GuidelineSource[] = [
     org: 'National Institute for Health and Care Excellence', year: '2016', identifier: 'NG51', category: 'Infektológia',
     intl: true, primary: false, status: 'Visszavonva', lastChecked: '2026-08-26', reviewNext: '2026-08-26',
     supersededBy: 'NG253 / NG254 / NG255 (2025)',
-    versionNote: 'Nem használandó. 2025 novemberében három új irányelv váltotta fel — az erre hivatkozó korábbi anyagok felülvizsgálandók.',
+    versionNote: 'Nem használandó. Az NG51 nem új kiadást kapott, hanem 2025 novemberében három önálló irányelvre vált szét, korcsoport és terhesség szerint: NG253 (16 év felett), NG254 (16 év alatt), NG255 (terhesség). Az erre hivatkozó korábbi anyagok felülvizsgálandók.',
   },
   {
     id: 'esc-2024-af', title: '2024 ESC Guidelines for the management of atrial fibrillation',
