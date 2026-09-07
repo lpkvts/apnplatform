@@ -1,215 +1,287 @@
-# APN Hungary Platform
+# APN-MED
 
-Mobil-first klinikai szakmai munkakörnyezet Advanced Practice Nurse (APN) szakembereknek.
-Cél: **egy összekapcsolt, gyors, intuitív** felület, amely a napi klinikai munkát, a szakmai tájékozódást és a fejlődést egyben támogatja.
+Klinikai szakmai platform kiterjesztett hatáskörű ápolóknak (APN).
 
-> **Fontos elv:** a platform **nem ad orvosi diagnózist**. Minden funkció döntéstámogató, oktatási és dokumentációs célú; a klinikai megítélést nem helyettesíti.
+A cél egy összekapcsolt munkakörnyezet, amely a napi klinikai munkát, a szakmai
+tájékozódást, a fejlődéskövetést és az oktatást egyetlen felületen támogatja —
+ugyanazzal a tartalommal az ágy mellett és a tanteremben.
 
-*Utoljára frissítve: a Betegvizsgálat 2.0 (1–6. fázis) és a V2 UX-audit (Phase 1–7 + 9) állapotában. Ezt a fájlt minden fejlesztésnél frissítjük.*
+> **Alapelv:** a platform **nem ad orvosi diagnózist**. Minden funkció
+> döntéstámogató, oktatási és dokumentációs célú; a klinikai megítélést nem
+> helyettesíti.
+
+**Jelenlegi állapot:** béta. A platform fejlesztés és tesztelés alatt áll.
 
 ---
 
 ## Tartalom
-1. [Információs architektúra](#információs-architektúra)
-2. [Mit lehet csinálni – funkciók](#mit-lehet-csinálni--funkciók)
-3. [Admin / Tartalomkezelés](#admin--tartalomkezelés)
-4. [Jogosultságok](#jogosultságok)
-5. [Kapcsolható modulok (feature flag-ek)](#kapcsolható-modulok-feature-flagek)
-6. [Technológia](#technológia)
-7. [Adatmodell és migrációk](#adatmodell-és-migrációk)
-8. [Telepítés és élesítés](#telepítés-és-élesítés)
-9. [Fejlesztési elvek](#fejlesztési-elvek)
-10. [Fejlesztési státusz és roadmap](#fejlesztési-státusz-és-roadmap)
-11. [Változásnapló](#változásnapló)
+
+1. [Áttekintés](#áttekintés)
+2. [Modulok](#modulok)
+3. [Oktatási réteg](#oktatási-réteg)
+4. [Tartalomkezelés](#tartalomkezelés)
+5. [Jogosultságok](#jogosultságok)
+6. [Kapcsolható modulok](#kapcsolható-modulok)
+7. [Szakmai tartalom és források](#szakmai-tartalom-és-források)
+8. [Design rendszer](#design-rendszer)
+9. [Technológia](#technológia)
+10. [Adatmodell és migrációk](#adatmodell-és-migrációk)
+11. [Fejlesztés](#fejlesztés)
+12. [Ellenőrző szkriptek](#ellenőrző-szkriptek)
 
 ---
 
-## Információs architektúra
+## Áttekintés
 
-A navigáció egyetlen, tiszta mentális modellre épül:
+A platform négy fő területre oszlik, ezek az alsó navigációban is megjelennek:
 
-**🩺 Klinikum → 📚 Tudástár → 🎓 Fejlődés → 👤 Profil**
+| Terület | Mit tartalmaz |
+|---|---|
+| **Klinikum** | A napi munkát támogató eszközök: betegvizsgálat, skálák, labor, vérgáz, EKG |
+| **Tudástár** | Szakmai tájékozódás: betegségtár, akut állapotok, irányelvek, kompetenciatérkép |
+| **Fejlődés** | Egyéni előrehaladás: kompetenciák, továbbképzés, saját esetek, mentorprogram |
+| **Education** | Intézményi oktatási réteg — külön munkamód, saját fejlécjelzéssel |
 
-- **Alsó menü (mobil + desktop):** Kezdőlap · Klinikum · Tudástár · Fejlődés
-- **Felső sáv (jobb felül):** értesítések + Profil (avatar) — minden oldalon elérhető
-
-A kikapcsolt vagy rejtett modulok automatikusan eltűnnek a navigációból, a kezdőlapról, a gyorselérésből és a keresésből.
-
----
-
-## Mit lehet csinálni – funkciók
-
-### 🏠 Kezdőlap (munkaasztal)
-- **Fő művelet:** „Új betegvizsgálat indítása" kiemelt gomb
-- **Folytasd, ahol abbahagytad:** a folyamatban lévő betegvizsgálat és nyitott klinikai eset gyors folytatása
-- **Gyors elérés:** testreszabható gyorsindító csempék — a felhasználó a Testreszabás oldalon (vagy a „＋ Hozzáadás” csempével) veszi fel a leggyakrabban használt menüket
-- **Legutóbbi tevékenységek** és **központi keresés**
-
-### 🩺 Klinikum
-- **Betegvizsgálat 2.0** – strukturált propedeutikai vizsgálat, klinikai és oktatási módban:
-  - Anamnézis (vezető panasz, OPQRST, korábbi betegségek, gyógyszerlista, allergia, szociális/családi)
-  - Vitális paraméterek (10 érték + BMI, ismételt mérés, **trend**, 🟢🟡🔴 zónák)
-  - Általános fizikális vizsgálat (állapot, tudat/AVPU, bőr, hydratatio, oedema)
-  - Szervrendszeri vizsgálatok (légző · cardiovascularis · neurológiai + FAST · hasi) IPPA/IAPP-logikával
-  - **Red flag jelzések** egy helyen, kapcsolódó akut/protokoll/mentor linkekkel
-  - **Klinikai összegzés** – automatikus, szerkeszthető, másolható státusz + kapcsolódó Labor/EKG/Betegségtár
-- **Új betegértékelés** – gyors, 12 lépéses klinikai értékelés
-- **Eseteim és előzmények** – klinikai esetek és korábbi betegértékelések egy listában (típus- és státuszszűrővel)
-- **Score Hub** – 56 klinikai skála és pontozó, kategóriákkal, kedvencezéssel
-- **Labor** – laborértékek referenciával és klinikai értelmezéssel; **nem-specifikus (férfi/nő) referenciák** külön értékeléssel
-- **EKG** – atlasz és gyakorlás (a vizsga mód admin-kapcsolóval)
-- **APN Copilot** – döntéstámogató (admin-kapcsolóval; AI-integráció előkészítve)
-
-### 📚 Tudástár
-- **Betegségtár** – kórképek strukturált, APN-fókuszú adatlapjai (evidence-badge-ekkel, DDx-szel, red flag-ekkel)
-- **Panasz alapján** – tünetből a lehetséges kórképek felé
-- **Akut állapotok** – gyors klinikai orientáció, vörös zászlók
-- **Protokollok és irányelvek** – evidence-alapú összefoglalók, források
-- **Klinikai kontextus** – összekapcsolt témák és modulok
-
-### 🎓 Fejlődés
-- **Mentorprogram** (hamarosan)
-- **Kompetenciák** (admin-kapcsolóval)
-- **CPD** – továbbképzés követése
-- **APN Career** (admin-kapcsolóval) – állások, képzések, konferenciák, pályázatok
-
-### 👤 Profil
-- Szakmai adatok, **APN szakirány** (6, itthon elérhető szakirány)
-- **Kedvenceim** – csillagozott betegségek, laborok, score-ok, EKG-k
-- **Előzmények**, profil szerkesztése, kijelentkezés
-- **Értesítések** (felső sávban is)
-
-### ⭐ Kedvencek és személyre szabás
-- Bárhol a **☆ csillaggal** kedvencnek jelölhető betegség, labor, score, EKG
-- **Kedvenceim** összesítő nézet, felhasználónként mentve
-- **Kezdőlap testreszabása** – gyorsindító gombok kiválasztása
-
-### 🔍 Központi keresés
-Egyetlen keresés, több tartalomtípus, csoportosítva: **panasz · kórkép · labor · score · EKG · akut állapot · protokoll/evidence · klinikai kontextus** (és Career, ha be van kapcsolva).
+**Számokban:** 79 oldal, 82 komponens, 24 tartalmi modul, 57 adatbázis-migráció.
 
 ---
 
-## Admin / Tartalomkezelés
+## Modulok
 
-A **Tartalomkezelés (CMS)** szerkesztő/lektor/admin szerepkörrel érhető el:
-- **Irányelvek kezelése** – piszkozat → lektorálás → publikálás munkafolyamat
-- **Betegségtár kezelése** – kórképek létrehozása, szerkesztése, lektorálása, **stub-import**
-- **Tartalomfigyelő** – felülvizsgálatra esedékes és lejárt tartalmak
-- **Klinikai források** – evidenciaforrások nyilvántartása és verziói
-- **Audit napló** – ki, mit, mikor módosított
-- **Beállítások** – modulrészek ki-/bekapcsolása (feature flag-ek)
-- **Felhasználók** – regisztrált felhasználók egy helyen (név, e-mail, szerep, szakirány), csak adminnak
+### Klinikum
+
+**Betegvizsgálat** — Strukturált propedeutikai vizsgálat 71 vizsgálati elemmel,
+tíz szervrendszerre bontva. Klinikai és oktatási módban is használható; a
+munkamenet menthető és folytatható.
+
+**Skálák és score-ok** — 57 klinikai pontozó és rizikóbecslő skála, kategóriák
+szerint rendezve. Minden pontozónál látszik a **tételenkénti bontás**: melyik
+kérdés mennyit adott az összeghez. Ez egyben ellenőrzés is — kiderül, ha a
+rendszer másképp értette a választ. A hat leggyakoribb pontozó a lista tetején
+közvetlenül elérhető.
+
+**Labor** — 61 laborparaméter referenciaértékekkel, nemre bontva, kritikus
+küszöbökkel és APN-teendőkkel. Mintázatfelismerés: mely értékkombinációk mire
+utalnak.
+
+**Vérgáz** — Sav-bázis elemzés lépésenkénti értelmezéssel, leletnézettel és tíz
+gyakorló esettel. Tanítási módban kivetíthető.
+
+**EKG** — 30 tételes atlasz, 11 lépésenként vezetett gyakorló eset, vizsgamód.
+A görbék paraméterekből generálódnak, nem képek — ezért a kiemelés és a
+magyarázat gépileg ellenőrizhető egymáshoz képest.
+
+**EKG-lelet átnézése (béta)** — Fotózott lelet strukturált átnézése hat
+szakaszban. Nem ad diagnózist: megfigyeléseket sorol és kérdéseket vet fel. A
+kép nem kerül tárolásra, és a feltöltés előtt a felület külön képernyőn kéri a
+betegazonosító kitakarását.
+
+### Tudástár
+
+**Betegségtár** — Kórképek strukturált adatlapjai: mikor gondoljunk rá, mit
+vizsgáljunk, red flag jelek, APN-fókusz, kezelés, követés, források.
+
+**Akut állapotok** — Hat téma gyors klinikai orientációval: mellkasi fájdalom,
+akut dyspnoe, akut hasi fájdalom, eszméletvesztés, láz, szédülés.
+
+**Protokollok és irányelvek** — Hazai és nemzetközi irányelvek összefoglalói,
+forrásmegjelöléssel és felülvizsgálati dátummal.
+
+**Kompetenciatérkép** — 274 kompetencia a hatályos szabályozás szerint, négy
+végzési szintre bontva.
+
+**APN World** — Az APN-szerepkör kilenc ország gyakorlatában: hatáskör 14
+dimenzióban, oktatás, szabályozás, felírási jog. Két–négy ország egymás mellett
+összehasonlítható. Adatbázisból működik, adminból bővíthető.
+
+### Fejlődés
+
+Kompetencia-önértékelés, továbbképzési nyilvántartás, saját klinikai esetek
+követése, mentorprogram, karrierút.
+
+---
+
+## Oktatási réteg
+
+Az **Education** külön munkamód: saját elrendezéssel, oldalsávval és
+fejléc-jelzéssel. Az oktatók a fejlécben lévő váltógombbal lépnek át — ez csak
+nekik és a platform adminisztrátorának jelenik meg.
+
+Amit tartalmaz:
+
+- **Kurzusok** célkompetenciákkal, csoportbeosztással, menet közben szerkeszthető
+  alapadatokkal
+- **Feladatlapok** négyféle kérdéstípussal; a pontozás az adatbázisban fut, a
+  helyes válasz sosem kerül a böngészőbe
+- **Klinikai esetek és tananyagok**, a platform klinikai moduljaihoz kapcsolva
+- **Fájlok**: PDF, Word, Excel, PowerPoint, kép — fájlonként legfeljebb 20 MB,
+  nem nyilvános tárolóban, rövid élettartamú aláírt hivatkozással
+- **Csoportelemzés** kompetenciánként, kérdésenként és hallgatónként
+- **Teaching Mode**: klinikai eset kivetítése teljes képernyőn, nagyobb betűvel
+
+Az oktató nem adhatja be a saját feladatát, és az elemzés csak a beiratkozott
+hallgatók eredményeit veszi számba.
+
+---
+
+## Tartalomkezelés
+
+A `/cms` útvonalon, szerkesztői vagy adminisztrátori joggal:
+
+| Menüpont | Mit kezel |
+|---|---|
+| Irányelvek | Szakmai irányelvek, piszkozat–közzététel állapottal |
+| Betegségtár | Kórképek adatlapjai |
+| Tartalomfigyelő | Lejáró és felülvizsgálandó tartalmak |
+| Forrásáttekintés | A platform teljes evidenciaállománya, modulonként |
+| Audit napló | Ki mit módosított |
+| Felhasználók | Szerepkörök, jogosultságok |
+| Mentorprogram | Mentorprofilok elbírálása |
+| Képzőhelyi megkeresések | A kapcsolat oldalról érkező érdeklődések |
+| APN World | Országprofilok, források, közzététel |
+| Beállítások | Modulkapcsolók, karbantartási mód |
+
+**Forrásáttekintés** — Összegyűjti a platform összes forrását: klinikai
+források, irányelvek, betegségtári hivatkozások, akut témák, APN World. A
+modulonkénti bontás megmutatja, hol vékony a lefedettség.
 
 ---
 
 ## Jogosultságok
 
-| Szerep | Jogosultság |
+| Szerepkör | Mit érhet el |
 |---|---|
-| **apn** | Klinikai és tudástár funkciók használata, saját adatok |
-| **szerkeszto** | + tartalom létrehozása/szerkesztése |
-| **lektor** | + tartalom lektorálása, publikálása |
-| **admin** | + beállítások, feature flag-ek, felhasználó-lista |
+| `user` | A platform klinikai és tudástári tartalma, saját fejlődés |
+| `szerkeszto` | Tartalomkezelés, piszkozatok, közzététel |
+| `lektor` | Szakmai felülvizsgálat |
+| `admin` | Teljes hozzáférés, felhasználókezelés, kapcsolók |
 
-A hozzáférést Supabase **Row Level Security (RLS)** védi; a saját munkamenetek (vizsgálatok, esetek, kedvencek) csak a tulajdonos számára láthatók.
+Az oktatási réteg **külön tagsági rendszert** használ: intézményenként
+`student`, `instructor` vagy `admin` szerep.
+
+**Adatbázisszintű védelem:** minden tábla soralapú jogosultsági szabályokkal
+működik. A szerepkör önhatalmú módosítását adatbázis-trigger akadályozza — a
+védelemnek nem a felületen a helye.
 
 ---
 
-## Kapcsolható modulok (feature flag-ek)
+## Kapcsolható modulok
 
-Admin → Beállítások alatt:
-- `ekg_exam` – EKG vizsga mód
-- `ekg_learning` – EKG oktatóanyagok
-- `apn_copilot` – APN Copilot
-- `apn_career` – APN Career
-- `kompetencia_passport` – Kompetencia Passport
+A Beállítások oldalról ki- és bekapcsolhatók:
 
-Alapértelmezetten kikapcsolva; bekapcsoláskor automatikusan megjelennek a megfelelő belépési pontokon.
+`apn_career` · `apn_copilot` · `apn_world` · `changelog_full` · `cpd` ·
+`education` · `ekg_exam` · `ekg_lelet` · `ertekeles` · `kompetencia_passport` ·
+`kompetenciaterkep` · `legutobbi_tevekenysegek` · `mentorprogram` · `vergaz`
+
+A kikapcsolás nem töröl adatot: csak a belépési pontokat rejti el.
+
+---
+
+## Szakmai tartalom és források
+
+**Forráselvek:**
+
+- Elsődlegesen **hazai szakmai irányelv**; ennek hiányában a legfrissebb
+  nemzetközi ajánlás
+- **Öt éven belüli** forrás a cél. Az ennél régebbiek külön jelölést kapnak —
+  ez nem minősítés: egyes területeken évtizedekig nem születik új ajánlás
+- Minden állítás mögött **megnevezett forrás**, ellenőrzési dátummal
+- Ahol nincs elegendő megbízható adat, ezt **kimondjuk**, nem pótoljuk
+  feltételezéssel
+
+**Forrásblokk minden kórképnél:** a forrás megnyitható, ha van hivatkozás; ha a
+platform irányelvtárában is szerepel, oda vezet; és látszik a kora.
+
+A visszavont irányelvek nem törlődnek a nyilvántartásból, hanem jelölést kapnak
+arról, mi váltotta fel őket.
+
+---
+
+## Design rendszer
+
+**Tokenek:** hatfokú tipográfia, nyolcfokú térközskála, négy sugár, három
+árnyékszint. A stíluslapban a betűméretek és sugarak 80 százaléka tokenből jön.
+
+**Állapotjelölés:** hét állapot, egy vizuális logikával — nincs megkezdve,
+folyamatban, befejezve, teljesítve, lejárt, nem sikerült, zárolva.
+
+**Téma:** világos és sötét, négy beállítással (világos, sötét, rendszer szerint,
+napszak szerint). A keret — fejléc és alsó sáv — mindkét témában sötét; a téma a
+tartalom hátterét váltja. A klinikai görbék (EKG, vérgáz, lelet) sötét témában
+is világos alapon jelennek meg, mert így tanuljuk felismerni őket.
+
+**Mozgás:** csak videokártya által kezelt tulajdonságok mozognak — elmozdulás,
+átlátszóság, szín. Az időtartamok 120–200 ezredmásodperc. Csökkentett mozgás
+beállítása mellett minden átmenet elmarad, a színes visszajelzés megmarad.
+
+**Akadálymentesség:** minden interaktív elem látható fókuszjelölést kap
+billentyűzetnél; érintőfelületeken legalább 44 képpont a célpont; a kontrasztok
+gépi ellenőrzéssel mérve (38 színpár, mindkét témában).
+
+**Megerősítés:** minden visszafordíthatatlan művelet egységes párbeszéden
+keresztül fut, amely konkrétan megnevezi a következményt, és a Mégsem gombra
+adja a fókuszt.
 
 ---
 
 ## Technológia
 
-- **Next.js 15** (App Router, TypeScript, Server Components)
-- **Supabase** (Postgres, Auth, RLS) – szerveroldali SSR kliens
-- **Vercel** (hosting, PWA – telepíthető mobilra)
-- Egyedi design rendszer (zöld/bézs paletta, kártyák, ikonrendszer), mobil-first, kontrasztos nézet
+- **Next.js 15** (App Router), React, TypeScript
+- **Supabase** — PostgreSQL, Auth, Storage
+- **Vercel** — üzemeltetés
+- **PWA** — telepíthető, offline elérhető tartalommal
+- **Anthropic API** — APN Copilot és EKG-lelet átnézés (`ANTHROPIC_API_KEY`
+  környezeti változó szükséges)
+
+Külső komponenskönyvtár nincs: a felület saját stíluslapra épül.
 
 ---
 
 ## Adatmodell és migrációk
 
-A séma verziózott SQL migrációkban (`supabase/migrations/`). Főbb táblák: `profiles`, `guidelines`, `assessments`, `clinical_cases`, `diseases`, `disease_evidence`, `clinical_sources`, `feature_flags`, `favorites`, `exam_sessions`, `career_items`, `competencies`, `cpd_entries`, `audit_log`, `notifications`.
+A migrációk a `supabase/migrations/` könyvtárban, sorszámozva. **Futtatás
+sorrendben kötelező** — több migráció épít a korábbiakra.
 
-Migrációk (aktuális): **0001–0025**
-- 0001–0011: init, RLS, seed, assessments, guidelines, CMS, profil, értesítések, career, betegségek, javítások
-- 0012 audit · 0013 clinical_cases · 0014 labor tudásbázis · 0015 disease_evidence · 0016 clinical_sources · 0017–0019 betegség-katalógus + seed + demó kórképek
-- 0020 feature_flags · 0021 copilot flag · 0022 career/passport flag · 0023 kedvencek · 0024 exam_sessions (Betegvizsgálat 2.0) · 0025 admin felhasználó-lista
+Néhány visszatérő szabály, amit a korábbi hibák tanítottak:
 
----
-
-## Telepítés és élesítés
-
-A fejlesztés **GitHub → Vercel** pipeline-nal élesedik, a séma a **Supabase SQL Editorban** fut.
-
-1. **Séma:** az új migráció(k) lefuttatása a Supabase SQL Editorban (a helyes projektben), sorrendben. A migrációk idempotensek.
-2. **Kód:** a módosított fájlok a GitHub repóba (a Vercel automatikusan buildel).
-3. **Sorrend:** mindig **séma előbb**, kód utána.
-
-Helyi build-ellenőrzés: `npm install` → `npx tsc --noEmit` → `npm run build`.
+- Ha egy adatbázis-függvény **visszatérési szerkezete változik**, előbb
+  `drop function if exists` kell — a `create or replace` nem elég
+- Az oszlopneveket **ellenőrizni kell** a séma alapján, nem emlékezetből; erre
+  való a `scripts/oszlop-ellenorzes.mjs`
+- A kapcsolókat a `feature_flags` tábla tartja; új modul migrációja vegye fel
+  a saját kapcsolóját, alapból kikapcsolva
 
 ---
 
-## Fejlesztési elvek
+## Fejlesztés
 
-- **Nem-diagnózis:** a rendszer soha nem állítja, hogy „a betegnek biztosan X betegsége van".
-- **Meglévő funkciók megtartása:** finomhangolás és összekötés, nem újraírás.
-- **RLS:** új policy-kben inline `exists (select 1 from profiles where id = auth.uid() and role in (...))`; profiles-önhivatkozásnál security-definer függvény.
-- **Migráció-kezelés:** alkalmazott migrációt sosem módosítunk, mindig új fájlban javítunk.
-- **Build-validáció:** minden lépés végén `tsc` + `next build` zöld.
-- **Betegadat-védelem:** valós betegazonosító nem tárolódik; az oktatási munkamenet elkülönül a klinikai dokumentációtól.
+```bash
+npm install
+npm run dev          # fejlesztői kiszolgáló
+npx tsc --noEmit     # típusellenőrzés
+npm run build        # éles fordítás
+```
 
----
+**Szerkezeti szabályok:**
 
-## Fejlesztési státusz és roadmap
-
-### Betegvizsgálat 2.0 modul
-- ✅ 1. Anamnézis · ✅ 2. Vitálisok · ✅ 3. Általános vizsgálat · ✅ 4. Szervrendszerek · ✅ 5. Red flags · ✅ 6. Összegzés
-- ⏳ 7. Oktatási/gyakorló mód · ⏳ 8. Mentor-átadás + kompetencia
-
-### V2 UX-audit és modulintegráció
-- ✅ 1. Audit · ✅ 2. Navigáció/IA · ✅ 3. Dashboard · ✅ 4. Betegvizsgálat workflow · ✅ 5. Keresés + Tudástár
-- ✅ 6. Clinical Context egységes, újrahasználható komponens · ✅ 7. Labor/EKG/Score finomhangolás (teljes strukturált detail-nézetek, kapcsolódások) · ⏳ 8. Fejlődés (Mentorprogram MVP) · ✅ 9. Mobil UX + üres állapotok + loading/feedback
-- ⏳ Opcionális: adatvezérelt navigáció (flag-státuszok: active/beta/coming_soon/hidden/disabled)
+- **Típusok és lekérdezések szétválasztva.** Ha egy kliens komponens importál
+  valamit, az a fájl nem tartalmazhat szerveroldali kódot. Minden modulban
+  `types.ts` a típusoknak és konstansoknak, `data.ts` a lekérdezéseknek.
+- **Minden írási művelet előtt jogosultság-ellenőrzés**, és az adatbázis
+  szabályai is védjenek — a felület megkerülhető.
+- **A gyökér elrendezés csak egyszer fut le.** Ami oldalváltáskor frissülne,
+  az kliensoldali komponensbe vagy szegmens-elrendezésbe való.
 
 ---
 
-## Változásnapló
+## Ellenőrző szkriptek
 
-- **Betegvizsgálat 2.0** – propedeutikai modul (anamnézis → összegzés), red flag-ekkel és kapcsolódó modulokkal
-- **V2 UX** – 4-kategóriás navigáció, Profil a felső sávba, munkaasztal-dashboard, multi-típusú keresés, **egységes Clinical Context** komponens
-- **Kedvencek rendszer** (★) + testreszabható Gyors elérés a kezdőlapon
-- **Labor** – nem-specifikus (férfi/nő) referenciaérték-értelmezés
-- **CMS** – irányelvek külön oldalon, felhasználó-lista, tartalomfigyelő, források
-- **Design** – kontrasztosabb paletta
-- **Admin-kapcsolók** – Copilot, Career, Kompetencia Passport, EKG vizsga/oktatás
+```bash
+node scripts/kontraszt-ellenorzes.mjs   # 38 színpár, világos és sötét témában
+node scripts/oszlop-ellenorzes.mjs      # kód és adatbázis oszlopnevei
+node scripts/ekg-ellenorzes.mjs         # görbék és paraméterek egyezése
+node scripts/vergaz-teszt.mjs           # vérgáz-számítások
+```
 
-## Betegvizsgálat — szervrendszer-alapú checklist (1. fázis)
-
-A Betegvizsgálat modul átalakítása gyors, mobil-first **vizsgálati és tanulási segédletté** (nem klinikai protokoll):
-- **`/klinika/vizsgalat`** — referencia-kezdőoldal: kereső (vizsgálati elemre is, pl. „pupilla") + szervrendszer-kártyák (11 rendszer) + belépő a vizsgálati munkamenethez.
-- **`/klinika/vizsgalat/rendszer/[sys]`** — szervrendszer-oldal: tabok (Vizsgálati checklist [alap] · Áttekintés · Részletes tudás); a checklist elemei a részletes útmutatóra visznek.
-- **`/klinika/vizsgalat/elem/[id]`** — vizsgálati elem részletes oldala: Mit vizsgálunk? · Előkészítés · Eszközök · Vizsgálat menete · Mire figyeljek? · Gyakori eltérések · Kapcsolódó tartalmak (Betegségtár/Score/Labor/EKG) · kompetencia-hivatkozás · Részletes propedeutikai útmutató.
-- **`/klinika/vizsgalat/munkamenet`** — a korábbi, beteg-szintű vizsgálati munkamenet (anamnézis→összegzés) ide került; a `/klinika/vizsgalat/[id]` munkamenet-oldalak változatlanok.
-- Adat: `lib/vizsgalat/checklist.ts` (EXAM_SYSTEMS + EXAM_ELEMENTS, §7 sablon).
-
-*Következő fázisok: perzisztens tanulási haladás (checklist-státusz per felhasználó), kompetencia-integráció, mentorprogram-hivatkozás, University Space.*
-
-## Klinikai témakör-rendszer — Mellkasi fájdalom (1. teljes témakör)
-
-Újrahasznosítható topic/relatedContent rendszer (`lib/topics/data.ts`), amely a meglévő modulokat **kétirányúan** kapcsolja össze — új főmenü/„Knowledge Graph" modul nélkül:
-- **`/betegsegtar/akut/[slug]`** — részletes akut adatlap (mobil-first, kártyás): rövid orientáció · 🚨 vörös zászlók · elsődleges értékelés (stabilitás checklist + célzott anamnézis) · EKG · Labor (hs-cTn) · Score (GRACE) · differenciáldiagnózisok (3 szint, kattintható Betegségtár) · ⭐ APN klinikai fókusz · ⚡ eszkaláció · oxigén-kártya · automatikus „Kapcsolódó tudás" · szakmai források.
-- **Kétirányú kapcsolat**: az EKG (STEMI/NSTEMI/ischaemia/PE/pericarditis), Labor (troponin/kreatinin/kálium/vércukor/lipid), Score (GRACE/HEART/TIMI) és a Betegségtár érintett kórképeinek oldalain megjelenik a „🔗 Kapcsolódó klinikai témakör → Mellkasi fájdalom" visszalink (`components/topic-backlinks.tsx`). A Betegvizsgálat szervrendszer-oldalak (életjelek/cardio/légző) is visszalinkelnek.
-- **Akut lista** (`/betegsegtar/akut`): a topickal rendelkező elem (Mellkasi fájdalom) kattintható a részletes adatlapra.
-- **Kereső**: a „mellkasi fájdalom" keresés a topic részletes adatlapjára visz (Akut állapot kategória).
-- Bővíthető: akut dyspnoe, akut hasi fájdalom, eszméletvesztés, tudatzavar stb. ugyanezzel a rendszerrel.
+Ezek mindegyike valós hibából született. Az oszlopellenőrző például azért, mert
+egy rossz oszlopnév csak futásidőben, a felhasználónál derült ki.

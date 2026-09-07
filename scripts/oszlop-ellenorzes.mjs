@@ -17,6 +17,10 @@ for (const f of fs.readdirSync(MIG).sort()) {
   sql += fs.readFileSync(path.join(MIG, f), 'utf8') + '\n'
 }
 
+// A /* ... */ blokk-megjegyzések eltávolítása. A bennük lévő szavak
+// különben oszlopnévnek látszanának, és téves hibajelzést okoznának.
+sql = sql.replace(/\/\*[\s\S]*?\*\//g, '')
+
 const tablak = new Map()
 
 // create table blokkok

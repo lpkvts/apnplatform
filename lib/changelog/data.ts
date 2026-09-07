@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.39.2',
+    date: '2026-09-07',
+    title: 'Frissített dokumentáció',
+    summary: 'A README a platform mai állapotát tükrözi.',
+    entries: [
+      {
+        id: 'v1392-readme', kind: 'eszkoz', title: 'Teljes átírás',
+        body: 'A projekt dokumentációja a Betegvizsgálat 2.0 idején készült, azóta a platform lényegesen bővült. Az új változat a mai állapotot írja le: modulok, oktatási réteg, tartalomkezelés, jogosultságok, kapcsolók, design rendszer és fejlesztési szabályok. A számok a kódból származnak, nem becslésből — 79 oldal, 82 komponens, 57 migráció, 57 klinikai skála, 61 laborparaméter, 274 kompetencia.',
+        href: '/',
+      },
+      {
+        id: 'v1392-szabalyok', kind: 'eszkoz', title: 'A hibákból tanult szabályok',
+        body: 'A dokumentáció külön szakaszban rögzíti azokat a szabályokat, amelyeket korábbi hibák tanítottak: a függvények visszatérési szerkezetének változásakor eldobás kell, az oszlopneveket ellenőrizni kell a séma alapján, és a gyökér elrendezés csak egyszer fut le. Így nem kell újra elkövetni őket.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.39.1',
     date: '2026-09-07',
     title: 'Szepszis-irányelvek kiegészítése',
