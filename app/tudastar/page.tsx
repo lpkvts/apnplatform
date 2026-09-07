@@ -12,6 +12,13 @@ const CARDS = [
   { href: '/kontextus', icon: 'brain', title: 'Klinikai kontextus', sub: 'Összekapcsolt klinikai témák és modulok' },
 ]
 
+// A nemzetközi kitekintés kapcsolóhoz kötött, ezért a többi kártyához
+// hasonlóan külön kezeljük.
+const NEMZETKOZI_KARTYA = {
+  href: '/nemzetkozi', icon: 'compass', title: 'Nemzetközi kitekintés',
+  sub: 'Az APN-szerepkör kilenc ország gyakorlatában',
+}
+
 /** Kapcsolóhoz kötött kártya — csak bekapcsolt állapotban jelenik meg. */
 const KOMPETENCIA_KARTYA = {
   href: '/kompetenciaterkep', icon: 'compass', title: 'APN Kompetenciatérkép',
@@ -20,7 +27,12 @@ const KOMPETENCIA_KARTYA = {
 
 export default async function TudastarHub() {
   const kompetenciaterkep = await getFlag('kompetenciaterkep', false)
-  const cards = kompetenciaterkep ? [...CARDS, KOMPETENCIA_KARTYA] : CARDS
+  const nemzetkozi = await getFlag('nemzetkozi', false)
+  const cards = [
+    ...CARDS,
+    ...(kompetenciaterkep ? [KOMPETENCIA_KARTYA] : []),
+    ...(nemzetkozi ? [NEMZETKOZI_KARTYA] : []),
+  ]
 
   return (
     <>

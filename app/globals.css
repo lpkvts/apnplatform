@@ -1962,3 +1962,24 @@ main.container > *, .edu-main > * {
   text-underline-offset: 2px;
 }
 .lp-beta-szoveg a:hover { color: var(--ink); }
+
+/* ── Nemzetközi kitekintés ──────────────────────────────── */
+.nk-zaszlo { flex: none; font-size: 22px; width: 30px; text-align: center; line-height: 1; }
+.nk-reszlet { padding: var(--s2) var(--s4) var(--s4) 60px; border-bottom: 1px solid var(--bg); }
+.nk-reszlet dl { margin: 0; display: grid; grid-template-columns: 132px 1fr; gap: 6px var(--s3); }
+.nk-reszlet dt {
+  font-size: var(--t-caption); font-weight: 700; color: var(--faint);
+  letter-spacing: .02em;
+}
+.nk-reszlet dd { margin: 0; font-size: var(--t-small); line-height: 1.55; color: var(--ink); }
+.nk-tanulsag {
+  margin: var(--s3) 0 0; padding: 10px 13px;
+  background: var(--brand-tint); border-radius: var(--r-md);
+  font-size: var(--t-small); line-height: 1.55; color: var(--muted);
+}
+.nk-tanulsag b { color: var(--brand); }
+@media (max-width: 620px) {
+  .nk-reszlet { padding-left: var(--s4); }
+  .nk-reszlet dl { grid-template-columns: 1fr; gap: 2px; }
+  .nk-reszlet dt { margin-top: 8px; }
+}

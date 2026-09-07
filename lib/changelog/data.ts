@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.35.0',
+    date: '2026-09-04',
+    title: 'Nemzetközi kitekintés',
+    summary: 'Az APN-szerepkör kilenc ország gyakorlatában, összehasonlítható szempontok szerint.',
+    entries: [
+      {
+        id: 'v1350-orszagok', kind: 'szakmai', title: 'Kilenc ország',
+        body: 'Egyesült Államok, Egyesült Királyság, Hollandia, Írország, Ausztrália, Kanada, Franciaország, a skandináv térség és Magyarország. Mindegyiknél ugyanaz az öt szempont: mióta létezik a keret, mit kíván a képzés, mekkora az önállóság, mi a helyzet a gyógyszerfelírással, és hol dolgozik a gyakorlatban.',
+        href: '/nemzetkozi',
+      },
+      {
+        id: 'v1350-mintazatok', kind: 'szakmai', title: 'Visszatérő mintázatok',
+        body: 'Külön nézet gyűjti össze, ami az összevetésből leszűrhető: a megnevezés nem árulja el a hatáskört, a védett cím kiszámíthatóságot teremt, a felírási jog külön kérdés, a bevezetés jellemzően szakmai ellenállásba ütközik, és ahol orvosból hiány van, ott gyorsabban terjed az önálló hatáskör.',
+        href: '/nemzetkozi',
+      },
+      {
+        id: 'v1350-pontossag', kind: 'eszkoz', title: 'Ahol a források nem egyeznek',
+        body: 'Az amerikai helyzetnél a források 26 és 30 közötti számot adnak ugyanarra a kérdésre, mert eltérően számolják a most elfogadott törvényeket. Az összeállítás ezért nem ragad ki egy számot, hanem azt írja, hogy az államok mintegy felében áll fenn a teljes önállóság — és külön jelzi, hogy a szabályozás gyorsan változik.',
+        href: '/nemzetkozi',
+      },
+    ],
+  },
+  {
     version: '1.34.1',
     date: '2026-09-04',
     title: 'Egységes vizuális rendszer',
