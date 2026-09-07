@@ -58,7 +58,10 @@ export function ForrasAttekintes({
       </div>
 
       {/* Modulonkénti bontás: ebből látszik, hol hiányos a lefedettség. */}
-      <div className="sec-h"><span className="sec-t">Modulonként</span></div>
+      <div className="sec-h">
+        <span className="sec-t">Modulonként</span>
+        <Link className="sec-l" href="/cms/forrasok">Klinikai források kezelése →</Link>
+      </div>
       <div className="tbl-wrap">
         <table className="tbl">
           <thead>

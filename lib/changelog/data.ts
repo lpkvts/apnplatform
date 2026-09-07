@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.37.2',
+    date: '2026-09-07',
+    title: 'Egy bejárat a forrásokhoz',
+    summary: 'A Klinikai források menüpont beolvadt a Forrásáttekintésbe.',
+    entries: [
+      {
+        id: 'v1372-menu', kind: 'eszkoz', title: 'Kevesebb menüpont',
+        body: 'A Tartalomkezelésből kikerült a Klinikai források menüpont: a Forrásáttekintés minden forrást megmutat, és onnan indul a szerkesztés is. Két bejárat ugyanoda fölöslegesen bontja a figyelmet.',
+        href: '/cms/forras-attekintes',
+      },
+      {
+        id: 'v1372-szerkesztes', kind: 'eszkoz', title: 'A szerkesztés megmaradt',
+        body: 'A klinikai források kezelőfelülete elérhető marad, csak most a Forrásáttekintésből nyílik — a fejlécben lévő hivatkozással, vagy az egyes források melletti Szerkesztés gombbal. Az áttekintés csak megmutatja a forrásokat, módosítani továbbra is a saját kezelőfelületén lehet őket.',
+        href: '/cms/forrasok',
+      },
+    ],
+  },
+  {
     version: '1.37.1',
     date: '2026-09-07',
     title: 'Skálák és score-ok',
