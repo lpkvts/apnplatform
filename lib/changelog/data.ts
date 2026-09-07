@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.38.0',
+    date: '2026-09-07',
+    title: 'Allergia és immunológia',
+    summary: 'Négy kórkép a betegségtárban, a legfrissebb nemzetközi irányelvek alapján.',
+    entries: [
+      {
+        id: 'v1380-korkepek', kind: 'betegseg', title: 'Négy új kórkép',
+        body: 'Anafilaxia, krónikus spontán urticaria, allergiás rhinitis és herediter angioödéma. A válogatás az akuttól a krónikusig ível: az első életveszélyes és az elsődleges ellátás ápolói kompetenciába eshet, a második és harmadik gyakori és gondozást igényel, a negyedik ritka, de a felismerése kritikus.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1380-anafilaxia', kind: 'szakmai', title: 'Anafilaxia: az adrenalin időzítése',
+        body: 'A leírás középpontjában az áll, hogy az izomba adott adrenalin az elsődleges beavatkozás, és a késleltetése a halálos kimenetel legfontosabb megelőzhető tényezője. Külön kiemeli, hogy az antihisztamin és a szteroid nem helyettesíti, a bőrtünet hiánya nem zárja ki a kórképet, és a triptáz megvárása nem késleltetheti az ellátást.',
+        href: '/betegsegtar/anafilaxia',
+      },
+      {
+        id: 'v1380-hae', kind: 'szakmai', title: 'A legveszélyesebb csapda',
+        body: 'A herediter angioödéma azért került be, mert a rohama anafilaxiának látszik, de az adrenalinra, antihisztaminra és szteroidra nem reagál — a duzzanatot nem hisztamin, hanem bradikinin okozza. A megkülönböztetés kulcsa a viszketés és a csalánkiütés hiánya. A leírás kimondja, hogy a kezelésre nem reagáló duzzanat maga is diagnosztikus jel.',
+        href: '/betegsegtar/herediter-angioodema',
+      },
+      {
+        id: 'v1380-forras', kind: 'szakmai', title: 'Irányelvi alap',
+        body: 'Az EAACI 2021-es anafilaxia-irányelve, az EAACI/GA²LEN/EuroGuiDerm/APAAACI urticaria-ajánlása, az ARIA rhinitis-ajánlás és a WAO/EAACI 2021-es herediter angioödéma irányelve. Ahol a bizonyítékok szintje alacsony — például az anafilaxia ellátásánál —, ott ezt a leírás kimondja.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.37.2',
     date: '2026-09-07',
     title: 'Egy bejárat a forrásokhoz',
