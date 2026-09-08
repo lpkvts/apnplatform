@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.43.0',
+    date: '2026-09-08',
+    title: 'Allergológia bővítése',
+    summary: 'Három új kórkép és a PEN-FAST pontozó.',
+    entries: [
+      {
+        id: 'v1430-korkepek', kind: 'betegseg', title: 'Három új kórkép',
+        body: 'Gyógyszerallergia és a téves allergiacímke, IgE-közvetített ételallergia, atópiás dermatitis. A válogatás az APN napi munkájához igazodik: mindhárom gondozást és beteg-oktatást igényel, és mindháromban van érdemi ápolói feladat.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1430-cimke', kind: 'szakmai', title: 'A téves allergiacímke',
+        body: 'A gyógyszerallergia adatlapja azért került az élre, mert itt a legnagyobb a felismerhető haszon. A penicillin-allergia címkék nagy része téves, és a címke miatt szélesebb spektrumú, kockázatosabb szert kap a beteg. Az irodalom szerint a kockázatbecslést és a felülvizsgálatot megfelelő képzéssel nem szakorvos is elvégezheti — a leírás ezt és a hozzá tartozó korlátokat is kimondja.',
+        href: '/betegsegtar/gyogyszerallergia',
+      },
+      {
+        id: 'v1430-penfast', kind: 'eszkoz', title: 'PEN-FAST pontozó',
+        body: 'Új, validált skála a penicillin-allergia címke kockázatának becslésére, három tétellel. Az anafilaxia és a súlyos bőrreakció szándékosan egy tételt alkot: az eredeti skálán így szerepel, és két külön kérdésként a maximum hét pont lenne az öt helyett. A súlyos bőrreakció esetén a leírás külön kimondja, hogy a pontszám nem irányadó.',
+        href: '/klinika/tesztek',
+      },
+      {
+        id: 'v1430-forras', kind: 'szakmai', title: 'Irányelvi alap',
+        body: 'A penicillin-allergia felülvizsgálatáról szóló, 2025-ös rendszerezett áttekintés, az EAACI 2024-es ételallergia-irányelve, és az amerikai szakmai társaságok 2023-as atópiás dermatitis ajánlása. Az első forrás maga jelzi, hogy az irányelvek minősége összességében gyenge, és a kockázatbesorolásban jelentős eltérések vannak — ezt a leírás átveszi.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.42.2',
     date: '2026-09-08',
     title: 'Dátumszámítás javítása',
