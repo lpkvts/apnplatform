@@ -1,4 +1,5 @@
 import { cache } from 'react'
+import { napokMulva } from '@/lib/datum'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser } from '@/lib/supabase/user'
 import { STAFF, isAdmin, type Role } from '@/lib/roles'
@@ -11,9 +12,7 @@ export interface Notif {
   update?: boolean   // új szakmai tartalom / platform-frissítés (nem teendő)
 }
 
-function daysBetween(d: string): number {
-  return Math.round((new Date(d).getTime() - Date.now()) / 86400000)
-}
+
 
 /**
  * Új szakmai tartalom a felhasználó legutóbbi megtekintése óta.
@@ -143,7 +142,7 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
     items.push({ id: n.id, icon: KIND_ICON[n.kind] ?? 'bell', title: n.title, body: n.body ?? undefined, href: n.link ?? undefined, stored: true })
   }
   for (const c of certRes.data ?? []) {
-    const d = daysBetween(c.expires_on)
+    const d = napokMulva(c.expires_on)
     items.push({ id: `c-${c.id}`, icon: 'bell', title: 'Lejáró tanúsítvány', body: `${c.title} — ${d} nap múlva jár le.`, href: '/profil', urgent: d <= 30 })
   }
 

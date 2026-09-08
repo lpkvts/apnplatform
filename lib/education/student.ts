@@ -5,6 +5,8 @@
  * nyit meg. A számított érték mindig a pillanatnyi állapotot tükrözi.
  */
 
+import { napokMulva as naptariNapokMulva } from '@/lib/datum'
+
 export interface MyCourse {
   id: string
   institution_id: string
@@ -43,5 +45,5 @@ export interface Group {
 /** Hány nap múlva esedékes — a sürgősség jelzéséhez. */
 export function napokMulva(iso: string | null): number | null {
   if (!iso) return null
-  return Math.ceil((new Date(iso).getTime() - Date.now()) / 864e5)
+  return naptariNapokMulva(iso)
 }

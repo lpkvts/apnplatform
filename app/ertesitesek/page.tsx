@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { mikorVolt } from '@/lib/datum'
 import { getNotifications, getAdminCounts, getRecentSignups, getRecentEvents, eventLabel } from '@/lib/notifications'
 import { Icon } from '@/components/icons'
 import { markAllRead, markUpdatesSeen } from './actions'
@@ -30,10 +31,7 @@ export default async function ErtesitesekPage() {
     ? await Promise.all([getRecentSignups(8), getRecentEvents(12)])
     : [[], []]
 
-  const napok = (iso: string) => {
-    const d = Math.floor((Date.now() - new Date(iso).getTime()) / 864e5)
-    return d === 0 ? 'ma' : d === 1 ? 'tegnap' : `${d} napja`
-  }
+
   const tasks = items.filter((n) => !n.update)
   const updates = items.filter((n) => n.update)
   const hasStored = tasks.some((n) => n.stored)
@@ -89,7 +87,7 @@ export default async function ErtesitesekPage() {
                       <b>{u.full_name || '(nincs megadva név)'}</b>
                       {u.specialty && <span className="sub" style={{ display: 'block', margin: 0, fontSize: 12 }}>{u.specialty}</span>}
                     </span>
-                    <span className="sub" style={{ margin: 0, fontSize: 12 }}>{napok(u.created_at)}</span>
+                    <span className="sub" style={{ margin: 0, fontSize: 12 }}>{mikorVolt(u.created_at)}</span>
                   </div>
                 ))}
                 <Link className="btn ghost sm" href="/cms/felhasznalok" style={{ marginTop: 10 }}>
@@ -115,7 +113,7 @@ export default async function ErtesitesekPage() {
                       )}
                     </span>
                     <span className="sub" style={{ margin: 0, fontSize: 11.5, textAlign: 'right' }}>
-                      {napok(e.created_at)}
+                      {mikorVolt(e.created_at)}
                       {e.actor_email && <span style={{ display: 'block' }}>{e.actor_email}</span>}
                     </span>
                   </div>

@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.42.2',
+    date: '2026-09-08',
+    title: 'Dátumszámítás javítása',
+    summary: 'A napok számítása naptári napokat néz, nem eltelt órákat.',
+    entries: [
+      {
+        id: 'v1422-napok', kind: 'javitas', title: 'A tegnapi regisztráció „ma”-ként jelent meg',
+        body: 'Az adminisztrátori összesítésben a napok száma eltelt huszonnégy órás időszakokból számolódott, nem naptári napokból. Aki tegnap este tizenegykor regisztrált, ma reggel tízkor még „ma”-ként jelent meg, mert csak tizenegy óra telt el. Mostantól a naptári nap dönt.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1422-lejarat', kind: 'javitas', title: 'Ugyanez a lejáratoknál',
+        body: 'A hiba a lejáró tanúsítványoknál és az oktatási határidőknél is fennállt, csak fordítva: a holnap lejáró tanúsítvány délután már „ma lejár” jelzést kapott. Mindhárom helyen közös számítás lépett a régiek helyére.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1422-datum', kind: 'eszkoz', title: 'Régebbi események dátummal',
+        body: 'Egy hétnél régebbi esemény mostantól a konkrét dátumot mutatja a napok száma helyett — a „tizenhét napja” nehezebben helyezhető el, mint egy megnevezett nap.',
+        href: '/ertesitesek',
+      },
+    ],
+  },
+  {
     version: '1.42.1',
     date: '2026-09-08',
     title: 'Kijelentkezés javítása',
