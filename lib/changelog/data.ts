@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.41.0',
+    date: '2026-09-08',
+    title: 'EKG-görbék a klinikai tartalmakban',
+    summary: 'A betegségtárban és az akut témáknál a hivatkozás helyett a görbe jelenik meg.',
+    entries: [
+      {
+        id: 'v1410-gorbe', kind: 'funkcio', title: 'Görbe a név helyett',
+        body: 'Az akut témáknál és a betegségtárban eddig csak hivatkozás mutatott az EKG-atlaszra. Aki felismerést tanul, annak viszont a görbét kell látnia — a kórkép neve önmagában nem tanít meg felismerni semmit. A teljes tizenkét elvezetéses felvétel mostantól helyben megjelenik, nagyítható, és az atlaszban is megnyitható.',
+        href: '/betegsegtar/akut/mellkasi-fajdalom',
+      },
+      {
+        id: 'v1410-kiemeles', kind: 'eszkoz', title: 'A kiemelés kapcsolható',
+        body: 'A „Hol nézzem?” gomb megmutatja, mely elvezetésekben látszik az eltérés — de csak kérésre. Ha a kiemelés alapból látszana, a felismerés gyakorlása maradna el: előbb magad keresed meg, aztán ellenőrzöd, jó helyen kerested-e.',
+        href: '/betegsegtar/akut/mellkasi-fajdalom',
+      },
+    ],
+  },
+  {
     version: '1.40.0',
     date: '2026-09-07',
     title: 'EKG-görbék pontosítása',

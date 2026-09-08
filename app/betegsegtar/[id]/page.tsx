@@ -1,3 +1,4 @@
+import { EkgElonezet } from '@/components/ekg-elonezet'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ForrasBlokk } from '@/components/forras-blokk'
@@ -145,7 +146,13 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
 
       <Sec title="5. EKG">
         {b.ekg && <p style={{ margin: '0 0 8px' }}>{b.ekg}</p>}
-        {ekgs.map((e) => <RowLink key={e.id} href={`/klinika/ekg?open=${e.id}`} title={e.name} sub={e.cat} />)}
+        {ekgs.length > 0 && (
+          <div style={{ display: 'grid', gap: 10, marginBottom: ekgs.length ? 10 : 0 }}>
+            {ekgs.map((e) => (
+              <EkgElonezet key={e.id} id={e.id} name={e.name} sub={e.cat} />
+            ))}
+          </div>
+        )}
         {ekgs.length === 0 && !b.ekg && <p className="sub" style={{ margin: 0 }}>Nem rutinszerűen releváns.</p>}
         <BlockSource src={bs.ekg} />
       </Sec>

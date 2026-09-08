@@ -2057,3 +2057,18 @@ main.container > *, .edu-main > * {
   background: var(--warn-bg); border-radius: var(--r-md);
   font-size: var(--t-caption); line-height: 1.55; color: var(--muted);
 }
+
+/* ── EKG-előnézet a klinikai tartalmakban ───────────────
+   Alapból ritmuscsík, lenyitva teljes tizenkét elvezetés. A több görbét
+   tartalmazó oldalak így nem lassulnak. */
+.ekg-elo { border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--card); }
+.ekg-elo-fej {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
+  padding: var(--s3) var(--s4); background: none; border: 0; cursor: pointer;
+  font: inherit; text-align: left; color: var(--ink);
+  border-bottom: 1px solid var(--bg);
+  transition: background var(--mozgas-gyors) var(--gorbe);
+}
+.ekg-elo-fej:hover { background: var(--bg); }
+.ekg-elo-abra { padding: var(--s2); }
+.ekg-elo-lab { padding: 0 var(--s4) var(--s3); }

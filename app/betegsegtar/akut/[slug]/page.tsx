@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { findTopic } from '@/lib/topics/data'
 import { ECG } from '@/lib/ekg/data'
+import { EkgElonezet } from '@/components/ekg-elonezet'
 import { LAB } from '@/lib/labor/data'
 import { TESTS } from '@/lib/scores/data'
 import { EXAM_SYSTEMS } from '@/lib/vizsgalat/checklist'
@@ -79,9 +80,13 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
       <Card title="📈 EKG">
         <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>{t.ekgHeadline}</div>
         <ul style={{ margin: 0, paddingLeft: 18 }}>{t.ekgNote.map((x, i) => <li key={i} style={{ margin: '2px 0' }}>{x}</li>)}</ul>
-        <div className="cop-acts" style={{ marginTop: 10 }}>
-          {(t.related.ekg ?? []).map((id) => <a key={id} className="btn ghost sm" href={`/klinika/ekg?open=${id}`}>📈 {ecgName(id)}</a>)}
-        </div>
+        {(t.related.ekg ?? []).length > 0 && (
+          <div style={{ marginTop: 12, display: 'grid', gap: 10 }}>
+            {(t.related.ekg ?? []).map((id) => (
+              <EkgElonezet key={id} id={id} name={ecgName(id)} />
+            ))}
+          </div>
+        )}
       </Card>
 
       {/* 5. Kapcsolódó labor */}
