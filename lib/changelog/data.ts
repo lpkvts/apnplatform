@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.43.1',
+    date: '2026-09-08',
+    title: 'Allergológia rendezése',
+    summary: 'A duplikált adatlapok összevonva, az angioödéma önálló kórképként kidolgozva.',
+    entries: [
+      {
+        id: 'v1431-duplikatum', kind: 'javitas', title: 'Tizenhárom adatlapból hét téma',
+        body: 'A szakterületen tizenhárom adatlap szerepelt, de hat közülük üres csonk volt, és ugyanazokat a kórképeket fedte, mint a kidolgozottak — korábban, más elnevezéssel kerültek be. Öt csonk összevonásra került. Nem törlődtek, hanem lejárt állapotba kerültek, és a nevük utal arra, melyik adatlap váltotta fel őket: így a korábbi hivatkozások nem szakadnak meg.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1431-angiooedema', kind: 'betegseg', title: 'Angioödéma — a formák elkülönítése',
+        body: 'Egy csonk nem volt összevonható: az angioödéma tágabb fogalom, mint a herediter forma, ezért önálló adatlapot kapott. A klinikai kérdés éppen az elkülönítés: a hisztamin-eredetű forma adrenalinra, antihisztaminra és szteroidra reagál, a bradikinin-eredetű ezekre nem. Ha az utóbbit az előbbiként kezelik, a beteg hatástalan szereket kap, miközben a légút záródik.',
+        href: '/betegsegtar/angiooedema',
+      },
+      {
+        id: 'v1431-elkulonites', kind: 'szakmai', title: 'Mi különíti el a két formát',
+        body: 'Az adatlap az ágy melletti megítélésre összpontosít: van-e csalánkiütés, viszket-e a duzzanat, percek vagy órák alatt alakult-e ki, és mit szed a beteg. Az ACE-gátló okozta forma külön kiemelést kap, mert akár évekkel a kezelés kezdete után is jelentkezhet. A leírás azt is kimondja, hogy a kezelésre adott hatástalanság önmagában diagnosztikus értékű.',
+        href: '/betegsegtar/angiooedema',
+      },
+    ],
+  },
+  {
     version: '1.43.0',
     date: '2026-09-08',
     title: 'Allergológia bővítése',
