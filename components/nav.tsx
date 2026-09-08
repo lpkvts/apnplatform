@@ -3,12 +3,13 @@ import { RingLogo, Icon } from '@/components/icons'
 import { getFlag } from '@/lib/flags'
 import { getTeachingMembership } from '@/lib/education/data'
 import { currentRole, isAdmin } from '@/lib/roles'
+import { NavEduBadge } from '@/components/nav-edu-badge'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser } from '@/lib/supabase/user'
 import { getNotificationCount } from '@/lib/notifications'
-import { signOut } from '@/lib/actions/auth'
+import { LogoutButton } from '@/components/logout-button'
 
-export async function Nav({ education = false }: { education?: boolean } = {}) {
+export async function Nav() {
   const supabase = await createClient()
   const user = await getCurrentUser()
   let initial = ''
@@ -44,29 +45,7 @@ export async function Nav({ education = false }: { education?: boolean } = {}) {
         </span>
       </Link>
 
-      {/* Oktatói felületen jelezzük, hogy más munkamódban vagyunk. A jelkép
-          és a márkanév változatlan: egy platform, két réteg. */}
-      {education && (
-        <span className="brand-edu">
-          <b>Education</b>
-          <span>Oktatói felület</span>
-        </span>
-      )}
-
-      <span className="spacer" />
-
-      {/* Váltás a két munkamód között. A gomb mindig arra a felületre mutat,
-          ahol éppen nem vagyunk. */}
-      {valthat && (
-        <Link
-          href={education ? '/' : '/oktatas'}
-          className="mode-switch"
-          title={education ? 'Vissza a klinikai felületre' : 'Váltás az oktatói felületre'}
-        >
-          <Icon name={education ? 'stethoscope' : 'courses'} size={17} />
-          <span>{education ? 'Klinikai' : 'Oktatói'}</span>
-        </Link>
-      )}
+      <NavEduBadge canSwitch={valthat} />
       {user && (
         <>
           <Link href="/ertesitesek" className="icon-btn bell-wrap" aria-label="Értesítések">
@@ -75,12 +54,10 @@ export async function Nav({ education = false }: { education?: boolean } = {}) {
           </Link>
           {firstName && <span className="nav-greet">Üdvözlünk <b>{firstName}</b></span>}
           <Link href="/profil" className="avatar" aria-label="Profil">{initial}</Link>
-          {/* Kijelentkezés egy gombnyomásra, a profil megnyitása nélkül. */}
-          <form action={signOut}>
-            <button type="submit" className="icon-btn" aria-label="Kijelentkezés" title="Kijelentkezés">
-              <Icon name="logout" size={20} />
-            </button>
-          </form>
+          {/* Kijelentkezés egy gombnyomásra, a profil megnyitása nélkül.
+              Teljes oldalbetöltéssel, hogy a keret tárolt állapota is
+              eldobódjon — enélkül a fejléc a régi adatokkal ott maradt. */}
+          <LogoutButton />
         </>
       )}
     </header>

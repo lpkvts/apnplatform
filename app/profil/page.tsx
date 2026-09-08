@@ -9,7 +9,7 @@ import { currentRole, isStaff } from '@/lib/roles'
 import type { Profile } from '@/lib/types'
 import { getFlag } from '@/lib/flags'
 import { APP_VERSION } from '@/lib/changelog/data'
-import { signOut } from '@/lib/actions/auth'
+import { LogoutButton } from '@/components/logout-button'
 
 const ROLE_LABEL: Record<string, string> = {
   apn: 'APN', szerkeszto: 'Szerkesztő', lektor: 'Lektor', admin: 'Adminisztrátor',
@@ -97,9 +97,11 @@ export default async function ProfilPage() {
         </>
       )}
 
-      <form action={signOut} style={{ marginTop: 8 }}>
-        <button className="btn ghost" type="submit" style={{ width: '100%' }}>Kijelentkezés</button>
-      </form>
+      <div style={{ marginTop: 8 }}>
+        <LogoutButton className="btn ghost" ariaLabel="Kijelentkezés">
+          Kijelentkezés
+        </LogoutButton>
+      </div>
 
       <p className="sub" style={{ marginTop: 18, textAlign: 'center', fontSize: 12 }}>
         APN-MED · <Link href="/ujdonsagok" className="sec-l" style={{ fontWeight: 500 }}>v{APP_VERSION}</Link>

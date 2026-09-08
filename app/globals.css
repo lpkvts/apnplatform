@@ -2072,3 +2072,5 @@ main.container > *, .edu-main > * {
 .ekg-elo-fej:hover { background: var(--bg); }
 .ekg-elo-abra { padding: var(--s2); }
 .ekg-elo-lab { padding: 0 var(--s4) var(--s3); }
+/* A kijelentkezés gomb a profilon teljes szélességű. */
+.btn.ghost[aria-label="Kijelentkezés"] { width: 100%; }

@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.42.1',
+    date: '2026-09-08',
+    title: 'Kijelentkezés javítása',
+    summary: 'A fejléc nem marad ott a régi adatokkal kilépés után.',
+    entries: [
+      {
+        id: 'v1421-kilepes', kind: 'javitas', title: 'Beragadt fejléc kijelentkezés után',
+        body: 'Kilépés után a fejléc továbbra is látszott, benne a felhasználó nevével és az értesítésszámmal — telefonon és telepített alkalmazásban különösen. Az ok az, hogy a keret a gyökér elrendezésben készül, azt pedig a böngésző rövid ideig megőrzi. A kijelentkezés mostantól teljes oldalbetöltéssel megy a nyitóoldalra, ami minden tárolt állapotot eldob.',
+        href: '/profil',
+      },
+    ],
+  },
+  {
     version: '1.42.0',
     date: '2026-09-08',
     title: 'EKG-görbék szakmai átvizsgálása',
