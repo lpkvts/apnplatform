@@ -286,8 +286,36 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
     if (p.p === 'fibrillatory') {
       v += (rand() - 0.5) * 0.06 * (lead === 'V1' || lead === 'II' ? 1.4 : 0.7)
     } else if (p.p === 'flutter') {
-      const ph = ((time * 5) % 1)
-      v += (ph < 0.7 ? -ph * 0.18 : (ph - 0.7) * 0.42) * (lead === 'II' || lead === 'III' || lead === 'aVF' ? 1 : 0.4)
+      // A flutterhullámok a kamrai ütésekhez igazodnak: 2:1 átvezetésnél minden
+      // QRS-re pontosan két hullám jut, állandó fázisban. Ha a két frekvencia
+      // egymástól függetlenül futna, a hullámok „vándorolnának" a komplexushoz
+      // képest, ami zavaros és tanulságtalan képet adna.
+      const cycle = 60 / Math.max(20, p.rate) / 2
+      const t0 = beats.length ? beats[0].t : 0
+      const ph = (((time - t0) / cycle) % 1 + 1) % 1
+      // Fűrészfog: lassú lefutás, majd meredek visszatérés — folytonosan,
+      // ugrás nélkül, különben töréspont keletkezik a görbén.
+      const DOWN = 0.72, DEPTH = 0.13
+      const saw = ph < DOWN
+        ? -(ph / DOWN) * DEPTH
+        : -DEPTH + ((ph - DOWN) / (1 - DOWN)) * DEPTH
+
+      // A kamrai komplexus elfedi a pitvari tevékenységet: a QRS és a T
+      // idejére a flutterhullám elhalványul. Enélkül a komplexus úgy nézne
+      // ki, mintha lejtőn ülne.
+      const legkozelebbi = beats.reduce(
+        (leg, b) => (Math.abs(time - b.t) < Math.abs(time - leg) ? b.t : leg),
+        beats.length ? beats[0].t : 0,
+      )
+      const tavolsag = Math.abs(time - legkozelebbi)
+      // A QRS fele szélessége, plusz a T-hullám területe.
+      const takart = p.qrsMs / 2000 + 0.16
+      const elhalvanyul = tavolsag < takart
+        ? Math.max(0.15, tavolsag / takart)
+        : 1
+
+      v += saw * elhalvanyul * (lead === 'II' || lead === 'III' || lead === 'aVF' ? 1
+        : lead === 'V1' ? 0.6 : 0.3)
     }
 
     // ── P-hullámok ──
@@ -378,6 +406,9 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
       // ── T-hullám ──
       // Szárblokknál a repolarizáció a QRS fő irányával ellentétes.
       let baseT = 0.22 * (gain === 0 ? 0.5 : Math.sign(gain)) * (0.6 + Math.abs(gain) * 0.6)
+      // Pitvari flutternél a T-hullám nem különíthető el a flutterhullámoktól,
+      // ezért nem rajzoljuk önálló, kiemelkedő hullámként.
+      if (p.p === 'flutter') baseT *= 0.6
       if (p.bundle === 'lbbb') baseT = (lead === 'V1' || lead === 'V2' || lead === 'V3') ? 0.3 : -0.3
       if (p.bundle === 'rbbb' && (lead === 'V1' || lead === 'V2')) baseT = -0.28
 

@@ -18,17 +18,19 @@ export const ECG_PARAMS: Record<string, EcgParams> = {
     rate: 46, rhythm: 'sinus', p: 'normal', prMs: 165, qrsMs: 92, axis: 'normal', qtMs: 430, noise: 0.2,
   },
   tachy: {
-    rate: 122, rhythm: 'sinus', p: 'normal', prMs: 135, qrsMs: 86, axis: 'normal', qtMs: 320, noise: 0.25,
+    rate: 122, rhythm: 'sinus', p: 'normal', prMs: 135, qrsMs: 86, axis: 'normal', qtMs: 285, noise: 0.25,
   },
   afib: {
     rate: 116, rhythm: 'afib', p: 'fibrillatory', prMs: 0, qrsMs: 88, axis: 'normal', qtMs: 330, noise: 0.35,
   },
   aflutter: {
-    rate: 150, rhythm: 'flutter', p: 'flutter', prMs: 0, qrsMs: 90, axis: 'normal', qtMs: 300, noise: 0.2,
+    // A QT gyors ritmusnál élettanilag rövidül; 150/perc mellett a 255 ms
+    // frekvenciakorrekció után élettani tartományban marad.
+    rate: 150, rhythm: 'flutter', p: 'flutter', prMs: 0, qrsMs: 90, axis: 'normal', qtMs: 255, noise: 0.2,
   },
   svt: {
     // Keskeny QRS, nagyon szapora, szabályos ritmus; a P-hullám a QRS-be olvad.
-    rate: 186, rhythm: 'sinus', p: 'absent', prMs: 0, qrsMs: 84, axis: 'normal', qtMs: 260, noise: 0.2,
+    rate: 186, rhythm: 'sinus', p: 'absent', prMs: 0, qrsMs: 84, axis: 'normal', qtMs: 230, noise: 0.2,
   },
   vt: {
     rate: 168, rhythm: 'vt', p: 'absent', prMs: 0, qrsMs: 165, axis: 'extreme', qtMs: 260, noise: 0.25,

@@ -568,7 +568,7 @@ export const EKG_CASES: EcgCase[] = [
     difficulty: 'haladó',
     tags: ['flutter', 'tachy'],
     params: {
-      rate: 150, rhythm: 'flutter', p: 'flutter', prMs: 0, qrsMs: 92, axis: 'normal', qtMs: 300,
+      rate: 150, rhythm: 'flutter', p: 'flutter', prMs: 0, qrsMs: 92, axis: 'normal', qtMs: 255,
       st: { V4: -0.6, V5: -0.6 },
       noise: 0.2,
     },
@@ -615,7 +615,7 @@ export const EKG_CASES: EcgCase[] = [
       pr: 'PR-intervallum nem értelmezhető.',
       qrs: 'QRS kb. 92 ms — keskeny, supraventricularis eredet.',
       tengely: 'Normál frontális tengely.',
-      qt: 'QT kb. 300 ms; gyors frekvencia mellett óvatosan értékelendő.',
+      qt: 'QT kb. 255 ms, ami a gyors ritmus mellett élettani; frekvenciakorrekció után is a normális tartományban marad.',
       st: 'Enyhe ST-depresszió a V4–V5 elvezetésben, amely frekvenciafüggő lehet.',
       t: 'A T-hullámok a flutterhullámok miatt nehezen ítélhetők meg.',
       osszegzes:

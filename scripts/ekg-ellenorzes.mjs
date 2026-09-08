@@ -169,3 +169,27 @@ function kiemelesEllenorzes(ECG_FOCUS, PRACTICE_META) {
   }
   return hiba
 }
+
+/* ── QTc-ellenőrzés ───────────────────────────────────────
+   A megadott QT-érték a frekvenciakorrekció után élettani tartományban
+   maradjon, hacsak a leírás nem beszél kifejezetten QT-megnyúlásról vagy
+   -rövidülésről. Gyors ritmusnál a QT élettanilag is rövidül; ha a paraméter
+   nem követi ezt, a felhasználó megnyúlt QTc-t lát ott, ahol a magyarázat
+   semmit nem említ róla. */
+function qtcEllenorzes(ECG_PARAMS) {
+  const qtc = (qt, rate) => Math.round(qt / Math.sqrt(60 / rate))
+  // Ezeknél a QT eltérése maga a tanulság.
+  const KIVETEL = ['lqts', 'sqts', 'hypok', 'hypocalc', 'hyperk']
+
+  let hiba = 0
+  for (const [id, p] of Object.entries(ECG_PARAMS)) {
+    if (KIVETEL.includes(id) || !p.qtMs || !p.rate) continue
+    const c = qtc(p.qtMs, p.rate)
+    if (c < 350 || c > 460) {
+      console.log(`  ✗ ${id}: QT ${p.qtMs} ms @ ${p.rate}/perc → QTc ${c} ms `
+        + `(${c > 460 ? 'megnyúlt' : 'rövid'}, pedig a leírás nem említi)`)
+      hiba++
+    }
+  }
+  return hiba
+}

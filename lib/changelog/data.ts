@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.40.0',
+    date: '2026-09-07',
+    title: 'EKG-görbék pontosítása',
+    summary: 'A pitvarlebegés képe és a szapora ritmusok QT-értékei javítva.',
+    entries: [
+      {
+        id: 'v1400-flutter', kind: 'javitas', title: 'A pitvarlebegés fűrészfoga',
+        body: 'A flutterhullámok amplitúdója a QRS harmadát tette ki — a valóságban ennek töredéke. A nagy hullám lehúzta az alapvonalat, elnyomta a T-hullámot, és a komplexus mintha lejtőn ült volna. Az amplitúdó a valósághoz igazodott, és a kamrai komplexus idejére a fűrészfog elhalványul: a QRS és a T elfedi a pitvari tevékenységet.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1400-qt', kind: 'javitas', title: 'Megnyúlt QTc ott, ahol nem kellett volna',
+        body: 'Három szapora ritmusú esetnél — pitvarlebegés, supraventricularis tachycardia, sinus tachycardia — a megadott QT-érték frekvenciakorrekció után megnyúlt QTc-t adott, pedig egyik leírás sem említ QT-megnyúlást. A gyors ritmusnál a QT élettanilag is rövidül; a paraméterek most ezt követik. Mind a négy szapora eset a normális tartományban van.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1400-ellenorzes', kind: 'eszkoz', title: 'Gépi QTc-ellenőrzés',
+        body: 'A görbe-ellenőrző mostantól minden esetnél kiszámolja a frekvenciakorrigált QT-t, és jelzi, ha az élettani tartományon kívül esik. Kivételt csak azok az esetek kapnak, ahol a QT eltérése maga a tanulság — például a hosszú QT-szindróma vagy a kálium-eltérések.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.39.2',
     date: '2026-09-07',
     title: 'Frissített dokumentáció',
