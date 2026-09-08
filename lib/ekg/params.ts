@@ -95,9 +95,12 @@ export const ECG_PARAMS: Record<string, EcgParams> = {
     noise: 0.2,
   },
   hypok: {
-    rate: 64, rhythm: 'sinus', p: 'normal', prMs: 180, qrsMs: 94, axis: 'normal', qtMs: 520,
+    // A lapos T mellett az U-hullám a legjellemzőbb jel: a T után jelenik meg,
+    // és összeolvadhat vele — ez adja a látszólag megnyúlt QT képét.
+    rate: 64, rhythm: 'sinus', p: 'normal', prMs: 180, qrsMs: 94, axis: 'normal', qtMs: 440,
     st: { V4: -1.0, V5: -1.1, V6: -0.9, II: -0.7 },
     t: { II: 'flat', V3: 'flat', V4: 'flat', V5: 'flat', V6: 'flat' },
+    u: { II: 1.6, V3: 2.0, V4: 2.2, V5: 1.8, V6: 1.4 },
     noise: 0.2,
   },
   hyperca: {
@@ -116,8 +119,11 @@ export const ECG_PARAMS: Record<string, EcgParams> = {
   },
   pericarditis: {
     // Diffúz, konkáv ST-eleváció reciprok eltérés nélkül; az aVR-ben depresszió.
-    rate: 96, rhythm: 'sinus', p: 'normal', prMs: 155, qrsMs: 90, axis: 'normal', qtMs: 350,
+    rate: 96, rhythm: 'sinus', p: 'normal', prMs: 155, qrsMs: 90, axis: 'normal', qtMs: 330,
     st: { I: 1.2, II: 1.6, III: 0.9, aVF: 1.3, V3: 1.5, V4: 1.6, V5: 1.4, V6: 1.1, aVR: -1.2 },
+    // A PR-depresszió a pericarditis másik kulcsjegye — ez különíti el a
+    // STEMI-től. Az aVR-ben fordítva: ott a PR elevált.
+    pr: { I: -0.8, II: -1.0, aVF: -0.7, V4: -0.8, V5: -0.7, V6: -0.6, aVR: 0.8 },
     noise: 0.25,
   },
   pacemaker: {

@@ -193,3 +193,89 @@ function qtcEllenorzes(ECG_PARAMS) {
   }
   return hiba
 }
+
+/* ── Morfológiai jegyek ───────────────────────────────────
+   A leírás megnevezi a felismerés kulcsjegyeit — U-hullám, PR-depresszió,
+   S1Q3T3 és így tovább. Ezeknek a renderelt jelben is látszaniuk kell,
+   különben a tanuló mást lát, mint amit olvas.
+
+   A mérés a tényleges jelből történik, nem a paraméterekből: így az is
+   kiderül, ha a renderelő nem ismeri az adott jegyet. Pontosan ez a hiba
+   fordult elő a hypokalaemia U-hullámával és a pericarditis
+   PR-depressziójával. */
+function morfologiaEllenorzes(ECG_PARAMS, leadSamples, beatTimes) {
+  const FS = 1000
+  const jel = (id, lead) =>
+    leadSamples(lead, ECG_PARAMS[id], { seconds: 3, samplesPerS: FS })
+  const abl = (v, t0, t1, fn) =>
+    fn(...v.slice(Math.round(t0 * FS), Math.round(t1 * FS)))
+  const max = (v, a, b) => abl(v, a, b, Math.max)
+  const min = (v, a, b) => abl(v, a, b, Math.min)
+
+  const PROBAK = [
+    {
+      id: 'hypok', mit: 'U-hullám a T után',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.hypok, 3)[1]
+        return max(jel('hypok', 'V4'), t + 0.40, t + 0.62) > 0.04
+      },
+    },
+    {
+      id: 'pericarditis', mit: 'PR-depresszió a II-ben',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.pericarditis, 3)[1]
+        return min(jel('pericarditis', 'II'), t - 0.075, t - 0.03) < -0.02
+      },
+    },
+    {
+      id: 'pericarditis', mit: 'PR-eleváció az aVR-ben',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.pericarditis, 3)[1]
+        return max(jel('pericarditis', 'aVR'), t - 0.075, t - 0.03) > 0.02
+      },
+    },
+    {
+      id: 'pe', mit: 'S1Q3T3 mintázat',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.pe, 3)[1]
+        return min(jel('pe', 'I'), t, t + 0.06) < -0.08
+          && min(jel('pe', 'III'), t - 0.05, t) < -0.08
+      },
+    },
+    {
+      id: 'stemi', mit: 'ST-eleváció a V3-ban',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.stemi, 3)[1]
+        return jel('stemi', 'V3')[Math.round((t + 0.09) * FS)] > 0.15
+      },
+    },
+    {
+      id: 'hyperk', mit: 'magas, csúcsos T',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.hyperk, 3)[1]
+        const tn = beatTimes(ECG_PARAMS.normal, 3)[1]
+        return max(jel('hyperk', 'V3'), t + 0.20, t + 0.42)
+          > max(jel('normal', 'V3'), tn + 0.20, tn + 0.42) * 1.5
+      },
+    },
+    {
+      id: 'pacemaker', mit: 'ingerképző tüske',
+      merd: () => {
+        const t = beatTimes(ECG_PARAMS.pacemaker, 3)[1]
+        return max(jel('pacemaker', 'II'), t - 0.09, t - 0.03) > 0.2
+      },
+    },
+  ]
+
+  let hiba = 0
+  for (const pr of PROBAK) {
+    if (!ECG_PARAMS[pr.id]) continue
+    let ok = false
+    try { ok = pr.merd() } catch { ok = false }
+    if (!ok) {
+      console.log(`  ✗ ${pr.id}: ${pr.mit} — nem mérhető a renderelt jelben`)
+      hiba++
+    }
+  }
+  return hiba
+}

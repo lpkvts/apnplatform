@@ -33,6 +33,21 @@ export interface EcgParams {
   atrialRate?: number                   // pitvari frekvencia AV-blokknál (alap: 78)
   bundle?: Bundle                       // szárblokk-morfológia
   ectopic?: number[]                    // hányadik ütés kamrai extrasystole (0-alapú)
+  /**
+   * U-hullám amplitúdója mm-ben, elvezetésenként.
+   *
+   * A hypokalaemia legjellemzőbb jele; a T után jelenik meg, és összeolvadhat
+   * vele. Enélkül a görbe nem mutatja azt, amit a leírás a felismerés
+   * kulcsaként megnevez.
+   */
+  u?: Partial<Record<Lead, number>>
+  /**
+   * PR-szakasz eltolódása mm-ben, elvezetésenként.
+   *
+   * A pericarditisben ez különíti el a képet a STEMI-től: a PR deprimált,
+   * az aVR-ben viszont elevált. A negatív érték depressziót jelent.
+   */
+  pr?: Partial<Record<Lead, number>>
   noise?: number                        // alapvonal-ingadozás mértéke (0–1)
 }
 
@@ -331,6 +346,25 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
         const jitter = p.p === 'varying' ? (0.75 + ((pt * 7) % 1) * 0.55) : 1
         v += gauss(time, pt + P_HALF, 0.026, base * pg * dir * jitter)
       }
+
+      // ── PR-szakasz eltolódása ──
+      // A pericarditisben ez különíti el a képet a STEMI-től: a PR deprimált,
+      // az aVR-ben viszont elevált. A P vége és a QRS kezdete közötti szakasz
+      // tolódik el, nem a teljes alapvonal.
+      const prMm = p.pr?.[lead]
+      if (prMm) {
+        for (const pt of pTimes) {
+          const prVeg = pt + P_HALF + 0.026 * 2
+          const qrsKezd = pt + p.prMs / 1000
+          if (time > prVeg && time < qrsKezd) {
+            // Sima átmenet a szakasz szélein, hogy ne keletkezzen töréspont.
+            const hossz = qrsKezd - prVeg
+            const helyzet = (time - prVeg) / hossz
+            const lagyitas = Math.min(1, Math.sin(helyzet * Math.PI) * 2.2)
+            v += prMm * 0.1 * lagyitas
+          }
+        }
+      }
     }
 
     // ── Kamrai komplexusok ──
@@ -420,6 +454,16 @@ export function leadSamples(lead: Lead, p: EcgParams, opt: RenderOptions = {}): 
         v += gauss(time, tCenter - tw * 0.65, tw * 0.55, Math.abs(baseT) * 0.8)
         v += gauss(time, tCenter + tw * 0.65, tw * 0.55, -Math.abs(baseT) * 0.8)
       } else v += gauss(time, tCenter, tw, baseT)
+
+      // ── U-hullám ──
+      // A T után, attól kissé elkülönülve. A hypokalaemia legjellemzőbb
+      // jele; enélkül a görbe nem mutatja azt, amit a leírás a felismerés
+      // kulcsaként megnevez. Lapos, szélesebb hullám, kis amplitúdóval.
+      const uMm = p.u?.[lead]
+      if (uMm) {
+        const uCenter = tCenter + th * 0.95
+        v += gauss(time, uCenter, th * 0.55, uMm * 0.1)
+      }
 
       // Ingerképző tüske pacemaker-ritmusnál
       if (p.rhythm === 'paced') v += gauss(time, qrsStart - 0.012, 0.002, 0.5)

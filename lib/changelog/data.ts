@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.42.0',
+    date: '2026-09-08',
+    title: 'EKG-görbék szakmai átvizsgálása',
+    summary: 'Két hiányzó kulcsjegy pótolva: U-hullám és PR-depresszió.',
+    entries: [
+      {
+        id: 'v1420-u', kind: 'javitas', title: 'Hiányzott az U-hullám',
+        body: 'A hypokalaemia leírása a legjellemzőbb jelként nevezi meg az U-hullámot, a görbén viszont nem látszott — a renderelő nem ismerte ezt a hullámformát. Így a tanuló mást olvasott, mint amit látott. Az U-hullám mostantól megjelenik a jellemző elvezetésekben, a T után, attól kissé elkülönülve.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1420-pr', kind: 'javitas', title: 'Hiányzott a PR-depresszió',
+        body: 'A pericarditisnél a PR-depresszió az, ami elkülöníti a képet a STEMI-től — ez a legfontosabb elkülönítő jegy. A görbén nem szerepelt. Mostantól látszik, és az aVR-ben fordítva, elevációként, ahogy a valóságban is.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1420-qt', kind: 'javitas', title: 'QT-értékek pontosítása',
+        body: 'A hypokalaemia és a pericarditis QT-értéke frekvenciakorrekció után a tartományon kívülre esett. A hypokalaemiánál ez különösen félrevezető volt: a látszólagos QT-megnyúlást ott az U-hullám okozza, nem a valódi repolarizáció elhúzódása — most a görbe ezt mutatja meg.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1420-ellenorzes', kind: 'eszkoz', title: 'Morfológiai ellenőrzés',
+        body: 'A görbe-ellenőrző hét kulcsjegyet mér a renderelt jelből: U-hullám, PR-depresszió és -eleváció, S1Q3T3, ST-eleváció, csúcsos T, ingerképző tüske. A mérés a tényleges jelből történik, nem a paraméterekből — így az is kiderül, ha a renderelő nem ismeri az adott jegyet. Pontosan ez a két hiba fordult elő.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.41.0',
     date: '2026-09-08',
     title: 'EKG-görbék a klinikai tartalmakban',
