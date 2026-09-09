@@ -29,7 +29,11 @@ create index if not exists idx_inq_kind
   on public.institution_inquiries(kind, created_at desc);
 
 /** A megkeresések listája — adminisztrátornak, az újak elöl. */
-create or replace function public.inquiry_list()
+-- A visszatérés bővül a kind mezővel, ezért a régi függvényt eldobjuk:
+-- a „create or replace” nem tudja megváltoztatni a szerkezetet.
+drop function if exists public.inquiry_list();
+
+create function public.inquiry_list()
 returns table (
   id uuid, kind text, institution text, contact_name text, email text, phone text,
   student_count text, message text, status text, admin_note text,

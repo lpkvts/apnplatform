@@ -8,7 +8,11 @@
 -- mezők nem adminisztrátornál nullák maradnak, a jogosultságot továbbra is az
 -- adatbázis érvényesíti, nem a felület.
 
-create or replace function public.notification_counts()
+-- A visszatérési szerkezet bővül az adminisztrátori mezőkkel, ezt a
+-- „create or replace” nem engedi — a régi változatot előbb eldobjuk.
+drop function if exists public.notification_counts();
+
+create function public.notification_counts()
 returns table (
   stored int, certs int, reviews int, followups int,
   new_dz int, new_gl int, new_lab int,

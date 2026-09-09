@@ -35,7 +35,9 @@ language sql stable security definer set search_path = public as $$
     -- Esedékes irányelv-felülvizsgálatok (csak szerkesztőknek és adminnak)
     (select case when (select role from me) in ('szerkeszto','lektor','admin')
        then (select count(*)::int from public.guidelines g
-              where g.review_due is not null and g.review_due <= current_date)
+              where g.status = 'published'
+                and ((g.review_on is not null and g.review_on <= current_date)
+                  or (g.expires_on is not null and g.expires_on <= current_date)))
        else 0 end),
     -- Esedékes utánkövetések a saját klinikai eseteknél
     (select count(*)::int from public.clinical_case_followups f
