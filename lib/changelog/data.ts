@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.52.1',
+    date: '2026-09-09',
+    title: 'Az új vizuális nyelv terjesztése',
+    summary: 'A Tudástár, a Fejlődés és a Gyógyszertár is átállt.',
+    entries: [
+      {
+        id: 'v1521-oldalak', kind: 'eszkoz', title: 'Rövidebb fejlécek mindenhol',
+        body: 'A Tudástár, a Fejlődés, a Kompetenciatérkép, a Klinikai kontextus és a Gyógyszertár is az új fejlécet kapta: cím és metaadat egy sorban, erős alsó vonallal. Az alcím ott maradt meg, ahol valóban mond valamit, amit a lista nem — a Gyógyszertárnál például azt, hogy miért hatóanyag-alapú a modul.',
+        href: '/tudastar',
+      },
+      {
+        id: 'v1521-meta', kind: 'eszkoz', title: 'Metaadat a nyíl helyén',
+        body: 'A Tudástárban és a Gyógyszertárban is tényleges információ áll a sorok végén. A hatóanyagoknál az ATC-kód került oda — az az azonosító, amit a szakmai szövegek használnak —, és így a leírásból is felszabadult hely a javallatnak.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.52.0',
     date: '2026-09-09',
     title: 'Új vizuális nyelv — első kör',

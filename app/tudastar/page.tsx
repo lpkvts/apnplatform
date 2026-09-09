@@ -1,33 +1,34 @@
 import Link from 'next/link'
+import { OldalFej } from '@/components/oldal-fej'
 import { getFlag } from '@/lib/flags'
 import { Icon } from '@/components/icons'
 
 export const dynamic = 'force-dynamic'
 
-const CARDS = [
-  { href: '/betegsegtar', icon: 'book', title: 'Betegségtár', sub: 'Kórképek strukturált, APN-fókuszú adatlapjai' },
-  { href: '/betegsegtar/panasz', icon: 'search2', title: 'Panasz alapján', sub: 'Tünetből a lehetséges kórképek felé' },
-  { href: '/betegsegtar/akut', icon: 'alert', title: 'Akut állapotok', sub: 'Gyors klinikai orientáció, red flag jelek' },
-  { href: '/klinika/tudastar', icon: 'clipboard', title: 'Protokollok és irányelvek', sub: 'Evidence-alapú szakmai összefoglalók, források' },
-  { href: '/kontextus', icon: 'brain', title: 'Klinikai kontextus', sub: 'Összekapcsolt klinikai témák és modulok' },
+const CARDS: { href: string; icon: string; title: string; sub: string; meta?: string }[] = [
+  { href: '/betegsegtar', icon: 'book', title: 'Betegségtár', sub: 'Kórképek APN-fókuszú adatlapjai', meta: 'kórképek' },
+  { href: '/betegsegtar/panasz', icon: 'search2', title: 'Panasz alapján', sub: 'Tünetből a kórképek felé', meta: 'kereső' },
+  { href: '/betegsegtar/akut', icon: 'alert', title: 'Akut állapotok', sub: 'Red flag jelek, gyors orientáció', meta: '6 téma' },
+  { href: '/klinika/tudastar', icon: 'clipboard', title: 'Protokollok és irányelvek', sub: 'Szakmai összefoglalók, források', meta: 'irányelvek' },
+  { href: '/kontextus', icon: 'brain', title: 'Klinikai kontextus', sub: 'Összekapcsolt témák és modulok', meta: 'kapcsolatok' },
 ]
 
 // A nemzetközi kitekintés kapcsolóhoz kötött, ezért a többi kártyához
 // hasonlóan külön kezeljük.
 const GYOGYSZERTAR_KARTYA = {
   href: '/gyogyszertar', icon: 'droplet', title: 'Gyógyszertár',
-  sub: 'Hatóanyagok, antibiotikumok — mire figyeljen az ápoló',
+  sub: 'Hatóanyagok, antibiotikumok', meta: 'gyógyszerek',
 }
 
 const APN_WORLD_KARTYA = {
   href: '/apn-world', icon: 'compass', title: 'APN World',
-  sub: 'Az APN-szerepkör a világ egészségügyi rendszereiben',
+  sub: 'Az APN-szerepkör a világban', meta: '9 ország',
 }
 
 /** Kapcsolóhoz kötött kártya — csak bekapcsolt állapotban jelenik meg. */
 const KOMPETENCIA_KARTYA = {
   href: '/kompetenciaterkep', icon: 'compass', title: 'APN Kompetenciatérkép',
-  sub: 'Mit végezhet önállóan az APN, és mihez kell orvosi együttműködés',
+  sub: 'Mit végezhet önállóan az APN, és mihez kell orvosi együttműködés', meta: '274 tétel',
 }
 
 export default async function TudastarHub() {
@@ -43,8 +44,7 @@ export default async function TudastarHub() {
 
   return (
     <>
-      <h1 className="h1">Tudástár</h1>
-      <p className="sub">Szakmai tudás és klinikai referencia egy helyen — betegségek, panaszok, akut állapotok, protokollok és evidence.</p>
+      <OldalFej cim="Tudástár" meta={`${cards.length} terület`} />
       <div className="lst">
         {cards.map((c) => (
           <Link key={c.href} className="lst-sor" href={c.href}>
@@ -53,7 +53,7 @@ export default async function TudastarHub() {
               <b>{c.title}</b>
               <span>{c.sub}</span>
             </span>
-            <span className="lst-nyil" aria-hidden="true">›</span>
+            {c.meta && <span className="lst-meta">{c.meta}</span>}
           </Link>
         ))}
       </div>

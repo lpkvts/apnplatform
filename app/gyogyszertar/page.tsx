@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OldalFej } from '@/components/oldal-fej'
 import { Morzsa } from '@/components/morzsa'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
@@ -27,11 +28,11 @@ export default async function GyogyszertarPage({
   return (
     <>
       <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'Gyógyszertár' }]} />
-      <h1 className="h1">Gyógyszertár</h1>
-      <p className="sub" style={{ fontSize: 15 }}>
-        Hatóanyag-központú áttekintés: mire való, hogyan hat, mire figyeljen az ápoló.
-        A készítménynevek változnak, a hatóanyag állandó.
-      </p>
+      <OldalFej
+        cim="Gyógyszertár"
+        meta={`${substances.length} hatóanyag`}
+        leiras="A készítménynevek változnak, a hatóanyag állandó."
+      />
 
       <Gyogyszertar
         groups={groups} substances={substances}

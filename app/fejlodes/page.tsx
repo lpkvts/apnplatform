@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OldalFej } from '@/components/oldal-fej'
 import { getFlag } from '@/lib/flags'
 export const dynamic = 'force-dynamic'
 export default async function FejlodesHub() {
@@ -7,8 +8,7 @@ export default async function FejlodesHub() {
   const [passportEnabled, careerEnabled, cpdEnabled] = await Promise.all([getFlag('kompetencia_passport', false), getFlag('apn_career', false), getFlag('cpd', false)])
   return (
     <>
-      <h1 className="h1">Fejlődés</h1>
-      <p className="sub">Szakmai fejlődés és mentorálás: hol tartasz, miben fejlődsz, mi a következő lépésed.</p>
+      <OldalFej cim="Fejlődés" />
 
       {/* Az eseteim a saját munka visszatekintése, ezért a fejlődéshez tartozik:
           a klinikumban az aktuális munkát támogató eszközök vannak. */}

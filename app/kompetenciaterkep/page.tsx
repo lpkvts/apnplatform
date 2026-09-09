@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OldalFej } from '@/components/oldal-fej'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
 import { KompetenciaTerkep } from '@/components/kompetencia-terkep'
@@ -21,11 +22,7 @@ export default async function KompetenciaterkepPage() {
   return (
     <>
       {/* ── Bevezető ── */}
-      <h1 className="h1">APN Kompetenciatérkép</h1>
-      <p className="sub" style={{ fontSize: 15 }}>
-        Mit csinálhat egy kiterjesztett hatáskörű ápoló? Fedezd fel a kompetenciákat az
-        önálló munkavégzéstől az orvosi együttműködés különböző szintjeiig.
-      </p>
+      <OldalFej cim="Kompetenciatérkép" />
 
       <div className="kt-hero">
         <div className="kt-hero-num">{COMPETENCIES.length}</div>

@@ -253,14 +253,11 @@ function SorLink({ s, antibiotikum }: { s: Substance; antibiotikum: boolean }) {
     <Link className="lst-sor" href={`/gyogyszertar/${s.slug}`}>
       <span className="lst-fo">
         <b>{s.name}</b>
-        <span>
-          {s.atc}
-          {s.indications.length > 0 && ` · ${s.indications[0]}`}
-        </span>
+        <span>{s.indications[0] ?? '—'}</span>
       </span>
       <span className="lst-veg">
         {antibiotikum && <span className="st st-progress">Antibiotikum</span>}
-        <span className="lst-nyil" aria-hidden="true">›</span>
+        {s.atc && <span className="lst-meta">{s.atc}</span>}
       </span>
     </Link>
   )
