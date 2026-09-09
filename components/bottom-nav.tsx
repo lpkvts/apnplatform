@@ -30,7 +30,7 @@ export function BottomNav() {
         else active = path.startsWith(t.href)
         return (
           <Link key={t.href} href={t.href} className={active ? 'bn active' : 'bn'}>
-            <span className="bn-i"><Icon name={t.icon} size={23} /></span>
+            <span className="bn-i"><Icon name={t.icon} size={21} /></span>
             <span>{t.label}</span>
           </Link>
         )

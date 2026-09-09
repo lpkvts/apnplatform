@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { OldalFej } from '@/components/oldal-fej'
 import { getFlag } from '@/lib/flags'
 import { Icon } from '@/components/icons'
 export const dynamic = 'force-dynamic'
@@ -9,17 +10,16 @@ export default async function KlinikaPage() {
     getFlag('ertekeles', false),
   ])
   const cards = [
-    { href: '/klinika/vizsgalat', icon: 'stethoscope', title: 'Betegvizsgálat', sub: 'Strukturált propedeutikai vizsgálat — klinikai és oktatási mód' },
-    { href: '/klinika/ertekeles', icon: 'clipboard', title: 'Új betegértékelés', sub: 'Gyors, 12 lépéses klinikai értékelés' },
-    { href: '/klinika/tesztek', icon: 'calculator', title: 'Skálák és score-ok', sub: 'Klinikai pontozók és rizikóbecslő skálák' },
-    { href: '/klinika/labor', icon: 'flask', title: 'Labor', sub: 'Laborértékek, referencia és értelmezés' },
-    { href: '/klinika/vergaz', icon: 'droplet', title: 'Vérgáz', sub: 'Vérgáz elemzés és klinikai értelmezés' },
-    { href: '/klinika/ekg', icon: 'pulse', title: 'EKG', sub: 'EKG-atlasz és gyakorlás' },
+    { href: '/klinika/vizsgalat', icon: 'stethoscope', title: 'Betegvizsgálat', sub: 'Propedeutika, tíz szervrendszer', meta: '71 elem' },
+    { href: '/klinika/ertekeles', icon: 'clipboard', title: 'Új betegértékelés', sub: 'Gyors klinikai értékelés', meta: '12 lépés' },
+    { href: '/klinika/tesztek', icon: 'calculator', title: 'Skálák és score-ok', sub: 'Pontozók, rizikóbecslés', meta: '58 skála' },
+    { href: '/klinika/labor', icon: 'flask', title: 'Labor', sub: 'Referencia, kritikus küszöb', meta: '61 érték' },
+    { href: '/klinika/vergaz', icon: 'droplet', title: 'Vérgáz', sub: 'Sav-bázis, lépésenként', meta: '10 eset' },
+    { href: '/klinika/ekg', icon: 'pulse', title: 'EKG', sub: 'Atlasz, gyakorlás, vizsga', meta: '30 tétel' },
   ]
   return (
     <>
-      <h1 className="h1">Klinikum</h1>
-      <p className="sub">A napi klinikai munka támogatása — vizsgálat, értékelés, labor, vérgáz, EKG és klinikai skálák.</p>
+      <OldalFej cim="Klinikum" meta={`${cards.length} eszköz`} />
       <div className="lst">
         {cards.filter((c) => c.href !== '/klinika/ertekeles' || ertekelesEnabled).map((c) => (
           <Link key={c.href} className="lst-sor" href={c.href}>
@@ -28,7 +28,7 @@ export default async function KlinikaPage() {
               <b>{c.title}</b>
               <span>{c.sub}</span>
             </span>
-            <span className="lst-nyil" aria-hidden="true">›</span>
+            {c.meta && <span className="lst-meta">{c.meta}</span>}
           </Link>
         ))}
         {copilotEnabled && (

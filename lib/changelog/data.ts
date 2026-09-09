@@ -75,6 +75,44 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.52.0',
+    date: '2026-09-09',
+    title: 'Új vizuális nyelv — első kör',
+    summary: 'Tintakék keret, zöld akcentus, és a szerkezetet vonal adja doboz helyett.',
+    entries: [
+      {
+        id: 'v1520-szin', kind: 'eszkoz', title: 'Tinta és zöld',
+        body: 'A keret — fejléc és alsó sáv — mély tintakék lett, a márkazöld pedig akcentussá lépett elő. A két szín szerepe elválik: a kék a keret, a zöld a tartalomban jelöl. A kék az orvosi dokumentum, a zöld az ápolói szakma színe.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1520-ikon', kind: 'eszkoz', title: 'Az ikonok elvesztették a dobozukat',
+        body: 'A listaikonok szürke háttere és kerete elmaradt, és az ikon a márkaszínt kapta. Így megkülönböztet, nem díszít — a doboz csak zajt adott hozzá.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1520-meta', kind: 'eszkoz', title: 'A nyíl helyett tényleges információ',
+        body: 'A sorok végén álló nyíl nem mondott újat, ha az egész sor kattintható. Helyette a tartalom mérete jelenik meg: 71 elem, 58 skála, 61 érték. Ez a laborlelet logikája — bal oldalt a megnevezés, jobb oldalt az érték.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1520-fejlec', kind: 'eszkoz', title: 'Rövidebb oldalfejléc',
+        body: 'A nagy cím és a kétsoros alcím a képernyő harmadát elvitte, mielőtt bármi használható jött volna. A cím és a metaadat mostantól egy sorban áll, erős alsó vonallal — a vonal adja a tagolást, nem a méret.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1520-also', kind: 'eszkoz', title: 'Visszafogottabb alsó sáv',
+        body: 'Kisebb ikonok, vékonyabb sáv, és az aktív elemet felül vékony vonal jelöli — nem a szín és a méret együtt. Így a sáv nem verseng a tartalommal, de a helyzet mégis egyértelmű.',
+        href: '/klinika',
+      },
+      {
+        id: 'v1520-jelzo', kind: 'eszkoz', title: 'A jelzőszínek jelentést kaptak',
+        body: 'Új stílusok készültek az állapotjelöléshez: élettani, határérték, kritikus. A szín ezentúl mondanivalót hordoz, nem díszít — ahol nincs mit jelezni, ott nincs szín. A klinikai modulokba a következő körökben épül be.',
+        href: '/klinika',
+      },
+    ],
+  },
+  {
     version: '1.51.2',
     date: '2026-09-09',
     title: 'Elkülönülő menüszintek',

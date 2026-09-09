@@ -54,11 +54,17 @@
      A fejléc és az alsó sáv mindkét témában sötét marad: ez a platform
      állandó kerete, a téma pedig a tartalom hátterét váltja. Így a
      navigáció mindig ugyanúgy néz ki, és a szem a tartalomra fókuszál. */
-  --chrome: #1B2733;
-  --chrome-line: #2C3948;
-  --chrome-ink: #F2F6F9;
-  --chrome-muted: #94A3B2;
-  --chrome-brand: #7FD3B4;
+  /* ── A keret színei ─────────────────────────────────────
+     Tintakék: az orvosi dokumentum világa. A márkazöld ebből kilépve
+     akcentussá válik — a kettő nem verseng, mert eltérő a szerepük.
+     A kék a keret, a zöld a tartalomban jelöl. */
+  --chrome: #16304A;
+  --chrome-line: #23425F;
+  --chrome-ink: #EAF1F6;
+  --chrome-muted: #8CA6BC;
+  /* Az aktív elem jelölése a keretben: a márkazöld világosabb változata,
+     hogy a sötét kéken is olvasható maradjon. */
+  --chrome-brand: #4FA981;
 
   /* ── Térközök ──────────────────────────────────────────
      Egyetlen skála az egész alkalmazásra. Korábban minden komponens
@@ -179,7 +185,7 @@ body {
 
 /* ===== Alsó navigáció ===== */
 .bottomnav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); border-top: 1px solid var(--line); padding-bottom: env(safe-area-inset-bottom); }
-.bn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 10px 0 8px; text-decoration: none; color: var(--brand-3); font-size: var(--t-caption); font-weight: 600; transition: color .15s; }
+.bn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 9px; text-decoration: none; color: var(--brand-3); font-size: var(--t-caption); font-weight: 600; transition: color .15s; }
 .bn-i { display: inline-flex; }
 .bn.active { color: var(--brand); }
 
@@ -1276,7 +1282,11 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .lst-sor:last-child { border-bottom: 0; }
 .lst-sor:hover { background: var(--bg); }
 .lst-sor:focus-visible { outline: 2px solid var(--brand-3); outline-offset: -2px; }
-.lst-ik { flex: none; width: 30px; height: 30px; display: grid; place-items: center; border-radius: var(--r-sm); background: var(--bg); color: var(--muted); }
+.lst-ik {
+  flex: none; width: 22px; height: 22px;
+  display: grid; place-items: center;
+  color: var(--brand);
+}
 .lst-fo { flex: 1; min-width: 0; }
 .lst-fo b { display: block; font-size: var(--t-body); font-weight: 650; line-height: 1.35; }
 .lst-fo span { display: block; font-size: var(--t-caption); color: var(--muted); margin-top: 2px; }
@@ -1733,8 +1743,15 @@ body:not(.is-landing) .bottomnav {
   background: var(--chrome);
   border-top: 1px solid var(--chrome-line);
 }
-body:not(.is-landing) .bottomnav a { color: var(--chrome-muted); }
-body:not(.is-landing) .bottomnav a.on { color: var(--chrome-brand); }
+body:not(.is-landing) .bottomnav a {
+  color: var(--chrome-muted);
+  border-top: 2px solid transparent;
+  padding-top: 8px;
+}
+body:not(.is-landing) .bottomnav a.active {
+  color: #FFFFFF;
+  border-top-color: var(--chrome-brand);
+}
 
 /* Az oktatói oldalsáv a keret része: a fejléc alatt fut végig. */
 @media (min-width: 1000px) {
@@ -2209,3 +2226,55 @@ body.is-landing .lap-fel {
 /* Az utolsó elem az aktuális oldal: nem kattintható, visszafogottabb. */
 .morzsa-e:last-child > span { color: var(--muted); font-weight: 600; }
 .morzsa-v { color: var(--faint); padding: 0 7px; flex: none; }
+
+
+/* ── Állapotjelölés listasorban ──────────────────────────
+   A szín itt jelentést hordoz, nem díszít: élettani, határérték vagy
+   kritikus. Ahol nincs mondanivaló, ott nincs pont sem. */
+.all-pont {
+  flex: none; width: 8px; height: 8px; border-radius: 50%;
+  margin-top: 6px;
+}
+.all-ok { background: var(--ok); }
+.all-fig { background: var(--warn); }
+.all-krit { background: var(--alert); }
+
+/* Az érték a sor végén, számjegy-igazítással: így a számok egymás alatt
+   olvashatók, ahogy a laborleleten. */
+.all-ertek {
+  flex: none; font-size: var(--t-small); font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.all-ertek.all-ok-sz { color: var(--ok); }
+.all-ertek.all-fig-sz { color: var(--warn); }
+.all-ertek.all-krit-sz { color: var(--alert); }
+
+/* ── A sor végi metaadat ─────────────────────────────────
+   A chevron helyett tényleges információ: mekkora a tartalom, mikor
+   változott, milyen állapotban van. */
+.lst-meta {
+  flex: none; font-size: var(--t-caption); color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Oldalfejléc ────────────────────────────────────────
+   A cím és a metaadat egy sorban, erős alsó vonallal. A vonal adja a
+   tagolást, nem a méret — így a tartalom hamarabb kezdődik. */
+.oldal-fej { margin-bottom: var(--s3); }
+.oldal-fej-sor {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s3); padding-bottom: 9px;
+  border-bottom: 2px solid var(--ink);
+}
+.oldal-fej-sor h1 {
+  font-size: var(--t-h2); font-weight: 800;
+  letter-spacing: -.015em; margin: 0;
+}
+.oldal-fej-meta {
+  font-size: var(--t-small); color: var(--muted);
+  font-variant-numeric: tabular-nums; flex: none;
+}
+.oldal-fej-leiras {
+  font-size: var(--t-small); color: var(--muted);
+  line-height: 1.6; margin: 10px 0 0;
+}
