@@ -1,5 +1,7 @@
 import { InquiryForm } from '@/components/inquiry-form'
 import { LpFejlec, LpLablec } from '@/components/lp-keret'
+import { getCurrentUser } from '@/lib/supabase/user'
+import { Morzsa } from '@/components/morzsa'
 import type { InquiryKind } from '@/lib/inquiry/types'
 
 export const metadata = {
@@ -13,6 +15,7 @@ export default async function KapcsolatPage({
   searchParams: Promise<{ tema?: string }>
 }) {
   const { tema } = await searchParams
+  const user = await getCurrentUser()
   // A nyitóoldalról érkezve rögtön a képzőhelyi témán állunk.
   const kezdo: InquiryKind =
     tema === 'kepzohely' ? 'institution'
@@ -20,12 +23,8 @@ export default async function KapcsolatPage({
     : tema === 'javaslat' ? 'suggestion'
     : 'general'
 
-  return (
-    <div className="lp">
-      <LpFejlec />
-
-      <main className="lp-sec">
-        <div className="lp-wrap lp-kapcs">
+  const tartalom = (
+    <>
           <h1 className="lp-h2">Kapcsolat</h1>
           <p className="lp-lead">
             Kérdés a platformról, hibajelzés, javaslat vagy intézményi érdeklődés —
@@ -50,9 +49,28 @@ export default async function KapcsolatPage({
             szakmai tájékozódást támogat, nem helyettesíti a konzultációt és az ügyeleti
             elérhetőségeket.
           </div>
-        </div>
-      </main>
+    </>
+  )
 
+  // Belépett felhasználónál a platform kerete veszi körül az oldalt, ezért
+  // itt csak a tartalom kell. Látogatóként viszont a nyilvános keret jár
+  // hozzá — enélkül a fejléc olyan menüt mutatna, ahonnan sehova nem lehet
+  // menni.
+  if (user) {
+    return (
+      <>
+        <Morzsa elemek={[{ label: 'Kezdőlap', href: '/' }, { label: 'Kapcsolat' }]} />
+        {tartalom}
+      </>
+    )
+  }
+
+  return (
+    <div className="lp">
+      <LpFejlec />
+      <main className="lp-sec">
+        <div className="lp-wrap lp-kapcs">{tartalom}</div>
+      </main>
       <LpLablec />
     </div>
   )

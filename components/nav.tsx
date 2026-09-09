@@ -49,6 +49,12 @@ export async function Nav() {
       <NavEduBadge canSwitch={valthat} />
       {user && (
         <>
+          {/* Visszajelzés menet közben. A béta sáv bezárása után eddig nem
+              volt más elérés a jelzéshez. */}
+          <Link href="/kapcsolat?tema=hiba" className="icon-btn"
+            aria-label="Hiba vagy javaslat jelzése" title="Jelzés a fejlesztőknek">
+            <Icon name="copilot" size={20} />
+          </Link>
           <Link href="/ertesitesek" className="icon-btn bell-wrap" aria-label="Értesítések">
             <Icon name="bell" size={20} />
             {notifCount > 0 && <span className="notif-dot">{notifCount > 9 ? '9+' : notifCount}</span>}

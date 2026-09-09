@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.58.3',
+    date: '2026-09-09',
+    title: 'Visszajelzés menet közben',
+    summary: 'Jelzés gomb a fejlécben, és megszűnt a dupla fejléc.',
+    entries: [
+      {
+        id: 'v1583-dupla', kind: 'javitas', title: 'Dupla fejléc a kapcsolat oldalon',
+        body: 'Belépett felhasználónál két fejléc jelent meg: a platform kerete és az oldal saját, nyilvános fejléce. Mostantól a saját keret csak látogatóknak jár — belépve a platform kerete veszi körül az oldalt, morzsasorral.',
+        href: '/kapcsolat',
+      },
+      {
+        id: 'v1583-jelzes', kind: 'funkcio', title: 'Jelzés gomb a fejlécben',
+        body: 'Aki használat közben hibát vagy hiányt talál, eddig meg kellett keresnie a kapcsolat oldalt — a béta sáv bezárása után nem volt más elérés. Mostantól a fejlécben, az értesítések mellett van egy gomb, ami a hibajelzési témával nyitja meg az űrlapot.',
+        href: '/kapcsolat?tema=hiba',
+      },
+    ],
+  },
+  {
     version: '1.58.2',
     date: '2026-09-09',
     title: 'Nefrológiai kórképek egy blokkban',
