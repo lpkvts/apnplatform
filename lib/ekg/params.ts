@@ -177,3 +177,80 @@ export const ECG_FOCUS: Record<string, string[]> = {
   pvc: ['II', 'V1'],
   pediatric: ['V1', 'V2', 'V3'],
 }
+
+/**
+ * Miért éppen ezeket az elvezetéseket kell nézni.
+ *
+ * A kiemelés önmagában megmutatja, hol az eltérés — de nem tanít meg
+ * felismerni. Az elvezetések nem véletlenszerűek: mindegyik a szív egy
+ * meghatározott területére „néz rá”, és ebből következik, hogy melyik
+ * kórkép hol látszik.
+ *
+ * Az elvezetések és a szívterületek megfeleltetése a nemzetközi
+ * kardiológiai irányelvek szerinti, standard hozzárendelés.
+ */
+export const ECG_FOCUS_REASON: Record<string, string> = {
+  afib:
+    'A II. elvezetés mutatja a legtisztábban a pitvari tevékenységet, a V1 pedig a jobb pitvar fölött fekszik. Pitvarfibrillációban éppen az a lényeg, hogy itt sem látszik rendezett P-hullám — csak szabálytalan alapvonal-hullámzás. A hiány a lelet.',
+
+  aflutter:
+    'A II, III és aVF elvezetések alulról néznek a szívre, és ezek a pitvari ingerhullámot a legjobban rajzolják ki. A pitvarlebegés fűrészfog-mintázata itt a legfelismerhetőbb — más elvezetésben elmosódhat, és a kép egyszerű szapora ritmusnak látszik.',
+
+  rbbb:
+    'A V1 és V2 a jobb kamra fölött fekszik, ezért itt látszik a jobb szár blokkjára jellemző kettős csúcs, a nyúlfül alakú komplexus. A V6 azért kell mellé, mert ott a széles, elhúzódó S-hullám erősíti meg a kórismét — a két lelet együtt biztos.',
+
+  lbbb:
+    'A bal szár blokkjában a bal kamra késve aktiválódik. Ez a bal kamra fölötti elvezetésekben — V5, V6 — széles, bevágott R-hullámot ad, míg a V1 és V2 fölött mély, széles negatív komplexust. A két oldal együtt adja ki a képet.',
+
+  stemi:
+    'A V1–V4 a szív elülső falára néz, amit a bal elülső leszálló koszorúér lát el. Az itt megjelenő ST-eleváció ezért az elülső fal elzáródására utal. Az elvezetések és a koszorúerek megfeleltetése teszi lehetővé, hogy az EKG-ból az elzáródás helyére következtessünk.',
+
+  nstemi:
+    'Ugyanaz az elülső terület, mint a STEMI-nél — de itt ST-depresszió és T-inverzió látszik eleváció helyett. A lokalizáció ilyenkor is irányt ad, még ha a kép nem is teljes elzáródásra utal.',
+
+  ischaemia:
+    'A V4–V6 a szív oldalsó-csúcsi területére néz. A terheléses vagy nyugalmi ischaemia itt jelentkezik a leggyakrabban, mert ez a terület a legérzékenyebb a keringés csökkenésére.',
+
+  pericarditis:
+    'A pericarditis a szívburok egészét érinti, ezért az ST-eleváció nem egy koszorúér területére korlátozódik, hanem diffúz — ezt mutatja a II, V4 és V5 együttese. Az aVR azért kulcsfontosságú, mert az szemből, ellentétes irányból néz a szívre: ott depresszió látszik. Ez a kettősség — diffúz eleváció és aVR-depresszió — különíti el a szívinfarktustól, ahol az eltérés egy területre esik, és van reciprok jel.',
+
+  pe:
+    'A tüdőembólia a jobb szívfelet terheli meg hirtelen. A III. elvezetésben ezért jelenik meg Q-hullám és T-inverzió, az I. elvezetésben pedig S-hullám — ez a klasszikus mintázat. A V1–V3 a jobb kamra fölötti terület: az itteni T-inverzió a jobb kamra terhelésének jele. Fontos: a mintázat hiánya nem zárja ki a tüdőembóliát, és a leggyakoribb EKG-lelet valójában a sinus tachycardia.',
+
+  hyperk:
+    'A magas káliumszint a szívizomsejtek repolarizációját gyorsítja, ami magas, csúcsos, keskeny alapú T-hullámot ad. Ez a mellkasi elvezetésekben — V3, V4 — a legfeltűnőbb, mert ott a T-hullám amplitúdója eleve nagyobb. A II. elvezetés a P-hullám ellaposodásának megítéléséhez kell, ami a folyamat előrehaladtát jelzi.',
+
+  hypok:
+    'Az alacsony kálium a repolarizációt nyújtja meg. A T-hullám ellaposodik, és utána megjelenik az U-hullám — ez a V4 és V5 elvezetésben a legjobban látható. A kettő összeolvadhat, ami látszólagos QT-megnyúlást ad; ezért fontos tudni, hogy nem a QT nyúlt meg, hanem U-hullám jelent meg.',
+
+  hypoca:
+    'Az alacsony kalciumszint a szívizom plató-fázisát nyújtja meg, ami az ST-szakasz megnyúlásában jelenik meg — a T-hullám alakja közben változatlan marad. Ez a II. és V5 elvezetésben ítélhető meg a legmegbízhatóbban, ahol az ST-szakasz jól elkülönül.',
+
+  hyperca:
+    'A magas kalciumszint fordítva hat: rövidíti a plató-fázist, ezért az ST-szakasz megrövidül vagy eltűnik, és a T-hullám szinte közvetlenül a QRS után következik. Ugyanazok az elvezetések alkalmasak a megítélésére, mint az alacsony kalciumnál.',
+
+  digoxin:
+    'A digoxin jellegzetes, lefelé homorú ST-depressziót okoz — ezt szokás „bajusz” alakúnak nevezni. A V5 és V6 elvezetésben látszik a legjobban, ahol az R-hullám a legmagasabb. Fontos: ez a kép a szer hatását jelzi, nem a mérgezését — a kettő nem ugyanaz.',
+
+  axis:
+    'A tengelyállás megítéléséhez elég két elvezetés: az I. balra néz, az aVF lefelé. A két komplexus fő iránya együtt megadja, merre mutat az elektromos tengely. Ha mindkettő pozitív, a tengely élettani tartományban van.',
+
+  av1:
+    'Az ingervezetési zavarok megítéléséhez a II. elvezetés a legalkalmasabb, mert itt a P-hullám a legtisztábban látszik, és a PR-táv pontosan mérhető. Az első fokú blokknál minden P-hullámot QRS követ, csak késve.',
+
+  av2a:
+    'Ugyanaz az elv: a II. elvezetésben követhető végig, hogyan nyúlik a PR-táv ütésről ütésre, amíg egy QRS ki nem marad. Ez a fokozatos nyúlás különíti el a Mobitz I. típust a II. típustól.',
+
+  av2b:
+    'A II. elvezetésben látszik, hogy a PR-táv állandó marad, és a QRS váratlanul, előjel nélkül marad ki. Ez a különbség a Mobitz I-hez képest, és ez teszi a II. típust veszélyesebbé: bármikor teljes blokkba mehet át.',
+
+  av3:
+    'A teljes blokknál a pitvarok és a kamrák egymástól függetlenül működnek. A II. elvezetésben követhető, hogy a P-hullámok és a QRS-ek saját, egymástól eltérő ütemben jelennek meg — ez a függetlenség maga a lelet.',
+
+  pvc:
+    'A II. elvezetés a normál ütések és a korai, széles komplexusok összehasonlítására alkalmas: itt látszik a különbség az alakban és a szélességben. A V1 azt segít eldönteni, melyik kamrából indul a korai ütés — ez a morfológiából következtethető ki.',
+
+  pediatric:
+    'Gyermekkorban a jobb kamra viszonylagosan nagyobb, mint felnőttben, ezért a jobb kamra fölötti elvezetésekben — V1–V3 — magas R-hullám és inverz T-hullám élettani. Ezek felnőttnél kórosak lennének; a gyermek EKG-ját ezért nem szabad felnőtt mércével értékelni.',
+}
+

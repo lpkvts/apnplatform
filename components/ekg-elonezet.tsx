@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { EcgViewer } from '@/components/ecg-viewer'
-import { paramsFor, ECG_FOCUS } from '@/lib/ekg/params'
+import { paramsFor, ECG_FOCUS, ECG_FOCUS_REASON } from '@/lib/ekg/params'
 import type { Lead } from '@/lib/ekg/render'
 
 /**
@@ -40,6 +40,7 @@ export function EkgElonezet({
   }
 
   const focus = (ECG_FOCUS as Record<string, string[]>)[id] as Lead[] | undefined
+  const indok = ECG_FOCUS_REASON[id]
 
   return (
     <div className="ekg-elo">
@@ -63,6 +64,13 @@ export function EkgElonezet({
           caption={kiemel && focus?.length ? `Kiemelve: ${focus.join(', ')}` : undefined}
         />
       </div>
+
+      {kiemel && indok && (
+        <div className="ekg-indok">
+          <b>Miért ezek az elvezetések?</b>
+          <p>{indok}</p>
+        </div>
+      )}
 
       <div className="ekg-elo-lab">
         <Link className="sec-l" href={`/klinika/ekg?open=${id}`}>

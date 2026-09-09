@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.47.0',
+    date: '2026-09-09',
+    title: 'Miért ezek az elvezetések?',
+    summary: 'A kiemelés mellé magyarázat is jár: az elvezetések nem véletlenszerűek.',
+    entries: [
+      {
+        id: 'v1470-indok', kind: 'szakmai', title: 'A kiemelés magyarázata',
+        body: 'A „Hol nézzem?” gomb eddig megmutatta, mely elvezetésekben látszik az eltérés — de nem tanított meg felismerni. Mostantól mind a huszonegy kiemeléshez tartozik magyarázat arról, miért éppen azok az elvezetések számítanak. Az elvezetések nem véletlenszerűek: mindegyik a szív egy meghatározott területére néz rá, és ebből következik, hogy melyik kórkép hol látszik.',
+        href: '/betegsegtar/akut/mellkasi-fajdalom',
+      },
+      {
+        id: 'v1470-peldak', kind: 'szakmai', title: 'Néhány példa',
+        body: 'A STEMI-nél a V1–V4 a szív elülső falára néz, amit a bal elülső leszálló koszorúér lát el — ezért utal az itteni ST-eleváció az elülső fal elzáródására. A pericarditisnél az aVR azért kulcsfontosságú, mert szemből néz a szívre: ott depresszió látszik, míg máshol eleváció, és éppen ez a kettősség különíti el az infarktustól. A pitvarfibrillációnál pedig a hiány a lelet: a II és V1 elvezetésben látszik a legtisztábban, hogy nincs rendezett P-hullám.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1470-gyermek', kind: 'szakmai', title: 'A gyermek EKG-ja külön eset',
+        body: 'A gyermek EKG-jánál a magyarázat kimondja, hogy a jobb kamra fölötti elvezetésekben a magas R-hullám és az inverz T élettani — felnőttnél ugyanez kóros lenne. A gyermek EKG-ját nem szabad felnőtt mércével értékelni.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.46.1',
     date: '2026-09-09',
     title: 'Vízhajtók bővítése',

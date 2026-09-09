@@ -2149,3 +2149,19 @@ body.is-landing .lap-fel {
 }
 .gy-alfej:hover { background: var(--brand-tint); border-color: var(--brand-3); }
 .gy-altartalom { padding: var(--s3) 0 0 var(--s3); }
+
+/* ── Az elvezetés-kiemelés magyarázata ──────────────────
+   A „hol nézzem?" kérdésre a válasz nem csak az, hogy hol, hanem az is,
+   hogy miért ott — az elvezetések a szív meghatározott területére néznek. */
+.ekg-indok {
+  margin: var(--s3) var(--s2) 0;
+  padding: 12px 15px;
+  background: var(--brand-tint);
+  border-radius: var(--r-md);
+  border-left: 3px solid var(--brand-3);
+}
+.ekg-indok b {
+  display: block; font-size: var(--t-caption); font-weight: 800;
+  letter-spacing: .04em; color: var(--brand); margin-bottom: 5px;
+}
+.ekg-indok p { margin: 0; font-size: var(--t-small); line-height: 1.65; color: var(--ink); }
