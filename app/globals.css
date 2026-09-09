@@ -2165,3 +2165,24 @@ body.is-landing .lap-fel {
   letter-spacing: .04em; color: var(--brand); margin-bottom: 5px;
 }
 .ekg-indok p { margin: 0; font-size: var(--t-small); line-height: 1.65; color: var(--ink); }
+
+/* ── Morzsasor ──────────────────────────────────────────
+   Hol tartok, és hova léphetek vissza. Mobilon vízszintesen görgethető,
+   hogy a hosszabb útvonalak se törjenek meg. */
+.morzsa {
+  display: flex; align-items: center; flex-wrap: nowrap;
+  gap: 0; margin-bottom: var(--s3);
+  font-size: var(--t-small); line-height: 1.4;
+  overflow-x: auto; scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.morzsa::-webkit-scrollbar { display: none; }
+.morzsa-e { display: inline-flex; align-items: center; white-space: nowrap; }
+.morzsa a {
+  color: var(--brand); font-weight: 600; text-decoration: none;
+  padding: 4px 0; border-radius: var(--r-sm);
+}
+.morzsa a:hover { text-decoration: underline; text-underline-offset: 2px; }
+/* Az utolsó elem az aktuális oldal: nem kattintható, visszafogottabb. */
+.morzsa-e:last-child > span { color: var(--muted); font-weight: 600; }
+.morzsa-v { color: var(--faint); padding: 0 7px; flex: none; }

@@ -1,4 +1,5 @@
 import { EkgElonezet } from '@/components/ekg-elonezet'
+import { Morzsa } from '@/components/morzsa'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ForrasBlokk } from '@/components/forras-blokk'
@@ -76,7 +77,7 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
   if (data.is_stub) {
     return (
       <>
-        <Link className="sh-back" href="/betegsegtar">‹ Betegségtár</Link>
+        <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'Betegségtár', href: '/betegsegtar' }, ...(data.specialty ? [{ label: data.specialty, href: `/betegsegtar?q=${encodeURIComponent(data.specialty)}` }] : []), { label: data.name }]} />
         <h1 className="h1">{data.name}</h1>
         <p className="sub">{data.specialty}{data.bno ? ` · BNO ${data.bno}` : ''}</p>
         <ClinicalDisclaimer />

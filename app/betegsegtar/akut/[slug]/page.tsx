@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { findTopic } from '@/lib/topics/data'
@@ -38,7 +39,7 @@ export default async function AkutTopicPage({ params }: { params: Promise<{ slug
 
   return (
     <>
-      <Link className="sh-back" href="/betegsegtar/akut">‹ Akut állapotok</Link>
+      <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'Betegségtár', href: '/betegsegtar' }, { label: 'Akut állapotok', href: '/betegsegtar/akut' }, { label: t.title }]} />
       <h1 className="h1">{t.icon} {t.title}</h1>
       <p className="sub">{t.subtitle}</p>
       {t.contentStatus && <div className="sub" style={{ fontSize: 12 }}>{t.contentStatus}</div>}

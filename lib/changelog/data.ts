@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.51.0',
+    date: '2026-09-09',
+    title: 'Morzsasor és ikonjelölés',
+    summary: 'Lépésenkénti visszalépés, és értesítésszám a telefon ikonján.',
+    entries: [
+      {
+        id: 'v1510-morzsa', kind: 'eszkoz', title: 'Lépésenkénti visszalépés',
+        body: 'A részletoldalakon a vissza-hivatkozás eddig mindig a modul főoldalára vitt. Egy hatóanyagnál ez azt jelentette, hogy a csoportig nem lehetett visszalépni, csak a Gyógyszertár tetejére — pedig a felfedezés jellemzően a csoporton belül folytatódik. Mostantól morzsasor mutatja a teljes utat, és minden eleme kattintható.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1510-csoport', kind: 'eszkoz', title: 'A csoport megnyitva fogad',
+        body: 'A gyógyszertárban a morzsasorból visszalépve az a csoport nyílik meg, ahonnan érkeztél — nem az üres lista. Ha alcsoportból jössz, a szülőcsoport is kinyílik, hogy lásd a helyed a szerkezetben.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1510-badge', kind: 'funkcio', title: 'Értesítésszám a telefon ikonján',
+        body: 'Telepített alkalmazásban a rendszer megjeleníti az olvasatlan újdonságok számát az ikonon — ugyanúgy, ahogy a levelező alkalmazásoknál. Így a kezdőképernyőn látszik, hogy van újdonság, anélkül hogy meg kellene nyitni a platformot. Böngészőben ez nem működik, csak telepített állapotban.',
+        href: '/ertesitesek',
+      },
+    ],
+  },
+  {
     version: '1.50.0',
     date: '2026-09-09',
     title: 'Minden említett hatóanyag kidolgozva',

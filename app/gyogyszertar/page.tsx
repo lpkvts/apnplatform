@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
 import { getGroups, getSubstances, getAntibiotics, getDrugSummary } from '@/lib/gyogyszer/data'
@@ -11,7 +12,12 @@ export const metadata = {
   description: 'Hatóanyag-központú gyógyszertudásbázis, antibiotikum-súllyal.',
 }
 
-export default async function GyogyszertarPage() {
+export default async function GyogyszertarPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ csoport?: string }>
+}) {
+  const { csoport } = await searchParams
   if (!(await getFlag('gyogyszertar', false))) return <FeatureOff title="Gyógyszertár" />
 
   const [groups, substances, antibiotics, summary] = await Promise.all([
@@ -20,7 +26,7 @@ export default async function GyogyszertarPage() {
 
   return (
     <>
-      <Link className="sh-back" href="/tudastar">‹ Tudástár</Link>
+      <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'Gyógyszertár' }]} />
       <h1 className="h1">Gyógyszertár</h1>
       <p className="sub" style={{ fontSize: 15 }}>
         Hatóanyag-központú áttekintés: mire való, hogyan hat, mire figyeljen az ápoló.
@@ -29,7 +35,7 @@ export default async function GyogyszertarPage() {
 
       <Gyogyszertar
         groups={groups} substances={substances}
-        antibiotics={antibiotics} summary={summary}
+        antibiotics={antibiotics} summary={summary} nyitottCsoport={csoport}
       />
     </>
   )

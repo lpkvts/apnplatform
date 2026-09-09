@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { currentRole, isStaff } from '@/lib/roles'
@@ -24,7 +25,7 @@ export default async function CareerDetail({ params }: { params: Promise<{ id: s
 
   return (
     <>
-      <Link className="sh-back" href="/career">‹ APN Career</Link>
+      <Morzsa elemek={[{ label: 'Fejlődés', href: '/fejlodes' }, { label: 'Karrier', href: '/career' }, { label: data.title }]} />
       <span className="cms-badge s-published" style={{ display: 'inline-block', marginBottom: 8 }}>{CAT_LABEL[data.category]}</span>
       <h1 className="h1">{data.title}</h1>
       <p className="sub">

@@ -13,18 +13,29 @@ import { filterSubstances, type DrugGroup, type Substance, type Antibiotic, type
  * a gyakorlatban mindhárom irányból keresünk.
  */
 export function Gyogyszertar({
-  groups, substances, antibiotics, summary,
+  groups, substances, antibiotics, summary, nyitottCsoport,
 }: {
   groups: DrugGroup[]
   substances: Substance[]
   antibiotics: Record<string, Antibiotic>
   summary: DrugSummary | null
+  /** A morzsasorból érkezve ez a csoport nyíljon meg. */
+  nyitottCsoport?: string
 }) {
   const [q, setQ] = useState('')
-  const [nyitva, setNyitva] = useState<string | null>(null)
+  // A morzsasorból érkezve a megadott csoport nyílik meg. Ha alcsoport
+  // érkezik, a szülőjét is meg kell nyitni, különben nem látszana.
+  const kezdo = groups.find((g) => g.slug === nyitottCsoport)
+  const kezdoFo = kezdo?.parent_id
+    ? groups.find((g) => g.id === kezdo.parent_id)?.slug
+    : kezdo?.slug
+
+  const [nyitva, setNyitva] = useState<string | null>(kezdoFo ?? null)
   // Az alcsoportok külön nyithatók: egy főcsoport megnyitása így nem
   // önti ki egyszerre az összes hatóanyagot.
-  const [nyitottAlcsoport, setNyitottAlcsoport] = useState<string | null>(null)
+  const [nyitottAlcsoport, setNyitottAlcsoport] = useState<string | null>(
+    kezdo?.parent_id ? (kezdo.slug ?? null) : null,
+  )
 
   const focsoportok = groups.filter((g) => !g.parent_id)
   const alcsoport = (parentId: string) => groups.filter((g) => g.parent_id === parentId)

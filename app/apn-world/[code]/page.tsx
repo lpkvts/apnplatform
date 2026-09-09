@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { notFound } from 'next/navigation'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
@@ -31,7 +32,7 @@ export default async function OrszagPage({ params }: { params: Promise<{ code: s
 
   return (
     <>
-      <Link className="sh-back" href="/apn-world">‹ APN World</Link>
+      <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'APN World', href: '/apn-world' }, { label: c.name }]} />
 
       <div className="aw-fej">
         <span className="aw-fej-flag" aria-hidden="true">{c.flag}</span>

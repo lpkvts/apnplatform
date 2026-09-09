@@ -7,6 +7,7 @@ import { NavEduBadge } from '@/components/nav-edu-badge'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser } from '@/lib/supabase/user'
 import { getNotificationCount } from '@/lib/notifications'
+import { AppBadge } from '@/components/app-badge'
 import { LogoutButton } from '@/components/logout-button'
 
 export async function Nav() {
@@ -51,6 +52,7 @@ export async function Nav() {
           <Link href="/ertesitesek" className="icon-btn bell-wrap" aria-label="Értesítések">
             <Icon name="bell" size={20} />
             {notifCount > 0 && <span className="notif-dot">{notifCount > 9 ? '9+' : notifCount}</span>}
+            <AppBadge count={notifCount} />
           </Link>
           {firstName && <span className="nav-greet">Üdvözlünk <b>{firstName}</b></span>}
           <Link href="/profil" className="avatar" aria-label="Profil">{initial}</Link>

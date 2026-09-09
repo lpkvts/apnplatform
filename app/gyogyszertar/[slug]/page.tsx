@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
 import { getSubstance, getAntibiotics, getGroups } from '@/lib/gyogyszer/data'
+import { Morzsa } from '@/components/morzsa'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,10 +24,23 @@ export default async function HatoanyagPage({ params }: { params: Promise<{ slug
   const [antibiotics, groups] = await Promise.all([getAntibiotics(), getGroups()])
   const ab = antibiotics[s.id]
   const csoport = groups.find((g) => g.id === s.group_id)
+  const focsoport = csoport?.parent_id
+    ? groups.find((g) => g.id === csoport.parent_id)
+    : null
+
+  // A csoportokra a modul főoldalán belüli horgonnyal mutatunk: a felület
+  // ott nyitja meg a megfelelő csoportot.
+  const morzsa = [
+    { label: 'Tudástár', href: '/tudastar' },
+    { label: 'Gyógyszertár', href: '/gyogyszertar' },
+    ...(focsoport ? [{ label: focsoport.name, href: `/gyogyszertar?csoport=${focsoport.slug}` }] : []),
+    ...(csoport ? [{ label: csoport.name, href: `/gyogyszertar?csoport=${csoport.slug}` }] : []),
+    { label: s.name },
+  ]
 
   return (
     <>
-      <Link className="sh-back" href="/gyogyszertar">‹ Gyógyszertár</Link>
+      <Morzsa elemek={morzsa} />
 
       <h1 className="h1">{s.name}</h1>
       <p className="sub">

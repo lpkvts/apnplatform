@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { CONTEXTS } from '@/lib/context/data'
@@ -54,7 +55,7 @@ export default async function ContextDetail({ params }: { params: Promise<{ id: 
 
   return (
     <>
-      <Link className="sh-back" href="/kontextus">‹ Klinikai kontextus</Link>
+      <Morzsa elemek={[{ label: 'Tudástár', href: '/tudastar' }, { label: 'Klinikai kontextus', href: '/kontextus' }, { label: ctx.name }]} />
       <h1 className="h1">{ctx.name}</h1>
       <div className="kb-relnote">🩺 APN fókusz: {ctx.apnFocus}</div>
 

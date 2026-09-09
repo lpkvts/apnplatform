@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Morzsa } from '@/components/morzsa'
 import { notFound } from 'next/navigation'
 import { getFlag } from '@/lib/flags'
 import { FeatureOff } from '@/components/feature-off'
@@ -41,7 +42,7 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
 
   return (
     <>
-      <Link className="sh-back" href="/oktatas">‹ Oktatás</Link>
+      <Morzsa elemek={[{ label: 'Education', href: '/oktatas' }, { label: course.title }]} />
       <h1 className="h1">{course.icon ?? '📘'} {course.title}</h1>
       <p className="sub">
         {[course.level, course.specialty, COURSE_STATUS_LABEL[course.status]]
