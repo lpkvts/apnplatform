@@ -1,5 +1,6 @@
 'use client'
 import { RelatedDiseases } from '@/components/related-diseases'
+import { useLapTetejere } from '@/lib/use-lap-tetejere'
 import { TopicBacklinks } from '@/components/topic-backlinks'
 import type { DzLite } from '@/lib/disease/resolve'
 import { FavStar } from '@/components/favorites-context'
@@ -153,6 +154,8 @@ function Kisokos({ initialOpen, lookup = [] }: { initialOpen?: string; lookup?: 
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
   const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
+  // Nézetváltáskor a lap tetejére ugrunk: a részlet közepén kezdeni zavaró.
+  useLapTetejere(openId)
   const [vals, setVals] = useState<Record<string, string>>({})
 
   const open = openId ? LAB.find((l) => l.id === openId) ?? null : null

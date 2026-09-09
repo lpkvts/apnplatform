@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.55.1',
+    date: '2026-09-09',
+    title: 'Görgetés a lista és a részlet között',
+    summary: 'A részlet a tetején kezd, a visszalépés a korábbi helyre visz.',
+    entries: [
+      {
+        id: 'v1551-gorgetes', kind: 'javitas', title: 'A részlet közepén kezdett',
+        body: 'Az EKG-atlaszban, a laborban és a skáláknál a részletnézet ugyanazon az oldalon nyílik meg, mint a lista. A böngésző megőrizte a görgetési pozíciót, ezért a felhasználó a részlet közepén találta magát — pont ott, ahol a listaelem volt, amire kattintott. Mostantól a lap tetején kezd.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1551-vissza', kind: 'eszkoz', title: 'A visszalépés megőrzi a helyet',
+        body: 'A visszalépés a lista korábbi pozíciójára visz. Aki a harmincadik EKG-tételt nyitotta meg, ne a lista tetején találja magát, amikor visszalép — az a hely elvesztése lenne, és a hosszú listákban bosszantó.',
+        href: '/klinika/labor',
+      },
+    ],
+  },
+  {
     version: '1.55.0',
     date: '2026-09-09',
     title: 'Kezdőlap — a design-átállás lezárása',

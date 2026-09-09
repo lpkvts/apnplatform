@@ -1,5 +1,6 @@
 'use client'
 import { RelatedDiseases } from '@/components/related-diseases'
+import { useLapTetejere } from '@/lib/use-lap-tetejere'
 import { TopicBacklinks } from '@/components/topic-backlinks'
 import type { DzLite } from '@/lib/disease/resolve'
 
@@ -393,6 +394,8 @@ function Atlas({ initialOpen, lookup = [] }: { initialOpen?: string; lookup?: Dz
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
   const [openId, setOpenId] = useState<string | null>(initialOpen ?? null)
+  // Nézetváltáskor a lap tetejére ugrunk: a részlet közepén kezdeni zavaró.
+  useLapTetejere(openId)
   const open = openId ? ECG.find((e) => e.id === openId) ?? null : null
   if (open) return <EcgDetail e={open} onBack={() => setOpenId(null)} lookup={lookup} />
   const nq = norm(q.trim())

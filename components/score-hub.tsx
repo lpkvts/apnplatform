@@ -1,5 +1,6 @@
 'use client'
 import { TopicBacklinks } from '@/components/topic-backlinks'
+import { useLapTetejere } from '@/lib/use-lap-tetejere'
 import { TeachingMode } from '@/components/teaching-mode'
 
 import { useState } from 'react'
@@ -25,6 +26,8 @@ export function ScoreHub() {
   const [q, setQ] = useState('')
   const [cat, setCat] = useState('Összes')
   const [openId, setOpenId] = useState<string | null>(sp.get('open'))
+  // Nézetváltáskor a lap tetejére ugrunk: a részlet közepén kezdeni zavaró.
+  useLapTetejere(openId)
   const [answers, setAnswers] = useState<Record<string, AnsMap>>({})
 
   const open = openId ? TESTS.find((t) => t.id === openId) ?? null : null
