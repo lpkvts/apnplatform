@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.51.1',
+    date: '2026-09-09',
+    title: 'Gyógyszertár ikonjai',
+    summary: 'Emoji helyett a platform saját vonalas ikonjai.',
+    entries: [
+      {
+        id: 'v1511-ikon', kind: 'javitas', title: 'A szív- és érrendszeri csoport ikonja hiányzott',
+        body: 'Az anatómiai szív emoji a 2020-as készletből való, ezért régebbi Windows- és Android-verziókon üres helyként jelenik meg. A vércsepp emojit ugyanez fenyegette. A megoldás nem újabb emoji lett, hanem a platform saját vonalas ikonkészlete: azok minden rendszeren egyformán jelennek meg, mert rajzoltak, nem betűkészletből származnak — és illeszkednek a felület többi részéhez, ahol már ezeket használjuk.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1511-alcsoport', kind: 'eszkoz', title: 'Az alcsoportok ikon nélkül',
+        body: 'Az alcsoportoknál a név és a rövid leírás elég; a sok ikon vizuális zajt okozna. Így a főcsoportok ikonjai jobban elkülönülnek.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.51.0',
     date: '2026-09-09',
     title: 'Morzsasor és ikonjelölés',

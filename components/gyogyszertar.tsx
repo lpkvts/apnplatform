@@ -107,7 +107,9 @@ export function Gyogyszertar({
           return (
             <div key={fo.slug} style={{ marginTop: 12 }}>
               <button className="gy-fej" onClick={() => setNyitva(ny ? null : fo.slug)}>
-                <span className="gy-ik" aria-hidden="true">{fo.icon}</span>
+                <span className="gy-ik" aria-hidden="true">
+                  <Icon name={fo.icon ?? 'flask'} size={22} />
+                </span>
                 <span className="lst-fo">
                   <b>{fo.name}</b>
                   <span>{fo.short}{db > 0 && ` · ${db} hatóanyag`}</span>
