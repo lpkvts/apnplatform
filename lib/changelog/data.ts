@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.56.0',
+    date: '2026-09-09',
+    title: 'Nyitóoldal az új vizuális nyelven',
+    summary: 'Tintakék fejléc, doboz nélküli ikonok, világos mentorprogram-szakasz.',
+    entries: [
+      {
+        id: 'v1560-fejlec', kind: 'eszkoz', title: 'Egységes fejléc',
+        body: 'A nyitóoldal világos fejlécet használt, a platform belseje viszont tintakéket. Aki belépett, más felületre érkezett — pedig ugyanaz a termék. Mostantól a nyitóoldal is a platform keretét viseli.',
+        href: '/',
+      },
+      {
+        id: 'v1560-mentor', kind: 'eszkoz', title: 'A mentorprogram világos alapon',
+        body: 'A szakasz telített zöld, színátmenetes háttéren ült, ami elütött a lap többi részétől. Most ugyanolyan világos alapot kap, mint a többi szakasz — a kiemelést a bal oldali márkaszínű sáv adja. A belső elemek szövegei is világos alapra álltak: korábban a sötét háttérhez tervezett halvány színeket viselték, amelyek így gyengén olvashatók voltak.',
+        href: '/',
+      },
+      {
+        id: 'v1560-ikonok', kind: 'eszkoz', title: 'Ikonok doboz nélkül',
+        body: 'A modulikonok elvesztették a színes hátterüket, és a márkaszínt kapták — ahogy a platform belsejében is. A funkciókártyák négyféle pasztellszíne egységesült: a szín ott nem különböztetett meg semmit, csak tarkított.',
+        href: '/',
+      },
+      {
+        id: 'v1560-education', kind: 'eszkoz', title: 'Az Education is „Hamarosan”',
+        body: 'Az Education szakasz ugyanazt a jelölést kapta, mint a mentorprogram. Mindkettő fejlesztés alatt áll, tehát ugyanúgy jelöljük — a látogatónak nem kell találgatnia, mi működik már és mi nem.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.55.1',
     date: '2026-09-09',
     title: 'Görgetés a lista és a részlet között',

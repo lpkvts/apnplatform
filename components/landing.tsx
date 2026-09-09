@@ -268,6 +268,7 @@ export function Landing() {
           <p className="lp-eyebrow c">Képzőhelyeknek</p>
           <div className="lp-edu">
             <div>
+              <span className="lp-soon">Hamarosan</span>
               <h2 className="lp-h2">APN-MED Education</h2>
               <p>
                 Az APN-képzés teljes oktatási folyamata egyetlen platformon: kurzusok,
