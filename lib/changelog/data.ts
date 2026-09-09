@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.59.0',
+    date: '2026-09-09',
+    title: 'Fájdalomcsillapítók',
+    summary: 'Négy alcsoport, hat hatóanyag — a hazai gyakorlathoz igazítva.',
+    entries: [
+      {
+        id: 'v1590-csoport', kind: 'betegseg', title: 'Négy alcsoport',
+        body: 'Nem opioid szerek, nem szteroid gyulladáscsökkentők, gyenge és erős opioidok. Hatóanyagok: paracetamol, metamizol, ibuprofén, diklofenák, tramadol, morfin.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1590-metamizol', kind: 'szakmai', title: 'A metamizol hazai sajátosság',
+        body: 'A metamizol Magyarországon alapszer, több országban viszont betiltották az agranulocitózis kockázata miatt — külföldi irányelvben ezért nem is szerepel. Az adatlap kimondja, hogy a felismerés a betegen múlik: ha nem tudja, hogy a láz és a torokfájás a fehérvérsejtszám csökkenésének jele lehet, csak akkor derül ki, amikor már súlyos fertőzése van.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1590-cyp2d6', kind: 'szakmai', title: 'Miért kiszámíthatatlan a tramadol',
+        body: 'A tramadol előanyag: a hatóanyag csak a szervezetben keletkezik, egy enzim közreműködésével, ami egyénenként gyökeresen eltérően működik. A lassú lebontóknál alig hat, az ultragyorsaknál szokásos adagban is életveszélyes légzésdepressziót okozhat. Ebből következik a legfontosabb gyakorlati tanulság: ha a beteg nem kap enyhülést, nem több kell, hanem más.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1590-buktatok', kind: 'szakmai', title: 'Három kiemelt buktató',
+        body: 'A kombinált készítményekben rejtett paracetamol a leggyakoribb túladagolási ok — a hidegrázás elleni porok és a kombinált fájdalomcsillapítók mind tartalmazzák. Az ACE-gátló, a vízhajtó és a gyulladáscsökkentő együtt a vesére nézve a legveszélyesebb hármas: külön-külön mindegyik elfogadható, együtt akut vesekárosodást okozhat. A morfinnál pedig a függőségtől való félelem vezet alulkezeléshez, pedig a valós fájdalomra adott opioid nem okoz függőséget.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.58.3',
     date: '2026-09-09',
     title: 'Visszajelzés menet közben',
