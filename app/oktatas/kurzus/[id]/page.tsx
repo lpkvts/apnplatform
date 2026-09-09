@@ -11,6 +11,9 @@ import { getAssignments } from '@/lib/education/assignments-data'
 import { CourseAssignments } from '@/components/course-assignments'
 import { getMaterials, getStudentMaterials } from '@/lib/education/materials-data'
 import { CourseMaterials } from '@/components/course-materials'
+import { getCourseFiles } from '@/lib/education/files-data'
+import { CourseFiles } from '@/components/course-files'
+import { CourseEdit } from '@/components/course-edit'
 import { getCourseGroups } from '@/lib/education/student-data'
 
 export const dynamic = 'force-dynamic'
@@ -34,6 +37,7 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
     canManage ? getMaterials(id) : getStudentMaterials(id),
   ])
   const groups = canManage ? await getCourseGroups(id) : []
+  const files = await getCourseFiles(id)
 
   return (
     <>
@@ -70,6 +74,10 @@ export default async function KurzusPage({ params }: { params: Promise<{ id: str
           </div>
         </>
       )}
+
+      {canManage && <CourseEdit course={course} />}
+
+      <CourseFiles courseId={id} files={files} canManage={canManage} />
 
       <CourseMaterials courseId={id} materials={materials} canManage={canManage} />
 
