@@ -81,8 +81,13 @@ export const RELEASES: Release[] = [
     summary: 'Három további hatóanyag, ahol a választás oka klinikai kérdés.',
     entries: [
       {
-        id: 'v1461-vizhajtok', kind: 'betegseg', title: 'Torasemid, hidroklorotiazid, eplerenon',
-        body: 'A vízhajtó csoport mindhárom alcsoportja bővült egy-egy hatóanyaggal. A válogatás szempontja az volt, hogy a választás oka klinikai kérdés legyen, ne csak névbeli különbség: a torasemid kiszámíthatóbban szívódik fel, mint a furoszemid, az eplerenon pedig ritkábban okoz hormonális mellékhatást, mint a spironolakton.',
+        id: 'v1461-hiba', kind: 'javitas', title: 'A vízhajtók nem jelentek meg',
+        body: 'A vízhajtó csoport hatóanyagai nem kerültek be az adatbázisba. Az ok az volt, hogy a csoport alcsoportjai felvételre kerültek, a főcsoport maga viszont nem — így az alcsoportok beszúrása szülő híján üresen futott, és velük együtt a hatóanyagok sem kerültek be. A javítás pótolja a főcsoportot, és mind a hat vízhajtót felviszi.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1461-vizhajtok', kind: 'betegseg', title: 'Hat vízhajtó, három alcsoportban',
+        body: 'Kacsdiuretikumok: furoszemid és torasemid. Tiazidok: indapamid és hidroklorotiazid. Kálium-megtakarítók: spironolakton és eplerenon. Minden alcsoportban két hatóanyag, ahol a választás oka klinikai kérdés — a torasemid kiszámíthatóbban szívódik fel, mint a furoszemid, az eplerenon pedig ritkábban okoz hormonális mellékhatást, mint a spironolakton.',
         href: '/gyogyszertar',
       },
       {
