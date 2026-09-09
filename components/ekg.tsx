@@ -8,10 +8,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { FavStar } from '@/components/favorites-context'
 import { ECG, EKG_CATS, type EcgItem } from '@/lib/ekg/data'
-import { ECG_WAVES } from '@/lib/ekg/waves'
 import { EKG_CASES } from '@/lib/ekg/cases'
 import { EcgViewer } from '@/components/ecg-viewer'
 import { paramsFor, ECG_FOCUS } from '@/lib/ekg/params'
+import { leadPath } from '@/lib/ekg/render'
 import { practiceMeta, practiceOptions, PRACTICE_META, LEVEL_LABEL, type Level } from '@/lib/ekg/practice'
 import { saveEkgAttempt } from '@/lib/ekg/progress'
 import type { Lead } from '@/lib/ekg/render'
@@ -40,14 +40,67 @@ function poolForLevel(level: Level | 'mind'): string[] {
   return all.filter((id) => PRACTICE_META[id]?.level === level)
 }
 
+/** SVG-egység milliméterenként — ugyanaz, mint az elemzésben. */
+const U = 4
+/** Hat másodpercnyi csík: 25 mm/s mellett 150 mm. */
+const CSIK_MP = 6
+const CSIK_W = 25 * CSIK_MP * U
+const CSIK_H = 26 * U
+
+/**
+ * Ritmuscsík az atlaszhoz.
+ *
+ * Az elnevezések az atlaszban és a görbeparaméterekben helyenként
+ * eltérnek — a térkép köti össze őket.
+ */
+const WAVE_PARAM: Record<string, string> = {
+  af: 'afib',
+  flutter: 'aflutter',
+  shortqt: 'hyperca',
+  longqt: 'hypoca',
+}
+
 function Trace({ wave }: { wave?: string }) {
-  const w = wave ? ECG_WAVES[wave] : undefined
-  if (!w) return null
+  const p = wave ? paramsFor(WAVE_PARAM[wave] ?? wave) : null
+  if (!p) return null
+
+  const pontok = leadPath('II', p, CSIK_W, CSIK_H, { unitsPerMm: U })
+
   return (
-    <svg className="ecg-svg" viewBox={`0 0 ${w.w} 150`} preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <defs><pattern id="eg" width="8" height="8" patternUnits="userSpaceOnUse"><path d="M8 0H0V8" fill="none" stroke="#f2ccd2" strokeWidth="0.6" /></pattern></defs>
-      <rect width="100%" height="100%" fill="#fffdfd" /><rect width="100%" height="100%" fill="url(#eg)" />
-      <polyline points={w.pts} fill="none" stroke="#0f172a" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
+    <svg
+      className="ecg-svg"
+      viewBox={`0 0 ${CSIK_W} ${CSIK_H}`}
+      xmlns="http://www.w3.org/2000/svg"
+      role="img"
+      aria-label="EKG ritmuscsík, II. elvezetés"
+    >
+      <defs>
+        {/* Kis kocka: 1 mm. Nagy kocka: 5 mm — ez adja a leolvasás
+            léptékét, ezért erősebb vonallal. */}
+        <pattern id="atlasz-kis" width={U} height={U} patternUnits="userSpaceOnUse">
+          <path d={`M ${U} 0 L 0 0 0 ${U}`} fill="none"
+            stroke="var(--ecg-grid-1, #F3D9D9)" strokeWidth="0.5" />
+        </pattern>
+        <pattern id="atlasz-nagy" width={U * 5} height={U * 5} patternUnits="userSpaceOnUse">
+          <rect width={U * 5} height={U * 5} fill="url(#atlasz-kis)" />
+          <path d={`M ${U * 5} 0 L 0 0 0 ${U * 5}`} fill="none"
+            stroke="var(--ecg-grid-2, #E8B4B4)" strokeWidth="1" />
+        </pattern>
+      </defs>
+
+      <rect width="100%" height="100%" fill="var(--ecg-paper, #FFFBFB)" />
+      <rect width="100%" height="100%" fill="url(#atlasz-nagy)" />
+
+      {/* Kalibrációs jel: 10 mm magas, 5 mm széles — ebből olvasható le,
+          hogy 10 mm egy millivoltnak felel meg. */}
+      <path
+        d={`M ${U} ${CSIK_H / 2} h ${U * 2} v ${-U * 10} h ${U * 5} v ${U * 10} h ${U * 2}`}
+        fill="none" stroke="var(--ecg-ink, #12202B)" strokeWidth="1.4"
+        strokeLinejoin="round" strokeLinecap="round"
+      />
+
+      <polyline points={pontok} fill="none" stroke="var(--ecg-ink, #12202B)"
+        strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   )
 }

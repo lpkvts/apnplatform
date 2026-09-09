@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.57.0',
+    date: '2026-09-09',
+    title: 'Valós EKG-csíkok az atlaszban',
+    summary: 'Ugyanaz a rajzolás, mint az elemzésben — helyes arányokkal.',
+    entries: [
+      {
+        id: 'v1570-aranyok', kind: 'javitas', title: 'A görbék szét voltak nyújtva',
+        body: 'Az atlasz előre kiszámított pontsorokat feszített szét a rendelkezésre álló szélességre. Ettől lett művi a kép: a vízszintes arány nem felelt meg a papírsebességnek, ezért a pitvarlebegés fűrészfoga és a szapora ritmusok különösen torzultak. Mostantól ugyanaz a paraméteres rajzolás készíti a csíkokat, mint az elemzésben: 25 mm/s, 10 mm/mV.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1570-racs', kind: 'javitas', title: 'Nagy kockás rács és kalibrációs jel',
+        body: 'A korábbi rács egyenletes négyzethálót rajzolt, nagy kockák nélkül. A valódi EKG-papíron az ötmilliméteres nagy kocka adja a leolvasás léptékét — enélkül a frekvencia és az időtartamok nem becsülhetők. A csík elején mostantól kalibrációs jel is szerepel, amiből leolvasható, hogy tíz milliméter egy millivoltnak felel meg.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1570-egyseg', kind: 'eszkoz', title: 'Egy rajzoló mindenhol',
+        body: 'Aki az atlaszban tanul felismerni, ugyanazokat az arányokat lássa, mint a vezetett elemzésben és a valódi leleten. A régi, előszámított hullámtár már nem használt.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.56.0',
     date: '2026-09-09',
     title: 'Nyitóoldal az új vizuális nyelven',
