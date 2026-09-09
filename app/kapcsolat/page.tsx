@@ -1,5 +1,5 @@
-import Link from 'next/link'
 import { InquiryForm } from '@/components/inquiry-form'
+import { LpFejlec, LpLablec } from '@/components/lp-keret'
 import type { InquiryKind } from '@/lib/inquiry/types'
 
 export const metadata = {
@@ -21,30 +21,39 @@ export default async function KapcsolatPage({
     : 'general'
 
   return (
-    <>
-      <Link className="sh-back" href="/">‹ Vissza a nyitóoldalra</Link>
+    <div className="lp">
+      <LpFejlec />
 
-      <h1 className="h1">Kapcsolat</h1>
-      <p className="sub" style={{ fontSize: 15 }}>
-        Kérdés a platformról, hibajelzés, javaslat vagy képzőhelyi érdeklődés — írj bátran.
-      </p>
+      <main className="lp-sec">
+        <div className="lp-wrap lp-kapcs">
+          <h1 className="lp-h2">Kapcsolat</h1>
+          <p className="lp-lead">
+            Kérdés a platformról, hibajelzés, javaslat vagy intézményi érdeklődés —
+            írj bátran.
+          </p>
 
-      <InquiryForm initialKind={kezdo} />
+          <InquiryForm initialKind={kezdo} />
 
-      <div className="card" style={{ marginTop: 12 }}>
-        <b style={{ fontSize: 'var(--t-h3)' }}>Egyetemeknek és képzőhelyeknek</b>
-        <p className="sub" style={{ margin: '6px 0 0' }}>
-          Az APN-MED Education a képzőhely saját oktatási terét adja a platformon belül:
-          kurzusok, klinikai esetek, feladatok automatikus értékeléssel és csoportelemzés.
-          A hallgató ugyanazt az alkalmazást használja a tanuláshoz, amit később az ágy
-          mellett is. Válaszd a „Képzőhelyi érdeklődés" témát, és néhány napon belül keresünk.
-        </p>
-      </div>
+          <section className="adat-szakasz" style={{ marginTop: 28 }}>
+            <h2 className="adat-cim">Intézményeknek</h2>
+            <p>
+              Az APN-MED Education az intézmény saját oktatási terét adja a platformon
+              belül: kurzusok, klinikai esetek, feladatok automatikus értékeléssel és
+              csoportelemzés. A hallgató ugyanazt az alkalmazást használja a tanuláshoz,
+              amit később az ágy mellett is. Válaszd az „Intézményi érdeklődés" témát,
+              és néhány napon belül keresünk.
+            </p>
+          </section>
 
-      <div className="safety-note" style={{ marginTop: 12 }}>
-        <b>ⓘ Sürgős betegellátási kérdésben ne itt keress minket.</b> A platform szakmai
-        tájékozódást támogat, nem helyettesíti a konzultációt és az ügyeleti elérhetőségeket.
-      </div>
-    </>
+          <div className="safety-note" style={{ marginTop: 18 }}>
+            <b>ⓘ Sürgős betegellátási kérdésben ne itt keress minket.</b> A platform
+            szakmai tájékozódást támogat, nem helyettesíti a konzultációt és az ügyeleti
+            elérhetőségeket.
+          </div>
+        </div>
+      </main>
+
+      <LpLablec />
+    </div>
   )
 }

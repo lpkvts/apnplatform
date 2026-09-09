@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.58.1',
+    date: '2026-09-09',
+    title: 'Kapcsolat oldal',
+    summary: 'Nyilvános keret, egyszerűbb űrlap, tágabb intézményi kör.',
+    entries: [
+      {
+        id: 'v1581-keret', kind: 'eszkoz', title: 'A nyitóoldal keretében',
+        body: 'A kapcsolat oldal a platform belső keretét viselte — fejléccel és alsó navigációval. Aki még nem lépett be, olyan menüt látott, ahonnan sehova nem tudott menni. Mostantól látogatóként a nyitóoldal fejléce és lábléce fogja közre. Belépett felhasználónál a platform keretében marad, mert onnan a hibajelzés a szokásos navigációval folytatódik.',
+        href: '/kapcsolat',
+      },
+      {
+        id: 'v1581-intezmeny', kind: 'javitas', title: 'Nem csak képzőhelyeknek',
+        body: 'A megkeresés típusa „Képzőhelyi érdeklődés” volt, ami szűkebb a valóságnál: a platformot kórházak, osztályok és szakmai szervezetek is bevezethetik. Mostantól „Intézményi érdeklődés”, és a mezők megfogalmazása is ezt tükrözi.',
+        href: '/kapcsolat',
+      },
+      {
+        id: 'v1581-egyszeru', kind: 'eszkoz', title: 'Rövidebb űrlap',
+        body: 'A hallgatói létszámot kérdező mező kikerült: a megkereséskor a legtöbben még nem tudják a választ, a felesleges mező viszont lassítja a beküldést. Ha fontos, a beszélgetésben kiderül.',
+        href: '/kapcsolat',
+      },
+    ],
+  },
+  {
     version: '1.58.0',
     date: '2026-09-09',
     title: 'Oktatói jogosultság kiosztása',

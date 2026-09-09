@@ -2416,3 +2416,13 @@ body.is-landing .lap-fel {
   margin: 10px 0 0; font-size: var(--t-small); color: var(--ok);
   border-left: 3px solid var(--ok); padding-left: 10px;
 }
+
+/* ── Kapcsolat oldal a nyilvános keretben ────────────────
+   Keskenyebb hasáb: az űrlap kitöltése összpontosítást kíván, a széles
+   sor pedig megnehezíti a mezők közötti tájékozódást. */
+.lp-kapcs { max-width: 660px; }
+.lp-kapcs .lp-h2 { margin-top: 0; }
+.lp-lead {
+  font-size: var(--t-body); line-height: 1.6; color: var(--muted);
+  margin: 0 0 22px; max-width: 60ch;
+}

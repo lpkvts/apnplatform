@@ -10,14 +10,14 @@ export type InquiryKind = 'general' | 'institution' | 'bug' | 'suggestion'
 
 export const KIND_LABEL: Record<InquiryKind, string> = {
   general: 'Általános kérdés',
-  institution: 'Képzőhelyi érdeklődés',
+  institution: 'Intézményi érdeklődés',
   bug: 'Hibajelzés',
   suggestion: 'Javaslat',
 }
 
 export const KIND_HINT: Record<InquiryKind, string> = {
   general: 'Bármilyen kérdés a platformmal vagy a tartalommal kapcsolatban.',
-  institution: 'Egyetem vagy képzőhely érdeklődése az oktatási felület iránt.',
+  institution: 'Kórház, osztály, képzőhely vagy szakmai szervezet érdeklődése.',
   bug: 'Valami nem működik, vagy hibásan jelenik meg.',
   suggestion: 'Ötlet, kérés, hiányzó funkció vagy tartalom.',
 }

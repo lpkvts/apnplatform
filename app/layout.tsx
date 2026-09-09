@@ -45,6 +45,10 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   const h = await headers()
   const path = h.get('x-path') ?? '/'
   const isLanding = path === '/' && h.get('x-auth') === '0'
+  // A kapcsolat oldal látogatóknak a nyitóoldal keretét viseli: aki még
+  // nincs belépve, ne olyan menüt lásson, ahonnan sehova nem tud menni.
+  const nyilvanosKapcsolat = path === '/kapcsolat' && h.get('x-auth') === '0'
+  const sajatKeret = isLanding || nyilvanosKapcsolat
 
   // A megjelenítési mód az útvonalból adódik. Az oktatói felület saját
   // elrendezéssel rendelkezik (app/oktatas/layout.tsx), ezért itt nem kell
@@ -74,17 +78,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   return (
     <html lang="hu" suppressHydrationWarning>
       <head><ThemeInit /></head>
-      <body className={isLanding ? 'is-landing' : bodyClassFor(mode)}>
-        {!isLanding && <Nav />}
+      <body className={sajatKeret ? 'is-landing' : bodyClassFor(mode)}>
+        {!sajatKeret && <Nav />}
         <FavoritesProvider initial={favKeys}>
-          {isLanding ? children : (
+          {sajatKeret ? children : (
           <>
             <BetaBanner />
             <main className="container">{children}</main>
           </>
         )}
         </FavoritesProvider>
-        {!isLanding && <BottomNav />}
+        {!sajatKeret && <BottomNav />}
         <PwaRegister />
         {/* Telepítés felajánlása. Csak akkor jelenik meg, ha a platform még nincs
             telepítve, és a felhasználó nem utasította el korábban. */}

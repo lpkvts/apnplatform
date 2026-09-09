@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { LpFejlec, LpLablec } from '@/components/lp-keret'
 import { RingLogo, Icon } from '@/components/icons'
 import { InstallPrompt } from '@/components/install-prompt'
 
@@ -93,25 +94,7 @@ export function Landing() {
   return (
     <div className="lp">
       {/* ── Fejléc ── */}
-      <header className="lp-nav">
-        <div className="lp-nav-inner">
-          <Link href="/" className="lp-brand">
-            <RingLogo size={30} />
-            <span className="lp-brand-txt"><b>APN-MED</b><span>SZAKMAI PLATFORM</span></span>
-          </Link>
-          <nav className="lp-nav-links">
-            <a href="#funkciok">Funkciók</a>
-            <a href="#ut">Szakmai út</a>
-            <a href="#kompetencia">Kompetenciatérkép</a>
-            <Link href="/kapcsolat">Kapcsolat</Link>
-            <a href="#mentor">Mentorprogram</a>
-            <a href="#kinek">Kinek készült</a>
-          </nav>
-          <Link className="lp-btn lp-btn-primary" href="/login">
-            Belépés a platformra <span className="lp-arw">→</span>
-          </Link>
-        </div>
-      </header>
+      <LpFejlec szakaszok />
 
       {/* ── Hero ── */}
       <section className="lp-hero">
@@ -364,14 +347,7 @@ export function Landing() {
       <InstallPrompt variant="inline" />
 
 
-      <footer className="lp-footer">
-        <div className="lp-footer-inner">
-          <p>© {new Date().getFullYear()} APN-MED</p>
-          <p className="lp-footer-note">
-            Szakmai és oktatási célú platform. Nem helyettesíti az orvosi döntést vagy az intézményi protokollt.
-          </p>
-        </div>
-      </footer>
+      <LpLablec />
     </div>
   )
 }

@@ -42,22 +42,12 @@ export function InquiryForm({ initialKind = 'general' }: { initialKind?: Inquiry
         {KIND_HINT[kind]}
       </p>
 
-      {/* Az intézmény neve csak képzőhelyi érdeklődésnél kell — másnál
-          fölösleges mező lenne, ami lassítja a beküldést. */}
       {kind === 'institution' && (
         <>
           <label className="sub lbl-req" htmlFor="inq-inst">Intézmény neve</label>
           <input className="field" id="inq-inst" name="institution" required
-            placeholder="pl. Pécsi Tudományegyetem" autoComplete="organization" />
-
-          <label className="sub" htmlFor="inq-letszam">Hány hallgatót érintene?</label>
-          <select className="field" id="inq-letszam" name="student_count" defaultValue="">
-            <option value="">Nem tudom még</option>
-            <option value="1-20">1–20</option>
-            <option value="21-50">21–50</option>
-            <option value="51-150">51–150</option>
-            <option value="150+">150 felett</option>
-          </select>
+            placeholder="Kórház, osztály, egyetem vagy szervezet"
+            autoComplete="organization" />
         </>
       )}
 
