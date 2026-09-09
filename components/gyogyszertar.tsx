@@ -106,7 +106,8 @@ export function Gyogyszertar({
 
           return (
             <div key={fo.slug} style={{ marginTop: 12 }}>
-              <button className="gy-fej" onClick={() => setNyitva(ny ? null : fo.slug)}>
+              <button className="gy-fej" data-nyitva={ny ? 'igen' : 'nem'}
+                onClick={() => setNyitva(ny ? null : fo.slug)}>
                 <span className="gy-ik" aria-hidden="true">
                   <Icon name={fo.icon ?? 'flask'} size={22} />
                 </span>
@@ -152,7 +153,7 @@ export function Gyogyszertar({
                     const alNyitva = nyitottAlcsoport === al.slug
                     return (
                       <div key={al.slug} style={{ marginBottom: 8 }}>
-                        <button className="gy-alfej"
+                        <button className="gy-alfej" data-nyitva={alNyitva ? 'igen' : 'nem'}
                           onClick={() => setNyitottAlcsoport(alNyitva ? null : al.slug)}>
                           <span className="lst-fo">
                             <b>{al.name}</b>

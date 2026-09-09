@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.51.2',
+    date: '2026-09-09',
+    title: 'Elkülönülő menüszintek',
+    summary: 'A beágyazott felület saját színt kapott, a hierarchia láthatóvá vált.',
+    entries: [
+      {
+        id: 'v1512-szin', kind: 'javitas', title: 'A beágyazott felület beleolvadt a háttérbe',
+        body: 'A beágyazott felület színe pontosan az app háttérszíne volt, ezért a rá épülő elemek — például a gyógyszertár alcsoport-fejlécei — nem váltak el semmitől. Mostantól önálló, a kártya és a háttér közé eső árnyalatot kap. A változás minden olyan helyre kihat, ahol beágyazott blokk szerepel.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1512-hierarchia', kind: 'eszkoz', title: 'A szerkezet látszik, nem csak a szín',
+        body: 'A szín önmagában kevés lett volna: a felhasználó nem árnyalatkülönbségből olvas szerkezetet, hanem elrendezésből. Ezért az alcsoportok beljebb kezdődnek, bal oldali vonal köti őket a fejlécükhöz, és a nyitott ág sávja a márkaszínt veszi fel — így egy pillantással látszik, melyik ág van kinyitva.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.51.1',
     date: '2026-09-09',
     title: 'Gyógyszertár ikonjai',

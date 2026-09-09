@@ -45,7 +45,9 @@
   /* Felületi árnyalatok — a fehér helyett ezeket használjuk, hogy a sötét
      témában is legyen mihez igazodni. */
   --surface: #FFFFFF;
-  --surface-2: #F6F8F8;
+  /* Beágyazott felület: kártyán vagy listán belüli blokk. Nem azonos az app
+     hátterével — ha az lenne, a rá épülő elemek beleolvadnának. */
+  --surface-2: #EDF1F2;
   --on-brand: #FFFFFF;
 
   /* ── A keret színei ────────────────────────────────────
@@ -2092,8 +2094,14 @@ main.container > *, .edu-main > * {
   transition: border-color var(--mozgas-gyors) var(--gorbe), background var(--mozgas-gyors);
 }
 .gy-fej:hover { border-color: var(--brand-3); background: var(--brand-tint); }
+/* A nyitott főcsoport fejléce kiemelt: a lista tetején látszik, hol járunk. */
+.gy-fej[data-nyitva='igen'] {
+  border-color: var(--brand-3);
+  background: var(--brand-tint);
+  box-shadow: var(--arny-1);
+}
+.gy-tartalom { padding: var(--s3) 0 var(--s4); }
 .gy-ik { flex: none; font-size: 22px; width: 30px; text-align: center; line-height: 1; }
-.gy-tartalom { padding: var(--s3) 0 0; }
 .gy-leiras { font-size: var(--t-small); line-height: 1.6; color: var(--muted); margin: 0 0 12px; }
 
 /* ── Vissza a lap tetejére ──────────────────────────────
@@ -2143,12 +2151,27 @@ body.is-landing .lap-fel {
 .gy-alfej {
   display: flex; align-items: center; gap: var(--s3); width: 100%;
   background: var(--surface-2); border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
   border-radius: var(--r-md); padding: 11px var(--s3);
   cursor: pointer; font: inherit; text-align: left; color: var(--ink);
-  transition: background var(--mozgas-gyors) var(--gorbe), border-color var(--mozgas-gyors);
+  transition: background var(--mozgas-gyors) var(--gorbe),
+              border-color var(--mozgas-gyors);
 }
 .gy-alfej:hover { background: var(--brand-tint); border-color: var(--brand-3); }
-.gy-altartalom { padding: var(--s3) 0 0 var(--s3); }
+/* A nyitott alcsoport bal sávja a márkaszínt veszi fel: így egy pillantással
+   látszik, melyik ág van kinyitva. */
+.gy-alfej[data-nyitva='igen'] {
+  background: var(--brand-tint);
+  border-left-color: var(--brand);
+}
+
+/* Az alcsoport tartalma beljebb kezdődik, és a bal oldali vonal köti a
+   fejléchez — enélkül a hosszabb listáknál elveszne az összetartozás. */
+.gy-altartalom {
+  padding: var(--s3) 0 var(--s2) var(--s4);
+  margin-left: 10px;
+  border-left: 2px solid var(--line);
+}
 
 /* ── Az elvezetés-kiemelés magyarázata ──────────────────
    A „hol nézzem?" kérdésre a válasz nem csak az, hogy hol, hanem az is,
