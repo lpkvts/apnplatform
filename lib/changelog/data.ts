@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.48.0',
+    date: '2026-09-09',
+    title: 'Véralvadásra ható szerek',
+    summary: 'Négy alcsoport, hat hatóanyag — a platform legmagasabb kockázatú csoportja.',
+    entries: [
+      {
+        id: 'v1480-csoport', kind: 'betegseg', title: 'Négy alcsoport',
+        body: 'K-vitamin-antagonisták, közvetlen hatású alvadásgátlók, heparinok és vérlemezke-gátlók. Mindegyiknél szerepel, mit takar a megnevezés: a K-vitamin-antagonisták például azért hatnak csak napok múlva, mert a már kész alvadási fehérjéknek előbb el kell fogyniuk.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1480-hazai', kind: 'szakmai', title: 'A hazai gyakorlathoz igazítva',
+        body: 'A K-vitamin-antagonisták közül az acenokumarol került be, nem a warfarin — a magyar ellátásban ez a jellemző, és a kettő nem cserélhető fel azonos adagban. A közvetlen hatású szerek közül kettő szerepel, mert a vesefunkció szerinti viselkedésük eltér: veseelégtelenségben ez a különbség dönti el a választást.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1480-buktatok', kind: 'szakmai', title: 'Amit gyakran elrontanak',
+        body: 'A rivaroxabant éhgyomorra bevéve a felszívódás jelentősen romlik — ez a szer legfontosabb sajátossága, és a beteg gyakran nem tudja. Az enoxaparinnál a megelőző és a kezelési adag összekeverése a leggyakoribb súlyos hiba, és a fecskendő légbuborékját nem szabad kinyomni. Az acetilszalicilsav pedig nem alvadásgátló: a pitvarfibrilláció okozta stroke megelőzésére nem alkalmas, pedig sokan annak gondolják.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1480-adagolas', kind: 'szakmai', title: 'Adagolás itt sem szerepel',
+        body: 'Ennél a csoportnál ez különösen fontos: az adag a javallattól, a testsúlytól, az életkortól és a vesefunkciótól együttesen függ, és a tévedés közvetlen ártalmat okoz. Minden hatóanyagnál az OGYÉI gyógyszeradatbázisára hivatkozunk.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.47.0',
     date: '2026-09-09',
     title: 'Miért ezek az elvezetések?',
