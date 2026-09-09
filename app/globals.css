@@ -287,8 +287,11 @@ body {
 .sh-result { border-radius: var(--r-lg); padding: 18px; margin-bottom: 12px; border: 1px solid var(--line); background: var(--surface); }
 .sh-result.r-low { border-left: 5px solid var(--ok); }
 .sh-result.r-mid { border-left: 5px solid var(--warn); }
-.sh-result.r-high { border-left: 5px solid var(--warn); }
-.sh-result.r-crit { border-left: 5px solid var(--alert); }
+.sh-result.r-high { border-left: 5px solid var(--alert); }
+.sh-result.r-crit {
+  border-left: 7px solid var(--alert);
+  background: var(--alert-bg);
+}
 .sh-res-top { display: flex; align-items: baseline; gap: 14px; }
 .sh-res-score { font-size: 32px; font-weight: 800; color: var(--ink); }
 .sh-res-score span { font-size: var(--t-small); font-weight: 600; color: var(--brand-3); margin-left: 4px; }
@@ -367,7 +370,7 @@ body {
 /* ===== EKG ===== */
 .ecg-svg { width: 100%; height: 120px; display: block; border-radius: var(--r-md); }
 .ekg-sev { font-size: var(--t-caption); font-weight: 700; padding: 3px 9px; border-radius: var(--r-pill); white-space: nowrap; margin-right: 4px; }
-.ekg-sev.sev-low { background: var(--brand-tint); color: var(--brand); }
+.ekg-sev.sev-low { background: var(--ok-bg); color: var(--ok); }
 .ekg-sev.sev-mid { background: var(--warn-bg); color: var(--warn); }
 .ekg-sev.sev-high { background: #fff1f2; color: #be123c; }
 .ekg-sev.sev-crit { background: var(--alert-bg); color: var(--alert); }
@@ -1257,13 +1260,13 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 }
 .st::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
 
-.st-none      { background: #EEF1F4; color: #52627A; }  /* Nincs megkezdve */
+.st-none      { background: var(--bg); color: var(--muted); }  /* Nincs megkezdve */
 .st-progress  { background: var(--info-bg); color: var(--info); }  /* Folyamatban */
 .st-done      { background: var(--ok-bg); color: var(--ok); }  /* Befejezve */
-.st-passed    { background: var(--ok-bg); color: #0F5B46; }  /* Teljesítve */
+.st-passed    { background: var(--ok-bg); color: var(--ok); }  /* Teljesítve */
 .st-overdue   { background: var(--alert-bg); color: var(--alert); }  /* Lejárt */
 .st-failed    { background: var(--warn-bg); color: var(--warn); }  /* Nem sikerült */
-.st-locked    { background: #F1F3F5; color: #6B7A8C; }  /* Zárolva */
+.st-locked    { background: var(--bg); color: var(--faint); }  /* Zárolva */
 .st-locked::before { border-radius: 1px; }
 
 /* ══ STRUKTURÁLT LISTA ══════════════════════════════════
@@ -2227,6 +2230,31 @@ body.is-landing .lap-fel {
 .morzsa-e:last-child > span { color: var(--muted); font-weight: 600; }
 .morzsa-v { color: var(--faint); padding: 0 7px; flex: none; }
 
+
+/* ══════════════════════════════════════════════════════════
+   ÁLLAPOTJELÖLÉS — egy jelentésrendszer, négy megjelenési forma
+
+   A platformon négy osztálycsalád jelöl állapotot, mindegyik más
+   helyen, de AZONOS jelentéssel és színnel:
+
+     st-*   oktatási haladás      (jelvény)
+     sev-*  EKG-súlyosság         (jelvény)
+     r-*    kockázati sáv         (bal oldali vonal)
+     all-*  klinikai érték        (pont és szám)
+
+   A jelentések és a hozzájuk tartozó tokenek:
+
+     rendben / élettani  →  --ok      (zöld)
+     figyelem / határ    →  --warn    (borostyán)
+     kockázat / kóros    →  --alert   (vörös)
+     kritikus            →  --alert + erősebb jelölés
+     folyamatban         →  --info    (kék)
+     semleges / zárolt   →  --muted   (szürke)
+
+   Aki új jelölést vezet be, ezeket a tokeneket használja — ne
+   rögzített színt, és ne ötödik osztálycsaládot. Ha a beteg állapota
+   máshogy néz ki a laborban, mint a skáláknál, az félreolvasáshoz vezet.
+   ══════════════════════════════════════════════════════════ */
 
 /* ── Állapotjelölés listasorban ──────────────────────────
    A szín itt jelentést hordoz, nem díszít: élettani, határérték vagy

@@ -1,6 +1,6 @@
 {
   "name": "apn-med",
-  "version": "1.53.0",
+  "version": "1.54.0",
   "private": true,
   "description": "APN Hungary Platform — az APN digitális klinikai munkatársa (B sáv: perzisztens platform)",
   "scripts": {
@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "ellenoriz": "node scripts/import-ellenorzes.mjs && node scripts/oszlop-ellenorzes.mjs && node scripts/utvonal-ellenorzes.mjs"
+    "ellenoriz": "node scripts/import-ellenorzes.mjs && node scripts/oszlop-ellenorzes.mjs && node scripts/utvonal-ellenorzes.mjs && node scripts/allapot-ellenorzes.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.2",

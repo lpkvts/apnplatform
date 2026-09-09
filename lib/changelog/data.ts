@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.54.0',
+    date: '2026-09-09',
+    title: 'Egységes állapotjelölés',
+    summary: 'Négy párhuzamos rendszer helyett egy jelentésrendszer.',
+    entries: [
+      {
+        id: 'v1540-kockazat', kind: 'javitas', title: 'A közepes és a magas kockázat nem különült el',
+        body: 'A klinikai skáláknál a közepes és a magas kockázat ugyanazt a színt kapta, ezért a felhasználó nem látta a különbséget közöttük. Mostantól négy szint négy jelölést kap: a kritikus a vastagabb sávval és a háttérrel válik el a magastól. Ez nem szépészeti kérdés — a pontszám sávja gyakran az első, amit a felhasználó megnéz.',
+        href: '/klinika/tesztek',
+      },
+      {
+        id: 'v1540-tokenek', kind: 'javitas', title: 'Rögzített színek helyett tokenek',
+        body: 'Négy állapotjelölés rögzített hexadecimális színt használt token helyett. Ez két bajt okozott: nem követték a sötét témát, és a kontrasztellenőrzés sem terjedt ki rájuk. Az oktatási haladás jelölései mostantól ugyanazokat a tokeneket használják, mint a klinikai modulok.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1540-egyseg', kind: 'eszkoz', title: 'Egy jelentés, egy szín',
+        body: 'Az EKG-súlyosság „alacsony” jelölése eddig a márkaszínt kapta, holott ugyanazt jelenti, mint a laborban az „élettani”: rendben van. Mostantól ugyanazt a zöldet viseli. A márkaszín a platform arca, nem állapotjelölés.',
+        href: '/klinika/ekg',
+      },
+      {
+        id: 'v1540-ellenorzes', kind: 'eszkoz', title: 'Gépi ellenőrzés',
+        body: 'Új szkript vizsgálja mind a 21 állapotjelölő szabályt: használnak-e rögzített színt, és elkülönül-e a négy kockázati szint. Ha valaki ötödik rendszert kezdene, vagy rögzített színt írna, az fordítás előtt kiderül. A stíluslapban külön szakasz írja le, melyik jelentéshez melyik token tartozik.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.53.0',
     date: '2026-09-09',
     title: 'Adatlapok új szerkezettel',
