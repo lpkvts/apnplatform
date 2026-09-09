@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.58.2',
+    date: '2026-09-09',
+    title: 'Nefrológiai kórképek egy blokkban',
+    summary: 'A krónikus vesebetegség átkerült az akut vesekárosodás mellé.',
+    entries: [
+      {
+        id: 'v1582-nefro', kind: 'javitas', title: 'Két blokk egy helyett',
+        body: 'A krónikus vesebetegség „Nefrológia” szakterület alatt szerepelt, az akut vesekárosodás viszont „Nefrológia-urológia” alatt. A betegségtár a szakterület neve szerint csoportosít, ezért két külön blokk jelent meg — pedig a felhasználó ugyanott keresi mindkettőt. Az egyesített megnevezés a „Nefrológia-urológia”, mert a szakterület a húgyúti kórképeket is magába foglalja.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.58.1',
     date: '2026-09-09',
     title: 'Kapcsolat oldal',
