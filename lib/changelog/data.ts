@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.55.0',
+    date: '2026-09-09',
+    title: 'Kezdőlap — a design-átállás lezárása',
+    summary: 'A csempék elvesztették a dekorációt, de megtartották a méretüket.',
+    entries: [
+      {
+        id: 'v1550-csempek', kind: 'eszkoz', title: 'Tisztább csempék',
+        body: 'Az ikonok elvesztették a színes dobozukat, és a márkaszínt kapták — ahogy a listákban is. A feliratok balra igazodnak: a középre zárt szöveg rövid szavaknál rendben van, hosszabbaknál viszont nehezebben olvasható, és a bal szél stabilabb kiindulópont. A csempe nagy célpontja megmaradt, mert az érintőn előny.',
+        href: '/',
+      },
+      {
+        id: 'v1550-atmenet', kind: 'eszkoz', title: 'A színátmenet lekerült',
+        body: 'A kiemelt csempén színátmenetes háttér volt. Az átmenet dekoráció: nem hordoz információt, viszont a felület minden más eleme sík. A kiemelést mostantól a keret és az egyszínű háttér adja.',
+        href: '/',
+      },
+      {
+        id: 'v1550-koszontes', kind: 'eszkoz', title: 'A köszöntés az új mintát követi',
+        body: 'A név a hangsúlyos, alatta a szakirány. Alsó vonal nélkül — itt a köszöntés nem szakaszcím, hanem megszólítás, és ezt a hiányzó vonal is kimondja.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.54.0',
     date: '2026-09-09',
     title: 'Egységes állapotjelölés',

@@ -98,15 +98,17 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <div className="dash-top">
-        <div className="dash-hi">
+      <div className="dash-fej">
+        <div>
           {/* A magyar névsorrendben a keresztnév az utolsó tag. */}
-          {profile?.full_name
-            ? `Jó napot, ${profile.full_name.trim().split(/\s+/).slice(-1)[0]}!`
-            : 'Üdvözöljük!'}
+          <h1>
+            {profile?.full_name
+              ? `Jó napot, ${profile.full_name.trim().split(/\s+/).slice(-1)[0]}!`
+              : 'Üdvözöljük!'}
+          </h1>
           {/* A szakirány csak akkor jelenik meg, ha meg van adva — a
-              helykitöltő „APN" mindenkinél ugyanaz lenne, tehát semmit nem mond. */}
-          {profile?.specialty && <span>{profile.specialty}</span>}
+              helykitöltő „APN" mindenkinél ugyanaz lenne. */}
+          {profile?.specialty && <p>{profile.specialty}</p>}
         </div>
       </div>
 

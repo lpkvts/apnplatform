@@ -215,11 +215,22 @@ body {
 .update-s { font-size: var(--t-small); opacity: .9; line-height: 1.45; }
 .update-go { font-size: var(--t-small); font-weight: 700; margin-top: 10px; display: inline-block; }
 
-.qgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.qtile { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); transition: transform .05s, border-color .15s; }
+.qgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.qtile {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 13px 12px;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 7px;
+  text-decoration: none; color: var(--ink); min-height: 84px;
+  transition: transform .05s, border-color var(--mozgas-gyors);
+}
+.qtile:hover { border-color: var(--brand-3); }
 .qtile:active { transform: scale(.97); }
-.qtile-i { width: 46px; height: 46px; border-radius: var(--r-lg); background: var(--brand-tint); color: var(--brand); display: flex; align-items: center; justify-content: center; }
-.qtile-l { font-size: var(--t-small); font-weight: 600; text-align: center; line-height: 1.2; }
+/* Az ikon doboz nélkül, a márkaszínben — ahogy a listákban is. */
+.qtile-i { color: var(--brand); display: flex; align-items: center; }
+.qtile-l {
+  font-size: var(--t-small); font-weight: 650;
+  line-height: 1.25; text-align: left;
+}
 
 .cpd-card { display: flex; align-items: center; gap: 18px; }
 .cpd-txt { flex: 1; }
@@ -487,12 +498,17 @@ body {
   padding: 16px 18px;
   border-color: var(--brand-3);
   border-width: 1.5px;
-  background: linear-gradient(120deg, var(--brand-tint) 0%, var(--surface) 55%);
+  background: var(--brand-tint);
 }
-.qtile-main .qtile-i { width: 52px; height: 52px; border-radius: var(--r-lg); flex: none; }
+.qtile-main .qtile-i { flex: none; }
 .qtile-main .qtile-l { font-size: var(--t-h3); text-align: left; }
 
-.qtile-add { border-style: dashed; }
+.qtile-add {
+  border-style: dashed; border-color: var(--line-strong);
+  background: transparent; color: var(--muted);
+  justify-content: center; align-items: center;
+}
+.qtile-add .qtile-i { color: var(--faint); }
 .qtile-add .qtile-i { font-size: 22px; font-weight: 700; color: var(--brand-2); }
 
 /* ============================================================
@@ -2348,3 +2364,16 @@ body.is-landing .lap-fel {
    hozzáadott értéke, nem a gyógyszerkönyv másolata. */
 .adat-szakasz.apn { border-left: 3px solid var(--brand-3); padding-left: 13px; }
 .adat-szakasz.apn .adat-tetel::before { background: var(--brand-3); }
+
+/* ── Kezdőlap fejléce ────────────────────────────────────
+   A név a hangsúlyos, alatta a szakirány. Alsó vonal nélkül: itt a
+   köszöntés nem szakaszcím, hanem megszólítás. */
+.dash-fej { margin-bottom: var(--s4); }
+.dash-fej h1 {
+  font-size: var(--t-h2); font-weight: 800;
+  letter-spacing: -.015em; margin: 0;
+}
+.dash-fej p {
+  font-size: var(--t-small); color: var(--muted);
+  margin: 3px 0 0;
+}
