@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.49.0',
+    date: '2026-09-09',
+    title: 'Cefalosporinok',
+    summary: 'A béta-laktám gyűjtőcsoport három önálló családra bomlott.',
+    entries: [
+      {
+        id: 'v1490-szetvalasztas', kind: 'javitas', title: 'Egy gyűjtőcsoport helyett három',
+        body: 'A béta-laktámok korábban egyetlen csoportot alkottak: penicillinek, cefalosporinok és karbapenemek együtt. Ez szerkezetileg helytálló — mind a három tartalmazza a béta-laktám gyűrűt —, a gyakorlatban viszont használhatatlan, mert a három család hatásspektruma, javallata és helye a kezelési sorrendben gyökeresen eltér. Mostantól három önálló csoport, saját névmagyarázattal.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1490-generaciok', kind: 'szakmai', title: 'A generációk jelentése',
+        body: 'A cefalosporinoknál a generáció határozza meg a hatásspektrumot — ez a legfontosabb, amit tudni kell róluk, és egy gyűjtőcsoportban elveszett. A csoport magyarázata kimondja: a generációk nem korszakokat jelölnek. Az első generáció főleg Gram-pozitív kórokozókra hat, felfelé haladva a Gram-negatív hatás erősödik, a Gram-pozitív viszont gyengül.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1490-hatoanyagok', kind: 'betegseg', title: 'Négy új hatóanyag',
+        body: 'Cefalexin (első generáció), cefuroxim (második), ceftazidim (harmadik, Pseudomonas-hatással) és meropenem. A meglévő ceftriaxon a cefalosporinokhoz, az amoxicillin/klavulánsav a penicillinekhez került át.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1490-buktatok', kind: 'szakmai', title: 'Két kiemelt buktató',
+        body: 'A cefuroxim éhgyomorra bevéve rosszabbul szívódik fel, és a vénás meg a szájon át adott forma nem cserélhető fel azonos milligrammban. A meropenem pedig jelentősen csökkenti a valproát szintjét, ami görcsrohamot válthat ki — ez a kölcsönhatás gyakran elkerüli a figyelmet, pedig súlyos.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.48.0',
     date: '2026-09-09',
     title: 'Véralvadásra ható szerek',
