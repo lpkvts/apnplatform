@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.59.1',
+    date: '2026-09-09',
+    title: 'A fájdalomcsillapítók kiegészítése',
+    summary: 'Naproxén, kodein, oxikodon, fentanil — minden említett szer kidolgozva.',
+    entries: [
+      {
+        id: 'v1591-potlas', kind: 'betegseg', title: 'Négy hiányzó hatóanyag',
+        body: 'Az alcsoportok leírása négy olyan szert nevezett meg, amely nem volt kidolgozva. A felhasználó látta a nevüket, kattintva viszont nem talált semmit. Mostantól minden alcsoportban minden említett hatóanyag megvan.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1591-fentanil', kind: 'szakmai', title: 'A fentanil-tapasz buktatói',
+        body: 'A tapasz opioidra még be nem állított betegnél életveszélyes — ez a legsúlyosabb hiba, ami ezzel a szerrel elkövethető. A láz és a külső meleg felgyorsítja a felszívódást: a lázas beteg tapasza ugyanaz, de a bejutó mennyiség több. A régi tapasz eltávolításának elmulasztása pedig halmozódó adagot jelent, ezért a dokumentálás nem formaság.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1591-kodein', kind: 'szakmai', title: 'A kodein gyermekgyógyászati tilalma',
+        body: 'A kodein tizenkét év alatt nem adható, és szoptatás alatt is ellenjavallt. Az ok nem elméleti: az ultragyors lebontóknál a képződő morfin mennyisége halálos lehet, és az anyatejbe is átjut. Ugyanez a mechanizmus, ami a tramadolnál is kiszámíthatatlanná teszi a hatást.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1591-oxikodon', kind: 'szakmai', title: 'A nyújtott forma összetörése',
+        body: 'Az oxikodon nyújtott hatóanyagleadású tablettájának összetörése a teljes adagot egyszerre szabadítja fel, ami halálos túladagolást okozhat. Nyelési nehézséggel küzdő betegnél ez valós kockázat, mert a tabletta összetörése egyébként bevett gyakorlat.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.59.0',
     date: '2026-09-09',
     title: 'Fájdalomcsillapítók',
