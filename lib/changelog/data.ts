@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.45.2',
+    date: '2026-09-09',
+    title: 'Oktatói elrendezés és gyógyszertár',
+    summary: 'Az oktatói felület kihasználja az asztali képernyőt, a csoportok zárva indulnak.',
+    entries: [
+      {
+        id: 'v1452-education', kind: 'javitas', title: 'Az oktatói felület asztali gépen',
+        body: 'Az oktatói munkafelület asztali gépen is a mobil elrendezést mutatta: az oldalsáv megjelent, de a tartalom keskeny hasábban maradt. Az ok az volt, hogy az oktatói elrendezés a gyökér tartalomkeretbe ágyazódik, amit 720 pixel szélesség korlátoz. Ez a korlát az egyéni használatra való — ott a hosszú sorok rontanák az olvashatóságot —, az oktatói felület viszont táblázatokkal és oldalsávval dolgozik. A korlát ott mostantól feloldódik.',
+        href: '/oktatas',
+      },
+      {
+        id: 'v1452-gyogyszertar', kind: 'eszkoz', title: 'A csoportok zárva indulnak',
+        body: 'A Gyógyszertárban az antibiotikum-csoport alapból nyitva volt. Mostantól minden csoport zárva indul, és a felhasználó dönti el, mit nyit ki — így a lista áttekinthető marad.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.45.1',
     date: '2026-09-09',
     title: 'Gyors elérés, törlés, törött hivatkozás',

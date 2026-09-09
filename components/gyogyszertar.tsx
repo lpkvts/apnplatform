@@ -21,7 +21,7 @@ export function Gyogyszertar({
   summary: DrugSummary | null
 }) {
   const [q, setQ] = useState('')
-  const [nyitva, setNyitva] = useState<string | null>('antibiotikumok')
+  const [nyitva, setNyitva] = useState<string | null>(null)
 
   const focsoportok = groups.filter((g) => !g.parent_id)
   const alcsoport = (parentId: string) => groups.filter((g) => g.parent_id === parentId)
