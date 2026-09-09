@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { MunkamenetLista } from '@/components/munkamenet-lista'
 import { createClient } from '@/lib/supabase/server'
 import { ExamStart } from '@/components/exam-start'
 import { ClinicalDisclaimer } from '@/components/clinical-disclaimer'
@@ -21,17 +22,7 @@ export default async function MunkamenetPage() {
       <div className="sec-h"><span className="sec-t">Új munkamenet indítása</span></div>
       <ExamStart />
 
-      {items.length > 0 && (
-        <>
-          <div className="sec-h"><span className="sec-t">Folyamatban lévő munkameneteim</span></div>
-          {items.map((r) => (
-            <Link key={r.id} className="sh-row" href={`/klinika/vizsgalat/${r.id}`}>
-              <span className="sh-row-main"><span className="sh-row-name">{r.title}</span><span className="sh-row-sub">{MODE_BADGE[r.mode] ?? r.mode} · {new Date(r.updated_at).toLocaleDateString('hu-HU')}{r.status === 'completed' ? ' · lezárt' : ''}</span></span>
-              <span className="sh-chev">›</span>
-            </Link>
-          ))}
-        </>
-      )}
+      <MunkamenetLista items={items} modeBadge={MODE_BADGE} />
     </>
   )
 }

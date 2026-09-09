@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.45.1',
+    date: '2026-09-09',
+    title: 'Gyors elérés, törlés, törött hivatkozás',
+    summary: 'A Gyógyszertár felvehető a kezdőlapra, a munkamenetek törölhetők.',
+    entries: [
+      {
+        id: 'v1451-404', kind: 'javitas', title: 'A vérgáz modul hibás hivatkozása',
+        body: 'A vérgáz oldal alján a Klinikai skálák gomb nem létező címre mutatott, ezért hibaoldalra vitt. Javítva, és az elnevezés is a mostanihoz igazodott. Új ellenőrző szkript vizsgálja mind az 552 belső hivatkozást: a törött hivatkozás máskülönben csak akkor derül ki, ha valaki rákattint.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1451-gyors', kind: 'eszkoz', title: 'Gyógyszertár a gyors elérésben',
+        body: 'A Gyógyszertár felvehető a kezdőlapi csempék közé a Testreszabás oldalról. Emellett a testreszabás mostantól elrejti a kikapcsolt modulokat: korábban fel lehetett venni olyan csempét, ami zárt oldalra vitt.',
+        href: '/testreszabas',
+      },
+      {
+        id: 'v1451-torles', kind: 'funkcio', title: 'Munkamenetek törlése',
+        body: 'A folyamatban lévő vizsgálati munkamenetek közvetlenül a listából törölhetők. A félbehagyott munkamenetek gyűlnek: aki napi több beteget vizsgál, hamar eljut oda, hogy a lista áttekinthetetlen. A törlés ugyanazon a megerősítő párbeszéden fut, mint a platform többi visszafordíthatatlan művelete.',
+        href: '/klinika/vizsgalat/munkamenet',
+      },
+    ],
+  },
+  {
     version: '1.45.0',
     date: '2026-09-09',
     title: 'Gyógyszertár bővítése',
@@ -474,17 +497,17 @@ export const RELEASES: Release[] = [
       {
         id: 'v1350-orszagok', kind: 'szakmai', title: 'Kilenc ország',
         body: 'Egyesült Államok, Egyesült Királyság, Hollandia, Írország, Ausztrália, Kanada, Franciaország, a skandináv térség és Magyarország. Mindegyiknél ugyanaz az öt szempont: mióta létezik a keret, mit kíván a képzés, mekkora az önállóság, mi a helyzet a gyógyszerfelírással, és hol dolgozik a gyakorlatban.',
-        href: '/nemzetkozi',
+        href: '/apn-world',
       },
       {
         id: 'v1350-mintazatok', kind: 'szakmai', title: 'Visszatérő mintázatok',
         body: 'Külön nézet gyűjti össze, ami az összevetésből leszűrhető: a megnevezés nem árulja el a hatáskört, a védett cím kiszámíthatóságot teremt, a felírási jog külön kérdés, a bevezetés jellemzően szakmai ellenállásba ütközik, és ahol orvosból hiány van, ott gyorsabban terjed az önálló hatáskör.',
-        href: '/nemzetkozi',
+        href: '/apn-world',
       },
       {
         id: 'v1350-pontossag', kind: 'eszkoz', title: 'Ahol a források nem egyeznek',
         body: 'Az amerikai helyzetnél a források 26 és 30 közötti számot adnak ugyanarra a kérdésre, mert eltérően számolják a most elfogadott törvényeket. Az összeállítás ezért nem ragad ki egy számot, hanem azt írja, hogy az államok mintegy felében áll fenn a teljes önállóság — és külön jelzi, hogy a szabályozás gyorsan változik.',
-        href: '/nemzetkozi',
+        href: '/apn-world',
       },
     ],
   },
@@ -1297,17 +1320,17 @@ export const RELEASES: Release[] = [
       {
         id: 'v1132-bisap', kind: 'szakmai', title: 'BISAP',
         body: 'Öt tétel, mindegyik egy pont, a felvételtől számított 24 órán belül értékelve: karbamid, tudatállapot-zavar, SIRS, életkor és mellkasi folyadékgyülem. Három kockázati sáv, a hármas pontszámtól jelentősen magasabb halálozási és szervelégtelenségi kockázattal.',
-        href: '/klinika/score',
+        href: '/klinika/tesztek',
       },
       {
         id: 'v1132-urea', kind: 'szakmai', title: 'A karbamid a hazai leletnek megfelelően',
         body: 'Az eredeti pontozó BUN-t használ mg/dl-ben, a hazai laborok viszont karbamidot adnak meg mmol/l-ben. A két érték nem ugyanaz: a 25 mg/dl BUN kb. 8,9 mmol/l karbamidnak felel meg. A tétel ezért azzal a mértékegységgel szerepel, ahogy a leleten látszik, és a súgó jelzi az átváltást — enélkül a küszöböt nem lehetne megtalálni a magyar leleten.',
-        href: '/klinika/score',
+        href: '/klinika/tesztek',
       },
       {
         id: 'v1132-korlat', kind: 'eszkoz', title: 'Amit a pontszám nem mond meg',
         body: 'A BISAP fajlagossága magas, az érzékenysége viszont mérsékelt: az alacsony pontszám nem zárja ki a súlyos lefolyást. A leírás ezt kimondja, és arra is figyelmeztet, hogy krónikus veseelégtelenségben a karbamid önmagában is emelkedett lehet.',
-        href: '/klinika/score',
+        href: '/klinika/tesztek',
       },
     ],
   },

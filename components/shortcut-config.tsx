@@ -3,11 +3,13 @@ import { useFavorites } from '@/components/favorites-context'
 import { SHORTCUTS, accentStyle } from '@/lib/shortcuts'
 import { Icon } from '@/components/icons'
 
-export function ShortcutConfig() {
+export function ShortcutConfig({ hidden = [] }: { hidden?: string[] }) {
   const { has, toggle } = useFavorites()
+  // A kikapcsolt modulok csempéi nem választhatók.
+  const lathato = SHORTCUTS.filter((s) => !hidden.includes(s.key))
   return (
     <>
-      {SHORTCUTS.map((s) => {
+      {lathato.map((s) => {
         const on = has('menu', s.key)
         return (
           <div className="sh-row" key={s.key} style={{ cursor: 'default' }}>

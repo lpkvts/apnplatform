@@ -54,6 +54,7 @@ export default async function DashboardPage() {
   const eduEnabled = await getFlag('education', false)
   const kompetenciaEnabled = await getFlag('kompetenciaterkep', false)
   const ertekelesEnabled = await getFlag('ertekeles', false)
+  const gyogyszertarEnabled = await getFlag('gyogyszertar', false)
   const tevekenysegEnabled = await getFlag('legutobbi_tevekenysegek', true)
   const eduMemberships = eduEnabled ? await getMemberships() : []
   const teaching = eduMemberships.find((m) => m.role === 'instructor' || m.role === 'admin')
@@ -70,6 +71,7 @@ export default async function DashboardPage() {
     // A kikapcsolt modulok csempéje nem jelenhet meg.
     .filter((sc) => sc.key !== 'kompterkep' || kompetenciaEnabled)
     .filter((sc) => sc.key !== 'ertekeles' || ertekelesEnabled)
+    .filter((sc) => sc.key !== 'gyogyszertar' || gyogyszertarEnabled)
     // A saját választásnál a felhasználó sorrendje számít.
     .sort((a, b) => (sajatValasztas ? kulcsok.indexOf(a.key) - kulcsok.indexOf(b.key) : 0))
 

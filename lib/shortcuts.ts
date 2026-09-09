@@ -8,6 +8,7 @@ export const SHORTCUTS: Shortcut[] = [
   { key: 'labor', href: '/klinika/labor', label: 'Labor', icon: 'flask' },
   { key: 'vergaz', href: '/klinika/vergaz', label: 'Vérgáz', icon: 'flask' },
   { key: 'ekg', href: '/klinika/ekg', label: 'EKG', icon: 'ekg' },
+  { key: 'gyogyszertar', href: '/gyogyszertar', label: 'Gyógyszertár', icon: 'droplet' },
   { key: 'betegsegtar', href: '/betegsegtar', label: 'Betegségtár', icon: 'clinic' },
   { key: 'tudastar', href: '/klinika/tudastar', label: 'Tudástár', icon: 'book' },
   { key: 'kontextus', href: '/kontextus', label: 'Klinikai kontextus', icon: 'book' },

@@ -34,7 +34,7 @@ export default async function VergazPage() {
 
       <div className="row" style={{ border: 'none', gap: 8, marginTop: 12 }}>
         <Link className="btn ghost" href="/klinika/labor" style={{ flex: 1 }}>Labor Kisokos</Link>
-        <Link className="btn ghost" href="/klinika/score" style={{ flex: 1 }}>Klinikai skálák</Link>
+        <Link className="btn ghost" href="/klinika/tesztek" style={{ flex: 1 }}>Skálák és score-ok</Link>
       </div>
     </>
   )
