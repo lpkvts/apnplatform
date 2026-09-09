@@ -103,6 +103,12 @@ export function Gyogyszertar({
 
               {ny && (
                 <div className="gy-tartalom">
+                  {fo.name_meaning && (
+                    <div className="gy-nev">
+                      <b>Mit takar a név?</b>
+                      <p>{fo.name_meaning}</p>
+                    </div>
+                  )}
                   {fo.description && <p className="gy-leiras">{fo.description}</p>}
 
                   {/* A csoport egészére vonatkozó tudnivalók gyakran fontosabbak,
@@ -138,6 +144,12 @@ export function Gyogyszertar({
                           )}
                         </div>
                         {al.short && <p className="sub" style={{ marginTop: 0 }}>{al.short}</p>}
+                        {al.name_meaning && (
+                          <div className="gy-nev">
+                            <b>Mit takar a név?</b>
+                            <p>{al.name_meaning}</p>
+                          </div>
+                        )}
                         {h.length > 0 ? (
                           <div className="lst">
                             {h.map((s) => (

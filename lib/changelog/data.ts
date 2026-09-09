@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.45.0',
+    date: '2026-09-09',
+    title: 'Gyógyszertár bővítése',
+    summary: 'Névmagyarázatok, vízhajtók, szívgyógyszerek — és visszaugrás a lap tetejére.',
+    entries: [
+      {
+        id: 'v1450-nevmagyarazat', kind: 'szakmai', title: 'Mit takar a név?',
+        body: 'Minden csoportnál rövid magyarázat arról, mit jelent a megnevezés. A „béta-laktám” a molekula négytagú gyűrűjére utal, ami a baktérium sejtfalépítő enzimeit bénítja — és a baktériumok védekezése is ehhez a gyűrűhöz kötődik. A „kacsdiuretikum” a vese Henle-kacsára, ahol a nátrium visszaszívásának nagy része történik, ezért ezek a legerősebb vízhajtók. Aki érti a nevet, könnyebben jegyzi meg, melyik szer mire jó.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1450-vizhajtok', kind: 'betegseg', title: 'Vízhajtók és szívgyógyszerek',
+        body: 'Öt új hatóanyag, három vízhajtó- és két szívgyógyszer-csoportban: furoszemid, indapamid, spironolakton, bisoprolol, ramipril. Ezek a kórházi és alapellátási gyakorlatban naponta előfordulnak, és sok bennük a buktató — például hogy a napi testsúly megbízhatóbb mérőszám, mint a folyadéklap, vagy hogy a diétás sópótlók káliumot tartalmaznak.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1450-lapfel', kind: 'eszkoz', title: 'Visszaugrás a lap tetejére',
+        body: 'Hosszabb görgetés után megjelenik egy gomb a jobb alsó sarokban, ami egy koppintással visszavisz a lap tetejére. Csak akkor jelenik meg, ha van hova visszagörgetni — rövid oldalakon fölöslegesen takarna el tartalmat. Az alsó navigáció fölött helyezkedik el, ahol nem ütközik a hüvelykujj szokásos útjával.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.44.0',
     date: '2026-09-08',
     title: 'Gyógyszertár',

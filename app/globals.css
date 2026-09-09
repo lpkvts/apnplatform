@@ -2087,3 +2087,46 @@ main.container > *, .edu-main > * {
 .gy-ik { flex: none; font-size: 22px; width: 30px; text-align: center; line-height: 1; }
 .gy-tartalom { padding: var(--s3) 0 0; }
 .gy-leiras { font-size: var(--t-small); line-height: 1.6; color: var(--muted); margin: 0 0 12px; }
+
+/* ── Vissza a lap tetejére ──────────────────────────────
+   Az alsó navigáció fölött, a jobb szélen. Ott nem ütközik a hüvelykujj
+   szokásos útjával, de elérhető marad. Csak hosszabb görgetés után
+   jelenik meg. */
+.lap-fel {
+  position: fixed; right: var(--s4); z-index: 60;
+  bottom: calc(var(--s4) + 62px + env(safe-area-inset-bottom));
+  width: 44px; height: 44px;
+  display: grid; place-items: center;
+  border-radius: var(--r-pill);
+  background: var(--chrome); color: var(--chrome-ink);
+  border: 1px solid var(--chrome-line);
+  box-shadow: var(--arny-3);
+  cursor: pointer;
+  animation: lapfel-be 180ms var(--gorbe);
+  transition: transform var(--mozgas-gyors) var(--gorbe), background var(--mozgas-gyors);
+}
+.lap-fel:hover { background: #26333F; transform: translateY(-2px); }
+.lap-fel:active { transform: translateY(0) scale(.94); }
+@keyframes lapfel-be {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Nagyobb képernyőn nincs alsó navigáció, ezért lejjebb kerülhet. */
+@media (min-width: 900px) {
+  .lap-fel { bottom: calc(var(--s5) + env(safe-area-inset-bottom)); right: var(--s5); }
+}
+/* A nyitóoldal saját színvilággal dolgozik. */
+body.is-landing .lap-fel {
+  background: var(--brand); color: #fff; border-color: transparent;
+}
+/* A csoport nevének magyarázata — a név jellemzően a szerkezetre vagy a
+   hatás helyére utal, és ebből következik a hatásmód is. */
+.gy-nev {
+  background: var(--brand-tint); border-radius: var(--r-md);
+  padding: 11px 14px; margin: 0 0 12px;
+}
+.gy-nev b {
+  display: block; font-size: var(--t-caption); font-weight: 800;
+  letter-spacing: .04em; color: var(--brand); margin-bottom: 4px;
+}
+.gy-nev p { margin: 0; font-size: var(--t-small); line-height: 1.6; color: var(--ink); }

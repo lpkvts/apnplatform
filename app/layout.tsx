@@ -6,6 +6,7 @@ import { BottomNav } from '@/components/bottom-nav'
 import { modeForPath, bodyClassFor } from '@/lib/layout/mode'
 import { ThemeInit } from '@/components/theme-init'
 import { BetaBanner } from '@/components/beta-banner'
+import { LapTetejere } from '@/components/lap-tetejere'
 import { PwaRegister } from '@/components/pwa-register'
 import { InstallPrompt } from '@/components/install-prompt'
 import { FavoritesProvider } from '@/components/favorites-context'
@@ -88,6 +89,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         {/* Telepítés felajánlása. Csak akkor jelenik meg, ha a platform még nincs
             telepítve, és a felhasználó nem utasította el korábban. */}
         <InstallPrompt />
+              <LapTetejere />
       </body>
     </html>
   )

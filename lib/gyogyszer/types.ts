@@ -13,6 +13,9 @@ export interface DrugGroup {
   parent_id: string | null
   short: string | null
   description: string | null
+  /** Mit takar a megnevezés — a név jellemzően a szerkezetre vagy a hatás
+      helyére utal, és ebből következik a hatásmód is. */
+  name_meaning: string | null
   key_points: string[]
   apn_notes: string[]
   icon: string | null
