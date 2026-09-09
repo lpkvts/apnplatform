@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.50.0',
+    date: '2026-09-09',
+    title: 'Minden említett hatóanyag kidolgozva',
+    summary: 'Tizennyolc új adatlap — a csoportleírások és a tartalom összeért.',
+    entries: [
+      {
+        id: 'v1500-potlas', kind: 'javitas', title: 'A leírás és a tartalom eltért',
+        body: 'A csoportok rövid leírása több hatóanyagot nevezett meg, mint amennyi ki volt dolgozva — a felhasználó olyan szereket látott felsorolva, amelyekre kattintva nem talált semmit. Tizennyolc hatóanyag kapott teljes adatlapot, ugyanazzal a szerkezettel, mint a korábbiak.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1500-antibiotikum', kind: 'betegseg', title: 'Nyolc antibiotikum',
+        body: 'Benzilpenicillin, piperacillin/tazobaktám, imipenem/cilasztatin, klaritromicin, levofloxacin, gentamicin, amikacin, teikoplanin. Az aminoglikozidok csoportja eddig teljesen üres volt, pedig a leírás két hatóanyagot említett.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1500-kardio', kind: 'betegseg', title: 'Tíz kardiovaszkuláris és véralvadási szer',
+        body: 'Metoprolol, karvedilol, perindopril, valzartán, warfarin, dabigatrán, edoxabán, nadroparin, nem frakcionált heparin, tikagrelor.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1500-buktatok', kind: 'szakmai', title: 'Néhány kiemelt buktató',
+        body: 'A dabigatrán kapszuláját nem szabad felnyitni: a felszívódás többszörösére nőne, ami nyelési nehézséggel küzdő betegnél valós kockázat. A metoprololnál a rövid és a nyújtott forma nem cserélhető fel — szívelégtelenségben csak a nyújtott igazolt. A nem frakcionált heparinnál a vérminta nem az infúzióval azonos végtagból veendő, mert hamisan magas értéket ad. A tikagrelor okozta nehézlégzést pedig gyakran szívelégtelenségnek tulajdonítják, pedig a szer ismert mellékhatása.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.49.0',
     date: '2026-09-09',
     title: 'Cefalosporinok',
