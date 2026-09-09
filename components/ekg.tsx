@@ -91,14 +91,6 @@ function Trace({ wave }: { wave?: string }) {
       <rect width="100%" height="100%" fill="var(--ecg-paper, #FFFBFB)" />
       <rect width="100%" height="100%" fill="url(#atlasz-nagy)" />
 
-      {/* Kalibrációs jel: 10 mm magas, 5 mm széles — ebből olvasható le,
-          hogy 10 mm egy millivoltnak felel meg. */}
-      <path
-        d={`M ${U} ${CSIK_H / 2} h ${U * 2} v ${-U * 10} h ${U * 5} v ${U * 10} h ${U * 2}`}
-        fill="none" stroke="var(--ecg-ink, #12202B)" strokeWidth="1.4"
-        strokeLinejoin="round" strokeLinecap="round"
-      />
-
       <polyline points={pontok} fill="none" stroke="var(--ecg-ink, #12202B)"
         strokeWidth="1.4" strokeLinejoin="round" strokeLinecap="round" />
     </svg>

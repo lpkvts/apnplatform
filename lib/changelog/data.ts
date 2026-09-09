@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.57.2',
+    date: '2026-09-09',
+    title: 'Tiszta EKG-csíkok az atlaszban',
+    summary: 'A kalibrációs jel lekerült a rövid csíkokról.',
+    entries: [
+      {
+        id: 'v1572-kalib', kind: 'javitas', title: 'A kalibrációs jel rálógott a görbére',
+        body: 'Az atlasz csíkjainak elejére került a kalibrációs jel, de a rövid csíkokon ez a görbe első ütésébe lógott — a normál sinusritmusnál különösen zavaróan. A felismerés tanulásához nem is ad hozzá: a hallgatónak a görbe alakját kell megjegyeznie. A valódi leleten van a helye, ezért a vezetett elemzésben ott is marad.',
+        href: '/klinika/ekg',
+      },
+    ],
+  },
+  {
     version: '1.57.1',
     date: '2026-09-09',
     title: 'Nyitóoldal és csempék finomítása',
