@@ -2074,3 +2074,16 @@ main.container > *, .edu-main > * {
 .ekg-elo-lab { padding: 0 var(--s4) var(--s3); }
 /* A kijelentkezés gomb a profilon teljes szélességű. */
 .btn.ghost[aria-label="Kijelentkezés"] { width: 100%; }
+
+/* ── Gyógyszertár ───────────────────────────────────────── */
+.gy-fej {
+  display: flex; align-items: center; gap: var(--s3); width: 100%;
+  background: var(--card); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: var(--s3) var(--s4); cursor: pointer; font: inherit;
+  text-align: left; color: var(--ink);
+  transition: border-color var(--mozgas-gyors) var(--gorbe), background var(--mozgas-gyors);
+}
+.gy-fej:hover { border-color: var(--brand-3); background: var(--brand-tint); }
+.gy-ik { flex: none; font-size: 22px; width: 30px; text-align: center; line-height: 1; }
+.gy-tartalom { padding: var(--s3) 0 0; }
+.gy-leiras { font-size: var(--t-small); line-height: 1.6; color: var(--muted); margin: 0 0 12px; }

@@ -14,6 +14,11 @@ const CARDS = [
 
 // A nemzetközi kitekintés kapcsolóhoz kötött, ezért a többi kártyához
 // hasonlóan külön kezeljük.
+const GYOGYSZERTAR_KARTYA = {
+  href: '/gyogyszertar', icon: 'droplet', title: 'Gyógyszertár',
+  sub: 'Hatóanyagok, antibiotikumok — mire figyeljen az ápoló',
+}
+
 const APN_WORLD_KARTYA = {
   href: '/apn-world', icon: 'compass', title: 'APN World',
   sub: 'Az APN-szerepkör a világ egészségügyi rendszereiben',
@@ -28,9 +33,11 @@ const KOMPETENCIA_KARTYA = {
 export default async function TudastarHub() {
   const kompetenciaterkep = await getFlag('kompetenciaterkep', false)
   const apnWorld = await getFlag('apn_world', false)
+  const gyogyszertar = await getFlag('gyogyszertar', false)
   const cards = [
     ...CARDS,
     ...(kompetenciaterkep ? [KOMPETENCIA_KARTYA] : []),
+    ...(gyogyszertar ? [GYOGYSZERTAR_KARTYA] : []),
     ...(apnWorld ? [APN_WORLD_KARTYA] : []),
   ]
 
