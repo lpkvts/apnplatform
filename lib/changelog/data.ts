@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.46.1',
+    date: '2026-09-09',
+    title: 'Vízhajtók bővítése',
+    summary: 'Három további hatóanyag, ahol a választás oka klinikai kérdés.',
+    entries: [
+      {
+        id: 'v1461-vizhajtok', kind: 'betegseg', title: 'Torasemid, hidroklorotiazid, eplerenon',
+        body: 'A vízhajtó csoport mindhárom alcsoportja bővült egy-egy hatóanyaggal. A válogatás szempontja az volt, hogy a választás oka klinikai kérdés legyen, ne csak névbeli különbség: a torasemid kiszámíthatóbban szívódik fel, mint a furoszemid, az eplerenon pedig ritkábban okoz hormonális mellékhatást, mint a spironolakton.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1461-buktatok', kind: 'szakmai', title: 'A rejtett vízhajtó',
+        body: 'A hidroklorotiazid adatlapja külön kiemeli, hogy ritkán adják önmagában: jellemzően kombinált készítményben szerepel, ezért a beteg — és néha az ellátó — sem tudja, hogy vízhajtót is szed. Elektrolitzavarnál ez fontos nyom. Ugyanígy szerepel, hogy szívelégtelenségben a bélfal duzzanata rontja a furoszemid felszívódását — ez az egyik oka annak, ha a szájon át adott kezelés hatástalan marad.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.46.0',
     date: '2026-09-09',
     title: 'Teljes keresés, lenyitható csoportok',
