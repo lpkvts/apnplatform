@@ -56,53 +56,49 @@ export default async function HatoanyagPage({ params }: { params: Promise<{ slug
       )}
 
       {s.mechanism && (
-        <div className="card" style={{ marginTop: 12 }}>
-          <b style={{ fontSize: 'var(--t-caption)', color: 'var(--muted)', letterSpacing: '.05em' }}>
-            HOGYAN HAT
-          </b>
-          <p style={{ margin: '6px 0 0', fontSize: 'var(--t-body)', lineHeight: 1.65 }}>
-            {s.mechanism}
-          </p>
-        </div>
+        <section className="adat-szakasz" style={{ marginTop: 14 }}>
+          <h2 className="adat-cim">Hogyan hat</h2>
+          <p>{s.mechanism}</p>
+        </section>
       )}
 
       {/* ── Antibiotikum-specifikus: a hatásspektrum ── */}
       {ab && (
         <>
-          <div className="sec-h"><span className="sec-t">Mire hat</span></div>
-          <div className="card">
+          <section className="adat-szakasz">
+            <h2 className="adat-cim">Mire hat</h2>
             <div className="mp-tags" style={{ marginTop: 0 }}>
               {ab.spectrum.map((x) => <span className="mp-tag" key={x}>{x}</span>)}
             </div>
-          </div>
+          </section>
 
           {ab.spectrum_gaps.length > 0 && (
             <>
-              <div className="sec-h"><span className="sec-t">Mire NEM hat</span></div>
-              <div className="card" style={{ borderLeft: '4px solid var(--warn)' }}>
+              <section className="adat-szakasz figyelem">
+                <h2 className="adat-cim">Mire nem hat</h2>
                 <p className="sub" style={{ margin: '0 0 8px' }}>
                   Ezeket gyakran tévesen feltételezik a hatáskörébe tartozónak.
                 </p>
                 <div className="mp-tags" style={{ marginTop: 0 }}>
                   {ab.spectrum_gaps.map((x) => <span className="mp-tag plain" key={x}>{x}</span>)}
                 </div>
-              </div>
+              </section>
             </>
           )}
         </>
       )}
 
       <Lista cim="Javallatok" elemek={s.indications} />
-      <Lista cim="Ellenjavallatok" elemek={s.contraindications} keret="var(--alert)" />
+      <Lista cim="Ellenjavallatok" elemek={s.contraindications} jelzes="veszely" />
 
       {s.apn_focus.length > 0 && (
         <>
-          <div className="sec-h"><span className="sec-t">APN-fókusz</span></div>
-          <div className="card" style={{ borderLeft: '4px solid var(--brand-3)' }}>
-            <ul className="aw-ul">
-              {s.apn_focus.map((x) => <li key={x}>{x}</li>)}
-            </ul>
-          </div>
+          <section className="adat-szakasz apn">
+            <h2 className="adat-cim">APN-fókusz</h2>
+            <div className="adat-lista">
+              {s.apn_focus.map((x) => <div className="adat-tetel" key={x}>{x}</div>)}
+            </div>
+          </section>
         </>
       )}
 
@@ -159,12 +155,12 @@ export default async function HatoanyagPage({ params }: { params: Promise<{ slug
       {/* ── Buktatók: a modul legértékesebb része ── */}
       {s.pitfalls.length > 0 && (
         <>
-          <div className="sec-h"><span className="sec-t">Amit gyakran elrontanak</span></div>
-          <div className="card" style={{ borderLeft: '4px solid var(--warn)' }}>
-            <ul className="aw-ul">
-              {s.pitfalls.map((x) => <li key={x}>{x}</li>)}
-            </ul>
-          </div>
+          <section className="adat-szakasz figyelem">
+            <h2 className="adat-cim">Amit gyakran elrontanak</h2>
+            <div className="adat-lista">
+              {s.pitfalls.map((x) => <div className="adat-tetel" key={x}>{x}</div>)}
+            </div>
+          </section>
         </>
       )}
 
@@ -196,16 +192,21 @@ export default async function HatoanyagPage({ params }: { params: Promise<{ slug
   )
 }
 
-function Lista({ cim, elemek, keret }: { cim: string; elemek: string[]; keret?: string }) {
+function Lista({
+  cim, elemek, jelzes,
+}: {
+  cim: string
+  elemek: string[]
+  /** A szakasz súlya: figyelmeztető vagy veszélyt jelző. */
+  jelzes?: 'figyelem' | 'veszely'
+}) {
   if (elemek.length === 0) return null
   return (
-    <>
-      <div className="sec-h"><span className="sec-t">{cim}</span></div>
-      <div className="card" style={keret ? { borderLeft: `4px solid ${keret}` } : undefined}>
-        <ul className="aw-ul">
-          {elemek.map((x) => <li key={x}>{x}</li>)}
-        </ul>
+    <section className={`adat-szakasz${jelzes ? ` ${jelzes}` : ''}`}>
+      <h2 className="adat-cim">{cim}</h2>
+      <div className="adat-lista">
+        {elemek.map((x) => <div className="adat-tetel" key={x}>{x}</div>)}
       </div>
-    </>
+    </section>
   )
 }

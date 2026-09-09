@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.53.0',
+    date: '2026-09-09',
+    title: 'Adatlapok új szerkezettel',
+    summary: 'A kórképek és hatóanyagok lapja folyamatos, vonalakkal tagolva.',
+    entries: [
+      {
+        id: 'v1530-adatlap', kind: 'eszkoz', title: 'Kártyák helyett folyamatos lap',
+        body: 'A kórképek és a hatóanyagok adatlapján minden szakasz külön kártyában ült, ami hosszú görgetést és sok üres helyet adott. Mostantól vonalak tagolják a lapot: a szakaszcím a márkaszínt kapja és vonalon ül. Ugyanaz a tartalom lényegesen kevesebb helyet foglal, és a lap folyamatosan olvasható marad.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1530-jelzes', kind: 'eszkoz', title: 'A szakaszok súlya látszik',
+        body: 'A figyelmeztető és a veszélyt jelző szakaszok bal oldali sávot kapnak a színes doboz helyett. A red flag jeleknél a sáv vastagabb, és a cím is a jelzőszínt viseli. Az APN-fókusz a márkaszínt kapja — ez a platform saját hozzáadott értéke, nem a gyógyszerkönyv másolata.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1530-tetelek', kind: 'eszkoz', title: 'Vonal a pont helyett',
+        body: 'A felsorolások rövid vízszintes vonást kapnak a kerek pont helyett. A vonás nem versenyez a szöveggel, viszont egyértelműen tagol — és a szakasz súlyát is átveszi: figyelmeztetőnél borostyán, veszélynél vörös.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.52.1',
     date: '2026-09-09',
     title: 'Az új vizuális nyelv terjesztése',

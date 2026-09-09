@@ -54,11 +54,20 @@ const APN_LABELS: { k: keyof ApnApproach; label: string }[] = [
 ]
 
 function Sec({ title, children }: { title: string; children: React.ReactNode }) {
-  return (<div className="card"><b>{title}</b><div style={{ marginTop: 6 }}>{children}</div></div>)
+  return (
+    <section className="adat-szakasz">
+      <h2 className="adat-cim">{title}</h2>
+      {children}
+    </section>
+  )
 }
 function UL({ items }: { items?: string[] }) {
   if (!items || items.length === 0) return <p className="sub" style={{ margin: 0 }}>—</p>
-  return <ul style={{ margin: 0, paddingLeft: 18 }}>{items.map((x, i) => <li key={i}>{x}</li>)}</ul>
+  return (
+    <div className="adat-lista">
+      {items.map((x, i) => <div className="adat-tetel" key={i}>{x}</div>)}
+    </div>
+  )
 }
 function RowLink({ href, title, sub }: { href: string; title: string; sub?: string }) {
   return (<Link className="sh-row" href={href}><span className="sh-row-main"><span className="sh-row-name">{title}</span>{sub && <span className="sh-row-sub">{sub}</span>}</span><span className="sh-chev">›</span></Link>)
@@ -177,11 +186,13 @@ export default async function DiseasePage({ params }: { params: Promise<{ id: st
         </Sec>
       )}
 
-      <div className="card" style={{ borderColor: '#fecaca', background: '#fff7f7' }}>
-        <b style={{ color: '#b91c1c' }}>8. 🚨 Red flag jelek</b>
-        <div style={{ marginTop: 6 }}><UL items={b.red_flags} /></div>
-        <p className="sub" style={{ margin: '8px 0 0' }}>Sürgős ellátás vagy magasabb szintű szakmai/orvosi konzultáció szükségességét jelzik.</p>
-      </div>
+      <section className="adat-szakasz veszely">
+        <h2 className="adat-cim">8. Red flag jelek</h2>
+        <UL items={b.red_flags} />
+        <p className="sub" style={{ margin: '8px 0 0' }}>
+          Sürgős ellátás vagy magasabb szintű szakmai konzultáció szükségességét jelzik.
+        </p>
+      </section>
 
       <div className="card" style={{ borderColor: '#d8e6df', background: 'var(--brand-tint)' }}>
         <b style={{ color: 'var(--brand)' }}>9. APN klinikai megközelítés</b>

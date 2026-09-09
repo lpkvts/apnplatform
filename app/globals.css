@@ -2278,3 +2278,45 @@ body.is-landing .lap-fel {
   font-size: var(--t-small); color: var(--muted);
   line-height: 1.6; margin: 10px 0 0;
 }
+
+/* ── Adatlap: folyamatos lap, vonalakkal tagolva ─────────
+   A szakaszok kártya helyett vonallal különülnek el. Ugyanaz a tartalom
+   lényegesen kevesebb helyet foglal, és a lap folyamatosan olvasható
+   marad — ahogy egy klinikai dokumentum. */
+.adat-szakasz { margin-bottom: var(--s4); }
+.adat-cim {
+  font-size: var(--t-caption); font-weight: 800;
+  letter-spacing: .03em; color: var(--brand);
+  margin: 0 0 8px; padding: 0 0 5px;
+  border-bottom: 1px solid var(--line);
+}
+.adat-szakasz > p { margin: 0; font-size: var(--t-body); line-height: 1.65; }
+
+/* A tételek vonallal, nem ponttal: a rövid vonás nem versenyez a
+   szöveggel, viszont egyértelműen tagol. */
+.adat-lista { display: grid; }
+.adat-tetel {
+  position: relative; padding: 6px 0 6px 16px;
+  font-size: var(--t-body); line-height: 1.55;
+}
+.adat-tetel::before {
+  content: ''; position: absolute; left: 1px; top: 14px;
+  width: 7px; height: 1.5px; background: var(--line-strong);
+}
+
+/* A figyelmeztető szakasz bal oldali sávot kap — nem külön színes dobozt. */
+.adat-szakasz.figyelem { border-left: 3px solid var(--warn); padding-left: 13px; }
+.adat-szakasz.figyelem .adat-cim { color: var(--warn); }
+.adat-szakasz.figyelem .adat-tetel::before { background: var(--warn); }
+/* A red flag szakasz: a legerősebb jelölés az adatlapon. A sáv vastagabb,
+   mint a figyelmeztetőnél, és a szöveg is a jelzőszínt kapja. */
+.adat-szakasz.veszely {
+  border-left: 4px solid var(--alert);
+  padding-left: 13px;
+}
+.adat-szakasz.veszely .adat-cim { color: var(--alert); }
+.adat-szakasz.veszely .adat-tetel::before { background: var(--alert); }
+/* Az APN-fókusz szakasz a márkaszínt kapja: ez a platform saját
+   hozzáadott értéke, nem a gyógyszerkönyv másolata. */
+.adat-szakasz.apn { border-left: 3px solid var(--brand-3); padding-left: 13px; }
+.adat-szakasz.apn .adat-tetel::before { background: var(--brand-3); }
