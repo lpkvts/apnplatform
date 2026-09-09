@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.44.0',
+    date: '2026-09-08',
+    title: 'Gyógyszertár',
+    summary: 'Hatóanyag-központú tudásbázis a Tudástárban, antibiotikum-súllyal.',
+    entries: [
+      {
+        id: 'v1440-modul', kind: 'funkcio', title: 'Új modul: Gyógyszertár',
+        body: 'A modul a hatóanyagra épül, nem a készítményre — a készítménynevek országonként és gyártónként eltérnek, és gyakran változnak, a hatóanyag viszont állandó. A csoportfa két szinten épül: főcsoportok, alattuk az antibiotikum-családok. A kereső a hatóanyagnévre, az ATC-kódra és a javallatra egyaránt talál.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1440-nincs-adag', kind: 'szakmai', title: 'Adagolás szándékosan nincs benne',
+        body: 'Az adagolás a beteg állapotától, a javallattól és a vesefunkciótól függ, és az alkalmazási előírás rendszeresen frissül. Egy másolt dózistáblázat elavulna, és a téves adag a legsúlyosabb ártalom, amit egy ilyen modul okozhatna. Minden hatóanyagnál az OGYÉI gyógyszeradatbázisára hivatkozunk.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1440-antibiotikum', kind: 'szakmai', title: 'Antibiotikum-súlypont',
+        body: 'Az antibiotikumoknál külön szakasz mutatja, mire hat és mire NEM hat a szer — az utóbbi legalább olyan fontos, mert ezeket gyakran tévesen feltételezik a hatáskörébe tartozónak. Emellett szerepel a rezisztencia-mechanizmus, és az, hogy mikor ne ezt válasszuk, milyen szűkebb spektrumú lehetőséggel.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1440-buktatok', kind: 'szakmai', title: 'Amit gyakran elrontanak',
+        body: 'Minden hatóanyagnál külön szakasz gyűjti a gyakorlati buktatókat: a ciprofloxacin tejtermékkel egyszerre bevéve hatástalan lehet, a vankomicin beadási reakcióját gyakran allergiának minősítik, a szájon át és a vénásan adott vankomicin nem cserélhető fel. Ez a modul legértékesebb része — ezt nem találni meg a gyógyszerkönyvben.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1440-bovitheto', kind: 'eszkoz', title: 'Bővíthető szerkezet',
+        body: 'Az adatok adatbázisban vannak, csoportokkal, hatóanyagokkal és külön antibiotikum-táblával. A kezdő készlet öt hatóanyag; a szerkezet több százat is elbír. A kapcsoló a Beállítások oldalról kezelhető, alapból kikapcsolva.',
+        href: '/cms/beallitasok',
+      },
+    ],
+  },
+  {
     version: '1.43.1',
     date: '2026-09-08',
     title: 'Allergológia rendezése',
