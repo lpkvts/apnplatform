@@ -22,6 +22,9 @@ export function Gyogyszertar({
 }) {
   const [q, setQ] = useState('')
   const [nyitva, setNyitva] = useState<string | null>(null)
+  // Az alcsoportok külön nyithatók: egy főcsoport megnyitása így nem
+  // önti ki egyszerre az összes hatóanyagot.
+  const [nyitottAlcsoport, setNyitottAlcsoport] = useState<string | null>(null)
 
   const focsoportok = groups.filter((g) => !g.parent_id)
   const alcsoport = (parentId: string) => groups.filter((g) => g.parent_id === parentId)
@@ -133,33 +136,68 @@ export function Gyogyszertar({
 
                   {alcs.map((al) => {
                     const h = csoportHatoanyagai(al.id)
+                    const alNyitva = nyitottAlcsoport === al.slug
                     return (
-                      <div key={al.slug} style={{ marginBottom: 10 }}>
-                        <div className="sec-h" style={{ marginTop: 4 }}>
-                          <span className="sec-t">{al.name}</span>
-                          {al.atc && (
-                            <span className="sub" style={{ margin: 0, fontSize: 'var(--t-caption)' }}>
-                              {al.atc}
+                      <div key={al.slug} style={{ marginBottom: 8 }}>
+                        <button className="gy-alfej"
+                          onClick={() => setNyitottAlcsoport(alNyitva ? null : al.slug)}>
+                          <span className="lst-fo">
+                            <b>{al.name}</b>
+                            <span>
+                              {al.short}
+                              {h.length > 0 && ` · ${h.length} hatóanyag`}
                             </span>
-                          )}
-                        </div>
-                        {al.short && <p className="sub" style={{ marginTop: 0 }}>{al.short}</p>}
-                        {al.name_meaning && (
-                          <div className="gy-nev">
-                            <b>Mit takar a név?</b>
-                            <p>{al.name_meaning}</p>
+                          </span>
+                          <span className="lst-veg">
+                            {al.atc && (
+                              <span className="sub" style={{ margin: 0, fontSize: 'var(--t-caption)' }}>
+                                {al.atc}
+                              </span>
+                            )}
+                            <span className="lst-nyil" aria-hidden="true">{alNyitva ? '⌃' : '⌄'}</span>
+                          </span>
+                        </button>
+
+                        {alNyitva && (
+                          <div className="gy-altartalom">
+                            {al.name_meaning && (
+                              <div className="gy-nev">
+                                <b>Mit takar a név?</b>
+                                <p>{al.name_meaning}</p>
+                              </div>
+                            )}
+                            {al.description && <p className="gy-leiras">{al.description}</p>}
+
+                            {al.key_points.length > 0 && (
+                              <div className="card" style={{ marginBottom: 10 }}>
+                                <b style={{ fontSize: 'var(--t-small)' }}>Amit a csoportról tudni kell</b>
+                                <ul className="aw-ul">
+                                  {al.key_points.map((k) => <li key={k}>{k}</li>)}
+                                </ul>
+                              </div>
+                            )}
+
+                            {al.apn_notes.length > 0 && (
+                              <div className="card" style={{ marginBottom: 10, borderLeft: '4px solid var(--brand-3)' }}>
+                                <b style={{ fontSize: 'var(--t-small)' }}>APN-fókusz</b>
+                                <ul className="aw-ul">
+                                  {al.apn_notes.map((k) => <li key={k}>{k}</li>)}
+                                </ul>
+                              </div>
+                            )}
+
+                            {h.length > 0 ? (
+                              <div className="lst">
+                                {h.map((s) => (
+                                  <SorLink key={s.slug} s={s} antibiotikum={!!antibiotics[s.id]} />
+                                ))}
+                              </div>
+                            ) : (
+                              <p className="sub" style={{ fontSize: 'var(--t-caption)' }}>
+                                Ehhez a csoporthoz még nincs feldolgozott hatóanyag.
+                              </p>
+                            )}
                           </div>
-                        )}
-                        {h.length > 0 ? (
-                          <div className="lst">
-                            {h.map((s) => (
-                              <SorLink key={s.slug} s={s} antibiotikum={!!antibiotics[s.id]} />
-                            ))}
-                          </div>
-                        ) : (
-                          <p className="sub" style={{ fontSize: 'var(--t-caption)' }}>
-                            Ehhez a csoporthoz még nincs feldolgozott hatóanyag.
-                          </p>
                         )}
                       </div>
                     )

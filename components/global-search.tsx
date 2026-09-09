@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { TESTS } from '@/lib/scores/data'
 import { LAB } from '@/lib/labor/data'
 import { ECG } from '@/lib/ekg/data'
+import { COMPETENCIES } from '@/lib/kompetencia/data'
 import { CAT_LABEL } from '@/components/career'
 import { CONTEXTS } from '@/lib/context/data'
 import { COMPLAINTS } from '@/lib/clinical/complaints'
@@ -20,7 +21,22 @@ const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u
 const LIMIT = 8
 
 interface DiseaseRow { id: string; name: string; aliases: string[] | null; abbrev: string | null; specialty: string | null }
-export function GlobalSearch({ guidelines, career, diseases, initialQuery = '' }: { guidelines: Gl[]; career: CareerRow[]; diseases: DiseaseRow[]; initialQuery?: string }) {
+export interface DrugRow {
+  slug: string; name: string; name_intl: string | null
+  atc: string | null; indications: string[] | null
+}
+export interface CountryRow {
+  code: string; name: string; name_en: string | null
+  flag: string | null; region: string
+}
+
+export function GlobalSearch({
+  guidelines, career, diseases, drugs = [], countries = [], initialQuery = '',
+}: {
+  guidelines: Gl[]; career: CareerRow[]; diseases: DiseaseRow[]
+  drugs?: DrugRow[]; countries?: CountryRow[]
+  initialQuery?: string
+}) {
   const [q, setQ] = useState(initialQuery)
   const nq = norm(q.trim())
   const groups: Group[] = []
@@ -73,6 +89,38 @@ export function GlobalSearch({ guidelines, career, diseases, initialQuery = '' }
       .filter((a) => norm(a).includes(nq))
       .slice(0, LIMIT).map((a) => { const tp = topicForAcuteName(a); return { id: a, title: a, sub: tp ? 'Részletes akut adatlap' : 'Akut állapotok', href: tp ? `/betegsegtar/akut/${tp.slug}` : '/betegsegtar/akut' } })
     if (ac.length) groups.push({ key: 'akut', label: '🚨 Akut állapotok', hits: ac })
+
+    // Gyógyszertár — hatóanyagnévre, nemzetközi névre, ATC-kódra és
+    // javallatra egyaránt keresünk, mert a gyakorlatban mindhárom irányból
+    // indulunk el.
+    const gy = drugs
+      .filter((x) => norm(`${x.name} ${x.name_intl ?? ''} ${x.atc ?? ''} ${(x.indications ?? []).join(' ')}`).includes(nq))
+      .slice(0, LIMIT).map((x) => ({
+        id: x.slug, title: x.name,
+        sub: [x.atc, (x.indications ?? [])[0]].filter(Boolean).join(' · '),
+        href: `/gyogyszertar/${x.slug}`,
+      }))
+    if (gy.length) groups.push({ key: 'gyogyszer', label: '💊 Gyógyszertár', hits: gy })
+
+    // Kompetenciatérkép
+    const ko = COMPETENCIES
+      .filter((k) => norm(`${k.text} ${k.group} ${k.sub ?? ''}`).includes(nq))
+      .slice(0, LIMIT).map((k) => ({
+        id: k.id,
+        title: k.text.length > 76 ? `${k.text.slice(0, 74).trimEnd()}…` : k.text,
+        sub: [k.group, k.sub].filter(Boolean).join(' · '),
+        href: `/kompetenciaterkep?q=${encodeURIComponent(k.text.slice(0, 40))}`,
+      }))
+    if (ko.length) groups.push({ key: 'komp', label: '🎓 Kompetenciák', hits: ko })
+
+    // APN World
+    const aw = countries
+      .filter((x) => norm(`${x.name} ${x.name_en ?? ''}`).includes(nq))
+      .slice(0, LIMIT).map((x) => ({
+        id: x.code, title: `${x.flag ?? ''} ${x.name}`.trim(), sub: 'APN World',
+        href: `/apn-world/${x.code.toLowerCase()}`,
+      }))
+    if (aw.length) groups.push({ key: 'apnworld', label: '🌍 APN World', hits: aw })
 
     // Career
     const ca = career

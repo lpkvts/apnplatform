@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.46.0',
+    date: '2026-09-09',
+    title: 'Teljes keresés, lenyitható csoportok',
+    summary: 'Minden modul kereshető, a gyógyszercsoportok pedig kérésre nyílnak.',
+    entries: [
+      {
+        id: 'v1460-kereses', kind: 'funkcio', title: 'Minden modul kereshető',
+        body: 'A központi keresés mostantól tizenkét forrásból dolgozik: a korábbiak mellé bekerült a Gyógyszertár, a Kompetenciatérkép és az APN World. A hatóanyagokra a magyar és a nemzetközi név, az ATC-kód és a javallat alapján is lehet keresni, mert a gyakorlatban mindhárom irányból indulunk el. A kikapcsolt modulok találatai nem jelennek meg — azok zárt oldalra vinnének.',
+        href: '/kereses',
+      },
+      {
+        id: 'v1460-alcsoport', kind: 'eszkoz', title: 'Lenyitható alcsoportok',
+        body: 'A Gyógyszertárban egy főcsoport megnyitása korábban az összes alcsoportot és hatóanyagot egyszerre kiöntötte. Mostantól az alcsoportok külön nyithatók, és mindegyiknél helyben látszik a névmagyarázat, a csoport tudnivalói és az APN-fókusz.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.45.2',
     date: '2026-09-09',
     title: 'Oktatói elrendezés és gyógyszertár',
