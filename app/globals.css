@@ -2396,3 +2396,23 @@ body.is-landing .lap-fel {
   font-size: var(--t-small); color: var(--muted);
   margin: 3px 0 0;
 }
+
+/* ── Tagságkezelés ──────────────────────────────────────── */
+.tag-urlap {
+  display: grid; grid-template-columns: 1fr 170px auto; gap: 8px;
+  align-items: center;
+}
+@media (max-width: 620px) { .tag-urlap { grid-template-columns: 1fr; } }
+.tag-szerep {
+  font-size: var(--t-caption); padding: 5px 8px;
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--surface); color: var(--ink);
+}
+.urlap-hiba {
+  margin: 10px 0 0; font-size: var(--t-small); color: var(--alert);
+  border-left: 3px solid var(--alert); padding-left: 10px;
+}
+.urlap-kesz {
+  margin: 10px 0 0; font-size: var(--t-small); color: var(--ok);
+  border-left: 3px solid var(--ok); padding-left: 10px;
+}

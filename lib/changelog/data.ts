@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.58.0',
+    date: '2026-09-09',
+    title: 'Oktatói jogosultság kiosztása',
+    summary: 'Az intézmény tagjai és szerepkörei mostantól felületről kezelhetők.',
+    entries: [
+      {
+        id: 'v1580-tagok', kind: 'funkcio', title: 'Tagok és jogosultságok',
+        body: 'Az oktatási szerepkört eddig csak közvetlenül az adatbázisban lehetett beállítani. Új oldal került az Education modulba: az intézmény adminisztrátora e-mail alapján vehet fel tagokat, módosíthatja a szerepkörüket, és el is távolíthatja őket.',
+        href: '/oktatas/tagok',
+      },
+      {
+        id: 'v1580-ket-rendszer', kind: 'szakmai', title: 'Két szerepkör-rendszer',
+        body: 'A platformon két, egymástól független szerepkör működik. A platform-szintű (APN, szerkesztő, lektor, adminisztrátor) azt szabályozza, ki mit szerkeszthet a tartalomban. Az oktatási viszont intézményhez kötött: ugyanaz a személy az egyik képzőhelyen oktató, a másikon hallgató lehet. Ezért a tagságot az intézményen belül kezeljük, nem a felhasználókezelőben.',
+        href: '/oktatas/tagok',
+      },
+      {
+        id: 'v1580-korlatok', kind: 'eszkoz', title: 'Beépített korlátok',
+        body: 'A felvenni kívánt személynek már regisztrálnia kell — így nem kerülhet hozzáférés olyan címre, amit senki nem birtokol. Az utolsó adminisztrátort nem lehet eltávolítani, mert az intézmény kezelhetetlenné válna. A tagságkezelés maga is csak adminisztrátornak látszik: az oktató nem oszthat jogosultságot, mert azzal saját magát is előléptethetné.',
+        href: '/oktatas/tagok',
+      },
+      {
+        id: 'v1580-beta', kind: 'javitas', title: 'Egységes béta üzenet',
+        body: 'A nyitóoldalon más szöveg szerepelt, mint a platform belsejében. Mostantól ugyanaz — a látogató és a belépett felhasználó ugyanazt olvassa.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.57.2',
     date: '2026-09-09',
     title: 'Tiszta EKG-csíkok az atlaszban',

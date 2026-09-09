@@ -20,11 +20,13 @@ export interface SidebarCourse {
 }
 
 export function EduSidebar({
-  institution, role, courses,
+  institution, role, courses, admin = false,
 }: {
   institution: string
   role: string
   courses: SidebarCourse[]
+  /** Intézményi adminisztrátor: neki a tagságkezelés is elérhető. */
+  admin?: boolean
 }) {
   return (
     <aside className="edu-side">
@@ -40,6 +42,13 @@ export function EduSidebar({
         <Link href="/oktatas/uj" className="edu-side-l">
           <span aria-hidden="true">＋</span> Új kurzus
         </Link>
+        {/* A tagságkezelés csak adminisztrátornak: az oktató nem oszthat
+            jogosultságot, mert azzal saját magát is előléptethetné. */}
+        {admin && (
+          <Link href="/oktatas/tagok" className="edu-side-l">
+            <span aria-hidden="true">◎</span> Tagok
+          </Link>
+        )}
       </nav>
 
       {courses.length > 0 && (

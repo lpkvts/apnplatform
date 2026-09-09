@@ -32,7 +32,8 @@ export default async function OktatasLayout({ children }: { children: React.Reac
           courses={courses.map((c) => ({
             id: c.id, title: c.title, icon: c.icon, status: c.status,
           }))}
-        />
+        admin={tagsag.role === 'admin'}
+          />
       }
     >
       {children}

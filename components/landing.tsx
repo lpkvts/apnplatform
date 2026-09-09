@@ -123,9 +123,9 @@ export function Landing() {
             <p className="lp-beta">
               <span>Béta</span>
               <span className="lp-beta-szoveg">
-                A platform fejlesztés és tesztelés alatt áll. Minél többen használják és
-                jelzik a hibákat, annál pontosabb lesz —{' '}
-                <Link href="/login">csatlakozz a teszteléshez</Link>.
+                A platform fejlesztés és tesztelés alatt áll. A visszajelzés sokat segít:
+                ha valami nem működik vagy hiányzik,{' '}
+                <Link href="/kapcsolat?tema=hiba">jelezd nekünk</Link>.
               </span>
             </p>
             <h1 className="lp-h1">
