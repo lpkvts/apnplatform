@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.57.1',
+    date: '2026-09-09',
+    title: 'Nyitóoldal és csempék finomítása',
+    summary: 'Olvasható menü, teli sávos mentorszakasz, negyedik célcsoport.',
+    entries: [
+      {
+        id: 'v1571-menu', kind: 'javitas', title: 'Olvashatatlan volt a menü kiemelése',
+        body: 'A fejléc menüpontjaira mutatva a szöveg sötétre váltott — a tintakék háttéren olvashatatlanul. Az ok két egymást követő szabály volt: az első világosra állította, a második felülírta sötétre. Mostantól fehér.',
+        href: '/',
+      },
+      {
+        id: 'v1571-csempek', kind: 'eszkoz', title: 'Csempék háttér nélkül, középre igazítva',
+        body: 'A gyors elérés ikonjai elvesztették a színes hátterüket — csak a rajz viseli a színt. A csempék tartalma visszatért középre igazítva: doboz nélküli ikonnál ez kiegyensúlyozottabb rácsot ad.',
+        href: '/',
+      },
+      {
+        id: 'v1571-mentor', kind: 'eszkoz', title: 'A mentorszakasz teli sáv lett',
+        body: 'A mentorprogram korábban kártyaként ült a lapon, most teli sávként jelenik meg — ugyanúgy, mint a szakmai út szakasza. Így a szakaszok ritmusába illeszkedik, nem szakítja meg.',
+        href: '/',
+      },
+      {
+        id: 'v1571-celcsoport', kind: 'eszkoz', title: 'Intézmények és képzőhelyek',
+        body: 'A „Kinek készült” felsorolás negyedik elemet kapott: kórházaknak és képzőknek, akik egységes szakmai alapot és követhető fejlődést szeretnének a csapatuknak. A platformot nem csak egyéni szakemberek használják.',
+        href: '/',
+      },
+      {
+        id: 'v1571-lablec', kind: 'eszkoz', title: 'A lábléc a fejléc stílusát kapta',
+        body: 'A lábléc sötétzöld volt, a fejléc tintakék. Mostantól a lap két végét ugyanaz a sáv zárja.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.57.0',
     date: '2026-09-09',
     title: 'Valós EKG-csíkok az atlaszban',

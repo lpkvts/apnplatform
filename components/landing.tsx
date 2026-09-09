@@ -47,6 +47,7 @@ const AUDIENCE = [
   { icon: '🌱', accent: 'var(--brand-3)', tint: 'var(--brand-tint)', title: 'Pályakezdőknek', text: 'Akik strukturáltan szeretnének elindulni és magabiztos alapokat építeni.' },
   { icon: '🚀', accent: 'var(--acc-vizsgalat)', tint: '#EFE9FB', title: 'Gyakorló APN-eknek', text: 'Akik tudatosan építik a szakmai útjukat és új szintre emelnék a tudásukat.' },
   { icon: '👥', accent: 'var(--acc-ekg)', tint: '#FDEEDF', title: 'Mentoroknak és oktatóknak', text: 'Akik támogatni szeretnének, megosztani a tapasztalatot és közösséget építeni.' },
+  { icon: '🏥', accent: 'var(--brand)', tint: 'var(--brand-tint)', title: 'Intézményeknek és képzőhelyeknek', text: 'Kórházaknak és képzőknek, akik egységes szakmai alapot és követhető fejlődést szeretnének a csapatuknak.' },
 ]
 
 /** Kicsinyített felületmakett — HTML-ből rajzolva, hogy minden méretben éles legyen. */
@@ -294,7 +295,7 @@ export function Landing() {
       </section>
 
       {/* ── Mentorprogram ── */}
-      <section className="lp-sec" id="mentor">
+      <section className="lp-sec lp-sec-tint" id="mentor">
         <div className="lp-wrap">
           <div className="lp-mentor">
             <div>

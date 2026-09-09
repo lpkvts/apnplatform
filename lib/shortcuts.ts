@@ -80,9 +80,9 @@ function sotetit(hex: string): string {
   return '#' + f(r) + f(g) + f(b)
 }
 
-export function accentStyle(href: string): { color: string; background: string } | undefined {
+export function accentStyle(href: string): { color: string } | undefined {
   const c = accentFor(href)
-  return c ? { color: sotetit(c), background: c + '1F' } : undefined
+  return c ? { color: sotetit(c) } : undefined
 }
 
 /**
