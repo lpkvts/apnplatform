@@ -9,6 +9,7 @@ import { FOGALMAK, fogalom } from '@/lib/vergaz/fogalmak'
 import { ESETEK, SZINT_LABEL, type Eset, type Szint } from '@/lib/vergaz/esetek'
 import { kerdesek, type Kerdes } from '@/lib/vergaz/kerdesek'
 import { VergazLelet } from '@/components/vergaz-lelet'
+import { TeachingMode } from '@/components/teaching-mode'
 
 /**
  * Vérgáz modul.
@@ -204,7 +205,24 @@ export function VergazElemzo() {
 
           {result && (
             <>
-              <div className="sec-h"><span className="sec-t">Lelet</span></div>
+              <div className="sec-h">
+                <span className="sec-t">Lelet</span>
+                {/* Oktatóteremben a lelet és az elemzés együtt vetíthető ki. */}
+                <TeachingMode
+                  title="Vérgáz elemzés"
+                  subtitle={sample === 'arterias' ? 'Artériás minta' : 'Vénás minta'}
+                >
+                  <VergazLelet values={vals} sample={sample} />
+                  <div className="sec-h"><span className="sec-t">Elemzés</span></div>
+                  <div className="card vg-sum"><b>{result.summary}</b></div>
+                  {result.findings.map((f) => (
+                    <div className={`card vg-find ${f.severity}`} key={f.id}>
+                      <b style={{ fontSize: '1.05em' }}>{f.title}</b>
+                      <p className="vg-detail">{f.detail}</p>
+                    </div>
+                  ))}
+                </TeachingMode>
+              </div>
               <VergazLelet values={vals} sample={sample} />
 
               <div className="sec-h"><span className="sec-t">Összefoglalás</span></div>

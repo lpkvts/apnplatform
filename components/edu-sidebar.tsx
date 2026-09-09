@@ -20,13 +20,11 @@ export interface SidebarCourse {
 }
 
 export function EduSidebar({
-  institution, role, courses, active,
+  institution, role, courses,
 }: {
   institution: string
   role: string
   courses: SidebarCourse[]
-  /** Az aktuális kurzus azonosítója, ha kurzus-oldalon vagyunk. */
-  active?: string
 }) {
   return (
     <aside className="edu-side">
@@ -36,7 +34,7 @@ export function EduSidebar({
       </div>
 
       <nav className="edu-side-nav">
-        <Link href="/oktatas" className={`edu-side-l ${!active ? 'on' : ''}`}>
+        <Link href="/oktatas" className="edu-side-l">
           <span aria-hidden="true">▦</span> Áttekintés
         </Link>
         <Link href="/oktatas/uj" className="edu-side-l">
@@ -50,7 +48,7 @@ export function EduSidebar({
           <nav className="edu-side-nav">
             {courses.map((c) => (
               <Link key={c.id} href={`/oktatas/kurzus/${c.id}`}
-                className={`edu-side-l ${active === c.id ? 'on' : ''}`}>
+                className="edu-side-l" data-course={c.id}>
                 <span aria-hidden="true">{c.icon ?? '📘'}</span>
                 <span className="edu-side-t">{c.title}</span>
                 {c.status === 'draft' && <i className="edu-side-jel">piszkozat</i>}
