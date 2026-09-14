@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.61.0',
+    date: '2026-09-14',
+    title: 'Nefrológiai-urológiai kórképek',
+    summary: 'Négy új adatlap: húgyúti fertőzés, vesekólika, hyperkalaemia, vizeletretenció.',
+    entries: [
+      {
+        id: 'v1610-korkepek', kind: 'betegseg', title: 'Négy kórkép',
+        body: 'A szakterületen eddig csak a krónikus vesebetegség és az akut vesekárosodás szerepelt. A négy új adatlap azokat a helyzeteket fedi le, amelyekkel az APN a leggyakrabban találkozik.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1610-bakteriuria', kind: 'szakmai', title: 'A tünetmentes bakteriuria',
+        body: 'A húgyúti fertőzés az egyik leggyakrabban túlkezelt kórkép. A tünetmentes bakteriuria antibiotikumos kezelése nem javítja a kimenetelt, viszont mellékhatást és rezisztenciát okoz — kivételt a terhesség és az urológiai beavatkozás jelent. Az adatlap azt is kimondja, hogy idős betegnél a zavartság nem mindig húgyúti fertőzés: a kapkodó antibiotikum elfedheti a valódi okot.',
+        href: '/betegsegtar/hugyuti-fertozes',
+      },
+      {
+        id: 'v1610-hyperkalaemia', kind: 'szakmai', title: 'A tünetmentesség mint kockázat',
+        body: 'A hyperkalaemia a vesebetegség leggyakoribb életveszélyes szövődménye, és tünetmentesen alakul ki — az első jel gyakran már a ritmuszavar. A kockázatot a gyakran együtt szedett gyógyszerek sokszorozzák meg, és a diétás sópótlók káliumtartalmát a betegek rendszerint nem ismerik. Az adatlap az EKG-jelekre és a mintavételi hibára is kitér.',
+        href: '/betegsegtar/hyperkalaemia',
+      },
+      {
+        id: 'v1610-redflag', kind: 'szakmai', title: 'Két megtévesztő helyzet',
+        body: 'A vesekólika adatlapja külön kiemeli, hogy ötven év felett először jelentkező kólikánál a hasi aortatágulat szakadása megtévesztően hasonló képet ad — és halálos. A vizeletretenciónál pedig az alsó végtagi gyengeség és a nyeregtáji érzéskiesés gerincvelői érintettségre utal, ami azonnali ellátást igényel.',
+        href: '/betegsegtar/vesekolika',
+      },
+    ],
+  },
+  {
     version: '1.60.1',
     date: '2026-09-14',
     title: 'Három hiba javítása',
