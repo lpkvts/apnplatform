@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.60.1',
+    date: '2026-09-14',
+    title: 'Három hiba javítása',
+    summary: 'Sötét mód olvashatóság, beragadt értesítésszám, hiányzó hatóanyagok.',
+    entries: [
+      {
+        id: 'v1601-sotet', kind: 'javitas', title: 'Olvashatatlan szöveg sötét módban',
+        body: 'Az információs buborékok — például a betegségtárban az oktatási célról szóló megjegyzés — rögzített szövegszínt használtak token helyett. Sötét módban így sötét háttéren sötét szöveg jelent meg. A buborék és további tizenhárom szabály átállt a rendszer tokenjeire, amelyek követik a témaváltást.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1601-csengo', kind: 'javitas', title: 'Beragadt szám a csengőn',
+        body: 'Az értesítésszám néha akkor sem tűnt el, ha a felhasználó megtekintettként jelölte az újdonságokat. Az ok egy visszacsatolás volt: a rendszer a szűrt kiadáslistával hasonlította össze a felhasználó rögzített verzióját. Ha a legfrissebb kiadás csak javításokat tartalmazott, az kimaradt a szűrésből, ezért a rögzített verzió magasabbnak tűnt — és a rendszer újra meg újra ugyanazt a kiadást mutatta. Az összehasonlítás mostantól a teljes listával történik.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1601-hatoanyagok', kind: 'javitas', title: 'Hiányzó hatóanyagok',
+        body: 'A warfarin adatlapja hibaoldalra vitt. A hozzá tartozó migráció nem került be a kódtárba, ezért a hatóanyag nem jött létre az adatbázisban. A migrációk visszakerültek, és készült egy lekérdezés, amely megmutatja, mely csoportokban maradt üres hely.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.60.0',
     date: '2026-09-09',
     title: 'Háromszintű csoportfa',
@@ -3260,12 +3283,18 @@ export function compareVersions(a: string, b: string): number {
 export function releasesAfterVersion(seenVersion: string | null, showAll = true): Release[] {
   if (!seenVersion) return []
   const list = visibleReleases(showAll)
-  const latest = list[0]
-  // Ha a felhasználónál rögzített verzió magasabb a legfrissebb kiadásnál, akkor egy
-  // verziószámot utólag korrigáltunk. Ilyenkor a nyilvántartás beragadna: minden
-  // további kiadás alacsonyabb számot kapna, és soha nem jelenne meg. Ezért a
-  // legfrissebb kiadást egyszer megmutatjuk, és a megtekintés után az állapot helyreáll.
-  if (latest && compareVersions(seenVersion, latest.version) > 0) return [latest]
+
+  // A beragadás elleni ág a teljes listával hasonlít, nem a szűrttel. A
+  // szűrt lista eleje ugyanis régebbi lehet — ha a legfrissebb kiadás csak
+  // javításokat tartalmaz, az kimarad. Ilyenkor a felhasználó rögzített
+  // verziója magasabbnak tűnne, és a rendszer újra meg újra ugyanazt a
+  // kiadást mutatná: a megtekintés nem szüntetné meg a jelzést.
+  const valodiLegfrissebb = RELEASES[0]
+  if (valodiLegfrissebb
+      && compareVersions(seenVersion, valodiLegfrissebb.version) > 0) {
+    return list.length > 0 ? [list[0]] : []
+  }
+
   return list.filter((r) => compareVersions(r.version, seenVersion) > 0)
 }
 

@@ -384,7 +384,7 @@ body {
 .ekg-sev { font-size: var(--t-caption); font-weight: 700; padding: 3px 9px; border-radius: var(--r-pill); white-space: nowrap; margin-right: 4px; }
 .ekg-sev.sev-low { background: var(--ok-bg); color: var(--ok); }
 .ekg-sev.sev-mid { background: var(--warn-bg); color: var(--warn); }
-.ekg-sev.sev-high { background: #fff1f2; color: #be123c; }
+.ekg-sev.sev-high { background: #fff1f2; color: var(--alert); }
 .ekg-sev.sev-crit { background: var(--alert-bg); color: var(--alert); }
 .ekg-modebar { display: flex; gap: 4px; background: var(--slate-100); padding: 4px; border-radius: var(--r-md); margin: 4px 0 16px; }
 .ekg-modebar .seg { flex: 1; padding: 10px 6px; border: none; border-radius: var(--r-md); background: transparent; color: var(--muted); font: inherit; font-size: var(--t-small); font-weight: 600; cursor: pointer; }
@@ -438,7 +438,12 @@ body {
 .search-box .search-input::placeholder { color: var(--brand-3); }
 
 /* ===== Healthcare Safety Layer ===== */
-.safety-note { background: var(--brand-tint); border: 1px solid #d8e6df; color: var(--slate-700); border-radius: var(--r-md); padding: 11px 13px; font-size: var(--t-small); line-height: 1.5; margin: 12px 0; }
+.safety-note {
+  background: var(--brand-tint); border: 1px solid var(--brand-3);
+  color: var(--ink); border-radius: var(--r-md);
+  padding: 11px 13px; font-size: var(--t-small); line-height: 1.5;
+  margin: 12px 0;
+}
 .safety-note b { color: var(--brand); }
 .urgency-flag { background: var(--alert-bg); border: 1px solid var(--alert-line); color: var(--alert); border-radius: var(--r-md); padding: 10px 13px; font-size: var(--t-small); font-weight: 700; margin-bottom: 10px; }
 .sl-wrap { display: flex; flex-direction: column; gap: 8px; }
@@ -456,11 +461,11 @@ body {
 .form-err { margin-top: 10px; color: var(--alert); background: var(--alert-bg); border: 1px solid var(--alert-line); border-radius: var(--r-md); padding: 10px 12px; font-size: var(--t-small); }
 
 /* ===== Clinical Case státusz badge-ek ===== */
-.cms-badge.cs-draft { background: #f1f5f9; color: #475569; }
-.cms-badge.cs-active { background: #dbeafe; color: #1d4ed8; }
-.cms-badge.cs-completed { background: #dcfce7; color: #15803d; }
-.cms-badge.cs-followup { background: #ffedd5; color: #c2410c; }
-.cms-badge.cs-archived { background: #e5e7eb; color: #4b5563; }
+.cms-badge.cs-draft { background: #f1f5f9; color: var(--muted); }
+.cms-badge.cs-active { background: #dbeafe; color: var(--info); }
+.cms-badge.cs-completed { background: #dcfce7; color: var(--ok); }
+.cms-badge.cs-followup { background: #ffedd5; color: var(--warn); }
+.cms-badge.cs-archived { background: #e5e7eb; color: var(--faint); }
 
 /* ===== Tartalomfigyelő stat kártyák ===== */
 .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
@@ -469,7 +474,7 @@ body {
 .stat-lbl { font-size: var(--t-small); color: var(--brand-3); margin-top: 6px; }
 
 /* ===== Kedvenc csillag ===== */
-.fav-star { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 18px; line-height: 1; color: #cbd5e1; cursor: pointer; user-select: none; border-radius: var(--r-sm); flex: none; }
+.fav-star { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; font-size: 18px; line-height: 1; color: var(--line-strong); cursor: pointer; user-select: none; border-radius: var(--r-sm); flex: none; }
 .fav-star:hover { background: var(--brand-tint); color: var(--warn); }
 .fav-star.on { color: var(--warn); }
 
@@ -779,13 +784,13 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .badge { display: inline-flex; align-items: center; padding: 2px 9px; border-radius: var(--r-pill); font-size: var(--t-small); font-weight: 600; line-height: 1.6; }
 .badge-uj { background: var(--brand-tint); color: var(--brand); }
 .badge-kiemelt { background: #FEE2E2; color: var(--alert); }
-.badge-nepszeru { background: #FEF3C7; color: #92400E; }
-.badge-mentett { background: #F1F5F4; color: #334155; }
+.badge-nepszeru { background: #FEF3C7; color: var(--warn); }
+.badge-mentett { background: #F1F5F4; color: var(--muted); }
 
 /* Állapotjelzők (forrás/tartalom státusz) */
 .status-ok { color: var(--brand-2); font-weight: 600; }
-.status-warn { color: #B7791F; font-weight: 600; }
-.status-danger { color: #C0392B; font-weight: 600; }
+.status-warn { color: var(--warn); font-weight: 600; }
+.status-danger { color: var(--alert); font-weight: 600; }
 
 /* Modul-akcentus segédosztályok (ikon-háttér csempéhez) */
 .acc-akut { color: var(--acc-akut); }
@@ -1110,7 +1115,7 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 .lel-ert { font-size: var(--t-h3); font-weight: 700; text-align: right; }
 .lel-ert i { font-style: normal; margin-left: 4px; font-size: var(--t-small); }
 .lel-ert i.up { color: var(--warn); }
-.lel-ert i.down { color: #0891B2; }
+.lel-ert i.down { color: var(--info); }
 .lel-egys { font-size: var(--t-caption); color: var(--faint); }
 .lel-ref { font-size: var(--t-caption); color: var(--faint); text-align: right; }
 .lel-sor.el .lel-ert { color: var(--warn); }
@@ -1146,7 +1151,7 @@ h3, .h3 { font-size: 18px; font-weight: 600; letter-spacing: -.2px; }
 
 .mp-badge { font-size: var(--t-caption); font-weight: 700; padding: 3px 10px; border-radius: var(--r-pill); white-space: nowrap; }
 .mp-badge.pending { background: var(--warn-bg); color: var(--warn); }
-.mp-badge.approved { background: var(--ok-bg); color: #0F5B46; }
+.mp-badge.approved { background: var(--ok-bg); color: var(--ok); }
 .mp-badge.rejected { background: var(--alert-bg); color: var(--alert); }
 .mp-badge.inactive { background: #EEF1F4; color: #5A6A7D; }
 
