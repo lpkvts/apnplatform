@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.64.1',
+    date: '2026-09-14',
+    title: 'Egységes menü a nyilvános oldalakon',
+    summary: 'A kapcsolat oldalon is a teljes menü jelenik meg.',
+    entries: [
+      {
+        id: 'v1641-menu', kind: 'javitas', title: 'A menü megfogyatkozott a kapcsolat oldalon',
+        body: 'A nyitóoldalon hat menüpont látszott, a kapcsolat oldalon viszont csak négy — a szakaszhivatkozások kimaradtak, mert azok a nyitóoldalon horgonyként működnek. A látogató így megfogyatkozott menüvel találkozott, amikor átlépett. Mostantól mindenhol ugyanaz a hat menüpont áll; a különbség csak a hivatkozás alakjában van, ami a felhasználó számára nem látszik.',
+        href: '/kapcsolat',
+      },
+    ],
+  },
+  {
     version: '1.64.0',
     date: '2026-09-14',
     title: 'Bőrgyógyászat és sebellátás',

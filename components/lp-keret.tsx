@@ -11,11 +11,16 @@ import { RingLogo } from '@/components/icons'
  */
 
 export function LpFejlec({
-  /** A szakaszhivatkozások csak a nyitóoldalon működnek. */
+  /** A nyitóoldalon a szakaszokra horgonnyal ugrunk, máshonnan oda navigálunk. */
   szakaszok = false,
 }: {
   szakaszok?: boolean
 }) {
+  // A menü mindenhol ugyanazokat a pontokat tartalmazza: aki a kapcsolat
+  // oldalra lép, ne találkozzon megfogyatkozott menüvel. Csak a hivatkozás
+  // alakja tér el — a nyitóoldalon horgony, máshonnan teljes útvonal.
+  const szakasz = (id: string) => (szakaszok ? `#${id}` : `/#${id}`)
+
   return (
     <header className="lp-nav">
       <div className="lp-nav-inner">
@@ -24,24 +29,12 @@ export function LpFejlec({
           <span className="lp-brand-txt"><b>APN-MED</b><span>SZAKMAI PLATFORM</span></span>
         </Link>
         <nav className="lp-nav-links">
-          {szakaszok ? (
-            <>
-              <a href="#funkciok">Funkciók</a>
-              <a href="#ut">Szakmai út</a>
-              <a href="#kompetencia">Kompetenciatérkép</a>
-              <Link href="/kapcsolat">Kapcsolat</Link>
-              <a href="#mentor">Mentorprogram</a>
-              <a href="#kinek">Kinek készült</a>
-            </>
-          ) : (
-            <>
-              {/* Más oldalról a szakaszokra a nyitóoldalon keresztül jutunk. */}
-              <Link href="/#funkciok">Funkciók</Link>
-              <Link href="/#ut">Szakmai út</Link>
-              <Link href="/#kinek">Kinek készült</Link>
-              <Link href="/kapcsolat">Kapcsolat</Link>
-            </>
-          )}
+          <Link href={szakasz('funkciok')}>Funkciók</Link>
+          <Link href={szakasz('ut')}>Szakmai út</Link>
+          <Link href={szakasz('kompetencia')}>Kompetenciatérkép</Link>
+          <Link href="/kapcsolat">Kapcsolat</Link>
+          <Link href={szakasz('mentor')}>Mentorprogram</Link>
+          <Link href={szakasz('kinek')}>Kinek készült</Link>
         </nav>
         <Link className="lp-btn lp-btn-primary" href="/login">
           Belépés a platformra <span className="lp-arw">→</span>
