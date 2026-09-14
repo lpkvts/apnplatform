@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.62.0',
+    date: '2026-09-14',
+    title: 'A nefrológiai szakterület kiegészítése',
+    summary: 'Négy további kórkép — a szakterület tíz adatlapra bővült.',
+    entries: [
+      {
+        id: 'v1620-korkepek', kind: 'betegseg', title: 'Négy kórkép, ahol ápolói feladat van',
+        body: 'Katéterrel összefüggő húgyúti fertőzés, diabéteszes vesebetegség, jóindulatú prosztata-megnagyobbodás, vérvizelés. A válogatás szempontja az volt, hogy mindegyikben legyen érdemi, önálló APN-feladat.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1620-kateter', kind: 'szakmai', title: 'A megelőzés ápolói munka',
+        body: 'A katéteres fertőzés az egyik leggyakoribb kórházi fertőzés, és a megelőzése szinte teljes egészében ápolói feladat. A legfontosabb lépés nem a fertőtlenítés, hanem az, hogy a katéter ne kerüljön be, vagy minél hamarabb kikerüljön — a szükségességét minden nap meg kell kérdezni. A tünetmentes baktériumjelenlét minden tartós katéter mellett kialakul, és nem kezelendő.',
+        href: '/betegsegtar/kateteres-hugyuti-fertozes',
+      },
+      {
+        id: 'v1620-vervizeles', kind: 'szakmai', title: 'Az alvadásgátló nem magyarázat',
+        body: 'A vérvizelés adatlapja kiemeli: az alvadásgátló szedése nem magyarázza a vérvizelést, a kivizsgálás ilyenkor is elvégzendő. A szer csak láthatóvá teszi a meglévő okot. A fájdalmatlan vérvizelés pedig gyanúsabb, mint a fájdalmas — a beteg viszont épp ezt hajlamos elbagatellizálni, és a vérzés átmeneti megszűnése sem jelenti a probléma megoldódását.',
+        href: '/betegsegtar/vervizeles',
+      },
+      {
+        id: 'v1620-szures', kind: 'szakmai', title: 'A diabéteszes vesebetegség szűrése',
+        body: 'A szűrés két értékből áll: a vizelet albumin/kreatinin arányából és a számított szűrési értékből — mindkettő szükséges, külön-külön egyik sem ad teljes képet. A betegek nagy része nem tudja, hogy évente vizeletvizsgálat is jár neki, és panasz híján nem kéri. Mire tünet jelentkezik, a károsodás jelentős része visszafordíthatatlan.',
+        href: '/betegsegtar/diabeteszes-vesebetegseg',
+      },
+    ],
+  },
+  {
     version: '1.61.0',
     date: '2026-09-14',
     title: 'Nefrológiai-urológiai kórképek',
