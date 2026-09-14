@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.64.0',
+    date: '2026-09-14',
+    title: 'Bőrgyógyászat és sebellátás',
+    summary: 'Nyolc kórkép a friss irányelvek szerint.',
+    entries: [
+      {
+        id: 'v1640-korkepek', kind: 'betegseg', title: 'Nyolc kórkép',
+        body: 'Nyomási fekély, vénás lábszárfekély, diabéteszes láb, cellulitis, nekrotizáló lágyrészfertőzés, akut sebellátás, égési sérülés, övsömör. A sebellátás azon kevés terület egyike, ahol a napi döntések nagy része ápolói kompetencia.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1640-antibiotikum', kind: 'szakmai', title: 'A nem fertőzött sebet nem kezeljük',
+        body: 'Ez az IWGDF/IDSA 2023 irányelv kifejezett ajánlása, és a gyakorlatban az egyik leggyakoribb hiba. A diabéteszes láb adatlapja azt is kimondja, hogy mézet és alginátot a sebgyógyulás céljából nem használunk — az irányelv ezt külön ellenzi.',
+        href: '/betegsegtar/diabeteses-lab',
+      },
+      {
+        id: 'v1640-kompresszio', kind: 'szakmai', title: 'A kompresszió előtt keringésvizsgálat',
+        body: 'A vénás lábszárfekély kezelésének alapja a kompresszió, nem a kötszer — de csak akkor adható, ha az artériás keringés megfelelő. Az ellenőrzés elmulasztása végtagvesztéshez vezethet. Ez a legfontosabb biztonsági lépés ezen a területen.',
+        href: '/betegsegtar/venas-labszarfekely',
+      },
+      {
+        id: 'v1640-aranytalan', kind: 'szakmai', title: 'Az aránytalan fájdalom vészjelzés',
+        body: 'A nekrotizáló lágyrészfertőzés korai szakaszában a bőr felszíne megtévesztően ártalmatlannak látszik, miközben a mélyben kiterjedt pusztulás zajlik. A látható eltéréshez aránytalanul erős fájdalom önmagában elegendő a sürgős sebészi értékeléshez — a laboreredmény bevárása nem indokolt, mert a normál érték sem zárja ki a kórképet.',
+        href: '/betegsegtar/nekrotizalo-lagyreszfertozes',
+      },
+      {
+        id: 'v1640-hutes', kind: 'szakmai', title: 'Az égés hűtése langyos vízzel',
+        body: 'A jég tovább mélyíti a sérülést és kihűlést okoz. Kiterjedt égésnél pedig a kihűlés veszélye nagyobb, mint a hűtés haszna — ilyenkor a beteg melegen tartása a feladat. A kiterjedés becslésénél a beteg tenyere a mérce, nem az ellátóé.',
+        href: '/betegsegtar/egesi-serules',
+      },
+    ],
+  },
+  {
     version: '1.63.1',
     date: '2026-09-14',
     title: 'Beragadt elrendezés és besorolás',
