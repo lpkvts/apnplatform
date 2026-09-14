@@ -4,7 +4,16 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { checkQuery, registryFor, type GuidelineSource } from '@/lib/sources/data'
 
-export interface GuideRow { id: string; title: string; specialty: string[] | null; summary: string | null }
+export interface GuideRow {
+  id: string
+  title: string
+  specialty: string[] | null
+  summary: string | null
+  /** Ha kórképből származik, annak azonosítója — a visszahivatkozáshoz. */
+  from_disease_slug?: string | null
+  source_url?: string | null
+  source_year?: string | null
+}
 
 const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
@@ -151,13 +160,26 @@ function SourceCard({ s, today }: { s: GuidelineSource; today: string }) {
 }
 
 function GuideRowLink({ g }: { g: GuideRow }) {
+  // A kórképből származó forrás a kórképre mutat vissza: onnan került ide,
+  // és ott olvasható a teljes szövegkörnyezete.
+  const cel = g.from_disease_slug
+    ? `/betegsegtar/${g.from_disease_slug}`
+    : `/klinika/tudastar/${g.id}`
+
+  const ev = g.source_year
+  const regi = ev && /^\d{4}$/.test(ev)
+    && Number(ev) < new Date().getFullYear() - 5
+
   return (
-    <Link className="sh-row" href={`/klinika/tudastar/${g.id}`}>
+    <Link className="sh-row" href={cel}>
       <span className="sh-row-main">
         <span className="sh-row-name">{g.title}</span>
         {g.summary && <span className="sh-row-sub">{g.summary}</span>}
       </span>
-      <span className="sh-chev">›</span>
+      <span className="lst-veg">
+        {regi && <span className="st st-overdue" title="Öt évnél régebbi forrás">Régi</span>}
+        {ev && <span className="lst-meta">{ev}</span>}
+      </span>
     </Link>
   )
 }

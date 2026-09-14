@@ -16,5 +16,9 @@ export interface Guideline {
   summary: string | null
   body: GuidelineBody
   version: string | null
+  /** Ha kórképből származik, annak azonosítója — a visszahivatkozáshoz. */
+  from_disease_slug?: string | null
+  source_url?: string | null
+  source_year?: string | null
 }
 export interface RelatedScore { id: string; name: string; abbr?: string }

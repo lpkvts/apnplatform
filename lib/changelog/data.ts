@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.63.0',
+    date: '2026-09-14',
+    title: 'A források magától az irányelvtárba kerülnek',
+    summary: 'A kórképek forrásai és a Tudástár nem tud többé szétcsúszni.',
+    entries: [
+      {
+        id: 'v1630-szinkron', kind: 'funkcio', title: 'Automatikus átvezetés',
+        body: 'A források eddig két helyen éltek: a kórképek adatlapján beágyazva, és az irányelvtárban külön felvéve. A kettő kézzel került szinkronba, ezért rendszeresen szétcsúszott. Mostantól a kórkép adatlapja a forrás elsődleges helye, és onnan kerül át magától az irányelvtárba — mentéskor, külön lépés nélkül.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1630-irany', kind: 'szakmai', title: 'Miért ebbe az irányba',
+        body: 'Aki új adatlapot ír, a forrást ott adja meg — ez a munka természetes része. Ha külön fel kellene vennie az irányelvtárba is, az a lépés elmaradna, ahogy eddig is elmaradt. A kézzel felvett irányelveket az átvezetés nem érinti.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1630-visszahivatkozas', kind: 'eszkoz', title: 'Visszahivatkozás és évszám',
+        body: 'A kórképből származó forrás a kórképre mutat vissza, mert ott olvasható a teljes szövegkörnyezete. A sor végén a forrás éve áll, és az öt évnél régebbiek külön jelölést kapnak — így egy pillantással látszik, hol kell frissíteni.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.62.1',
     date: '2026-09-14',
     title: 'Elavult vesekórkép-források frissítése',
