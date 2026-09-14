@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.62.1',
+    date: '2026-09-14',
+    title: 'Elavult vesekórkép-források frissítése',
+    summary: 'A 2012-es AKI-irányelv helyett a 2026-os, a CKD-nél a 2024-es.',
+    entries: [
+      {
+        id: 'v1621-aki', kind: 'szakmai', title: 'Új akut vesekárosodás-irányelv',
+        body: 'Az adatlap a KDIGO 2012-es irányelvére hivatkozott. Azóta megjelent a 2026-os — az első nagy frissítés tizennégy év után —, és ez nem csak a forrásmegjelölést érinti. A kórisme kritériumai bővültek: a cisztatin C emelkedése önállóan is kritérium lett, és bekerültek a szerkezeti károsodást jelző anyagok. Ezek a kreatininnél korábban jeleznek, mert az utóbbi csak a már bekövetkezett működésromlást mutatja. Az irányelv emellett bevezette az akut vesebetegség fogalmát, és külön fejezetet szentel az utánkövetésnek.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1621-ckd', kind: 'szakmai', title: 'A krónikus vesebetegség új szemlélete',
+        body: 'A CKD adatlapja évszám nélküli hivatkozást viselt, és a tartalma a 2012-es szemléletet tükrözte. A 2024-es irányelv szerint a szűrés két értéken alapul — a szűrési értéken és az albumin/kreatinin arányon —, és egyik sem elegendő önmagában. A cisztatin C szerepe megnőtt, és a kockázatbecslő egyenletek használata is bekerült az ajánlásba.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1621-tartalom', kind: 'szakmai', title: 'A tartalom is frissült, nem csak a forrás',
+        body: 'Az elavult hivatkozás cseréje önmagában megtévesztő lett volna: az adatlap továbbra is a régi szemléletet tanítaná, csak új évszámmal. Mindkét kórkép teljes tartalma átdolgozásra került. A migráció záró lekérdezése megjelöli, ha valamelyik forrás öt évnél régebbi.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.62.0',
     date: '2026-09-14',
     title: 'A nefrológiai szakterület kiegészítése',
