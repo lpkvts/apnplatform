@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { FlagToggle } from '@/components/flag-toggle'
 import { currentRole, isAdmin } from '@/lib/roles'
 import { getFlags } from '@/lib/flags'
 import { toggleFlag, saveMaintenanceMessage } from './actions'
@@ -66,11 +67,7 @@ export default async function BeallitasokPage() {
         <div className="card" key={f.key}>
           <div className="row" style={{ border: 'none', padding: 0 }}>
             <div><b>{f.label ?? f.key}</b><div className="sub" style={{ margin: '2px 0 0' }}>{f.key}</div></div>
-            <form action={toggleFlag}>
-              <input type="hidden" name="key" value={f.key} />
-              <input type="hidden" name="enabled" value={String(f.enabled)} />
-              <button className={`btn sm ${f.enabled ? '' : 'ghost'}`} type="submit">{f.enabled ? 'Bekapcsolva ✓' : 'Kikapcsolva'}</button>
-            </form>
+            <FlagToggle flagKey={f.key} enabled={f.enabled} label={f.label ?? f.key} />
           </div>
         </div>
       ))}

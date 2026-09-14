@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.63.1',
+    date: '2026-09-14',
+    title: 'Beragadt elrendezés és besorolás',
+    summary: 'A kapcsolás után nem marad széles a felület, az UTI a nefrológiai blokkba került.',
+    entries: [
+      {
+        id: 'v1631-elrendezes', kind: 'javitas', title: 'A felület széles maradt kapcsolás után',
+        body: 'A Beállítások oldalon kapcsolva a felület a széles, munkafelületi elrendezésben ragadt, és a kikapcsolás sem állította vissza. Az ok ugyanaz volt, mint korábban a beragadt fejlécnél: a kapcsolók a gyökér elrendezést is befolyásolják, amit a böngésző rövid ideig megőriz. A kapcsolás mostantól teljes oldalbetöltéssel zárul, ami minden tárolt állapotot eldob.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v1631-kapcsolo', kind: 'eszkoz', title: 'Hatástalan kapcsoló elrejtve',
+        body: 'Az EKG oktatóanyagok kapcsolóját a kód sehol nem kérdezi, tehát bekapcsolva sem történt semmi. Kivettük a listából — nem töröltük, hogy egy esetleges korábbi beállítás ne vesszen el. Ha a modul elkészül, visszaadható.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v1631-besorolas', kind: 'javitas', title: 'A húgyúti fertőzés a nefrológiai blokkban',
+        body: 'A kórkép külön szakterület alatt szerepelt, ami önálló blokkot adott a betegségtárban. Ugyanoda tartozik, mint a többi vesekórkép: a felhasználó ott keresi, és a szövegkörnyezete is ott teljes — a vesefunkció, a kőbetegség és a katéteres forma egymás mellett érthető meg.',
+        href: '/betegsegtar',
+      },
+    ],
+  },
+  {
     version: '1.63.0',
     date: '2026-09-14',
     title: 'A források magától az irányelvtárba kerülnek',
