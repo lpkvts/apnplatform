@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.60.0',
+    date: '2026-09-09',
+    title: 'Háromszintű csoportfa',
+    summary: 'A cefalosporinok és a karbapenemek visszakerültek a béta-laktámok alá.',
+    entries: [
+      {
+        id: 'v1600-fa', kind: 'javitas', title: 'A béta-laktám család helyreállt',
+        body: 'A penicillinek, cefalosporinok és karbapenemek egymás mellett álltak a menüben, mintha független családok lennének. Ez szakmailag félrevezető: mindháromban ott a béta-laktám gyűrű, és ugyanahhoz a szerkezeti csoporthoz tartoznak. A felület mostantól három szintet kezel, ezért a szerkezet visszatérhetett ahhoz, ami helyes.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1600-szint3', kind: 'eszkoz', title: 'A harmadik szint nem lenyitható',
+        body: 'Aki a béta-laktámokat megnyitotta, a három családot egyben akarja látni — a további kattintás ott már akadály lenne. A családok ezért vonallal elválasztott szakaszként jelennek meg, nem külön nyitható blokként.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1600-jelveny', kind: 'eszkoz', title: 'Az antibiotikum-jelvény csak keresésnél',
+        body: 'A csoportfában a jelvény elvette a helyet a hatóanyag nevétől, pedig a csoport neve már megmondta, mivel van dolgunk. Keresésnél viszont marad, mert ott nincs csoportkontextus.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.59.1',
     date: '2026-09-09',
     title: 'A fájdalomcsillapítók kiegészítése',

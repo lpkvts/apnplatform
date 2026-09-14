@@ -2426,3 +2426,21 @@ body.is-landing .lap-fel {
   font-size: var(--t-body); line-height: 1.6; color: var(--muted);
   margin: 0 0 22px; max-width: 60ch;
 }
+
+/* ── Harmadik csoportszint ───────────────────────────────
+   A béta-laktámokon belül a penicillinek, cefalosporinok és karbapenemek.
+   Nem lenyitható: aki a béta-laktámokat megnyitotta, a három családot
+   egyben akarja látni — a további kattintás itt már akadály lenne. */
+.gy-szint3 { margin-bottom: var(--s4); }
+.gy-szint3-fej {
+  padding-bottom: 6px; margin-bottom: 10px;
+  border-bottom: 2px solid var(--brand-3);
+}
+.gy-szint3-fej b {
+  display: block; font-size: var(--t-body); font-weight: 800;
+  letter-spacing: -.01em;
+}
+.gy-szint3-fej span {
+  display: block; font-size: var(--t-caption); color: var(--muted);
+  margin-top: 2px;
+}

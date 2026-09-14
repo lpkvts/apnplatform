@@ -42,6 +42,17 @@ export function Gyogyszertar({
   const csoportHatoanyagai = (groupId: string) =>
     substances.filter((s) => s.group_id === groupId)
 
+  /**
+   * Egy csoport összes hatóanyaga, az alatta lévő szinteket is beleértve.
+   *
+   * A béta-laktámok például önmagukban egy hatóanyagot sem tartalmaznak — a
+   * penicillinek, cefalosporinok és karbapenemek alcsoportjaiban vannak. A
+   * fejlécen mégis a teljes számot kell mutatni, különben nullát írna ki.
+   */
+  const osszesHatoanyag = (groupId: string): number =>
+    csoportHatoanyagai(groupId).length
+    + alcsoport(groupId).reduce((a, al) => a + osszesHatoanyag(al.id), 0)
+
   const talalat = useMemo(() => filterSubstances(substances, q), [substances, q])
   const keres = q.trim().length >= 2
 
@@ -91,7 +102,7 @@ export function Gyogyszertar({
           ) : (
             <div className="lst">
               {talalat.map((s) => (
-                <SorLink key={s.slug} s={s} antibiotikum={!!antibiotics[s.id]} />
+                <SorLink key={s.slug} s={s} antibiotikum={!!antibiotics[s.id]} jelol />
               ))}
             </div>
           )}
@@ -102,7 +113,7 @@ export function Gyogyszertar({
           const alcs = alcsoport(fo.id)
           const sajat = csoportHatoanyagai(fo.id)
           const ny = nyitva === fo.slug
-          const db = alcs.reduce((a, x) => a + csoportHatoanyagai(x.id).length, 0) + sajat.length
+          const db = osszesHatoanyag(fo.id)
 
           return (
             <div key={fo.slug} style={{ marginTop: 12 }}>
@@ -174,6 +185,44 @@ export function Gyogyszertar({
 
                         {alNyitva && (
                           <div className="gy-altartalom">
+                            {/* Harmadik szint: a béta-laktámokon belül a
+                                penicillinek, cefalosporinok és karbapenemek. */}
+                            {alcsoport(al.id).map((cs) => {
+                              const h3 = csoportHatoanyagai(cs.id)
+                              return (
+                                <div key={cs.slug} className="gy-szint3">
+                                  <div className="gy-szint3-fej">
+                                    <b>{cs.name}</b>
+                                    <span>
+                                      {cs.short}
+                                      {h3.length > 0 && ` · ${h3.length} hatóanyag`}
+                                    </span>
+                                  </div>
+                                  {cs.name_meaning && (
+                                    <div className="gy-nev">
+                                      <b>Mit takar a név?</b>
+                                      <p>{cs.name_meaning}</p>
+                                    </div>
+                                  )}
+                                  {cs.key_points.length > 0 && (
+                                    <div className="card" style={{ marginBottom: 10 }}>
+                                      <b style={{ fontSize: 'var(--t-small)' }}>Amit a csoportról tudni kell</b>
+                                      <ul className="aw-ul">
+                                        {cs.key_points.map((k) => <li key={k}>{k}</li>)}
+                                      </ul>
+                                    </div>
+                                  )}
+                                  {h3.length > 0 && (
+                                    <div className="lst">
+                                      {h3.map((x) => (
+                                        <SorLink key={x.slug} s={x} antibiotikum={!!antibiotics[x.id]} />
+                                      ))}
+                                    </div>
+                                  )}
+                                </div>
+                              )
+                            })}
+
                             {al.name_meaning && (
                               <div className="gy-nev">
                                 <b>Mit takar a név?</b>
@@ -248,7 +297,15 @@ export function Gyogyszertar({
   )
 }
 
-function SorLink({ s, antibiotikum }: { s: Substance; antibiotikum: boolean }) {
+function SorLink({
+  s, antibiotikum, jelol = false,
+}: {
+  s: Substance
+  antibiotikum: boolean
+  /** A jelvény csak keresésnél kell: a csoportfában a csoport neve
+      már megmondja, mivel van dolgunk. */
+  jelol?: boolean
+}) {
   return (
     <Link className="lst-sor" href={`/gyogyszertar/${s.slug}`}>
       <span className="lst-fo">
@@ -256,7 +313,7 @@ function SorLink({ s, antibiotikum }: { s: Substance; antibiotikum: boolean }) {
         <span>{s.indications[0] ?? '—'}</span>
       </span>
       <span className="lst-veg">
-        {antibiotikum && <span className="st st-progress">Antibiotikum</span>}
+        {jelol && antibiotikum && <span className="st st-progress">Antibiotikum</span>}
         {s.atc && <span className="lst-meta">{s.atc}</span>}
       </span>
     </Link>
