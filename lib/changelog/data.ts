@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.68.0',
+    date: '2026-09-15',
+    title: 'Elektrolit- és sav-bázis blokk',
+    summary: 'Mind a tizenhárom kórkép kidolgozva, két migrációban.',
+    entries: [
+      {
+        id: 'v1680-elektrolit', kind: 'betegseg', title: 'Kilenc elektrolitzavar',
+        body: 'Hyponatraemia, hypernatraemia, hypokalaemia, hypocalcaemia, hypercalcaemia, hypomagnesaemia, hypermagnesaemia, dehidráció, hypervolaemia. A hyperkalaemia a nefrológiai blokkban készült el, és átkerült ide a többi ionzavar mellé.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1680-utem', kind: 'szakmai', title: 'Nem a szám számít, hanem az ütem',
+        body: 'A lassan kialakult hyponatraemia tünetmentes lehet ugyanazon az értéken, amelyen a gyors halálos. A korrekció sebességét is ez határozza meg, nem a kiindulási érték — ezért a korábbi laborérték felkutatása többet ér, mint a mostani érték pontossága.',
+        href: '/betegsegtar/hyponatraemia',
+      },
+      {
+        id: 'v1680-korrekcio', kind: 'szakmai', title: 'A korrekció maga is árthat',
+        body: 'A nátrium túl gyors rendezése maradandó idegrendszeri károsodást okoz, a kálium túl gyors vénás pótlása szívmegállást. Az adatlapokon ezért a „milyen gyorsan” hangsúlyosabb, mint a „mennyivel”.',
+        href: '/betegsegtar/hypokalaemia',
+      },
+      {
+        id: 'v1680-magnezium', kind: 'szakmai', title: 'A legtöbbször elfelejtett ion',
+        body: 'Alacsony magnézium mellett a káliumpótlás hatástalan, és a kalcium sem rendeződik. A „nem emelkedő” kálium hátterében gyakran ez áll — a magnézium mérése mégis ritkán kerül be a rutinba. Ez a leghasznosabb, amit ezzel az ionnal kapcsolatban tenni lehet.',
+        href: '/betegsegtar/hypomagnesaemia',
+      },
+      {
+        id: 'v1680-savbazis', kind: 'betegseg', title: 'Négy sav-bázis zavar',
+        body: 'Metabolikus és respiratorikus acidózis, illetve alkalózis. A vérgáz-modul a lépésenkénti elemzést tanítja; ezek az adatlapok a klinikai oldalt adják hozzá. Két kiemelt pont: a pulzoximéter nem mutatja a széndioxidot, ezért a jó telítettség nem zárja ki a savasodást — és a gyors légzés lehet a savasodás ellensúlyozása, amit lassítani ártalmas.',
+        href: '/betegsegtar/respiratorikus_acidosis',
+      },
+    ],
+  },
+  {
     version: '1.67.0',
     date: '2026-09-15',
     title: 'Közreműködők',
