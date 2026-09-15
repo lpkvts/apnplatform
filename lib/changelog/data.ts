@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.72.3',
+    date: '2026-09-15',
+    title: 'SCORE2 küszöbtáblázat',
+    summary: 'Színes besorolási tábla, és tagolt leírás a pontozók fejrészén.',
+    entries: [
+      {
+        id: 'v1723-tabla', kind: 'eszkoz', title: 'A küszöbök táblázatban',
+        body: 'A SCORE2 besorolási határai az életkortól függenek, és ezt folyó szövegben nehéz átlátni. A három kockázati sáv mostantól színes táblázatban jelenik meg, korcsoportonként — a rendszer jelzőszíneivel, ugyanazzal a jelentéssel, mint máshol a platformon. Mobilon a sávok egymás alá kerülnek, a megnevezéssel együtt.',
+        href: '/klinika/tesztek?open=score2',
+      },
+      {
+        id: 'v1723-leiras', kind: 'eszkoz', title: 'Tagolt leírás egy szövegdoboz helyett',
+        body: 'A pontozók fejrésze eddig egyetlen kártyában sorolta a célt, a javallatot és a korlátokat. Mostantól vonallal elválasztott szakaszokra bomlik, ahogy az adatlapokon — és a hosszabb leírások bekezdései is külön állnak. A „mikor nem használható” szakasz figyelmeztető sávot kap, mert az a legfontosabb rész.',
+        href: '/klinika/tesztek',
+      },
+    ],
+  },
+  {
     version: '1.72.2',
     date: '2026-09-15',
     title: 'A széles elrendezés beragadása',

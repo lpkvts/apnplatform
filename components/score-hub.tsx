@@ -1,5 +1,6 @@
 'use client'
 import { TopicBacklinks } from '@/components/topic-backlinks'
+import { Score2Tabla } from '@/components/score2-tabla'
 import { useLapTetejere } from '@/lib/use-lap-tetejere'
 import { TeachingMode } from '@/components/teaching-mode'
 
@@ -167,23 +168,30 @@ function TestDetail({
         {t.scoreType ?? ''}
       </p>
 
-      <div className="card">
-        {t.purpose && (
-          <p>
-            <b>Mi a célja?</b> {t.purpose}
-          </p>
-        )}
-        {t.when && (
-          <p className="sub" style={{ margin: '6px 0 0' }}>
-            <b>Mikor:</b> {t.when}
-          </p>
-        )}
-        {t.contra && (
-          <p className="sub" style={{ margin: '6px 0 0' }}>
-            <b>Korlátok:</b> {t.contra}
-          </p>
-        )}
-      </div>
+      <section className="adat-szakasz">
+        <h2 className="adat-cim">Mi a célja</h2>
+        {(t.purpose ?? '').split('\n\n').filter(Boolean).map((bek, i) => (
+          <p key={i} style={i > 0 ? { marginTop: 10 } : undefined}>{bek}</p>
+        ))}
+      </section>
+
+      {t.when && (
+        <section className="adat-szakasz">
+          <h2 className="adat-cim">Mikor használd</h2>
+          <p>{t.when}</p>
+        </section>
+      )}
+
+      {t.contra && (
+        <section className="adat-szakasz figyelem">
+          <h2 className="adat-cim">Mikor nem használható</h2>
+          <p>{t.contra}</p>
+        </section>
+      )}
+
+      {/* A SCORE2-nél a küszöbértékek életkortól függenek — ezt táblázatban
+          sokkal könnyebb átlátni, mint folyó szövegben. */}
+      {t.id === 'score2' && <Score2Tabla />}
 
       {t.refOnly ? (
         <div className="card">
