@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.65.1',
+    date: '2026-09-14',
+    title: 'A kapcsolók nem váltottak át',
+    summary: 'Kettős tagadás miatt minden kapcsoló visszaállt az eredeti állapotába.',
+    entries: [
+      {
+        id: 'v1651-kapcsolo', kind: 'javitas', title: 'Egyik kapcsoló sem működött',
+        body: 'Az előző kiadásban a kapcsolókat teljes oldalbetöltésre állítottam át, hogy ne ragadjon be az elrendezés. Az átalakításkor viszont hibát vétettem: a szerveroldali művelet a jelenlegi állapotot várja, és ő fordítja meg — én pedig már megfordítva küldtem. A kettős tagadás miatt minden kapcsoló visszaállt az eredeti állapotába, miközben a felület újratöltődött. Így nézett ki úgy, mintha a kapcsolás széthúzná a képernyőt, de nem kapcsolna be semmit.',
+        href: '/cms/beallitasok',
+      },
+      {
+        id: 'v1651-passport', kind: 'javitas', title: 'A Kompetencia Passport bekapcsolható',
+        body: 'A hiba minden kapcsolót érintett, de a Passportnál volt a legfeltűnőbb, mert a kompetenciatérkép is arra hivatkozott, hogy be kell kapcsolni az adminban — miközben a bekapcsolás nem működött.',
+        href: '/kompetenciak',
+      },
+    ],
+  },
+  {
     version: '1.65.0',
     date: '2026-09-14',
     title: 'Bőrgyógyászat kiegészítése',

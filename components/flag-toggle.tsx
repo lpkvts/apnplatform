@@ -28,7 +28,10 @@ export function FlagToggle({
     start(async () => {
       const fd = new FormData()
       fd.set('key', flagKey)
-      fd.set('enabled', enabled ? 'false' : 'true')
+      // A szerveroldali művelet a jelenlegi állapotot várja, és ő fordítja
+      // meg. Ha itt is megfordítanánk, a kettős tagadás miatt a kapcsoló
+      // sosem változna.
+      fd.set('enabled', String(enabled))
       try {
         await toggleFlag(fd)
       } catch {
