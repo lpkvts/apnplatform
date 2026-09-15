@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.78.0',
+    date: '2026-09-15',
+    title: 'Gyógyszertár bővítés — harmadik kör',
+    summary: 'Légzőszervi, gasztrointesztinális, neurológiai és pszichiátriai szerek.',
+    entries: [
+      {
+        id: 'v1780-harom', kind: 'betegseg', title: 'Három új főcsoport',
+        body: 'Légzőszervi szerek tíz hatóanyaggal, gasztrointesztinális szerek kilenccel, neurológiai és pszichiátriai szerek kilenccel. A gyógyszertár ezzel eléri a tervezett méretet.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1780-inhalacio', kind: 'szakmai', title: 'Az inhalációs technika a leggyengébb láncszem',
+        body: 'A légzőszervi adatlapok központi gondolata: a betegek jelentős része rosszul használja az eszközt, és ettől a szer hatástalan marad — ez gyakoribb ok a panaszok fennmaradására, mint az elégtelen adag. A rohamoldó használatának gyakorisága pedig a betegségkontroll legjobb mutatója: a heti kétszerinél gyakoribb igény az alapkezelés felülvizsgálatát jelzi.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1780-savcsokkento', kind: 'szakmai', title: 'A savcsökkentők felülvizsgálata',
+        body: 'A tartós szedés gyakran indokolatlanul folytatódik: sok beteg évekig szedi anélkül, hogy bárki megkérdezné, miért kezdték. A hirtelen elhagyás viszont visszacsapó savtermelést okoz — a visszatérő panaszokat ilyenkor a betegség kiújulásának veszik, és újraindítják a szert.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1780-nyugtatok', kind: 'szakmai', title: 'A nyugtatóknál kimondva',
+        body: 'Ezek a szerek rövid távra készültek, a gyakorlatban viszont évekig szedik őket. A hirtelen elhagyás görcsrohamot okozhat, ezért a leépítés mindig fokozatos. Idős betegnél eséshez és zavartsághoz vezetnek, az opioiddal alkotott kombináció légzésdepressziós kockázata pedig a gyakorlatban alulértékelt.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1780-antidepresszans', kind: 'szakmai', title: 'Két hetes türelem',
+        body: 'Az antidepresszánsok hatása két–négy hét alatt alakul ki, és a korai abbahagyás a kezelés kudarcának leggyakoribb oka. A szexuális mellékhatást pedig a beteg ritkán hozza szóba — inkább szó nélkül abbahagyja a szert; a kérdezés ezt megelőzi.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.77.0',
     date: '2026-09-15',
     title: 'Gyógyszertár bővítés — diabetes és lipidek',
