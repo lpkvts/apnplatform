@@ -1592,7 +1592,7 @@ export const TOPICS: Topic[] = [
   {
     slug: 'haemoptoe',
     title: 'Haemoptoe',
-    icon: '🫁',
+    icon: '🩸',
     subtitle: 'Gyors klinikai orientáció vérköhögés esetén: az elkülönítés a felső légúti és emésztőrendszeri vérzéstől, a súlyosság megítélése és az eszkaláció.',
     orientation: [
       'A vérköhögés a tüdőből vagy a hörgőkből származó vér felköhögése. Az első feladat annak tisztázása, hogy valóban onnan jön-e: az orrvérzés és a gyomorvérzés egyaránt utánozhatja.',

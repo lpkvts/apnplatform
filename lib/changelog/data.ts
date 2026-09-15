@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.1',
+    date: '2026-09-15',
+    title: 'Hiányzó ikon a haemoptoénál',
+    summary: 'A tüdő emoji helyett vércsepp — ugyanaz, mint a vérzéses kórképeknél.',
+    entries: [
+      {
+        id: 'v1701-ikon', kind: 'javitas', title: 'A tüdő emoji nem jelent meg',
+        body: 'Ugyanaz az ok, mint korábban a szív- és érrendszeri csoportnál: a tüdő emoji a 2020-as készletből való, ezért régebbi rendszereken üres helyként jelenik meg. Helyette vércsepp került rá — az régebbi, mindenhol látszik, és egyben össze is köti a vérzéses kórképekkel. Az összes többi akut ikon 2019 előtti készletből származik, ezért azoknál nem várható hasonló gond.',
+        href: '/betegsegtar/akut',
+      },
+    ],
+  },
+  {
     version: '1.70.0',
     date: '2026-09-15',
     title: 'Hazai irányelvek a jegyzékben',
