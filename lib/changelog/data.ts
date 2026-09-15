@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.4',
+    date: '2026-09-15',
+    title: 'Jelen idő a közreműködőknél',
+    summary: 'A fejlesztés folyamatos, ezért a szöveg is jelen időben szól.',
+    entries: [
+      {
+        id: 'v1704-szoveg', kind: 'eszkoz', title: 'Lektorálják és építik',
+        body: 'A múlt idő lezárt munkát sugallt, pedig a közreműködés tartó együttműködés. A hivatkozások, az oldal bevezetője és a szerkesztői felület szövege egyaránt jelen időbe került, és a bevezető ki is mondja, hogy a lista bővül.',
+        href: '/kozremukodok',
+      },
+    ],
+  },
+  {
     version: '1.70.3',
     date: '2026-09-15',
     title: 'A közreműködők három helyről elérhetők',

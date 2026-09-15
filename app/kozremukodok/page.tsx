@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Közreműködők — APN-MED',
-  description: 'Akik a platform szakmai tartalmát és fejlesztését segítették.',
+  description: 'Akik a platform szakmai tartalmát és fejlesztését segítik.',
 }
 
 /**
@@ -33,8 +33,8 @@ export default async function KozremukodokPage() {
       <p className="lp-lead" style={{ marginBottom: 26 }}>
         A platform szakmai tartalma nem egyetlen ember munkája. Az itt
         felsoroltak lektorálással, szakmai tanácsadással, tartalomfejlesztéssel
-        vagy a rendszer építésével segítették, hogy az APN-MED használható
-        legyen a betegágy mellett.
+        vagy a rendszer építésével segítik, hogy az APN-MED használható legyen
+        a betegágy mellett. A fejlesztés folyamatos, ezért a lista is bővül.
       </p>
 
       <Kozremukodok lista={lista} />

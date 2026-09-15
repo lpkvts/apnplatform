@@ -20,7 +20,7 @@ export async function KozremukodokLink({
     return (
       <p className="kozr-lablec">
         <Link href="/kozremukodok">Közreműködők</Link>
-        <span>Akik a tartalmat lektorálták és a platformot építették</span>
+        <span>Akik a tartalmat lektorálják és a platformot építik</span>
       </p>
     )
   }
@@ -29,7 +29,7 @@ export async function KozremukodokLink({
     <Link className="lst-sor" href="/kozremukodok">
       <span className="lst-fo">
         <b>Közreműködők</b>
-        <span>Akik a tartalmat lektorálták és a platformot építették</span>
+        <span>Akik a tartalmat lektorálják és a platformot építik</span>
       </span>
       <span className="lst-meta">köszönet</span>
     </Link>

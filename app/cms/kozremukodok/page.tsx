@@ -24,7 +24,7 @@ export default async function CmsKozremukodokPage() {
       <Link className="sh-back" href="/cms">‹ Szerkesztés</Link>
       <OldalFej cim="Közreműködők" meta={`${lista.length} fő`} />
       <p className="sub" style={{ marginTop: -6, marginBottom: 14 }}>
-        Akik a platform szakmai tartalmát és fejlesztését segítették.
+        Akik a platform szakmai tartalmát és fejlesztését segítik.
       </p>
 
       {/* A nyilvános megjelenésnek két feltétele van, és mindkettő könnyen
