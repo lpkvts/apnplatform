@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.75.0',
+    date: '2026-09-15',
+    title: 'ESC 2026 — három új irányelv',
+    summary: 'A szívelégtelenség besorolása megváltozott, és minden szívbeteget vesére kell szűrni.',
+    entries: [
+      {
+        id: 'v1750-szivelegtelenseg', kind: 'szakmai', title: 'A közepesen csökkent forma megszűnt',
+        body: 'Ez a legnagyobb változás, és minden szívelégtelen beteget érint. A 41–49% közötti ejekciós frakciójú forma megszűnt önálló kategóriaként — két fenotípus maradt, egyetlen határral: 50% alatt csökkent, 50% felett megtartott. Az indok, hogy a köztes forma kórélettanilag és kezelési válaszban közelebb áll a csökkenthez; az elkülönítés eredetileg vizsgálati beválasztási okokból született.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1750-kezeles', kind: 'szakmai', title: 'Ami ebből a kezelésre következik',
+        body: 'Aki eddig a köztes csoportban volt bizonytalanabb ajánlásokkal, most egyértelműen a csökkent csoportba kerül — és rá a teljes, négyes alapkezelés vonatkozik. A gondozott betegek dokumentációjában érdemes átnézni, kiket érint. Új fogalmi rend is bekerült: az alapkezelés a bizonyítottan halálozáscsökkentő szereket jelenti, és megtartott formánál is van már ilyen — mineralokortikoid-receptor-antagonista és SGLT2-gátló.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1750-vese', kind: 'szakmai', title: 'Minden szívbeteget vesére kell szűrni',
+        body: 'Megjelent az első önálló ESC-irányelv a szív- és érrendszeri betegség és a krónikus vesebetegség kapcsolatáról, az Európai Nefrológiai Társasággal közösen. A fő ajánlás: minden szívbetegnél el kell végezni a vesefunkció és a vizelet albumin vizsgálatát. A vesebetegség korai szakaszban tünetmentes, ezért csak szűréssel deríthető fel.',
+        href: '/betegsegtar/ckd',
+      },
+      {
+        id: 'v1750-verziok', kind: 'eszkoz', title: 'A verziókezelés működésben',
+        body: 'A korábbi kiadások nem tűntek el: a 2021-es szívelégtelenség-irányelv a 2026-os lapján, „Korábbi verziók” alatt érhető el. Ez az első alkalom, hogy a most bevezetett verziókezelés valós frissítésnél dolgozik.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1750-infarktus', kind: 'szakmai', title: 'Ötödik infarktus-meghatározás',
+        body: 'Az ESC, az ACC, az AHA és a World Heart Federation közös dokumentuma a negyediket váltja fel. A meghatározás nem elméleti kérdés: ezen múlik a betegút és a kezelés. A troponin-emelkedés önmagában nem infarktus — a klinikai kép és a kórélettani ok együtt dönt.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.74.0',
     date: '2026-09-15',
     title: 'Forrásfelderítés',
