@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.76.0',
+    date: '2026-09-15',
+    title: 'Gyógyszertár bővítés — kardio és véralvadás',
+    summary: 'Tizenhárom új hatóanyag, négy új alcsoport. A gyógyszertár 61 hatóanyagra nőtt.',
+    entries: [
+      {
+        id: 'v1760-kardio', kind: 'betegseg', title: 'Szív- és érrendszer',
+        body: 'Négy szartán és egy kalciumcsatorna-blokkoló a vérnyomáskezeléshez, karvedilol a béta-blokkolók közé, valamint két új alcsoport a szívelégtelenséghez: a sacubitril/valzartán és az SGLT2-gátlók. Az utóbbi a 2026-os irányelv szerint mindkét fenotípus alapkezelésének része.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1760-thrombocyta', kind: 'betegseg', title: 'Thrombocytaaggregáció-gátlók',
+        body: 'Új alcsoport a véralvadás alatt: acetilszalicilsav, klopidogrél, prazugrél, tikagrelor. Az adatlapok kimondják, hogy ezek nem alvadásgátlók — az INR nem mutatja a hatásukat, és a javallatuk is eltér: az artériás elzáródásra ezek valók, a vénásra és a pitvarfibrillációra az alvadásgátlók.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1760-szerkezet', kind: 'szakmai', title: 'Miért nem külön vérnyomás- és szívelégtelenség-csoport',
+        body: 'A két lista erősen átfedne: a béta-blokkolók, a spironolakton és az SGLT2-gátlók mindkettőbe tartoznának. A hatóanyag viszont egy adatlap — ha két helyen áll, előbb-utóbb szétcsúszik. Helyette egy szív- és érrendszeri főcsoport áll, hatásmód szerinti alcsoportokkal; a javallat az adatlapon szerepel.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1760-apn', kind: 'szakmai', title: 'Bővített APN-szemlélet',
+        body: 'Az adatlapokon az ellenőrzési pontok mellett a betegoktatási és adherencia-szempontok is szerepelnek. Néhány példa arra, mit old meg ez: az SGLT2-gátlónál a kezdeti kreatinin-emelkedés nem vesekárosodás és nem ok a leállításra; a tikagrelor okozta nehézlégzés nem szívelégtelenség; a karvedilol kezdeti tünetromlása a beállítás természetes szakasza. Mindhárom gyakori ok az abbahagyásra.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.75.2',
     date: '2026-09-15',
     title: 'A verziókezelés két hibája',
