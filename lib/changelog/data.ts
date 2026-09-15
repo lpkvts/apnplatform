@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.72.0',
+    date: '2026-09-15',
+    title: 'SCORE2 — kardiovaszkuláris kockázatbecslés',
+    summary: 'Az első prevenciós kockázatbecslő a platformon.',
+    entries: [
+      {
+        id: 'v1720-score2', kind: 'funkcio', title: 'Hiányzó eszköz a gondozáshoz',
+        body: 'A platformon tizenkét pontozó volt, de kardiovaszkuláris prevenciós kockázatbecslő egy sem — mind az akut helyzetre készült. Pedig a SCORE2 alapján dől el, kinél elegendő az életmódbeli tanácsadás, és kinél indokolt gyógyszeres kezelés.',
+        href: '/klinika/tesztek?open=score2',
+      },
+      {
+        id: 'v1720-nem-szamol', kind: 'szakmai', title: 'Miért nem számol százalékot',
+        body: 'A SCORE2 nem pontösszeg, hanem régióra kalibrált statisztikai modell. A hibás implementáció itt nem apró pontatlanság: a téves besorolás fölösleges gyógyszeres kezeléshez vagy elmaradó kezeléshez vezet. Az eszköz ezért azt végzi el, ami a gyakorlatban legalább annyit ér — eldönti, alkalmazható-e egyáltalán, és megadja a korcsoporthoz tartozó küszöböket.',
+        href: '/klinika/tesztek?open=score2',
+      },
+      {
+        id: 'v1720-hibak', kind: 'szakmai', title: 'Három gyakori hiba',
+        body: 'A SCORE2 csak látszólag egészséges emberre érvényes: igazolt szívbetegnél, cukorbetegnél, vesebetegnél és örökletes koleszterin-anyagcserezavarnál a becslés értelmetlen, mert ők eleve magas vagy igen magas kockázatúak. Magyarország a magas kockázatú régióba tartozik, tehát a megfelelő táblázat kell — a másik alulbecsülne. A küszöbértékek pedig 2021 óta életkorfüggők, a régi SCORE-nál állandóak voltak.',
+        href: '/klinika/tesztek?open=score2',
+      },
+    ],
+  },
+  {
     version: '1.71.0',
     date: '2026-09-15',
     title: 'Közreműködő jelölése a felhasználók közül',
