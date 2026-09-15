@@ -2498,3 +2498,22 @@ body.is-landing .lap-fel {
 .kozr-jelolo input { width: 16px; height: 16px; flex: none; }
 .lp-footer-l { color: var(--chrome-ink); text-decoration: none; font-weight: 600; }
 .lp-footer-l:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ── Közreműködők hivatkozás az oldalak alján ────────────
+   Diszkrét, de megtalálható: a köszönetnyilvánítás nem verseng a
+   tartalommal, de nem is rejtőzik el. */
+.kozr-lablec {
+  margin: var(--s5) 0 var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.kozr-lablec a {
+  display: block; font-size: var(--t-small); font-weight: 700;
+  color: var(--brand); text-decoration: none;
+}
+.kozr-lablec a:hover { text-decoration: underline; text-underline-offset: 2px; }
+.kozr-lablec span {
+  display: block; font-size: var(--t-caption); color: var(--muted);
+  margin-top: 2px;
+}

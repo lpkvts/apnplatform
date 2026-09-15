@@ -75,6 +75,19 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.3',
+    date: '2026-09-15',
+    title: 'A közreműködők három helyről elérhetők',
+    summary: 'Kezdőlap, Tudástár és profil.',
+    entries: [
+      {
+        id: 'v1703-harom', kind: 'eszkoz', title: 'Kezdőlap, Tudástár, profil',
+        body: 'A köszönetnyilvánítás csak akkor ér valamit, ha meg is találják. A hivatkozás a kezdőlap és a Tudástár aljára került — az utóbbira azért, mert a lektorok a szakmai tartalomhoz kötődnek —, és megmaradt a profil oldalán is. A hivatkozás csak akkor jelenik meg, ha a modul be van kapcsolva, így nem keletkezik út egy elérhetetlen oldalra.',
+        href: '/kozremukodok',
+      },
+    ],
+  },
+  {
     version: '1.70.2',
     date: '2026-09-15',
     title: 'A közreműködők oldal elérhetősége',

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { KozremukodokLink } from '@/components/kozremukodok-link'
 import { OldalFej } from '@/components/oldal-fej'
 import { getFlag } from '@/lib/flags'
 import { Icon } from '@/components/icons'
@@ -57,6 +58,8 @@ export default async function TudastarHub() {
           </Link>
         ))}
       </div>
+
+      <KozremukodokLink valtozat="lablec" />
     </>
   )
 }

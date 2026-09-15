@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { KozremukodokLink } from '@/components/kozremukodok-link'
 import { createClient } from '@/lib/supabase/server'
 import { getCurrentUser } from '@/lib/supabase/user'
 import type { Profile } from '@/lib/types'
@@ -192,6 +193,8 @@ export default async function DashboardPage() {
       )}
         </>
       )}
+
+      <KozremukodokLink valtozat="lablec" />
     </>
   )
 }
