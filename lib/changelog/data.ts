@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.73.0',
+    date: '2026-09-15',
+    title: 'Irányelvek verziókezelése',
+    summary: 'Az új kiadás automatikusan felváltja a korábbit, ami megmarad a történetben.',
+    entries: [
+      {
+        id: 'v1730-foszabaly', kind: 'funkcio', title: 'Egy főszabály',
+        body: 'Ugyanannak az irányelvnek az újabb kiadása automatikusan felváltja a korábbit. A friss verzió látszik a jegyzékben, a korábbiak pedig a lapján, „Korábbi verziók” néven maradnak elérhetők. A rendezés a forrás éve szerint történik, és mentéskor magától lefut.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1730-mi-veszett-el', kind: 'szakmai', title: 'Eddig kétféleképpen veszett el a történet',
+        body: 'A kórképek forrásfrissítésekor a rekord felülíródott — amikor az akut vesekárosodás KDIGO 2012-ről 2026-ra váltott, a régi hivatkozás nyomtalanul eltűnt. A kézzel felvett irányelveknél viszont az új kiadás új sorként került be, és a régi ottmaradt a jegyzékben, jelzés nélkül. Mostantól mindkét eset ugyanúgy működik.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1730-ellenorzo', kind: 'javitas', title: 'Az oszlopellenőrző hiánya',
+        body: 'A séma-ellenőrző csak az első oszlopot ismerte fel, ha egy utasítás többet adott hozzá egyszerre — így a később hozzáadott mezők nem létezőnek látszottak. A javítás után mind a 183 oszlop-hivatkozás ellenőrzött, 45 táblán.',
+        href: '/',
+      },
+      {
+        id: 'v1730-miert', kind: 'szakmai', title: 'Miért nem törlünk',
+        body: 'Egy dokumentált klinikai döntés annak az irányelvnek az alapján született, ami akkor hatályos volt — utólag tudni kell, mi volt az. A korábbi kiadások ezért megmaradnak, csak nem a jegyzékben állnak. Ha valaki mégis egy felváltott kiadást nyit meg, a lap tetején jelzés áll, és egy kattintással átvihet a hatályosra.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.72.3',
     date: '2026-09-15',
     title: 'SCORE2 küszöbtáblázat',

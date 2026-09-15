@@ -52,9 +52,13 @@ for (const m of sql.matchAll(/create table(?: if not exists)? public\.(\w+)\s*\(
 }
 
 // utólag hozzáadott oszlopok
-for (const m of sql.matchAll(/alter table public\.(\w+)\s+add column(?: if not exists)? (\w+)/g)) {
-  const [, tabla, oszlop] = m
-  tablak.set(tabla, [...(tablak.get(tabla) ?? []), oszlop])
+// Egy alter table több oszlopot is hozzáadhat, vesszővel elválasztva — a
+// korábbi minta csak az elsőt ismerte fel, ezért a többi hiányzónak látszott.
+for (const blokk of sql.matchAll(/alter table public\.(\w+)([\s\S]*?);/g)) {
+  const [, tabla, torzs] = blokk
+  for (const o of torzs.matchAll(/add column(?: if not exists)? (\w+)/g)) {
+    tablak.set(tabla, [...(tablak.get(tabla) ?? []), o[1]])
+  }
 }
 
 /* ── A kódban hivatkozott oszlopok ── */

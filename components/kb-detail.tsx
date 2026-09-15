@@ -2,11 +2,18 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import type { Guideline, RelatedScore } from '@/lib/kb/types'
+import type { Guideline, RelatedScore, GuidelineVersion } from '@/lib/kb/types'
 
 type Level = 'gyors' | 'apn' | 'forras'
 
-export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[] }) {
+export function KbDetail({
+  g, related, korabbiak = [],
+}: {
+  g: Guideline
+  related: RelatedScore[]
+  /** Az azonos irányelv korábbi kiadásai, a legfrissebbtől visszafelé. */
+  korabbiak?: GuidelineVersion[]
+}) {
   const [lv, setLv] = useState<Level>('gyors')
   // A body üres is lehet: a kórképekből átvezetett források nem hoznak
   // szakaszokat, csak címet és forrásadatokat. Üres objektumra cseréljük,
@@ -94,6 +101,17 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
         </>
       )}
 
+      {/* Ha ezt a kiadást felváltotta egy újabb, azt a lap tetején kell
+          kimondani — nem a végén, amikor a felhasználó már elolvasta. */}
+      {g.superseded_by && (
+        <div className="kb-felvaltva" role="status">
+          <b>Ez a kiadás már nem hatályos.</b>
+          <Link href={`/klinika/tudastar/${g.superseded_by}`}>
+            Ugrás a hatályos kiadásra
+          </Link>
+        </div>
+      )}
+
       {lv === 'forras' && (
         <>
           <div className="kb-qh">📄 Eredeti, hivatalos forrás</div>
@@ -108,6 +126,35 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
               Hivatalos forrás megnyitása
             </a>
           )}
+          {korabbiak.length > 0 && (
+            <details className="kb-korabbi">
+              <summary>
+                Korábbi verziók
+                <span>{korabbiak.length} kiadás</span>
+              </summary>
+              <div className="lst">
+                {korabbiak.map((k) => (
+                  <Link key={k.id} className="lst-sor"
+                    href={`/klinika/tudastar/${k.id}`}>
+                    <span className="lst-fo">
+                      <b>{k.title}</b>
+                      <span>
+                        {k.source_year ?? 'évszám nélkül'}
+                        {k.status === 'superseded' && ' · felváltva'}
+                      </span>
+                    </span>
+                    <span className="lst-meta">{k.source_year ?? '—'}</span>
+                  </Link>
+                ))}
+              </div>
+              <p className="sub" style={{ margin: '10px 0 0' }}>
+                A korábbi kiadások azért maradnak elérhetők, mert egy
+                dokumentált klinikai döntés annak az irányelvnek az alapján
+                született, ami akkor hatályos volt.
+              </p>
+            </details>
+          )}
+
           {b.refs && b.refs.length > 0 && (
             <div className="card" style={{ marginTop: 12 }}>
               <b>Hivatkozott források</b>

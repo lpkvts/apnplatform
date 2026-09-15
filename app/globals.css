@@ -2565,3 +2565,40 @@ body.is-landing .lap-fel {
   .sc2-ertek.sc2-krit::before { content: 'Igen magas:'; }
   .sc2-ertek { text-align: left; padding: 8px 10px; }
 }
+
+/* ── Irányelv-verziók ────────────────────────────────────
+   A felváltott kiadás jelzése a lap tetején áll: a felhasználónak azelőtt
+   kell tudnia, hogy elolvasta volna a tartalmat. */
+.kb-felvaltva {
+  border-left: 3px solid var(--warn);
+  background: var(--warn-bg);
+  padding: 11px 14px; border-radius: var(--r-sm);
+  margin-bottom: var(--s3);
+}
+.kb-felvaltva b {
+  display: block; font-size: var(--t-small); color: var(--warn);
+}
+.kb-felvaltva a {
+  display: inline-block; margin-top: 5px;
+  font-size: var(--t-small); font-weight: 700; color: var(--brand);
+  text-decoration: none;
+}
+.kb-felvaltva a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* A korábbi kiadások alapból csukva: a hatályos verzió a fő tartalom. */
+.kb-korabbi { margin-top: var(--s4); }
+.kb-korabbi > summary {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--s3); cursor: pointer;
+  font-size: var(--t-caption); font-weight: 800;
+  letter-spacing: .03em; color: var(--brand);
+  padding: 0 0 5px; border-bottom: 1px solid var(--line);
+  list-style: none;
+}
+.kb-korabbi > summary::-webkit-details-marker { display: none; }
+.kb-korabbi > summary span {
+  font-weight: 600; color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.kb-korabbi > summary:hover { color: var(--brand-3); }
+.kb-korabbi[open] > summary { margin-bottom: 10px; }

@@ -20,5 +20,19 @@ export interface Guideline {
   from_disease_slug?: string | null
   source_url?: string | null
   source_year?: string | null
+  /** Az irányelv-család azonosítója: minden kiadás ugyanahhoz tartozik. */
+  family?: string | null
+  /** Ha felváltották, a hatályos kiadás azonosítója. */
+  superseded_by?: string | null
+  status?: string | null
+}
+
+/** Egy irányelv korábbi kiadása a verziótörténetben. */
+export interface GuidelineVersion {
+  id: string
+  title: string
+  source_year: string | null
+  source_url: string | null
+  status: string | null
 }
 export interface RelatedScore { id: string; name: string; abbr?: string }
