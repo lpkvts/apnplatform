@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.2',
+    date: '2026-09-15',
+    title: 'A közreműködők oldal elérhetősége',
+    summary: 'Látszik, miért nem jelenik meg a felvitt adat, és belépve is elérhető.',
+    entries: [
+      {
+        id: 'v1702-allapot', kind: 'javitas', title: 'Miért nem látszik, amit felvittem?',
+        body: 'A nyilvános megjelenésnek két feltétele van: a modul be legyen kapcsolva, és a közreműködő közzétett állapotban legyen. A felvett adat piszkozatként indul, ezért külön lépéssel kell közzétenni. Ez a két feltétel eddig sehol nem látszott — mostantól a szerkesztői felület kimondja, melyik teljesül, és hol lehet a hiányzót pótolni.',
+        href: '/cms/kozremukodok',
+      },
+      {
+        id: 'v1702-eleres', kind: 'javitas', title: 'Belépve sehonnan nem volt elérhető',
+        body: 'A hivatkozás csak a nyilvános láblécben szerepelt, amit belépett felhasználó nem lát. Mostantól a profil oldalán, a verziószám mellett is szerepel — ott, ahol a platformról szóló többi adat.',
+        href: '/profil',
+      },
+    ],
+  },
+  {
     version: '1.70.1',
     date: '2026-09-15',
     title: 'Hiányzó ikon a haemoptoénál',

@@ -25,7 +25,7 @@ function Field({ label, value }: { label: string; value?: string | number | null
 }
 
 export default async function ProfilPage() {
-  const [careerEnabled, passportEnabled] = await Promise.all([getFlag('apn_career', false), getFlag('kompetencia_passport', false)])
+  const [careerEnabled, passportEnabled, kozremukodokOn] = await Promise.all([getFlag('apn_career', false), getFlag('kompetencia_passport', false), getFlag('kozremukodok', false)])
   const supabase = await createClient()
   const user = await getCurrentUser()
   const { role } = await currentRole()
@@ -105,6 +105,9 @@ export default async function ProfilPage() {
 
       <p className="sub" style={{ marginTop: 18, textAlign: 'center', fontSize: 12 }}>
         APN-MED · <Link href="/ujdonsagok" className="sec-l" style={{ fontWeight: 500 }}>v{APP_VERSION}</Link>
+        {kozremukodokOn && (
+          <> · <Link href="/kozremukodok" className="sec-l" style={{ fontWeight: 500 }}>Közreműködők</Link></>
+        )}
       </p>
       <div className="sec-h"><span className="sec-t">Megjelenés</span></div>
       <ThemeSwitch />
