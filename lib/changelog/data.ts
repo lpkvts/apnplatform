@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.66.0',
+    date: '2026-09-15',
+    title: 'A bőrgyógyászati csonkok rendezése',
+    summary: 'Hat duplikátum összevonva, két valóban hiányzó kórkép kidolgozva.',
+    entries: [
+      {
+        id: 'v1660-duplikatum', kind: 'javitas', title: 'Hat csonk már ki volt dolgozva',
+        body: 'A „tartalom fejlesztés alatt” jelzésű nyolc kórképből hat ugyanazt fedte, mint a korábban elkészült adatlapok — csak más azonosítóval, aláhúzásos írásmóddal. Ezek összevonásra kerültek: nem törlődtek, hanem lejárt állapotba kerültek, és a nevük utal arra, melyik lap váltotta fel őket.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1660-kronikus', kind: 'betegseg', title: 'A krónikus seb — a blokk hiányzó alapja',
+        body: 'A nyomási, a vénás, az artériás és a diabéteszes fekély mind krónikus seb, és a gyógyulás akadályai mindegyiknél ugyanazok. Az adatlap ezeket foglalja össze: a sebágy-előkészítést, a nedvességegyensúlyt és a négyhetes szabályt — ha négy hét alatt nincs érdemi csökkenés, a kezelési tervet kell újragondolni, nem a kötszert cserélni.',
+        href: '/betegsegtar/kronikus_seb',
+      },
+      {
+        id: 'v1660-allergias', kind: 'betegseg', title: 'Allergiás bőrreakciók áttekintése',
+        body: 'A formák megjelenésükben hasonlíthatnak, a kezelésük viszont eltér. Az adatlap három kérdéssel szűri ki a súlyos formákat: fáj-e a bőr, érintettek-e a nyálkahártyák, van-e láz. Emellett egy egyszerű elkülönítő jelet is megad: a csalánfolt huszonnégy óránál rövidebb ideig áll fenn egy helyen — ha tovább marad, más kórképről van szó.',
+        href: '/betegsegtar/allergias_borreakciok',
+      },
+    ],
+  },
+  {
     version: '1.65.2',
     date: '2026-09-15',
     title: 'Forráshivatkozások javítása',
