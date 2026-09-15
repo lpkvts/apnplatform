@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.65.0',
+    date: '2026-09-14',
+    title: 'Bőrgyógyászat kiegészítése',
+    summary: 'Nyolc további kórkép — a szakterület tizenhat adatlapra bővült.',
+    entries: [
+      {
+        id: 'v1650-korkepek', kind: 'betegseg', title: 'Nyolc további kórkép',
+        body: 'Artériás lábszárfekély, súlyos gyógyszer okozta bőrreakció, bőrtályog, inkontinencia okozta bőrkárosodás, bőrgombásodás, rühesség, bőrdaganat felismerése, kontakt dermatitis.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1650-tevesztes', kind: 'szakmai', title: 'Amit a leggyakrabban összetévesztenek',
+        body: 'Az artériás fekélyt vénásnak nézik és kompressziót kapnak rá — ez a maradék keringést is elzárja. A két típus elkülönítésének legjobb jele a fájdalom viselkedése: a vénás felpolcolásra enyhül, az artériás rosszabbodik. Az inkontinencia okozta bőrkárosodást pedig nyomási fekélyként kezelik, pedig más a helye, a széle és a mélysége — és más a megelőzése is.',
+        href: '/betegsegtar/arterias-labszarfekely',
+      },
+      {
+        id: 'v1650-felismeres', kind: 'szakmai', title: 'Ahol az ápolónak felismerő szerepe van',
+        body: 'A súlyos gyógyszerreakció első jelei megtévesztően enyhék, de a nyálkahártyák megnézése elkülöníti a közönséges kiütéstől — és a kimenetel azon múlik, milyen gyorsan hagyják el a kiváltó szert. A bőrdaganat felismerése pedig gyakran nem a bőrgyógyászaton történik, hanem ott, ahol a beteg levetkőzik: fürdetéskor látszik a hát, a fejbőr és a talp, amit a beteg maga nem lát.',
+        href: '/betegsegtar/sulyos-borreakcio',
+      },
+      {
+        id: 'v1650-kezmosas', kind: 'szakmai', title: 'A kézfertőtlenítő bőrkímélőbb',
+        body: 'A kontakt dermatitis az egészségügyi dolgozók egyik leggyakoribb foglalkozási betegsége. Az adatlap kiemeli, hogy az alkoholos kézfertőtlenítő kevésbé károsítja a bőrt, mint a gyakori szappanos mosás — ez szembemegy az általános megérzéssel, és az egyik legjobban dokumentált, mégis legkevésbé ismert megállapítás ezen a területen.',
+        href: '/betegsegtar/kontakt-dermatitis',
+      },
+      {
+        id: 'v1650-forras', kind: 'eszkoz', title: 'A források magától a jegyzékbe kerülnek',
+        body: 'Mind a tizenhat kórkép forrása bekerül az irányelvtárba, mert azt a korábban bevezetett átvezetés magától elvégzi. A migráció záró lekérdezése ezt ellenőrzi is.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.64.1',
     date: '2026-09-14',
     title: 'Egységes menü a nyilvános oldalakon',
