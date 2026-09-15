@@ -35,6 +35,10 @@ export default async function CmsPage() {
         <div className="sub" style={{ margin: '4px 0 0' }}>A platform teljes evidenciaállománya — áttekintés és szerkesztés</div>
       </Link>
 
+      <Link className="card klink" href="/cms/forras-felderites">
+        <div className="klink-t">🔎 Forrásfelderítés</div>
+        <div className="sub" style={{ margin: '4px 0 0' }}>Mely források avultak el, és hol keresd az újabb kiadást</div>
+      </Link>
       <Link className="card klink" href="/cms/kozremukodok">
         <div className="klink-t">🤝 Közreműködők</div>
         <div className="sub" style={{ margin: '4px 0 0' }}>Lektorok, szakértők, fejlesztők — köszönetnyilvánítás</div>

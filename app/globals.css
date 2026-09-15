@@ -2602,3 +2602,29 @@ body.is-landing .lap-fel {
 }
 .kb-korabbi > summary:hover { color: var(--brand-3); }
 .kb-korabbi[open] > summary { margin-bottom: 10px; }
+
+/* ── Forrásfelderítés ────────────────────────────────────
+   Az összegzés a lap tetején: a szerkesztőnek először azt kell látnia,
+   mennyi munka vár rá, és csak utána a részleteket. */
+.fd-osszegzes {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  margin-bottom: var(--s3);
+}
+.fd-szam {
+  padding: 12px 14px; border-radius: var(--r-md);
+  border-left: 3px solid var(--line-strong);
+}
+.fd-szam b {
+  display: block; font-size: var(--t-h2); font-weight: 800;
+  line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.fd-szam span {
+  display: block; font-size: var(--t-caption); color: var(--muted);
+  margin-top: 2px;
+}
+.fd-krit { background: var(--alert-bg); border-left-color: var(--alert); }
+.fd-krit b { color: var(--alert); }
+.fd-fig  { background: var(--warn-bg);  border-left-color: var(--warn); }
+.fd-fig b { color: var(--warn); }
+.fd-ok   { background: var(--ok-bg);    border-left-color: var(--ok); }
+.fd-ok b { color: var(--ok); }

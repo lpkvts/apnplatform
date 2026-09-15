@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.74.0',
+    date: '2026-09-15',
+    title: 'Forrásfelderítés',
+    summary: 'Mit kell megnézni, milyen sorrendben, és hol keresd az újabb kiadást.',
+    entries: [
+      {
+        id: 'v1740-felderites', kind: 'funkcio', title: 'Sorba rendezett felülvizsgálat',
+        body: 'Új szerkesztői oldal gyűjti össze, mely források avultak el vagy maradtak régóta ellenőrizetlenül. A sorrendet három tényező adja: a forrás kora, az utolsó ellenőrzés ideje, és hogy hány kórkép támaszkodik rá. Az utolsó azért számít, mert egy tíz kórképnél hivatkozott elavult forrás többet árt, mint egy olyan, amire senki nem mutat.',
+        href: '/cms/forras-felderites',
+      },
+      {
+        id: 'v1740-hol', kind: 'eszkoz', title: 'Hol keresd az újabb kiadást',
+        body: 'Minden forráshoz megjelenik a kiadó, a hivatalos jegyzék hivatkozása, és egy tipp a frissítés ütemével kapcsolatban — az ESC irányelvei például évente, a kongresszuson jelennek meg, a KDIGO tervezetei pedig nyilvános véleményezésen vannak, és a véleményezés alatti változat még nem hatályos.',
+        href: '/cms/forras-felderites',
+      },
+      {
+        id: 'v1740-nincs-ujabb', kind: 'szakmai', title: 'A „nincs újabb” is eredmény',
+        body: 'Az ellenőrzés tényét rögzíteni lehet, megjegyzéssel együtt. Ez azért fontos, mert a „megnéztem, nincs újabb kiadás” épp olyan értékes információ, mint egy frissítés — enélkül a következő átnézés ugyanazokat a forrásokat hozná fel újra.',
+        href: '/cms/forras-felderites',
+      },
+      {
+        id: 'v1740-ai', kind: 'szakmai', title: 'Miért nem keres a gép',
+        body: 'A felület nem keres az interneten és nem hív modellt. Az automatikus keresés téves forrásmegjelölést eredményezhetne — kitalált évszámot vagy tervezetet véglegesnek véve —, ami rosszabb, mint az elavult hivatkozás: annál legalább tudni, hogy régi. A tényleges ellenőrzés így emberi döntés marad.',
+        href: '/cms/forras-felderites',
+      },
+    ],
+  },
+  {
     version: '1.73.0',
     date: '2026-09-15',
     title: 'Irányelvek verziókezelése',
