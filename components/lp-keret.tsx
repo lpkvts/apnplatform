@@ -53,6 +53,9 @@ export function LpLablec() {
           Szakmai és oktatási célú platform. Nem helyettesíti az orvosi döntést
           vagy az intézményi protokollt.
         </p>
+        <p>
+          <Link href="/kozremukodok" className="lp-footer-l">Közreműködők</Link>
+        </p>
       </div>
     </footer>
   )

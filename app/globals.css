@@ -2449,3 +2449,52 @@ body.is-landing .lap-fel {
   display: block; font-size: var(--t-caption); color: var(--muted);
   margin-top: 2px;
 }
+
+/* ── Közreműködők ───────────────────────────────────────
+   Rácsos elrendezés: a nevek egymás mellett állnak, nem egymás alatt —
+   így a lista rövidebb, és a szerep szerinti csoportok jobban elkülönülnek. */
+.kozr-racs {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 10px;
+}
+.kozr {
+  padding: 12px 14px;
+  border-left: 2px solid var(--line-strong);
+}
+/* A kiemelt közreműködő a márkaszínt kapja, és valamivel több helyet. */
+.kozr-kiemelt {
+  border-left: 3px solid var(--brand-3);
+  background: var(--brand-tint);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+}
+.kozr-nev {
+  display: block; font-size: var(--t-body); font-weight: 700;
+  line-height: 1.35;
+}
+.kozr-hely {
+  display: block; font-size: var(--t-caption); color: var(--muted);
+  margin-top: 2px;
+}
+.kozr-terulet {
+  display: block; font-size: var(--t-caption); color: var(--brand);
+  margin-top: 3px; font-weight: 600;
+}
+.kozr-jegyzet {
+  margin: 6px 0 0; font-size: var(--t-caption);
+  line-height: 1.5; color: var(--muted);
+}
+/* A közreműködői űrlap két hasábja keskeny mezőkhöz. */
+.kozr-urlap { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 560px) { .kozr-urlap { grid-template-columns: 1fr; } }
+.kozr-szerepek {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 6px; margin-bottom: 10px;
+}
+.kozr-jelolo {
+  display: flex; align-items: center; gap: 7px;
+  font-size: var(--t-small); cursor: pointer;
+}
+.kozr-jelolo input { width: 16px; height: 16px; flex: none; }
+.lp-footer-l { color: var(--chrome-ink); text-decoration: none; font-weight: 600; }
+.lp-footer-l:hover { text-decoration: underline; text-underline-offset: 2px; }

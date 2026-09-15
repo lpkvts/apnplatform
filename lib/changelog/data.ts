@@ -75,6 +75,34 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.67.0',
+    date: '2026-09-15',
+    title: 'Közreműködők',
+    summary: 'Köszönetnyilvánítás a lektoroknak, szakértőknek és fejlesztőknek.',
+    entries: [
+      {
+        id: 'v1670-oldal', kind: 'funkcio', title: 'Új oldal a közreműködőknek',
+        body: 'A platform szakmai tartalma nem egyetlen ember munkája. Az új oldal azt a helyet adja meg, ahol ez látszik is: lektorok, szakértők, szerzők, tanácsadók, fejlesztők és tesztelők. Az oldal nyilvános — a látogató is láthatja, kik állnak a tartalom mögött, mert a szakmai platform hitelességét ez adja meg.',
+        href: '/kozremukodok',
+      },
+      {
+        id: 'v1670-szerepek', kind: 'eszkoz', title: 'Szerep szerinti csoportosítás',
+        body: 'A lista a szerep szerint csoportosít, nem névsor szerint: az olvasó azt keresi, ki lektorálta a tartalmat, nem azt, hogy ki van a listán. Aki több szerepben közreműködött, mindegyiknél szerepel — a munkája így nem vész el egyetlen besorolás mögött. A kiemelt közreműködők a lista elején, külön szakaszban jelennek meg.',
+        href: '/kozremukodok',
+      },
+      {
+        id: 'v1670-kezeles', kind: 'eszkoz', title: 'Szerkesztői felület',
+        body: 'A közreműködők a szerkesztői felületen vehetők fel és módosíthatók, helyben megnyíló űrlappal. A felvétel piszkozatként indul, és külön lépéssel tehető közzé — így a lista nem a szerkesztés közben változik a látogató szeme előtt.',
+        href: '/cms/kozremukodok',
+      },
+      {
+        id: 'v1670-adatvedelem', kind: 'szakmai', title: 'A nevek személyes adatok',
+        body: 'A szerkesztői felület emlékeztet rá, hogy a felvétel a közreműködő hozzájárulásával történik — és arra is, hogy érdemes egyeztetni, mi jelenjen meg a nevén kívül. Az intézmény és a titulus feltüntetése nem mindenkinek természetes. Az oldalon külön jelzés mondja ki, hogy a közreműködés nem jelent felelősségvállalást a klinikai döntésekért.',
+        href: '/kozremukodok',
+      },
+    ],
+  },
+  {
     version: '1.66.0',
     date: '2026-09-15',
     title: 'A bőrgyógyászati csonkok rendezése',
