@@ -80,7 +80,15 @@ function BlockSource({ src }: { src?: string }) {
 export default async function DiseasePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
   const supabase = await createClient()
-  const { data } = await supabase.from('diseases').select('*').eq('id', id).eq('status', 'published').maybeSingle<Disease>()
+  // Az útvonal azonosítót és slugot is elfogad. A slug beszédesebb és
+  // állandóbb, a generált azonosító viszont a korábbi hivatkozásokban él —
+  // mindkettőnek működnie kell.
+  const azonosito = /^[0-9a-f]{8}-[0-9a-f]{4}-/i.test(id)
+  const { data } = await supabase
+    .from('diseases').select('*')
+    .eq(azonosito ? 'id' : 'slug', id)
+    .eq('status', 'published')
+    .maybeSingle<Disease>()
   if (!data) notFound()
   const copilotEnabled = await getFlag('apn_copilot', false)
   if (data.is_stub) {

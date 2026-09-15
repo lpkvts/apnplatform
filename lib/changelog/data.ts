@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.65.2',
+    date: '2026-09-15',
+    title: 'Forráshivatkozások javítása',
+    summary: 'A kórképből átvezetett források megnyithatók.',
+    entries: [
+      {
+        id: 'v1652-404', kind: 'javitas', title: 'Hibaoldal a forrásokra kattintva',
+        body: 'A kórképekből átvezetett források hibaoldalra vittek. Az ok az volt, hogy a betegségtár és az irányelvtár csak belső azonosítót fogadott el, az átvezetés viszont beszédes azonosítót ad — a kórkép slugját, illetve a „korkep:” előtagú külső azonosítót. Mindkét oldal mostantól mindkét formát kezeli, tehát a korábbi hivatkozások sem szakadnak meg.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1652-kontextus', kind: 'eszkoz', title: 'Visszautalás a kórképre',
+        body: 'A kórképből átvezetett forrás lapján megjelenik, melyik kórképről származik, és onnan egy kattintással elérhető az adatlap. Az irányelv önmagában csak egy cím és egy évszám — a szövegkörnyezetét a kórkép adja.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.65.1',
     date: '2026-09-14',
     title: 'A kapcsolók nem váltottak át',

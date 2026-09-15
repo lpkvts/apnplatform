@@ -30,6 +30,17 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
     <>
       <Link className="sh-back" href="/klinika/tudastar">‹ Tudástár</Link>
       <h1 className="h1">{g.title}</h1>
+      {/* A kórképből átvezetett forrásnál a kórkép adja a szövegkörnyezetet:
+          onnan derül ki, mire vonatkozik az irányelv. */}
+      {g.from_disease_slug && (
+        <p className="sub" style={{ marginTop: -4 }}>
+          Forrás a{' '}
+          <Link href={`/betegsegtar/${g.from_disease_slug}`} className="sec-l">
+            kórkép adatlapjáról
+          </Link>
+          {g.source_year && ` · ${g.source_year}`}
+        </p>
+      )}
 
       <div className="kb-levels">
         <button className={lv === 'gyors' ? 'kb-lv on' : 'kb-lv'} onClick={() => setLv('gyors')}>Gyors válasz</button>
