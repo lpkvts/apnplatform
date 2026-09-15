@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.68.1',
+    date: '2026-09-15',
+    title: 'Hibaoldal a forrásoknál',
+    summary: 'Az APN-összefoglaló és az eredeti forrás nézet megnyitható.',
+    entries: [
+      {
+        id: 'v1681-hiba', kind: 'javitas', title: 'Üres adatmező okozta a hibát',
+        body: 'A kórképekből átvezetett források bejegyzése nem tartalmazott részletadatokat, a felület viszont onnan olvasta volna a szakaszokat — ezért a nézetváltás hibaoldalra futott. A felület mostantól elviseli az üres mezőt, és az átvezetés is kitölti a forrás adatait.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1681-tartalom', kind: 'eszkoz', title: 'A forrás önmagában is értelmes',
+        body: 'Az átvezetett bejegyzés két szakaszt kap a kórkép adatlapjáról: mire vonatkozik, és miért fontos. Ennyi elég ahhoz, hogy a jegyzékben álló forrás önmagában is használható legyen — a teljes tartalom viszont a kórképnél marad, ahová egy kattintással el lehet jutni.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.68.0',
     date: '2026-09-15',
     title: 'Elektrolit- és sav-bázis blokk',

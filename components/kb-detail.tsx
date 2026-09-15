@@ -8,7 +8,10 @@ type Level = 'gyors' | 'apn' | 'forras'
 
 export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[] }) {
   const [lv, setLv] = useState<Level>('gyors')
-  const b = g.body
+  // A body üres is lehet: a kórképekből átvezetett források nem hoznak
+  // szakaszokat, csak címet és forrásadatokat. Üres objektumra cseréljük,
+  // különben a mezőhivatkozások hibát dobnak.
+  const b = g.body ?? {}
 
   const RelatedBox = () =>
     related.length ? (
@@ -63,12 +66,30 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
       {lv === 'apn' && (
         <>
           <div className="kb-qh">📋 Mit kell tudnom APN-ként?</div>
-          {(b.sections ?? []).map((s, i) => (
-            <div className="card" key={i}>
-              <b>{s[0]}</b>
-              <p style={{ margin: '6px 0 0' }}>{s[1]}</p>
+          {(b.sections ?? []).length > 0 ? (
+            (b.sections ?? []).map((s, i) => (
+              <div className="card" key={i}>
+                <b>{s[0]}</b>
+                <p style={{ margin: '6px 0 0' }}>{s[1]}</p>
+              </div>
+            ))
+          ) : g.from_disease_slug ? (
+            /* A kórképből átvezetett forrásnál a részletek a kórkép
+               adatlapján vannak — oda irányítunk, üres lap helyett. */
+            <div className="card">
+              <b>A részletek a kórkép adatlapján</b>
+              <p style={{ margin: '6px 0 0' }}>
+                Ez a bejegyzés egy kórkép forrásaként került a jegyzékbe. Az
+                APN-teendők, a figyelmeztető jelek és a kezelés ott olvashatók.
+              </p>
+              <Link className="btn ghost sm" href={`/betegsegtar/${g.from_disease_slug}`}
+                style={{ marginTop: 10 }}>
+                Kórkép megnyitása
+              </Link>
             </div>
-          ))}
+          ) : (
+            <p className="sub">Ehhez a forráshoz még nincs APN-összefoglaló.</p>
+          )}
           <RelatedBox />
         </>
       )}
@@ -78,12 +99,12 @@ export function KbDetail({ g, related }: { g: Guideline; related: RelatedScore[]
           <div className="kb-qh">📄 Eredeti, hivatalos forrás</div>
           <div className="card">
             <div className="row"><span className="sub" style={{ margin: 0 }}>Azonosító</span><b>{g.external_id}</b></div>
-            <div className="row"><span className="sub" style={{ margin: 0 }}>Verzió</span><b>{b.version || g.version}</b></div>
+            <div className="row"><span className="sub" style={{ margin: 0 }}>Verzió</span><b>{b.version || g.version || g.source_year || '—'}</b></div>
             {b.updated && <div className="row"><span className="sub" style={{ margin: 0 }}>Frissítve</span><b>{b.updated}</b></div>}
-            <div className="row" style={{ borderBottom: 'none' }}><span className="sub" style={{ margin: 0 }}>Kiadó / forrás</span><b style={{ textAlign: 'right' }}>{b.source_name}</b></div>
+            <div className="row" style={{ borderBottom: 'none' }}><span className="sub" style={{ margin: 0 }}>Kiadó / forrás</span><b style={{ textAlign: 'right' }}>{b.source_name || g.title}</b></div>
           </div>
-          {b.source_url && (
-            <a className="btn" href={b.source_url} target="_blank" rel="noopener" style={{ justifyContent: 'center', width: '100%' }}>
+          {(b.source_url || g.source_url) && (
+            <a className="btn" href={b.source_url || g.source_url || '#'} target="_blank" rel="noopener" style={{ justifyContent: 'center', width: '100%' }}>
               Hivatalos forrás megnyitása
             </a>
           )}
