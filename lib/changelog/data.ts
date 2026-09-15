@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.5',
+    date: '2026-09-15',
+    title: 'Rövidebb „Mire használják” lista',
+    summary: 'A nyitóoldalon a helyzetek és a hasznuk egy-egy sorban.',
+    entries: [
+      {
+        id: 'v1705-lista', kind: 'eszkoz', title: 'Tömörebb megfogalmazás',
+        body: 'A korábbi sorok felsorolták a részleteket — mit lehet megnyitni, mit lehet kitölteni —, ami alatta úgyis szerepel a modullistában. Most a helyzet és a haszon áll egymás alatt: betegágy mellett gyors szakmai segítség, labor és leletek értelmezése, esetek elemzése, tanulás, mentorkeresés.',
+        href: '/',
+      },
+      {
+        id: 'v1705-ikonok', kind: 'eszkoz', title: 'Az ikonok a jelentéshez igazodnak',
+        body: 'A vonalas készletből: sztetoszkóp az ágy melletti munkához, lombik a laborhoz, agy a klinikai gondolkodáshoz, diáksapka a tanuláshoz, kézfogás a mentoráláshoz.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.70.4',
     date: '2026-09-15',
     title: 'Jelen idő a közreműködőknél',

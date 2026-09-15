@@ -135,16 +135,16 @@ export function Landing() {
           <div className="lp-modulok">
             <div className="lp-mod-fej">Mire használják</div>
             {[
-              { ik: 'droplet', cim: 'Ágy mellett, telefonon',
-                le: 'Vérgáz értelmezése, pontozó kitöltése, laborérték ellenőrzése' },
-              { ik: 'book', cim: 'Vizit előtt',
-                le: 'Betegség áttekintése, protokoll megnyitása, teendők átfutása' },
-              { ik: 'pulse', cim: 'Gyakorlásra',
-                le: 'EKG-esetek elemzése lépésenként, saját fejlődés követése' },
-              { ik: 'courses', cim: 'Oktatóteremben',
-                le: 'Klinikai eset kivetítve, kérdés a csoportnak, pontozó egy kattintásra' },
+              { ik: 'stethoscope', cim: 'Betegágy mellett',
+                le: 'Gyors szakmai segítség' },
+              { ik: 'flask', cim: 'Labor és leletek',
+                le: 'Értelmezés és összefüggések' },
+              { ik: 'brain', cim: 'Esetek elemzésére',
+                le: 'Klinikai gondolkodás' },
+              { ik: 'grad', cim: 'Tanulásra',
+                le: 'Gyakorlás és tudásellenőrzés' },
               { ik: 'handshake', cim: 'Ha elakadsz',
-                le: 'Mentorkeresés szakterület és téma szerint' },
+                le: 'Mentor és szakmai segítség' },
             ].map((m) => (
               <div className="lp-mod" key={m.cim}>
                 <span className="lp-mod-ik"><Icon name={m.ik} size={19} /></span>
