@@ -75,6 +75,24 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.72.2',
+    date: '2026-09-15',
+    title: 'A széles elrendezés beragadása',
+    summary: 'A megjelenítési mód mostantól követi a navigációt.',
+    entries: [
+      {
+        id: 'v1722-mod', kind: 'javitas', title: 'A platform teljes képernyőre húzva maradt',
+        body: 'A szerkesztői felület széles, adminisztratív elrendezésben fut. Ha a felhasználó onnan kilépett — mentés, navigáció vagy frissítés után —, a széles elrendezés ottragadt a többi oldalon is. Az ok az volt, hogy a megjelenítési módot a szerver állította be, a gyökér elrendezés viszont nem renderelődik újra minden lapváltásnál.',
+        href: '/',
+      },
+      {
+        id: 'v1722-kovetes', kind: 'eszkoz', title: 'Miért nem elég a teljes újratöltés',
+        body: 'Korábban a kapcsolóknál teljes oldalbetöltéssel oldottuk meg ugyanezt, de az minden érintett műveletnél külön beavatkozást kívánt volna — és a sima navigációnál nem is működne. Mostantól a felület az aktuális útvonalból tartja karban a megjelenítési módot, ami minden esetet lefed: mentést, navigációt és frissítést egyaránt.',
+        href: '/',
+      },
+    ],
+  },
+  {
     version: '1.72.1',
     date: '2026-09-15',
     title: 'ESC 2024 vérnyomás-irányelv',

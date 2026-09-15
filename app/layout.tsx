@@ -1,4 +1,5 @@
 import './globals.css'
+import { BodyMode } from '@/components/body-mode'
 import type { ReactNode } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { Nav } from '@/components/nav'
@@ -89,6 +90,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         )}
         </FavoritesProvider>
         {!sajatKeret && <BottomNav />}
+        <BodyMode />
         <PwaRegister />
         {/* Telepítés felajánlása. Csak akkor jelenik meg, ha a platform még nincs
             telepítve, és a felhasználó nem utasította el korábban. */}
