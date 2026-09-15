@@ -2517,3 +2517,8 @@ body.is-landing .lap-fel {
   display: block; font-size: var(--t-caption); color: var(--muted);
   margin-top: 2px;
 }
+
+/* ── Közreműködő-kereső ─────────────────────────────────── */
+.kozr-kereso { margin-bottom: 12px; }
+.kozr-kereso-sor { display: flex; gap: 8px; }
+.kozr-kereso-sor .field { flex: 1; }

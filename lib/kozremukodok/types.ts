@@ -31,8 +31,24 @@ export const ROLE_HINT: Record<ContributorRole, string> = {
   tesztelo: 'Visszajelzések a fejlesztés során.',
 }
 
+/** Közreműködőnek jelölhető felhasználó. */
+export interface ContributorCandidate {
+  user_id: string
+  full_name: string | null
+  email: string | null
+  title: string | null
+  workplace: string | null
+  specialty: string | null
+}
+
 export interface Contributor {
   id: string
+  /**
+   * A kapcsolt felhasználói fiók, ha a közreműködőt a regisztráltak közül
+   * jelölték. A név ettől függetlenül önálló: a felvételkor átmásolódik,
+   * de utána szerkeszthető.
+   */
+  user_id: string | null
   name: string
   title: string | null
   organization: string | null

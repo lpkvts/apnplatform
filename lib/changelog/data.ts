@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.71.0',
+    date: '2026-09-15',
+    title: 'Közreműködő jelölése a felhasználók közül',
+    summary: 'Keresés névre vagy e-mailre, és az adatok betöltése egy kattintással.',
+    entries: [
+      {
+        id: 'v1710-jeloles', kind: 'funkcio', title: 'Nem kell begépelni',
+        body: 'A lektorok és a szakértők többsége használja is a platformot, ezért a nevük kézi begépelése fölösleges munka és hibaforrás. A szerkesztői felületen mostantól kereshetők a regisztrált felhasználók, és a találatra kattintva az űrlap kitöltődik a profil adataival — névvel, titulussal, munkahellyel, szakterülettel.',
+        href: '/cms/kozremukodok',
+      },
+      {
+        id: 'v1710-laza', kind: 'szakmai', title: 'A kapcsolat laza marad',
+        body: 'A név a felvételkor átmásolódik, de utána önálló. Ez szándékos: a megjelenített név nem feltétlenül azonos a profilban szereplővel — van, aki titulussal szeretne megjelenni, és van, aki a profilját később átírja anélkül, hogy a köszönetnyilvánítás változna. Minden mező szerkeszthető marad a betöltés után.',
+        href: '/cms/kozremukodok',
+      },
+      {
+        id: 'v1710-hozzajarulas', kind: 'szakmai', title: 'A regisztráció nem hozzájárulás',
+        body: 'A listából választás könnyűvé teszi a felvételt, és pont ezért érdemes kimondani: attól, hogy valaki regisztrált a platformon, még nem járult hozzá a nyilvános megjelenéshez. A szerkesztői felület figyelmeztetése ezt most külön tartalmazza. Aki már szerepel a listán, nem jelenik meg a találatok között, így kétszer nem vehető fel.',
+        href: '/cms/kozremukodok',
+      },
+    ],
+  },
+  {
     version: '1.70.5',
     date: '2026-09-15',
     title: 'Rövidebb „Mire használják” lista',

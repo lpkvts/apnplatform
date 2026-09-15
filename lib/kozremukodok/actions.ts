@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
 import { currentRole } from '@/lib/roles'
-import type { ContributorRole } from './types'
+import type { ContributorRole, ContributorCandidate } from './types'
 
 /**
  * Közreműködők kezelése.
@@ -31,6 +31,7 @@ export async function saveContributor(fd: FormData): Promise<MentesEredmeny> {
 
   const adat = {
     name: nev,
+    user_id: String(fd.get('user_id') ?? '') || null,
     title: String(fd.get('title') ?? '').trim() || null,
     organization: String(fd.get('organization') ?? '').trim() || null,
     roles: szerepek,
@@ -68,4 +69,24 @@ export async function deleteContributor(id: string): Promise<MentesEredmeny> {
   revalidatePath('/kozremukodok')
   revalidatePath('/cms/kozremukodok')
   return { ok: true }
+}
+
+
+/**
+ * Közreműködőnek jelölhető felhasználók keresése.
+ *
+ * A már felvettek nem jelennek meg a találatok között, így nem lehet
+ * kétszer felvenni ugyanazt a személyt.
+ */
+export async function searchCandidates(
+  kereses: string,
+): Promise<ContributorCandidate[]> {
+  const { role } = await currentRole()
+  if (!jogosult(role)) return []
+
+  const supabase = await createClient()
+  const { data } = await supabase.rpc('contributor_candidates', {
+    p_kereses: kereses.trim() || null,
+  })
+  return (data as ContributorCandidate[] | null) ?? []
 }

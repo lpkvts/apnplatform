@@ -3,7 +3,8 @@
 import { useState, useTransition } from 'react'
 import { ConfirmAction } from '@/components/confirm-action'
 import { saveContributor, deleteContributor } from '@/lib/kozremukodok/actions'
-import { ROLE_LABEL, ROLE_ORDER, teljesNev, type Contributor } from '@/lib/kozremukodok/types'
+import { KozremukodoKereso } from '@/components/kozremukodo-kereso'
+import { ROLE_LABEL, ROLE_ORDER, teljesNev, type Contributor, type ContributorCandidate } from '@/lib/kozremukodok/types'
 
 /**
  * Közreműködők kezelése.
@@ -29,9 +30,9 @@ export function KozremukodoAdmin({ lista }: { lista: Contributor[] }) {
     <>
       <div className="safety-note" style={{ marginBottom: 16 }}>
         <b>ⓘ A nevek személyes adatok.</b> A felvétel a közreműködő
-        hozzájárulásával történik. Érdemes egyeztetni azt is, hogy a nevén
-        kívül mi jelenjen meg — az intézmény és a titulus feltüntetése nem
-        mindenkinek természetes.
+        hozzájárulásával történik — a platformon való regisztráció önmagában
+        nem az. Érdemes egyeztetni azt is, hogy a nevén kívül mi jelenjen meg:
+        az intézmény és a titulus feltüntetése nem mindenkinek természetes.
       </div>
 
       {!ujNyitva && (
@@ -111,29 +112,65 @@ function Urlap({
   fut: boolean
   hiba: string | null
 }) {
+  // A kiválasztott felhasználó adatai előtöltik a mezőket, de minden
+  // szerkeszthető marad: a megjelenített név nem feltétlenül azonos a
+  // profilban szereplővel.
+  const [valasztott, setValasztott] = useState<ContributorCandidate | null>(null)
+  const ertek = (mezo: 'name' | 'title' | 'organization' | 'specialties') => {
+    if (valasztott) {
+      if (mezo === 'name') return valasztott.full_name ?? ''
+      if (mezo === 'title') return valasztott.title ?? ''
+      if (mezo === 'organization') return valasztott.workplace ?? ''
+      if (mezo === 'specialties') return valasztott.specialty ?? ''
+    }
+    if (!c) return ''
+    if (mezo === 'specialties') return c.specialties.join(', ')
+    return (c[mezo] ?? '') as string
+  }
+
   return (
     <form
       className="card" style={{ marginTop: 10 }}
       action={(fd) => onSubmit(fd)}
+      key={valasztott?.user_id ?? c?.id ?? 'uj'}
     >
       {c && <input type="hidden" name="id" value={c.id} />}
+      <input type="hidden" name="user_id"
+        value={valasztott?.user_id ?? c?.user_id ?? ''} />
+
+      {/* Új felvételnél felkínáljuk a regisztrált felhasználók közüli
+          jelölést — így nem kell begépelni a nevet és az intézményt. */}
+      {!c && (
+        <>
+          <KozremukodoKereso onValaszt={setValasztott} />
+          {valasztott && (
+            <p className="urlap-kesz" role="status">
+              {valasztott.full_name ?? valasztott.email} adatai betöltve — a mezők
+              szerkeszthetők.
+            </p>
+          )}
+          <div className="sec-h" style={{ marginTop: 14 }}>
+            <span className="sec-t">Adatok</span>
+          </div>
+        </>
+      )}
 
       <div className="kozr-urlap">
         <div>
           <label className="sub lbl-req" htmlFor="kozr-nev">Név</label>
           <input className="field" id="kozr-nev" name="name" required
-            defaultValue={c?.name} placeholder="Kovács Anna" />
+            defaultValue={ertek('name')} placeholder="Kovács Anna" />
         </div>
         <div>
           <label className="sub" htmlFor="kozr-titulus">Titulus</label>
           <input className="field" id="kozr-titulus" name="title"
-            defaultValue={c?.title ?? ''} placeholder="dr., APN, szakápoló" />
+            defaultValue={ertek('title')} placeholder="dr., APN, szakápoló" />
         </div>
       </div>
 
       <label className="sub" htmlFor="kozr-hely">Intézmény</label>
       <input className="field" id="kozr-hely" name="organization"
-        defaultValue={c?.organization ?? ''} />
+        defaultValue={ertek('organization')} />
 
       <label className="sub" style={{ marginTop: 10 }}>Szerepek</label>
       <div className="kozr-szerepek">
@@ -150,7 +187,7 @@ function Urlap({
         Szakterületek — vesszővel elválasztva
       </label>
       <input className="field" id="kozr-terulet" name="specialties"
-        defaultValue={c?.specialties.join(', ') ?? ''}
+        defaultValue={ertek('specialties')}
         placeholder="Nefrológia, Sebellátás" />
 
       <label className="sub" htmlFor="kozr-jegyzet">Miben segített</label>
