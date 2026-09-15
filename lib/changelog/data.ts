@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.72.1',
+    date: '2026-09-15',
+    title: 'ESC 2024 vérnyomás-irányelv',
+    summary: 'Új vérnyomás-kategória és alacsonyabb célérték a tudásbázisban.',
+    entries: [
+      {
+        id: 'v1721-pontositas', kind: 'szakmai', title: 'Mi 2024-es és mi nem',
+        body: 'A SCORE2 maga a 2021-es prevenciós irányelvből való — 2024-ben nem jelent meg új prevenciós ajánlás, tehát a küszöbértékek és a régióbesorolás érvényesek. Ami 2024-ben megváltozott, az a vérnyomás-irányelv, és az köti a kockázatbecslést a kezelési döntéshez.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1721-kategoria', kind: 'szakmai', title: 'Új kategória: emelkedett vérnyomás',
+        body: 'A 120–139/70–89 tartomány külön kategóriát kapott. Ez korábban normális vagy magas-normális volt, ezért a betegek jelentős része átsorolódik. A magas vérnyomás határa változatlanul 140/90.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1721-celertek', kind: 'szakmai', title: 'A célérték 120–129/70–79 lett',
+        body: 'Ez alacsonyabb a korábbi általános 140/90-es célnál, és a gondozott betegek egy részénél kezelésmódosítást jelent. Emelkedett vérnyomásnál a gyógyszeres kezelés akkor indokolt, ha a kockázat magas, és három hónap életmódváltás után is 130/80 felett marad — itt kap szerepet a SCORE2. A gyógyszerelésben a kis adagú kombináció lett az első lépés, lehetőleg egyetlen tablettában, a béta-blokkoló pedig hátrébb sorolódott.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
     version: '1.72.0',
     date: '2026-09-15',
     title: 'SCORE2 — kardiovaszkuláris kockázatbecslés',
