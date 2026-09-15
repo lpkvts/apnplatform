@@ -75,6 +75,62 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.70.0',
+    date: '2026-09-15',
+    title: 'Hazai irányelvek a jegyzékben',
+    summary: 'Az Egészségügyi Szakmai Kollégium irányelvei bekerültek az irányelvtárba.',
+    entries: [
+      {
+        id: 'v1700-hazai', kind: 'szakmai', title: 'Öt hazai irányelv',
+        body: 'A platform forráspolitikája szerint elsődlegesen hazai szakmai irányelvre hivatkozunk, és csak annak hiányában nemzetközire — az irányelvtárban viszont túlsúlyban voltak a nemzetköziek. Bekerült a sürgősségi betegellátás, a perioperatív fájdalomcsillapítás, az opioid használati zavar és az akut koronária szindróma irányelve, valamint az Egészségügyi Szakmai Kollégium teljes irányelvjegyzéke.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1700-forrasok', kind: 'szakmai', title: 'Az akut adatlapok hazai forrásai',
+        body: 'Az akut fájdalom adatlapja a hazai perioperatív fájdalomcsillapítási irányelvre hivatkozik: az a műtéti helyzetre vonatkozik, de a felmérés, a dokumentálás és a lépcsőzetes kezelés elvei általánosan érvényesek. Az akut oedemánál a hazai szívelégtelenség-irányelv szerepel. Ahol nincs hazai irányelv — haemoptoe, cyanosis —, az adatlap ezt kimondja, és megadja, hol kereshető a teljes jegyzék.',
+        href: '/betegsegtar/akut',
+      },
+      {
+        id: 'v1700-lejarat', kind: 'szakmai', title: 'Az irányelvek érvényessége lejár',
+        body: 'A hazai irányelvek érvényessége határozott időre szól, és a felülvizsgálat évekig elhúzódhat. A lejárt irányelv nem automatikusan érvénytelen szakmailag, de a felhasználónak tudnia kell róla — ezért a megjelenés éve minden bejegyzésnél szerepel, és az öt évnél régebbi források külön jelölést kapnak.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
+    version: '1.69.1',
+    date: '2026-09-15',
+    title: 'Mind a húsz akut állapot kidolgozva',
+    summary: 'Haemoptoe, akut oedema, cyanosis és akut fájdalom — a blokk teljes.',
+    entries: [
+      {
+        id: 'v1691-negy', kind: 'betegseg', title: 'A maradék négy adatlap',
+        body: 'Ezzel az akut állapotok mindegyikéhez tartozik részletes adatlap. A blokkban nem marad „tartalom fejlesztés alatt” jelzés.',
+        href: '/betegsegtar/akut',
+      },
+      {
+        id: 'v1691-fajdalom', kind: 'szakmai', title: 'A fájdalomcsillapítás nem fedi el a kórismét',
+        body: 'Ez a tévhit évtizedekig késleltette a hasi fájdalom kezelését, és bizonyítottan téves — a csillapítás nem halasztható a vizsgálat elvégzéséig. Az akut fájdalom adatlapja nem differenciáldiagnózist ad, hanem a csillapítás gyakorlatát: a mérés módját, a nem közlő beteg felismerését, és azt, hogy idős betegnél az alulkezelés a gyakoribb hiba, nem a túlkezelés.',
+        href: '/betegsegtar/akut/akut-fajdalom',
+      },
+      {
+        id: 'v1691-haemoptoe', kind: 'szakmai', title: 'A vérköhögésnél a légút a tét',
+        body: 'Nagy mennyiségű vérköhögésnél a beteg nem a vérvesztésbe, hanem a fulladásba hal bele. Ha ismert, melyik tüdőfél vérzik, a beteget arra az oldalra kell fektetni — így az ép oldal védve marad.',
+        href: '/betegsegtar/akut/haemoptoe',
+      },
+      {
+        id: 'v1691-cyanosis', kind: 'szakmai', title: 'Amikor a pulzoximéter félrevezet',
+        body: 'Ha a beteg kékes, de a mért oxigéntelítettség jó, és az oxigénadás nem javít, kóros vérfesték-forma állhat a háttérben — ilyenkor a pulzoximéter megbízhatatlan. Vérszegény betegnél pedig a kékes szín hiánya nem zárja ki a súlyos oxigénhiányt, mert a megjelenéséhez elegendő vérfesték kell.',
+        href: '/betegsegtar/akut/cyanosis',
+      },
+      {
+        id: 'v1691-oedema', kind: 'szakmai', title: 'Az ACE-gátló okozta arcduzzanat',
+        body: 'Nem allergiás eredetű, ezért az adrenalin, az antihisztamin és a szteroid hatástalan lehet rá. Hónapokkal vagy évekkel a kezelés kezdete után is jelentkezhet, és a duzzanat órákig fokozódhat — a szer elhagyása és a légút szoros figyelése a teendő.',
+        href: '/betegsegtar/akut/akut-oedema',
+      },
+    ],
+  },
+  {
     version: '1.69.0',
     date: '2026-09-15',
     title: 'Akut állapotok — hat új adatlap',
