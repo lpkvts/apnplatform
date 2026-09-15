@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.77.0',
+    date: '2026-09-15',
+    title: 'Gyógyszertár bővítés — diabetes és lipidek',
+    summary: 'Két új főcsoport, kilenc alcsoport, tizenhat hatóanyag.',
+    entries: [
+      {
+        id: 'v1770-diabetes', kind: 'betegseg', title: 'Diabetes és anyagcsere',
+        body: 'Metformin, kanagliflozin, négy GLP-1 analóg, szitagliptin, két szulfonilurea, és egy összefoglaló adatlap az inzulinokról. A főcsoport leírása kimondja, hogy a szerválasztás ma nem csak a vércukron múlik: a szív- és vesebetegség jelenléte önmagában meghatározza, melyik csoport jön szóba.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1770-lipid', kind: 'betegseg', title: 'Lipidcsökkentők',
+        body: 'Három statin, ezetimib, bempedoinsav és két PCSK9-gátló. A csoport központi gondolata, hogy a célérték nem általános szám: a beteg kockázata határozza meg, és igazolt betegségnél a legszigorúbb.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1770-glp1', kind: 'szakmai', title: 'Műtét előtt jelezni kell',
+        body: 'A GLP-1 analógoknál külön szempont került az adatlapokra: a lassult gyomorürülés miatt a gyomor tele lehet a szokásos éhezés ellenére, ami altatás alatt félrenyelést okozhat. Ez valós kockázat, és a beteg gyakran nem tudja, hogy jeleznie kellene.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1770-statin', kind: 'szakmai', title: 'Az izompanasz nem végleges akadály',
+        body: 'A statinok abbahagyásának leggyakoribb oka az izompanasz, pedig a valódi izomkárosodás ritka, és a betegek nagy része másik statint vagy kisebb adagot tolerál. Az adatlapok ezért az újrapróbálást javasolják a végleges elhagyás előtt.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1770-metformin', kind: 'szakmai', title: 'A metformin két elfelejtett szempontja',
+        body: 'A betegnapok rendje: hányással vagy hasmenéssel járó betegség alatt a szert szüneteltetni kell, mert kiszáradás mellett halmozódik. A B12-hiány pedig évek alatt alakul ki, és a zsibbadást gyakran a cukorbetegség idegkárosodásának tulajdonítják — pedig a szer okozza, és pótolható.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.76.0',
     date: '2026-09-15',
     title: 'Gyógyszertár bővítés — kardio és véralvadás',
