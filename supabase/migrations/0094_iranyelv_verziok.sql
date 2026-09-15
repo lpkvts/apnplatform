@@ -18,6 +18,16 @@
 -- irányelvnek az alapján született, ami akkor hatályos volt; utólag tudni
 -- kell, mi volt az.
 
+-- ══ 0. A státusz megszorítás bővítése ════════════════════
+-- A felváltott kiadás új állapotot kap, amit az eredeti megszorítás nem
+-- engedett meg.
+alter table public.guidelines
+  drop constraint if exists guidelines_status_check;
+
+alter table public.guidelines
+  add constraint guidelines_status_check
+  check (status in ('draft', 'review', 'published', 'expired', 'superseded'));
+
 -- ══ 1. Az irányelv-család azonosítója ════════════════════
 -- A család a verzió nélküli azonosító: minden kiadás ugyanahhoz tartozik.
 alter table public.guidelines

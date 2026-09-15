@@ -75,6 +75,52 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.75.2',
+    date: '2026-09-15',
+    title: 'A verziókezelés két hibája',
+    summary: 'Hiányzó státuszérték és túl tág családba sorolás.',
+    entries: [
+      {
+        id: 'v1752-statusz', kind: 'javitas', title: 'A felváltott állapot nem volt engedélyezve',
+        body: 'A verziókezelés bevezette a „felváltott” állapotot, de a tábla eredeti megszorítása csak négy értéket engedett meg. Az új érték beírása ezért elutasításra került, és a migráció megállt. A megszorítás kiegészült az ötödik értékkel.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1752-csalad', kind: 'javitas', title: 'Kórképforrás került idegen családba',
+        body: 'A korábbi ESC-kiadások besorolásánál a minta a címre és a hivatkozásra szűrt — ebbe beleesett a hypervolaemia kórkép forrása is, mert a címében szerepel a szívelégtelenség, és escardio hivatkozású. Egy kórképforrás viszont mindig a saját kórképéhez tartozik. A besorolás mostantól ezt kikényszeríti, és a téves eseteket visszarendezi.',
+        href: '/klinika/tudastar',
+      },
+    ],
+  },
+  {
+    version: '1.75.1',
+    date: '2026-09-15',
+    title: 'A szívelégtelenség adatlapja átdolgozva',
+    summary: 'Teljes tartalom az ESC 2026 szerint, nem csak a forrásmegjelölés.',
+    entries: [
+      {
+        id: 'v1751-adatlap', kind: 'betegseg', title: 'Az egész adatlap újraírva',
+        body: 'A korábbi tartalom a három fenotípusos szemléletet követte, és a régi kezelési fogalomrendszerrel dolgozott. Mivel mindkettő megváltozott, a forrásmegjelölés cseréje önmagában megtévesztő lett volna — az adatlap egészét újra kellett fogalmazni.',
+        href: '/betegsegtar/szivelegtelenseg',
+      },
+      {
+        id: 'v1751-atnezes', kind: 'szakmai', title: 'Konkrét feladat a gondozásban',
+        body: 'Az APN-teendők közé bekerült a besorolás átvezetése: aki 41–49% közötti ejekciós frakcióval a korábbi köztes csoportban volt, most a csökkent csoportba tartozik, és a teljes négyes alapkezelés jár neki. A gondozott betegek átnézése ezért nem adminisztratív formaság, hanem kezelésmódosítást jelenthet.',
+        href: '/betegsegtar/szivelegtelenseg',
+      },
+      {
+        id: 'v1751-megtartott', kind: 'szakmai', title: 'A megtartott formának is van alapkezelése',
+        body: 'Ez a 2026-os irányelv másik érdemi újdonsága: az alapkezelés fogalma már nem csak a csökkent formára vonatkozik. Megtartott ejekciós frakciónál két szercsoport tartozik ide — mineralokortikoid-receptor-antagonista és SGLT2-gátló.',
+        href: '/betegsegtar/szivelegtelenseg',
+      },
+      {
+        id: 'v1751-alulkezeles', kind: 'szakmai', title: 'Az alulkezelés a gyakoribb probléma',
+        body: 'Az adatlap kimondja: a kezelés érdemben javítja a túlélést, de csak akkor, ha a beteg a teljes alapkezelést megkapja a legmagasabb tolerált adagban. Az alulkezelés gyakoribb gond, mint a mellékhatás — és az átmeneti kreatinin-emelkedés nem feltétlenül ok a leállításra.',
+        href: '/betegsegtar/szivelegtelenseg',
+      },
+    ],
+  },
+  {
     version: '1.75.0',
     date: '2026-09-15',
     title: 'ESC 2026 — három új irányelv',

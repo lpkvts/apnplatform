@@ -74,11 +74,14 @@ on conflict (external_id) do update set
 -- ══ A korábbi ESC-kiadások családba sorolása ═════════════
 -- A verziókezelés így ismeri fel, hogy ugyanannak az irányelvnek a korábbi
 -- kiadásáról van szó, és a „Korábbi verziók" alá helyezi.
+-- Csak a nem kórképből származó források kerülhetnek ide: a kórképforrás
+-- családja mindig a saját kórképe.
 update public.guidelines
 set family = 'esc:szivelegtelenseg'
-where family is distinct from 'esc:szivelegtelenseg'
-  and (title ilike '%szívelégtelenség%' or title ilike '%heart failure%')
-  and (title ilike '%ESC%' or source_url ilike '%escardio%');
+where from_disease_slug is null
+  and family is distinct from 'esc:szivelegtelenseg'
+  and title ilike '%ESC%'
+  and (title ilike '%szívelégtelenség%' or title ilike '%heart failure%');
 
 -- ══ A szívelégtelenség kórkép frissítése ═════════════════
 -- A besorolás változása minden szívelégtelen beteget érint, ezért nem elég
