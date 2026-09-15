@@ -75,6 +75,39 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.69.0',
+    date: '2026-09-15',
+    title: 'Akut állapotok — hat új adatlap',
+    summary: 'A húsz akut állapotból tizenhathoz van részletes adatlap.',
+    entries: [
+      {
+        id: 'v1690-adatlapok', kind: 'betegseg', title: 'Hat új akut adatlap',
+        body: 'Tudatzavar, shock, hirtelen neurológiai tünet, gastrointestinalis vérzés, palpitáció és ismeretlen eredetű akut állapotromlás. Mindegyik ugyanazt a szerkezetet követi: orientáció, red flag jelek, stabilitás, anamnézis, EKG, labor, differenciáldiagnózis, APN-fókusz, eszkaláció.',
+        href: '/betegsegtar/akut',
+      },
+      {
+        id: 'v1690-osszevonas', kind: 'eszkoz', title: 'Rokon állapotok egy lapon',
+        body: 'A shock és a hypotensio, illetve a tudatzavar és az akut zavartság ugyanazt a gondolatmenetet követi. Külön lapokra bontva a tartalom nagy része ismétlődne, és a két lap előbb-utóbb szétcsúszna — ezért egy adatlap több rokon állapotot is lefedhet.',
+        href: '/betegsegtar/akut',
+      },
+      {
+        id: 'v1690-romlas', kind: 'szakmai', title: 'Az ápolói aggodalom mint riasztó jel',
+        body: 'Az „ismeretlen eredetű akut állapotromlás” adatlapja kimondja: az „aggódom miatta, de nem tudom megmondani, miért” nem gyenge érv, hanem a betegbiztonsági rendszerek egyik elismert riasztó jele. Az idős beteg súlyos betegsége jellegtelenül kezdődik, és a rendszerezett keresés többet ér, mint a tünetre szabott gondolkodás.',
+        href: '/betegsegtar/akut/akut-allapotromlas',
+      },
+      {
+        id: 'v1690-nyeles', kind: 'szakmai', title: 'Nyelési szűrés stroke-nál',
+        body: 'A hirtelen neurológiai tünet adatlapja kiemeli: a nyelési szűrés elvégzése előtt semmit nem adunk szájon át, sem vizet, sem gyógyszert. Ez a legegyszerűbb és leghatékonyabb szövődmény-megelőzés stroke-ban, mégis gyakran elmarad. A gyors felismerő skálák pedig az elülső keringésre készültek — negatív eredményük nem zárja ki a hátsó scala eseményét.',
+        href: '/betegsegtar/akut/hirtelen-neurologiai-tunet',
+      },
+      {
+        id: 'v1690-szedules', kind: 'javitas', title: 'A szédülés adatlapja rejtve maradt',
+        body: 'A lista „Szédülés” néven hivatkozott rá, az adatlap címe viszont „Akut szédülés” volt — emiatt fejlesztés alattinak látszott, pedig kész volt.',
+        href: '/betegsegtar/akut/szedules',
+      },
+    ],
+  },
+  {
     version: '1.68.1',
     date: '2026-09-15',
     title: 'Hibaoldal a forrásoknál',
