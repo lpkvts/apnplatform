@@ -45,6 +45,9 @@
   /* Felületi árnyalatok — a fehér helyett ezeket használjuk, hogy a sötét
      témában is legyen mihez igazodni. */
   --surface: #FFFFFF;
+  /* A körvonalas gomb háttere. Nem a --brand-tint, mert az ehhez a célhoz
+     túl halvány: a gomb felülete beleolvadna a kártyába. */
+  --btn-ghost-bg: #C7DECF;
   /* Beágyazott felület: kártyán vagy listán belüli blokk. Nem azonos az app
      hátterével — ha az lenne, a rá épülő elemek beleolvadnának. */
   --surface-2: #EDF1F2;
@@ -174,8 +177,17 @@ body {
 .btn:active { transform: scale(.98); }
 .btn:hover { background: var(--brand-dark); }
 .btn:disabled { opacity: .55; }
-.btn.ghost { background: var(--surface); color: var(--brand); border: 1.5px solid var(--brand-3); }
-.btn.ghost:hover { background: var(--brand-tint); border-color: var(--brand-tint); }
+.btn.ghost {
+  background: var(--btn-ghost-bg); color: var(--brand);
+  border: 1.5px solid var(--brand-3);
+}
+/* Lebegtetéskor erősödik, nem halványul. A korábbi megoldás a --brand-tint
+   színre váltott, ami közel azonos volt a gomb alapszínével — ettől a gomb
+   lebegtetéskor gyakorlatilag eltűnt. A sötét márkaszín a fehér szöveggel
+   megfelelő kontrasztot ad. */
+.btn.ghost:hover {
+  background: var(--brand); color: #FFFFFF; border-color: var(--brand);
+}
 .btn.sm { padding: 8px 13px; font-size: var(--t-small); border-radius: var(--r-md); }
 
 /* ===== Űrlap ===== */
@@ -1508,6 +1520,9 @@ summary:focus-visible,
     --bg: #151E28;
     --card: #1E2935;
     --surface: #1E2935;
+    /* Sötét témában a körvonalas gomb háttere a felülethez képest
+       világosodik, nem sötétedik — így ugyanúgy elválik. */
+    --btn-ghost-bg: #1E3A30;
     --surface-2: #27333F;
 
     --line: #333F4B;
@@ -1570,6 +1585,9 @@ summary:focus-visible,
     --bg: #151E28;
     --card: #1E2935;
     --surface: #1E2935;
+    /* Sötét témában a körvonalas gomb háttere a felülethez képest
+       világosodik, nem sötétedik — így ugyanúgy elválik. */
+    --btn-ghost-bg: #1E3A30;
     --surface-2: #27333F;
 
     --line: #333F4B;
@@ -1639,6 +1657,9 @@ summary:focus-visible,
 @media print {
   :root {
     --bg: #FFFFFF; --card: #FFFFFF; --surface: #FFFFFF;
+    /* Sötét témában a körvonalas gomb háttere a felülethez képest
+       világosodik, nem sötétedik — így ugyanúgy elválik. */
+    --btn-ghost-bg: #1E3A30;
     --ink: #000000; --muted: #333333; --line: #CCCCCC;
   }
   .topbar, .bottomnav, .inst-card, .btn { display: none !important; }

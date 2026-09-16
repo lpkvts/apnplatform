@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.78.2',
+    date: '2026-09-15',
+    title: 'A körvonalas gombok elválnak a háttértől',
+    summary: 'A Kisokos és a hasonló gombok felülete eddig azonos volt a kártyáéval.',
+    entries: [
+      {
+        id: 'v1782-gomb', kind: 'javitas', title: 'A gomb felülete beleolvadt',
+        body: 'A körvonalas gombok — Labor Kisokos, Panel értékelés és társaik — háttere fehér volt, ugyanaz, mint a kártyáé. A mérés szerint a kontraszt pontosan 1,00 volt: a felület nem vált el semmiben, csak a vékony keret jelezte, hogy gombról van szó. Mostantól halvány zöld felületet kapnak, ami elválik a kártyától, de nem versenyez az elsődleges gombbal.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1782-hover', kind: 'javitas', title: 'Lebegtetéskor eltűnt',
+        body: 'A korábbi megoldás lebegtetéskor arra a halvány színre váltott, amin a gomb amúgy is állt volna — ettől a gomb gyakorlatilag eltűnt az egér alatt. Most sötét márkaszínre vált fehér szöveggel, ami egyértelmű visszajelzést ad.',
+        href: '/klinika/vergaz',
+      },
+      {
+        id: 'v1782-token', kind: 'eszkoz', title: 'Saját token, nem a meglévő',
+        body: 'A kézenfekvő megoldás a meglévő halvány márkaszín lett volna, de a mérés szerint az túl gyenge: 1,15-ös kontraszt a fehérrel, ami gyakorlatilag láthatatlan. Ezért külön token készült, sötét témával együtt — ott a gomb világosodik a felülethez képest, nem sötétedik.',
+        href: '/klinika/vergaz',
+      },
+    ],
+  },
+  {
     version: '1.78.1',
     date: '2026-09-15',
     title: 'A vérlemezke-gátló csoportok összevonása',
