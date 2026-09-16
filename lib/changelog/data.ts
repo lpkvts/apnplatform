@@ -75,6 +75,29 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.78.1',
+    date: '2026-09-15',
+    title: 'A vérlemezke-gátló csoportok összevonása',
+    summary: 'Ugyanaz a csoport kétszer létezett — a pontosabb megnevezés maradt.',
+    entries: [
+      {
+        id: 'v1781-osszevonas', kind: 'javitas', title: 'Két csoport ugyanarra',
+        body: 'A véralvadás alatt két csoport keletkezett ugyanarra a szercsoportra: a „Vérlemezke-gátlók” hatóanyagok nélkül, és a „Thrombocytaaggregáció-gátlók” néggyel. Az utóbbi megnevezése szakmailag pontosabb, ezért az maradt — de a másik leírásának legjobb részei átkerültek, különösen a kettős kezelés időtartamáról és a beavatkozás előtti szüneteltetésről szóló rész.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1781-ok', kind: 'szakmai', title: 'Miért nem vettem észre',
+        body: 'A bővítés előtt ellenőriztem a meglévő csoportokat, de a régi csoport azonosítójában ékezetes betű volt, és a keresésem ezt nem találta meg. A slug célja épp az, hogy hivatkozható és gépelhető legyen — az ékezet ezt elrontja.',
+        href: '/gyogyszertar',
+      },
+      {
+        id: 'v1781-ellenorzo', kind: 'eszkoz', title: 'Új ellenőrző szkript',
+        body: 'A tanulság szkriptbe került. Három hibát keres, amelyek a bővítések során ténylegesen előfordultak: nem létező csoportra hivatkozó hatóanyagot — ez a legveszélyesebb, mert a beszúrás nem hibázik, csak csendben nem szúr be semmit —, ékezetes vagy szóközös slugot, és gyanúsan hasonló csoportneveket. Az utóbbinál a döntés emberi marad.',
+        href: '/gyogyszertar',
+      },
+    ],
+  },
+  {
     version: '1.78.0',
     date: '2026-09-15',
     title: 'Gyógyszertár bővítés — harmadik kör',
