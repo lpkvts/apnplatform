@@ -436,6 +436,12 @@ body {
 .notif.urgent .notif-i { background: var(--alert-bg); color: var(--alert); }
 .notif-t { font-weight: 700; font-size: var(--t-body); }
 .notif-b { font-size: var(--t-small); color: var(--muted); margin-top: 2px; }
+/* A kártya belseje a link, a törlés gomb mellette áll — így a × megnyomása
+   nem navigál el, és a kártya többi része továbbra is kattintható. */
+.notif-l { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; text-decoration: none; color: inherit; }
+.notif-x { flex: 0 0 auto; width: 30px; height: 30px; border-radius: var(--r-md); border: 1px solid var(--line); background: transparent; color: var(--muted); font-size: 19px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.notif-x:hover { background: var(--alert-bg); border-color: var(--alert-line); color: var(--alert); }
+.notif.urgent .notif-x { border-color: var(--alert-line); }
 
 /* ===== Töltési váz (azonnali navigációs visszajelzés) ===== */
 @keyframes skel-pulse { 0% { opacity: .55 } 50% { opacity: 1 } 100% { opacity: .55 } }

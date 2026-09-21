@@ -2,11 +2,17 @@ import Link from 'next/link'
 import { mikorVolt } from '@/lib/datum'
 import { getNotifications, getAdminCounts, getRecentSignups, getRecentEvents, eventLabel } from '@/lib/notifications'
 import { Icon } from '@/components/icons'
-import { markAllRead, markUpdatesSeen } from './actions'
+import { markAllRead, markUpdatesSeen, deleteNotif, clearAllNotifs } from './actions'
 
-function NotifCard({ n }: { n: { id: string; icon: string; title: string; body?: string; href?: string; urgent?: boolean; when?: string } }) {
+interface CardNotif {
+  id: string; icon: string; title: string; body?: string
+  href?: string; urgent?: boolean; when?: string
+  rowId?: string; torolheto?: boolean
+}
+
+function NotifCard({ n }: { n: CardNotif }) {
   const inner = (
-    <div className={`notif ${n.urgent ? 'urgent' : ''}`}>
+    <>
       <span className="notif-i"><Icon name={n.icon} size={20} /></span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div className="notif-t">{n.title}</div>
@@ -14,11 +20,22 @@ function NotifCard({ n }: { n: { id: string; icon: string; title: string; body?:
         {n.when && <div className="notif-b" style={{ opacity: .7, fontSize: 12 }}>{n.when}</div>}
       </div>
       {n.href && <span className="sh-chev">›</span>}
+    </>
+  )
+  return (
+    <div className={`notif ${n.urgent ? 'urgent' : ''}`}>
+      {n.href
+        ? <Link className="notif-l" href={n.href}>{inner}</Link>
+        : <div className="notif-l">{inner}</div>}
+      {n.torolheto && (
+        <form action={deleteNotif}>
+          <input type="hidden" name="key" value={n.id} />
+          {n.rowId && <input type="hidden" name="rowId" value={n.rowId} />}
+          <button className="notif-x" type="submit" title="Értesítés törlése" aria-label={`Értesítés törlése: ${n.title}`}>×</button>
+        </form>
+      )}
     </div>
   )
-  return n.href
-    ? <Link href={n.href} style={{ textDecoration: 'none', color: 'inherit' }}>{inner}</Link>
-    : <div>{inner}</div>
 }
 
 export default async function ErtesitesekPage() {
@@ -36,14 +53,27 @@ export default async function ErtesitesekPage() {
   const updates = items.filter((n) => n.update)
   const hasStored = tasks.some((n) => n.stored)
 
+  // Az adminisztrátori összesítés is számít a harangon, de nem tétel a
+  // listában. Ha csak ez van, akkor is kell legyen mit megnyomni — különben a
+  // szám ott marad, és semmi nem tünteti el.
+  const adminJelez = !!adminCounts && (
+    adminCounts.uj_regisztracio + adminCounts.uj_tartalom +
+    adminCounts.uj_szerepkor + adminCounts.karbantartas_valtas) > 0
+
+  // A „Mind törlése” akkor is elérhető, ha a lista üresnek látszik: ez a
+  // biztonsági szelep arra az esetre, ha a harangon mégis ragadna szám.
+  const vanJelzes = items.length > 0 || adminJelez
+
   return (
     <>
       <Link className="sh-back" href="/">‹ Kezdőlap</Link>
-      <div className="row" style={{ border: 'none' }}>
+      <div className="row" style={{ border: 'none', gap: 8, flexWrap: 'wrap' }}>
         <h1 className="h1" style={{ margin: 0 }}>Értesítések</h1>
+        <span style={{ flex: 1 }} />
         {hasStored && (
           <form action={markAllRead}><button className="btn ghost sm" type="submit">Mind olvasott</button></form>
         )}
+        <form action={clearAllNotifs}><button className="btn ghost sm" type="submit">Mind törlése</button></form>
       </div>
       {/* ── Adminisztrátori áttekintés ── */}
       {adminCounts && (
@@ -130,8 +160,20 @@ export default async function ErtesitesekPage() {
       )}
 
 
-      {items.length === 0 && (
+      {!vanJelzes && (
         <div className="card"><p style={{ margin: 0 }}>Nincs új értesítés. 🎉</p></div>
+      )}
+
+      {items.length === 0 && adminJelez && (
+        <div className="card">
+          <p style={{ margin: 0 }}>
+            Neked szóló teendő nincs — a fenti platform-összesítés viszont tartalmaz újdonságot.
+            A „Megtekintettem” gombbal ez is nullázható.
+          </p>
+          <form action={markUpdatesSeen} style={{ marginTop: 10 }}>
+            <button className="btn ghost sm" type="submit">Megtekintettem — ne jelezze újra</button>
+          </form>
+        </div>
       )}
 
       {tasks.length > 0 && (
@@ -158,6 +200,10 @@ export default async function ErtesitesekPage() {
         A teendők a fiókod aktuális állapotából származnak. Az „Új a platformon” rész azt mutatja, milyen
         jóváhagyott szakmai tartalom került fel a legutóbbi megtekintésed óta. A teljes lista a{' '}
         <Link href="/ujdonsagok">verziókövetésben</Link> érhető el.
+      </p>
+      <p className="sub" style={{ marginTop: 6, fontSize: 12 }}>
+        A tételek melletti <b>×</b> eltünteti az adott jelzést. A teendőknél ez csak a jelzést
+        némítja el — a tanúsítvány, az eset és a felülvizsgálati dátum változatlan marad.
       </p>
     </>
   )

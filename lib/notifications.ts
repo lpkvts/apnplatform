@@ -10,7 +10,23 @@ export interface Notif {
   id: string; icon: string; title: string; body?: string
   href?: string; when?: string; urgent?: boolean; stored?: boolean
   update?: boolean   // új szakmai tartalom / platform-frissítés (nem teendő)
+  /** A tárolt értesítés adatbázis-azonosítója — csak stored tételnél. */
+  rowId?: string
+  /** Egyesével törölhető-e. A származtatott teendőknél elnémítást jelent. */
+  torolheto?: boolean
 }
+
+/**
+ * A harang számának és a listának EGYEZNIE kell.
+ *
+ * Amíg a szám az adatbázis függvényében, a lista pedig itt dőlt el külön
+ * feltételekkel, a kettő elcsúszott: a harang olyan tételt is számolt, ami a
+ * listában meg sem jelent, így a felhasználónak nem volt mit megnyomnia — a
+ * jelzés beragadt. Az alábbi két ablak a 0103 migráció notification_items()
+ * függvényével azonos, és a scripts/ertesites-ellenorzes.mjs ezt ellenőrzi.
+ */
+export const CERT_NAPOK = 60      // tanúsítvány: ennyi napon belül jár le (a már lejárt is jön)
+export const FOLLOWUP_NAPOK = 7   // utánkövetés: ennyi napra előre
 
 
 
@@ -120,18 +136,24 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
   if (!user) return { items: [], count: 0 }
 
   const today = new Date().toISOString().slice(0, 10)
-  const in60 = new Date(Date.now() + 60 * 86400000).toISOString().slice(0, 10)
+  const certHatar = new Date(Date.now() + CERT_NAPOK * 86400000).toISOString().slice(0, 10)
 
   // Párhuzamos lekérdezések
-  const [profRes, storedRes, certRes] = await Promise.all([
+  const [profRes, storedRes, certRes, nemaRes] = await Promise.all([
     supabase.from('profiles').select('role').eq('id', user.id).maybeSingle<{ role: Role }>(),
     supabase.from('notifications').select('id, kind, title, body, link, created_at')
       .eq('read', false).order('created_at', { ascending: false })
       .returns<{ id: string; kind: string; title: string; body: string | null; link: string | null; created_at: string }[]>(),
+    // Alsó határ nincs: a már lejárt tanúsítvány is jelzés értékű, és a
+    // számláló is így dolgozik. Eltüntetni az egyedi törléssel lehet.
     supabase.from('certifications').select('id, title, expires_on')
-      .gte('expires_on', today).lte('expires_on', in60)
+      .not('expires_on', 'is', null).lte('expires_on', certHatar)
       .returns<{ id: string; title: string; expires_on: string }[]>(),
+    supabase.from('notification_dismissals').select('item_key')
+      .returns<{ item_key: string }[]>(),
   ])
+
+  const nema = new Set((nemaRes.data ?? []).map((d) => d.item_key))
 
   const role = profRes.data?.role ?? null
   const isStaff = !!role && STAFF.includes(role)
@@ -139,11 +161,18 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
   const KIND_ICON: Record<string, string> = { guideline: 'book', review: 'assessment', cert: 'bell' }
 
   for (const n of storedRes.data ?? []) {
-    items.push({ id: n.id, icon: KIND_ICON[n.kind] ?? 'bell', title: n.title, body: n.body ?? undefined, href: n.link ?? undefined, stored: true })
+    items.push({ id: `n-${n.id}`, rowId: n.id, icon: KIND_ICON[n.kind] ?? 'bell', title: n.title, body: n.body ?? undefined, href: n.link ?? undefined, stored: true, torolheto: true })
   }
   for (const c of certRes.data ?? []) {
+    if (nema.has(`c-${c.id}`)) continue
     const d = napokMulva(c.expires_on)
-    items.push({ id: `c-${c.id}`, icon: 'bell', title: 'Lejáró tanúsítvány', body: `${c.title} — ${d} nap múlva jár le.`, href: '/profil', urgent: d <= 30 })
+    const lejart = d < 0
+    items.push({
+      id: `c-${c.id}`, icon: 'bell',
+      title: lejart ? 'Lejárt tanúsítvány' : 'Lejáró tanúsítvány',
+      body: lejart ? `${c.title} — ${Math.abs(d)} napja lejárt.` : `${c.title} — ${d} nap múlva jár le.`,
+      href: '/profil', urgent: d <= 30, torolheto: true,
+    })
   }
 
   // Staff: dátumalapú felülvizsgálati jelzés
@@ -153,19 +182,27 @@ export async function getNotifications(): Promise<{ items: Notif[]; count: numbe
       .eq('status', 'published')
       .returns<{ id: string; title: string; status: string; review_on: string | null; expires_on: string | null }[]>()
     for (const g of review ?? []) {
+      if (nema.has(`x-${g.id}`)) continue
       if ((g.review_on && g.review_on <= today) || (g.expires_on && g.expires_on <= today)) {
-        items.push({ id: `x-${g.id}`, icon: 'assessment', title: 'Felülvizsgálat esedékes', body: g.title, href: '/cms', urgent: true })
+        items.push({ id: `x-${g.id}`, icon: 'assessment', title: 'Felülvizsgálat esedékes', body: g.title, href: '/cms', urgent: true, torolheto: true })
       }
     }
   }
 
-  const soon = new Date(Date.now() + 86400000).toISOString().slice(0, 10)
-  const { data: fups } = await supabase.from('clinical_case_followups').select('id, case_id, horizon, due_on, done').eq('done', false).lte('due_on', soon).returns<{ id: string; case_id: string; horizon: string | null; due_on: string | null; done: boolean }[]>()
+  // Hét nap, nem egy: a számláló is ennyivel dolgozik. Korábban a harang
+  // számolta a néhány nap múlva esedékes utánkövetést, a lista viszont nem
+  // mutatta — ez volt a beragadás egyik forrása.
+  const soon = new Date(Date.now() + FOLLOWUP_NAPOK * 86400000).toISOString().slice(0, 10)
+  const { data: fups } = await supabase.from('clinical_case_followups').select('id, case_id, horizon, due_on, done').eq('done', false).not('due_on', 'is', null).lte('due_on', soon).returns<{ id: string; case_id: string; horizon: string | null; due_on: string | null; done: boolean }[]>()
   if (fups && fups.length) {
     const ids = [...new Set(fups.map((x) => x.case_id))]
     const { data: cs } = await supabase.from('clinical_cases').select('id, title, case_no').in('id', ids).returns<{ id: string; title: string; case_no: number }[]>()
     const byId = new Map((cs ?? []).map((x) => [x.id, x]))
-    for (const fu of fups) { const cc = byId.get(fu.case_id); if (!cc) continue; items.push({ id: `fu-${fu.id}`, icon: 'assessment', title: 'Esedékes utánkövetés', body: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}${fu.horizon ? ` (${fu.horizon})` : ''}`, href: `/klinika/esetek/${fu.case_id}`, urgent: !!(fu.due_on && fu.due_on <= today) }) }
+    for (const fu of fups) {
+      if (nema.has(`fu-${fu.id}`)) continue
+      const cc = byId.get(fu.case_id); if (!cc) continue
+      items.push({ id: `fu-${fu.id}`, icon: 'assessment', title: 'Esedékes utánkövetés', body: `CASE #${String(cc.case_no).padStart(6, '0')} · ${cc.title}${fu.horizon ? ` (${fu.horizon})` : ''}`, href: `/klinika/esetek/${fu.case_id}`, urgent: !!(fu.due_on && fu.due_on <= today), torolheto: true })
+    }
   }
 
   // Új szakmai tartalom — a teendők után, saját jelöléssel
@@ -201,9 +238,17 @@ export const getNotificationCount = cache(async (): Promise<number> => {
     grouped(c.new_dz) + grouped(c.new_gl) + grouped(c.new_lab)
 
   // A kódban szállított újdonságok nem igényelnek adatbázis-hívást.
+  //
+  // A szűrésnek EGYEZNIE kell a listáéval. Korábban itt az alapértelmezett
+  // „mindent mutat” érvényesült, a lista viszont a nem adminisztrátoroknak
+  // csak a lényeges változásokat mutatta. Egy csak javításokat tartalmazó
+  // kiadás után a harang jelzett, a listában viszont semmi nem állt — és a
+  // „Megtekintettem” gomb sem jelent meg, mert azt a lista hossza kapcsolta.
+  // Így a jelzés véglegesen beragadt.
+  const showAll = (await getFlag('changelog_full', false)) || c.is_admin
   const code = c.seen_version
-    ? releasesAfterVersion(c.seen_version).reduce((n, r) => n + r.entries.length, 0)
-    : changesSince(c.seen_at).length
+    ? releasesAfterVersion(c.seen_version, showAll).reduce((n, r) => n + r.entries.length, 0)
+    : changesSince(c.seen_at, showAll).length
 
   // Az adminisztrátori tételek ugyanabból a körből jönnek — külön lekérdezés
   // nélkül. Nem adminisztrátornál ezek nullák.

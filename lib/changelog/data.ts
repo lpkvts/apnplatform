@@ -75,6 +75,38 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.79.0',
+    date: '2026-09-21',
+    title: 'Az értesítések törölhetők, és nem ragadnak be',
+    summary: 'A harangon maradt szám mögött két külön hiba állt: a szám mást számolt, mint amit a lista mutatott, és a jelzések egy részét semmivel nem lehetett eltüntetni.',
+    entries: [
+      {
+        id: 'v1790-torles', kind: 'funkcio', title: 'Értesítés törlése — egyesével és mind',
+        body: 'Minden teendő mellett megjelent egy × gomb, és a fejlécben egy „Mind törlése”. A tárolt értesítés valóban törlődik; a származtatott jelzéseknél — lejáró tanúsítvány, esedékes felülvizsgálat, utánkövetés — a törlés csak a jelzést némítja el, a mögöttes adat érintetlen marad. Eddig ezekre semmilyen törlési lehetőség nem volt: amíg az állapot fennállt, a szám a harangon maradt.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1790-egyezes', kind: 'javitas', title: 'A harang száma és a lista elcsúszott',
+        body: 'A szám az adatbázisban dőlt el, a lista a kódban — külön feltételekkel, és ezek eltértek. A szám a már lejárt tanúsítványt is vitte, a lista csak a még le nem járót mutatta. A szám hét napra előre nézte az utánkövetést, a lista egyre. Ami a számban benne volt, de a listában nem, azt a felhasználó nem tudta eltüntetni. Mostantól mindkettő ugyanabból a forrásból dolgozik, és külön ellenőrzés figyeli, hogy ne csússzon szét újra.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1790-naplo', kind: 'javitas', title: 'A csak javításokat tartalmazó kiadás beragadt',
+        body: 'A harang a változásnapló minden bejegyzését számolta, a lista viszont a nem adminisztrátoroknak csak a lényeges változásokat mutatta. Egy csak javításokat hozó kiadás után a harang jelzett, a listában semmi nem állt — és a „Megtekintettem” gomb sem jelent meg, mert azt a lista hossza kapcsolta. Így a jelzés véglegesen ott maradt.',
+        href: '/ujdonsagok',
+      },
+      {
+        id: 'v1790-admin', kind: 'javitas', title: 'Az adminisztrátori összesítést sem lehetett nullázni',
+        body: 'Az új regisztrációk és tartalomváltozások száma beleszámított a harangba, de nem tételként jelentek meg, hanem a felső összesítő táblában. Ha csak ez adott jelzést, a „Megtekintettem” gomb nem jelent meg sehol. Mostantól ilyenkor is van mit megnyomni.',
+        href: '/ertesitesek',
+      },
+      {
+        id: 'v1790-ellenorzes', kind: 'eszkoz', title: 'Ellenőrzés az elcsúszásra',
+        body: 'Az npm run ellenoriz új szkripttel bővült, amely összeveti az adatbázis és a kód értesítés-feltételeit: az időablakokat, a változásnapló szűrését és a törlési útvonalak meglétét. Ez a fajta hiba némán keletkezik — a kód lefordul, a felület működik, csak a szám nem stimmel —, ezért kell gépi ellenőrzés.',
+      },
+    ],
+  },
+  {
     version: '1.78.2',
     date: '2026-09-15',
     title: 'A körvonalas gombok elválnak a háttértől',
