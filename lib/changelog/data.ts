@@ -75,6 +75,37 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.81.0',
+    date: '2026-09-22',
+    title: 'Tizenegy új kórkép a nefrológiai-urológiai blokkban',
+    summary: 'A blokk kidolgozatlan adatlapjai feltöltve, friss nemzetközi irányelvekkel — és a források automatikusan bekerültek az irányelvjegyzékbe.',
+    entries: [
+      {
+        id: 'v1810-korkepek', kind: 'betegseg', title: 'Tizenegy kidolgozott adatlap',
+        body: 'Nephrosis szindróma, glomerulonephritis, policisztás vesebetegség, vesepótló kezelés gondozása, veseátültetett beteg gondozása, vizelet-inkontinencia, tünetmentes bacteriuria, gyógyszer és kontrasztanyag okozta vesekárosodás, húgyúti elzáródás, prostatitis és húgyhólyagdaganat. Mindegyik az eddigi szerkezet szerint: mikor gondolj rá, mit vizsgálj, labor, képalkotó, vészjelek, APN-teendők, kezelés és utánkövetés.',
+        href: '/betegsegtar',
+      },
+      {
+        id: 'v1810-forrasok', kind: 'forras', title: 'Friss irányelvek, automatikus átvezetéssel',
+        body: 'A hivatkozások a jelenleg hatályos kiadásokra mutatnak: KDIGO 2025 a policisztás vesebetegségre — ez a betegség első önálló irányelve —, EAU 2025 az urológiai kórképekre, KDIGO 2024 a krónikus vesebetegségre. Az akut vesekárosodás irányelvénél a hatályos 2012-es változat szerepel, és az adatlap jelzi, hogy a 2026-os frissítés nyilvános véleményezés alatt áll — tervezetre nem hivatkozunk úgy, mintha végleges lenne. A források a 0082 óta működő átvezetés révén maguktól megjelentek a Tudástár irányelvjegyzékében.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1810-duplikacio', kind: 'eszkoz', title: 'A feltöltés nem hoz létre másodpéldányt',
+        body: 'A „fejlesztés alatt" jelzésű tételek a katalógus-importból származnak, nem migrációból, ezért az azonosítójuk nem ismert előre. Vak beszúrással a vérlemezke-gátlók esete ismétlődött volna: két sor ugyanarra a kórképre. A migráció ezért előbb a meglévő csonkot tölti fel név- és rokonnév-egyezés alapján — az azonosító és a rá mutató hivatkozások megmaradnak —, és csak azt szúrja be újként, amihez nem talált meglévő sort. Kidolgozott adatlapot nem ír felül.',
+      },
+      {
+        id: 'v1810-eos', kind: 'labor', title: 'Eozinofil sejtszám a Labor Kisokosban',
+        body: 'Négy allergológiai adatlap egy nem létező laborazonosítóra hivatkozott, ezért a hivatkozás némán semmit nem jelenített meg. A paraméter most valóban bekerült, APN-szempontokkal: a gyógyszerindítás utáni emelkedés kiütéssel és lázzal súlyos gyógyszerreakcióra, a vesefunkció romlásával együtt pedig gyógyszer okozta vesecsatorna-gyulladásra utal.',
+        href: '/klinika/labor',
+      },
+      {
+        id: 'v1810-ellenorzes', kind: 'eszkoz', title: 'A betegségtár hivatkozásai gépi ellenőrzést kaptak',
+        body: 'A kórképek laborparaméterre, pontozóra és EKG-leletre azonosítóval hivatkoznak. Ha az azonosító nem létezik, semmi nem jelez: a migráció lefut, az adatlap megnyílik, csak a hivatkozott elem hiányzik róla. Az új szkript minden adatlap hivatkozásait összeveti a tényleges készlettel, ellenőrzi a kötelező mezőket, és külön kilistázza azokat a régi adatlapokat, amelyeknél a forrásnak nincs hivatkozása — ezekből tíz van, és külön körben pótolandók.',
+      },
+    ],
+  },
+  {
     version: '1.80.0',
     date: '2026-09-22',
     title: 'NEWS2: a 3 pontos paraméter külön szól, és bejött a 2-es SpO₂-skála',
