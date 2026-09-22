@@ -69,11 +69,19 @@ for (const f of readdirSync(join(GY, dir)).filter((x) => x.endsWith('.sql')).sor
     allapot.set(m[1], { f, nev: m[2].replace(/''/g, "'"), sc, lb, ek, body })
   }
 
-  // Külön body-frissítések (update … set body = '{…}'::jsonb … slug = '…').
+  // Teljes body-csere (update … set body = '{…}'::jsonb … slug = '…').
   for (const m of s.matchAll(/body\s*=\s*('\{"brief_what[\s\S]*?\}')::jsonb[\s\S]{0,600}?slug\s*=\s*'([a-z0-9_-]+)'/g)) {
     const e = allapot.get(m[2])
     if (!e) continue
     try { e.body = JSON.parse(m[1].slice(1, -1).replace(/''/g, "'")); e.f = f } catch { /* átugorjuk */ }
+  }
+
+  // Részleges frissítés (update … set body = body || '{…}'::jsonb … slug = '…').
+  // Csak a felsorolt kulcsokat cseréli, ezért itt is összefűzünk, nem cserélünk.
+  for (const m of s.matchAll(/body\s*=\s*body\s*\|\|\s*('\{[\s\S]*?\}')::jsonb[\s\S]{0,600}?slug\s*=\s*'([a-z0-9_-]+)'/g)) {
+    const e = allapot.get(m[2])
+    if (!e || !e.body) continue
+    try { Object.assign(e.body, JSON.parse(m[1].slice(1, -1).replace(/''/g, "'"))); e.f = f } catch { /* átugorjuk */ }
   }
 }
 
@@ -96,6 +104,13 @@ for (const [slug, e] of allapot) {
   }
   if (e.body.source_name && e.body.source_url && !e.body.version) {
     rossz(`${e.f} · ${slug}: a forrásnál nincs évszám (version)`)
+  }
+
+  // A „MVP 2026" a platform belső jelölése volt, nem kiadási évszám. A
+  // Tudástárban viszont évszámként jelent meg, és 2026-os irányelvnek
+  // látszott — ezért az ilyen helykitöltő nem maradhat a verziómezőben.
+  if (/^MVP/i.test(String(e.body.version ?? ''))) {
+    figyelem.push(`${slug} (${e.nev}) — helykitöltő verziójelölés: „${e.body.version}"`)
   }
 }
 

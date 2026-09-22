@@ -75,6 +75,38 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.82.0',
+    date: '2026-09-22',
+    title: 'Tíz alapkórkép forrása a hatályos kiadásra frissült',
+    summary: 'A platform legfontosabb adatlapjain a forrásnak nem volt hivatkozása, a verziómezőben pedig egy belső helykitöltő állt — ami a Tudástárban 2026-os irányelvnek látszott.',
+    entries: [
+      {
+        id: 'v1820-hivatkozas', kind: 'forras', title: 'A forrás gombja végre visz valahová',
+        body: 'COPD, asztma, hipertónia, 2-es típusú cukorbetegség, pitvarfibrilláció, stroke, pneumónia, szepszis, diabéteszes láb, demencia és delírium: tíz adatlapon szerepelt forrásnév hivatkozás nélkül. A 0082 óta működő átvezetés ezeket hivatkozás nélkül vitte át a Tudástárba, így az „eredeti forrás" gomb sehová nem vezetett. Most mindegyikhez a hatályos kiadás tényleges címe tartozik.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1820-evszam', kind: 'javitas', title: 'A verziómezőben helykitöltő állt',
+        body: 'Mind a tíznél „MVP 2026" szerepelt évszámként. Ez a platform belső jelölése volt a kezdeti tartalomra, a Tudástárban viszont úgy látszott, mintha 2026-os kiadású irányelvről lenne szó — pedig a hivatkozott irányelvek egy része évekkel régebbi. Mostantól mindenhol a valódi kiadási év áll, és a verziókezelés is ehhez tud igazodni.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1820-szepszis', kind: 'szakmai', title: 'Szepszis: a NEWS2 váltotta a qSOFA-t a szűrésben',
+        body: 'A Surviving Sepsis Campaign 2026-ban új irányelvet adott ki — 129 állítás, ebből 46 új. A szűrésre mostantól a NEWS2-t vagy hasonló korai figyelmeztető pontozót ajánlja, és kimondja, hogy a qSOFA önmagában nem elegendő szűrőeszköz; a SOFA a szervi működészavar megítélésére szolgál, nem szűrésre. Az adatlap eddig a kettőt egyenrangúként említette, ezért a pontozó-mezője is frissült.',
+        href: '/klinika/tesztek?open=news2',
+      },
+      {
+        id: 'v1820-friss', kind: 'forras', title: 'Több irányelv időközben új kiadást kapott',
+        body: 'GOLD 2026 a COPD-re, GINA 2026 az asztmára, ADA 2026 a cukorbetegségre — ezek évente frissülnek. Az ESC 2024-es hipertónia- és pitvarfibrilláció-irányelve, az IWGDF 2023-as diabéteszes láb ajánlása és az európai pneumónia-irányelv a hatályos kiadás. A pneumóniánál az adatlap jelzi, hogy 2025-ben megjelent egy újabb amerikai ajánlás is, amelynek egyes pontjai vitatottak.',
+        href: '/klinika/tudastar',
+      },
+      {
+        id: 'v1820-nemirja', kind: 'eszkoz', title: 'A frissítés nem ír felül mást',
+        body: 'A migráció jsonb-összefűzéssel dolgozik: csak a forrásmezőket cseréli, az adatlap minden más tartalma érintetlen marad. A feltétel emellett az üres hivatkozásmező, ezért ha időközben valaki megadta a címet, azt nem bántja, és az ismételt futtatás sem okoz változást. Az ellenőrző szkript mostantól a helykitöltő verziójelölést is jelzi.',
+      },
+    ],
+  },
+  {
     version: '1.81.0',
     date: '2026-09-22',
     title: 'Tizenegy új kórkép a nefrológiai-urológiai blokkban',
