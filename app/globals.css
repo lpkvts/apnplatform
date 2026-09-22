@@ -302,6 +302,9 @@ body {
 .sh-item { padding: 13px 0; border-top: 1px solid var(--line); }
 .sh-q { font-size: var(--t-body); color: var(--ink); margin-bottom: 9px; }
 .sh-help { color: var(--brand-3); font-weight: 400; }
+/* Magyarázó sor a választható tételek fölött — a NEWS2 két SpO₂-skálájánál
+   nem elég a kérdés szövege, tudni kell, melyiket mikor kell választani. */
+.sh-help-b { color: var(--muted); font-size: var(--t-small); margin: 2px 0 6px; line-height: 1.45; }
 .sh-opts { display: flex; flex-wrap: wrap; gap: 7px; }
 .sh-opts.slider .sh-opt { min-width: 42px; text-align: center; }
 .sh-opt { padding: 10px 13px; border: 1.5px solid var(--line); border-radius: var(--r-md); background: var(--surface); color: var(--slate-700); font: inherit; font-size: var(--t-body); cursor: pointer; }

@@ -22,11 +22,27 @@ const TEST_COMPUTE: Record<string, (t: Test, a: Answers) => number> = {
   },
 }
 
+/**
+ * Látszik-e a tétel a jelenlegi válaszok mellett.
+ *
+ * A feltételes tétel egy jelölőnégyzetre hivatkozik. A NEWS2 két SpO₂-skálája
+ * közül mindig csak az egyik érvényes; a másik nem pontozhat, és a
+ * kiértékelést sem akadályozhatja azzal, hogy megválaszolatlan marad.
+ */
+export function itemVisible(t: Test, a: Answers, i: number): boolean {
+  const c = (t.items ?? [])[i]?.showIf
+  if (!c) return true
+  const v = a[c.item]
+  const be = Array.isArray(v) ? v.length > 0 : v != null
+  return be === c.checked
+}
+
 export function testScore(t: Test, a: Answers): number {
   const comp = TEST_COMPUTE[t.id]
   if (comp) return comp(t, a)
   let s = 0
   ;(t.items ?? []).forEach((it: TestItem, i: number) => {
+    if (!itemVisible(t, a, i)) return
     const v = a[i]
     if (it.type === 'check') {
       if (Array.isArray(v)) v.forEach((x) => (s += Number(x)))
@@ -59,7 +75,9 @@ export interface ItemScore {
  */
 export function testItemScores(t: Test, a: Answers): ItemScore[] {
   if (TEST_COMPUTE[t.id]) return []
-  return (t.items ?? []).map((it: TestItem, i: number) => {
+  return (t.items ?? []).flatMap((it: TestItem, i: number) => {
+    // A rejtett tétel a bontásban sem jelenik meg — nem adott pontot.
+    if (!itemVisible(t, a, i)) return []
     const v = a[i]
     let points = 0
     let answered = false
@@ -72,18 +90,34 @@ export function testItemScores(t: Test, a: Answers): ItemScore[] {
       points = Number(v)
       answered = true
     }
-    return {
+    return [{
       // A hosszú kérdéseket rövidítjük: a bontásban a felismerhetőség számít.
       label: it.q.length > 46 ? it.q.slice(0, 44).trimEnd() + '…' : it.q,
       points: Math.round(points * 10) / 10,
       answered,
-    }
+    }]
   })
+}
+
+/**
+ * Azok a tételek, amelyek önmagukban elérik a sürgősségi küszöböt.
+ *
+ * A NEWS2-nél bármely EGY paraméter 3 pontja sürgős felülvizsgálatot indokol,
+ * akkor is, ha az összpontszám alacsony sávba esik. Ez a szabály eddig csak a
+ * sáv tanácsszövegében szerepelt — vagyis épp annál a betegnél volt apróbetűs,
+ * akinél számít.
+ */
+export function testItemFlags(t: Test, a: Answers): ItemScore[] {
+  const f = t.itemFlag
+  if (!f) return []
+  return testItemScores(t, a).filter((x) => x.answered && x.points >= f.points)
 }
 
 export function testComplete(t: Test, a: Answers): boolean {
   return (t.items ?? []).every((it: TestItem, i: number) =>
-    it.type === 'check' ? true : a[i] != null && (a[i] as unknown) !== '',
+    it.type === 'check' || !itemVisible(t, a, i)
+      ? true
+      : a[i] != null && (a[i] as unknown) !== '',
   )
 }
 

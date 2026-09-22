@@ -8,7 +8,7 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { TESTS, TEST_CATS, type Test, type TestItem } from '@/lib/scores/data'
 import { FavStar } from '@/components/favorites-context'
-import { testScore, testComplete, testBand, testItemScores } from '@/lib/scores/engine'
+import { testScore, testComplete, testBand, testItemScores, testItemFlags, itemVisible } from '@/lib/scores/engine'
 
 type AnsMap = Record<number, number | number[]>
 
@@ -154,6 +154,9 @@ function TestDetail({
   const score = complete ? testScore(t, a) : 0
   // Tételenkénti bontás: melyik kérdés mennyit adott hozzá.
   const bontas = complete ? testItemScores(t, a) : []
+  // Az egyetlen paraméter alapján is sürgős tételek — az összpontszámtól
+  // függetlenül. A kitöltés közben is látszik, nem csak a végén.
+  const egyTeteles = testItemFlags(t, a)
   const band = complete ? testBand(t, score) : null
   const apn = band?.apn ?? t.apn
 
@@ -213,17 +216,30 @@ function TestDetail({
           <div className="card">
             <b>Kitöltés — automatikus pontozás</b>
             {(t.items ?? []).map((it, i) => (
-              <ItemRow
-                key={i}
-                it={it}
-                i={i}
-                a={a}
-                onRadio={setRadio}
-                onNum={setNum}
-                onCheck={toggleCheck}
-              />
+              itemVisible(t, a, i) ? (
+                <ItemRow
+                  key={i}
+                  it={it}
+                  i={i}
+                  a={a}
+                  onRadio={setRadio}
+                  onNum={setNum}
+                  onCheck={toggleCheck}
+                />
+              ) : null
             ))}
           </div>
+
+          {/* A küszöböt elérő egyetlen paraméter már kitöltés közben jelez —
+              nem kell megvárni, hogy minden tétel meglegyen. */}
+          {egyTeteles.length > 0 && t.itemFlag && (
+            <div className="sh-urgent">
+              ⚠ {t.itemFlag.text}
+              <div style={{ marginTop: 4, fontWeight: 600 }}>
+                {egyTeteles.map((x) => `${x.label} — ${x.points} pont`).join(' · ')}
+              </div>
+            </div>
+          )}
 
           {/* Oktatóteremben a kitöltött pontozó és az eredmény kivetíthető. */}
           {complete && band && (
@@ -235,12 +251,22 @@ function TestDetail({
                 </div>
                 {band.advice && <p className="sh-res-adv">{band.advice}</p>}
               </div>
+              {egyTeteles.length > 0 && t.itemFlag && (
+                <div className="sh-urgent">
+                  ⚠ {t.itemFlag.text}
+                  <div style={{ marginTop: 4, fontWeight: 600 }}>
+                    {egyTeteles.map((x) => `${x.label} — ${x.points} pont`).join(' · ')}
+                  </div>
+                </div>
+              )}
               <div className="sec-h"><span className="sec-t">A pontozó tételei</span></div>
               {(t.items ?? []).map((it, i) => (
-                <div className="card" key={i}>
-                  <b>{it.q}</b>
-                  {it.help && <p className="sub" style={{ margin: '6px 0 0' }}>{it.help}</p>}
-                </div>
+                itemVisible(t, a, i) ? (
+                  <div className="card" key={i}>
+                    <b>{it.q}</b>
+                    {it.help && <p className="sub" style={{ margin: '6px 0 0' }}>{it.help}</p>}
+                  </div>
+                ) : null
               ))}
             </TeachingMode>
           )}
@@ -275,6 +301,14 @@ function TestDetail({
                 </div>
               )}
 
+              {egyTeteles.length > 0 && t.itemFlag && (
+                <div className="sh-urgent">
+                  ⚠ {t.itemFlag.text}
+                  <div style={{ marginTop: 4, fontWeight: 600 }}>
+                    {egyTeteles.map((x) => `${x.label} — ${x.points} pont`).join(' · ')}
+                  </div>
+                </div>
+              )}
               {band.notify && (
                 <div className="sh-urgent">⚠ Orvos értesítése: {band.notify}</div>
               )}
@@ -352,6 +386,7 @@ function ItemRow({
   return (
     <div className="sh-item">
       <div className="sh-q">{it.q}</div>
+      {it.help && <div className="sh-help-b">{it.help}</div>}
       <div className={it.type === 'slider' ? 'sh-opts slider' : 'sh-opts'}>
         {opts.map((o, oi) => {
           const on = isChk

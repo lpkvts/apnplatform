@@ -75,6 +75,32 @@ export const CHANGE_KIND_META: Record<ChangeKind, { icon: string; label: string 
 
 export const RELEASES: Release[] = [
   {
+    version: '1.80.0',
+    date: '2026-09-22',
+    title: 'NEWS2: a 3 pontos paraméter külön szól, és bejött a 2-es SpO₂-skála',
+    summary: 'A pontozó sávjai helyesek voltak, de két szabály hiányzott belőle — mindkettő pont a legveszélyesebb betegeknél számít.',
+    entries: [
+      {
+        id: 'v1800-egy3', kind: 'szakmai', title: 'Egyetlen 3 pontos paraméter önmagában sürgős',
+        body: 'Az RCP szabálya szerint ha bármely EGY élettani paraméter 3 pontot ad, az sürgős orvosi felülvizsgálatot indokol, az összpontszámtól függetlenül. Ez eddig csak az „Alacsony rizikó" sáv tanácsszövegében szerepelt — vagyis épp annál a betegnél volt apróbetűs, akinél számít. Példa: 225 Hgmm szisztolés vérnyomás, minden más rendben, összpontszám 3 → „Alacsony rizikó". Mostantól külön figyelmeztetés jelenik meg, és már kitöltés közben látszik, nem csak a végén.',
+        href: '/klinika/tesztek?open=news2',
+      },
+      {
+        id: 'v1800-spo2', kind: 'szakmai', title: '2-es SpO₂-skála krónikus hipoxiás betegnek',
+        body: 'Eddig csak az 1-es skála volt kitölthető, a 2-es skálát az ellenjavallat szövege említette, de nem lehetett használni. COPD-s betegnél ez tévedés forrása: a 88–92%-os céltartományban lévő beteg az 1-es skálán 3 pontot kap, pedig a saját célértékén van. A kitöltés elején most egy jelölőnégyzet vált a két skála között, és a 2-es skála a kiegészítő oxigént is figyelembe veszi — a céltartomány feletti telítettség oxigénen túladagolást jelez.',
+        href: '/klinika/tesztek?open=news2',
+      },
+      {
+        id: 'v1800-felteteles', kind: 'eszkoz', title: 'Feltételes tételek a pontozókban',
+        body: 'A két SpO₂-skála miatt a pontozó-adatmodell megtanult feltételes tételt: egy jelölőnégyzet állásától függően jelenik meg vagy marad rejtve. A rejtett tétel nem pontoz, nem szerepel a pontbontásban, és nem akadályozza a kiértékelést azzal, hogy megválaszolatlan marad. Ez más pontozóknál is használható lesz.',
+      },
+      {
+        id: 'v1800-ellenorzes', kind: 'eszkoz', title: 'A NEWS2 sávjai gépi ellenőrzést kaptak',
+        body: 'A skálák adatai egyetlen nagy JSON-tömbben állnak. Egy elgépelt határérték — 219 helyett 211 — nem okoz fordítási hibát: a felület működik, a pontszám kijön, csak rossz. Klinikai pontozónál ez a legrosszabb fajta hiba, mert hihetőnek látszik. Az npm run ellenoriz mostantól tételről tételre összeveti a NEWS2 minden sávját az RCP 2017-es táblázatával, és négy eseten végig is számolja a pontozást.',
+      },
+    ],
+  },
+  {
     version: '1.79.0',
     date: '2026-09-21',
     title: 'Az értesítések törölhetők, és nem ragadnak be',
